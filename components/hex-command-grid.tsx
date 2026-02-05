@@ -582,7 +582,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             JULES MOREAU
           </h1>
           <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
-            M1 STAPS ISA // HEAD OF COMMS @ ASN95
+            M1 STAPS ISA
           </p>
           <p className="font-mono text-[9px] text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed hidden md:block group-hover:text-muted-foreground/80 transition-colors">
             Operative specialized in sport management, event logistics,
