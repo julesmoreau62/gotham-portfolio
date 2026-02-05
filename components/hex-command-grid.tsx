@@ -7,6 +7,7 @@ import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from 
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
+import { FieldOpsPanel } from "./field-ops-panel"
 
 interface HexModule {
   id: string
@@ -289,11 +290,13 @@ function HexTile({
   index,
   mouseOffset,
   visible,
+  onSelect,
 }: {
   module: HexModule
   index: number
   mouseOffset: { x: number; y: number }
   visible: boolean
+  onSelect?: () => void
 }) {
   const Icon = module.icon
   const [hovered, setHovered] = useState(false)
@@ -317,6 +320,8 @@ function HexTile({
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={onSelect}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onSelect?.() }}
       role="button"
       tabIndex={0}
     >
@@ -407,6 +412,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const [aboutOpen, setAboutOpen] = useState(false)
   const [strategyOpen, setStrategyOpen] = useState(false)
   const [intelOpen, setIntelOpen] = useState(false)
+  const [fieldOpsOpen, setFieldOpsOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -571,15 +577,21 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
 
           {/* Secondary row: FIELD OPS, SIGNAL, IMAGERY */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-2.5">
-            {MODULES.slice(1, 4).map((mod, i) => (
-              <HexTile
-                key={mod.id}
-                module={mod}
-                index={i + 2}
-                mouseOffset={mouseOffset}
-                visible={visible}
-              />
-            ))}
+            {MODULES.slice(1, 4).map((mod, i) => {
+              const handlers: Record<string, () => void> = {
+                "field-ops": () => setFieldOpsOpen(true),
+              }
+              return (
+                <HexTile
+                  key={mod.id}
+                  module={mod}
+                  index={i + 2}
+                  mouseOffset={mouseOffset}
+                  visible={visible}
+                  onSelect={handlers[mod.id]}
+                />
+              )
+            })}
           </div>
 
           {/* INTEL CORE - on desktop at the bottom, hidden on mobile */}
@@ -651,6 +663,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <StrategyPanel open={strategyOpen} onClose={() => setStrategyOpen(false)} />
       <IntelCorePanel open={intelOpen} onClose={() => setIntelOpen(false)} />
+      <FieldOpsPanel open={fieldOpsOpen} onClose={() => setFieldOpsOpen(false)} />
     </div>
   )
 }
