@@ -69,6 +69,214 @@ const MODULES: HexModule[] = [
   },
 ]
 
+/* ---- Featured (large) tile for STRATEGY & INTEL CORE ---- */
+function FeaturedTile({
+  module,
+  index,
+  mouseOffset,
+  visible,
+}: {
+  module: HexModule
+  index: number
+  mouseOffset: { x: number; y: number }
+  visible: boolean
+}) {
+  const Icon = module.icon
+  const [hovered, setHovered] = useState(false)
+
+  const parallaxX = mouseOffset.x * 0.03
+  const parallaxY = mouseOffset.y * 0.03
+
+  const isCritical = module.statusType === "critical"
+  const isIntel = module.statusType === "intel"
+
+  return (
+    <div
+      className="relative group cursor-pointer"
+      style={{
+        transform: `translate(${parallaxX}px, ${parallaxY}px)`,
+        transition: "transform 0.3s cubic-bezier(0.2, 1, 0.3, 1)",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className={`relative transition-all duration-700 ${visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-90"}`}
+        style={{ transitionDelay: `${200 + index * 120}ms` }}
+      >
+        {/* Always-on ambient glow */}
+        <div
+          className="absolute -inset-4 rounded-2xl blur-2xl transition-opacity duration-500"
+          style={{
+            background: `radial-gradient(ellipse at center, hsl(${module.glowColor} / ${hovered ? 0.35 : 0.12}), transparent 70%)`,
+          }}
+        />
+
+        {/* Main card */}
+        <div
+          className="relative bg-card/70 backdrop-blur-xl border-2 rounded-xl p-6 md:p-8 overflow-hidden transition-all duration-300"
+          style={{
+            borderColor: hovered ? module.color : `hsl(${module.glowColor} / 0.35)`,
+            boxShadow: hovered
+              ? `0 0 50px hsl(${module.glowColor} / 0.25), inset 0 1px 0 hsl(${module.glowColor} / 0.15)`
+              : `0 0 20px hsl(${module.glowColor} / 0.08), inset 0 1px 0 hsl(${module.glowColor} / 0.08)`,
+          }}
+        >
+          {/* Persistent scan line (slow) */}
+          <div
+            className="absolute left-0 w-full h-[1px] pointer-events-none opacity-40"
+            style={{
+              background: `linear-gradient(90deg, transparent, ${module.color}, transparent)`,
+              animation: "scan-line 4s linear infinite",
+            }}
+          />
+          {/* Faster scan on hover */}
+          {hovered && (
+            <div
+              className="absolute left-0 w-full h-[1px] pointer-events-none"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${module.color}, transparent)`,
+                animation: "scan-line 1.2s linear infinite",
+              }}
+            />
+          )}
+
+          {/* Corner accents (always visible) */}
+          <div
+            className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 rounded-tl-xl transition-colors duration-300"
+            style={{ borderColor: hovered ? module.color : `hsl(${module.glowColor} / 0.5)` }}
+          />
+          <div
+            className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 rounded-tr-xl transition-colors duration-300"
+            style={{ borderColor: hovered ? module.color : `hsl(${module.glowColor} / 0.5)` }}
+          />
+          <div
+            className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 rounded-bl-xl transition-colors duration-300"
+            style={{ borderColor: hovered ? module.color : `hsl(${module.glowColor} / 0.5)` }}
+          />
+          <div
+            className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 rounded-br-xl transition-colors duration-300"
+            style={{ borderColor: hovered ? module.color : `hsl(${module.glowColor} / 0.5)` }}
+          />
+
+          {/* Background decorative grid lines */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            style={{
+              backgroundImage: `linear-gradient(${module.color} 1px, transparent 1px), linear-gradient(90deg, ${module.color} 1px, transparent 1px)`,
+              backgroundSize: "20px 20px",
+            }}
+          />
+
+          <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-8 relative z-10">
+            {/* Large icon block */}
+            <div
+              className="w-14 h-14 md:w-16 md:h-16 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-300"
+              style={{
+                borderColor: `hsl(${module.glowColor} / 0.4)`,
+                background: `hsl(${module.glowColor} / ${hovered ? 0.15 : 0.06})`,
+                boxShadow: hovered ? `0 0 20px hsl(${module.glowColor} / 0.3)` : "none",
+              }}
+            >
+              <Icon
+                className="w-7 h-7 md:w-8 md:h-8 transition-all duration-300"
+                style={{
+                  color: module.color,
+                  filter: hovered ? `drop-shadow(0 0 10px ${module.color})` : `drop-shadow(0 0 4px hsl(${module.glowColor} / 0.4))`,
+                }}
+              />
+            </div>
+
+            <div className="flex-1">
+              {/* Status */}
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`w-2 h-2 rounded-full ${isCritical ? "bg-accent animate-pulse" : "bg-[hsl(var(--neon-cyan))] animate-pulse"}`} />
+                <span
+                  className="text-[9px] font-mono tracking-[0.25em] uppercase font-bold"
+                  style={{ color: module.color }}
+                >
+                  {module.status} {isCritical ? "// PRIORITY ALPHA" : "// DEEP ANALYSIS"}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h3
+                className="font-tech text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-none mb-2 tracking-wide transition-all duration-300"
+                style={{
+                  textShadow: `0 0 ${hovered ? 30 : 12}px hsl(${module.glowColor} / ${hovered ? 0.6 : 0.25})`,
+                }}
+              >
+                {module.title}
+              </h3>
+              <p className="text-[10px] md:text-xs font-mono text-muted-foreground tracking-wider leading-relaxed max-w-md">
+                {module.subtitle}
+                {isCritical && " // Strategic audit & competitive positioning for BLAST.tv Major"}
+                {isIntel && " // Deep-dive knowledge base: sport business intelligence & geospatial ops"}
+              </p>
+
+              {/* Featured data bars */}
+              {isCritical && (
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="flex-1 h-1.5 bg-accent/10 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-accent via-accent/80 to-accent/40 rounded-full transition-all duration-1000"
+                      style={{ width: hovered ? "85%" : "73%" }}
+                    />
+                  </div>
+                  <span className="text-[9px] font-mono text-accent font-bold tabular-nums">
+                    {hovered ? "85%" : "73%"}
+                  </span>
+                  <span className="text-[8px] font-mono text-muted-foreground hidden md:inline">COMPLETION</span>
+                </div>
+              )}
+              {isIntel && (
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="relative flex-1 h-1.5 bg-[hsl(var(--neon-cyan))]/10 rounded-full overflow-hidden">
+                    <div
+                      className="absolute top-0 h-full w-[40%] bg-gradient-to-r from-transparent via-[hsl(var(--neon-cyan))]/80 to-transparent rounded-full"
+                      style={{ animation: "data-flow 2s linear infinite" }}
+                    />
+                    <div
+                      className="absolute top-0 h-full w-[25%] bg-gradient-to-r from-transparent via-[hsl(var(--neon-cyan))]/50 to-transparent rounded-full"
+                      style={{ animation: "data-flow 3s linear infinite", animationDelay: "1s" }}
+                    />
+                  </div>
+                  <span className="text-[8px] font-mono text-[hsl(var(--neon-cyan))] hidden md:inline">STREAMING</span>
+                </div>
+              )}
+            </div>
+
+            {/* Arrow indicator */}
+            <div
+              className="hidden md:flex w-10 h-10 rounded-full border items-center justify-center transition-all duration-300 shrink-0"
+              style={{
+                borderColor: `hsl(${module.glowColor} / ${hovered ? 0.6 : 0.2})`,
+                background: hovered ? `hsl(${module.glowColor} / 0.1)` : "transparent",
+              }}
+            >
+              <svg
+                className="w-4 h-4 transition-transform duration-300"
+                style={{
+                  color: module.color,
+                  transform: hovered ? "translateX(2px)" : "translateX(0)",
+                }}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ---- Standard (smaller) tile ---- */
 function HexTile({
   module,
   index,
@@ -83,19 +291,15 @@ function HexTile({
   const Icon = module.icon
   const [hovered, setHovered] = useState(false)
 
-  const parallaxX = mouseOffset.x * (0.02 + index * 0.008)
-  const parallaxY = mouseOffset.y * (0.02 + index * 0.008)
+  const parallaxX = mouseOffset.x * (0.015 + index * 0.006)
+  const parallaxY = mouseOffset.y * (0.015 + index * 0.006)
 
   const statusDotClass =
-    module.statusType === "critical"
-      ? "bg-accent animate-pulse"
-      : module.statusType === "active"
-        ? "bg-[hsl(var(--field-green))] animate-pulse"
-        : module.statusType === "intel"
-          ? "bg-[hsl(var(--neon-cyan))] animate-pulse"
-          : module.statusType === "online"
-            ? "bg-primary"
-            : "bg-muted-foreground/50"
+    module.statusType === "active"
+      ? "bg-[hsl(var(--field-green))] animate-pulse"
+      : module.statusType === "online"
+        ? "bg-primary"
+        : "bg-muted-foreground/50"
 
   return (
     <div
@@ -109,31 +313,29 @@ function HexTile({
       role="button"
       tabIndex={0}
     >
-      {/* Hex shape container */}
       <div
         className={`relative transition-all duration-700 ${visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-90"}`}
-        style={{ transitionDelay: `${300 + index * 150}ms` }}
+        style={{ transitionDelay: `${500 + index * 120}ms` }}
       >
-        {/* Glow effect on hover */}
+        {/* Glow on hover */}
         <div
           className="absolute -inset-3 rounded-2xl transition-opacity duration-500 blur-xl"
           style={{
-            background: `radial-gradient(circle, hsl(${module.glowColor} / 0.3), transparent)`,
+            background: `radial-gradient(circle, hsl(${module.glowColor} / 0.25), transparent)`,
             opacity: hovered ? 1 : 0,
           }}
         />
 
-        {/* Main card */}
+        {/* Card */}
         <div
-          className="relative bg-card/80 backdrop-blur-md border rounded-lg p-5 md:p-6 overflow-hidden transition-all duration-300"
+          className="relative bg-card/60 backdrop-blur-md border rounded-lg p-4 md:p-5 overflow-hidden transition-all duration-300"
           style={{
             borderColor: hovered ? module.color : "hsl(215 25% 22%)",
             boxShadow: hovered
-              ? `0 0 30px hsl(${module.glowColor} / 0.2), inset 0 0 30px hsl(${module.glowColor} / 0.05)`
+              ? `0 0 25px hsl(${module.glowColor} / 0.15), inset 0 0 20px hsl(${module.glowColor} / 0.04)`
               : "none",
           }}
         >
-          {/* Scan line on hover */}
           {hovered && (
             <div
               className="absolute left-0 w-full h-[1px] pointer-events-none"
@@ -146,27 +348,27 @@ function HexTile({
 
           {/* Corner accents */}
           <div
-            className="absolute top-0 left-0 w-6 h-6 border-t border-l transition-all duration-300"
+            className="absolute top-0 left-0 w-5 h-5 border-t border-l transition-all duration-300"
             style={{ borderColor: hovered ? module.color : "transparent" }}
           />
           <div
-            className="absolute bottom-0 right-0 w-6 h-6 border-b border-r transition-all duration-300"
+            className="absolute bottom-0 right-0 w-5 h-5 border-b border-r transition-all duration-300"
             style={{ borderColor: hovered ? module.color : "transparent" }}
           />
 
           {/* Status row */}
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-2">
               <div className={`w-1.5 h-1.5 rounded-full ${statusDotClass}`} />
               <span
-                className="text-[9px] font-mono tracking-[0.2em] uppercase"
+                className="text-[8px] font-mono tracking-[0.2em] uppercase"
                 style={{ color: module.color }}
               >
                 {module.status}
               </span>
             </div>
             <Icon
-              className="w-4 h-4 transition-all duration-300"
+              className="w-3.5 h-3.5 transition-all duration-300"
               style={{
                 color: hovered ? module.color : "hsl(215 20% 45%)",
                 filter: hovered ? `drop-shadow(0 0 6px ${module.color})` : "none",
@@ -174,38 +376,17 @@ function HexTile({
             />
           </div>
 
-          {/* Title */}
           <h3
-            className="font-tech text-xl md:text-2xl font-bold text-foreground leading-none mb-1.5 tracking-wide transition-all duration-300"
+            className="font-tech text-lg md:text-xl font-bold text-foreground leading-none mb-1 tracking-wide transition-all duration-300"
             style={{
-              textShadow: hovered ? `0 0 20px hsl(${module.glowColor} / 0.5)` : "none",
+              textShadow: hovered ? `0 0 15px hsl(${module.glowColor} / 0.4)` : "none",
             }}
           >
             {module.title}
           </h3>
-          <p className="text-[10px] font-mono text-muted-foreground tracking-wider">
+          <p className="text-[9px] font-mono text-muted-foreground tracking-wider">
             {module.subtitle}
           </p>
-
-          {/* Data bar for intel */}
-          {module.statusType === "intel" && (
-            <div className="relative h-[2px] bg-[hsl(var(--neon-cyan))]/15 rounded-full mt-3 overflow-hidden">
-              <div
-                className="absolute top-0 h-full w-[30%] bg-gradient-to-r from-transparent via-[hsl(var(--neon-cyan))]/90 to-transparent"
-                style={{ animation: "data-flow 1.6s linear infinite" }}
-              />
-            </div>
-          )}
-
-          {/* Progress bar for critical */}
-          {module.statusType === "critical" && (
-            <div className="flex items-center gap-2 mt-3">
-              <div className="flex-1 h-1 bg-accent/10 rounded-full overflow-hidden">
-                <div className="h-full w-[73%] bg-gradient-to-r from-accent to-accent/60 rounded-full" />
-              </div>
-              <span className="text-[8px] font-mono text-accent">73%</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -349,33 +530,36 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           </p>
         </div>
 
-        {/* Hex module grid */}
-        <div className="w-full max-w-5xl">
-          {/* Top row: 3 modules */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4">
-            {MODULES.slice(0, 3).map((mod, i) => (
+        {/* Module grid: featured + secondary + featured */}
+        <div className="w-full max-w-5xl flex flex-col gap-3 md:gap-4">
+          {/* STRATEGY - Featured primary */}
+          <FeaturedTile
+            module={MODULES[0]}
+            index={0}
+            mouseOffset={mouseOffset}
+            visible={visible}
+          />
+
+          {/* Secondary row: FIELD OPS, SIGNAL, IMAGERY */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+            {MODULES.slice(1, 4).map((mod, i) => (
               <HexTile
                 key={mod.id}
                 module={mod}
-                index={i}
+                index={i + 1}
                 mouseOffset={mouseOffset}
                 visible={visible}
               />
             ))}
           </div>
 
-          {/* Bottom row: 2 modules centered */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 max-w-3xl mx-auto">
-            {MODULES.slice(3).map((mod, i) => (
-              <HexTile
-                key={mod.id}
-                module={mod}
-                index={i + 3}
-                mouseOffset={mouseOffset}
-                visible={visible}
-              />
-            ))}
-          </div>
+          {/* INTEL CORE - Featured secondary */}
+          <FeaturedTile
+            module={MODULES[4]}
+            index={4}
+            mouseOffset={mouseOffset}
+            visible={visible}
+          />
         </div>
 
         {/* Skills orbiting tags */}
