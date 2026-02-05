@@ -4,6 +4,7 @@ import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
+import { AboutPanel } from "./about-panel"
 
 interface HexModule {
   id: string
@@ -397,6 +398,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
   const [time, setTime] = useState("")
+  const [aboutOpen, setAboutOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -494,16 +496,19 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
 
       {/* Main content area */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-3 md:py-0 overflow-hidden">
-        {/* Center identity block */}
-        <div
-          className={`text-center mb-5 md:mb-6 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        {/* Center identity block - clickable to open About */}
+        <button
+          type="button"
+          onClick={() => setAboutOpen(true)}
+          className={`text-center mb-5 md:mb-6 transition-all duration-1000 group cursor-pointer ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
           style={{ transitionDelay: "100ms" }}
+          aria-label="Open agent profile dossier"
         >
           {/* Avatar ring */}
           <div className="relative inline-flex items-center justify-center mb-4">
             {/* Outer rotating ring */}
             <div
-              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-primary/20"
+              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-primary/20 group-hover:border-primary/50 transition-colors duration-500"
               style={{ animation: "orbit-spin 20s linear infinite" }}
             >
               <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
@@ -511,24 +516,27 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             </div>
 
             {/* Core circle */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)]">
-              <User className="w-8 h-8 md:w-10 md:h-10 text-primary/80" />
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500">
+              <User className="w-8 h-8 md:w-10 md:h-10 text-primary/80 group-hover:text-primary transition-colors duration-300" />
               {/* Ping */}
               <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
             </div>
           </div>
 
-          <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5">
+          <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5 group-hover:text-primary transition-colors duration-300">
             JULES MOREAU
           </h1>
           <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
             M1 STAPS ISA // HEAD OF COMMS @ ASN95
           </p>
-          <p className="font-mono text-[9px] text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed hidden md:block">
+          <p className="font-mono text-[9px] text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed hidden md:block group-hover:text-muted-foreground/80 transition-colors">
             Operative specialized in sport management, event logistics,
             digital communication & competitive intelligence.
           </p>
-        </div>
+          <span className="inline-block mt-1.5 text-[8px] font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
+            [ CLICK TO OPEN DOSSIER ]
+          </span>
+        </button>
 
         {/* Module grid: on mobile STRATEGY + INTEL CORE together, then secondary.
             On desktop: STRATEGY top, secondary middle, INTEL CORE bottom. */}
@@ -627,6 +635,9 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           </span>
         </div>
       </footer>
+
+      {/* About Panel overlay */}
+      <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </div>
   )
 }
