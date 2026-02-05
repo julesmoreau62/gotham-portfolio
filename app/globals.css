@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 92%;
+    --card: 222 40% 10%;
+    --card-foreground: 210 40% 92%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 40% 92%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 210 40% 92%;
+    --muted: 222 30% 14%;
+    --muted-foreground: 215 20% 45%;
+    --accent: 24 95% 53%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 217 91% 60%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 160 84% 39%;
+    --chart-3: 186 100% 50%;
+    --chart-4: 24 95% 53%;
+    --chart-5: 0 84% 60%;
+    --radius: 0.25rem;
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 30% 14%;
+    --sidebar-accent-foreground: 210 40% 92%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 217 91% 60%;
+    --neon-cyan: 186 100% 50%;
+    --field-green: 160 84% 39%;
+    --alert-orange: 24 95% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Tactical grid background */
+.tactical-grid {
+  background-image:
+    linear-gradient(hsl(215 25% 22% / 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(215 25% 22% / 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scan line animation */
+@keyframes scan-line {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+/* Typing cursor blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Data flow particle */
+@keyframes data-flow {
+  from { left: -30%; }
+  to { left: 100%; }
+}
+
+/* Radar sweep */
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px hsl(24 95% 53% / 0.3); }
+  50% { box-shadow: 0 0 40px hsl(24 95% 53% / 0.6); }
+}
+
+/* Node ping */
+@keyframes node-ping {
+  75%, 100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Orbit spin */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Scroll data stream */
+@keyframes scroll-data {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* Fade slide in */
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Scale in */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Glitch flicker */
+@keyframes glitch-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.2; }
+  94% { opacity: 1; }
+  96% { opacity: 0.4; }
+  97% { opacity: 1; }
+}
+
+/* Typing animation */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(222 47% 6%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(215 25% 22%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(217 91% 60%);
+  box-shadow: 0 0 8px hsl(217 91% 60% / 0.5);
+}
+
+/* Selection color */
+::selection {
+  background: hsl(217 91% 60% / 0.3);
+  color: white;
+}
