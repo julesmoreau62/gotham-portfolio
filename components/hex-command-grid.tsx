@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
+import { IntelCorePanel } from "./intel-core-panel"
 
 interface HexModule {
   id: string
@@ -405,6 +406,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const [time, setTime] = useState("")
   const [aboutOpen, setAboutOpen] = useState(false)
   const [strategyOpen, setStrategyOpen] = useState(false)
+  const [intelOpen, setIntelOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -563,6 +565,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               index={1}
               mouseOffset={mouseOffset}
               visible={visible}
+              onSelect={() => setIntelOpen(true)}
             />
           </div>
 
@@ -586,6 +589,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               index={4}
               mouseOffset={mouseOffset}
               visible={visible}
+              onSelect={() => setIntelOpen(true)}
             />
           </div>
         </div>
@@ -646,6 +650,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       {/* About Panel overlay */}
       <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <StrategyPanel open={strategyOpen} onClose={() => setStrategyOpen(false)} />
+      <IntelCorePanel open={intelOpen} onClose={() => setIntelOpen(false)} />
     </div>
   )
 }
