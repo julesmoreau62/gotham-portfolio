@@ -389,7 +389,7 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
 
             {!activeCategory ? (
               /* ---- HUB VIEW: 3 category cards ---- */
-              <div className="max-w-5xl mx-auto h-full flex flex-col justify-center">
+              <div className="max-w-5xl mx-auto py-4 md:py-8">
                 {/* Stats bar */}
                 <div
                   className={`flex items-center justify-center gap-6 mb-6 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
