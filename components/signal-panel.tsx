@@ -703,6 +703,20 @@ function SponsorBlock({ visible }: { visible: boolean }) {
       {/* Body */}
       <div className="p-4 relative">
         <div className="flex flex-col md:flex-row gap-4">
+          {/* Sponsor visual */}
+          <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group">
+            <img
+              src="https://julesmoreau.eu/assets/comms/sponsor.png"
+              alt="Les Pronos du Sultan - Sultan Kebab Campaign"
+              className="w-full h-full object-contain bg-background/50"
+            />
+            {/* Corner brackets */}
+            <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />
+            <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r border-accent/40" />
+            <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l border-accent/40" />
+            <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r border-accent/40" />
+          </div>
+
           {/* Description */}
           <div className="flex-1">
             <div className="flex items-center gap-1.5 text-[9px] text-accent font-mono font-bold mb-2">

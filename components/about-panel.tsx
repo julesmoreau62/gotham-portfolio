@@ -113,23 +113,34 @@ export function AboutPanel({
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
               {/* Left column - Identity card */}
               <div className="col-span-1 md:col-span-4 flex flex-col gap-4">
-                {/* Agent photo placeholder */}
+                {/* Agent photo */}
                 <div className="relative bg-secondary/50 border border-border p-1 rounded overflow-hidden">
-                  <div className="w-full aspect-[3/4] bg-card flex flex-col items-center justify-center gap-3 relative overflow-hidden">
+                  <div className="w-full aspect-[3/4] bg-card relative overflow-hidden">
+                    {/* Actual photo */}
+                    <img
+                      src="https://julesmoreau.eu/assets/photo-cv.jpg"
+                      alt="Jules Moreau - Agent Profile"
+                      className="w-full h-full object-cover grayscale contrast-125"
+                    />
                     {/* Grid overlay */}
                     <div
-                      className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                      className="absolute inset-0 opacity-[0.06] pointer-events-none"
                       style={{
                         backgroundImage:
                           "linear-gradient(hsl(217 91% 60%) 1px, transparent 1px), linear-gradient(90deg, hsl(217 91% 60%) 1px, transparent 1px)",
                         backgroundSize: "20px 20px",
                       }}
                     />
-                    <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center relative">
-                      <User className="w-10 h-10 text-primary/60" />
-                      <div className="absolute inset-0 rounded-full border border-primary/20 animate-node-ping" />
-                    </div>
-                    <div className="text-center relative z-10">
+                    {/* Scan line */}
+                    <div
+                      className="absolute left-0 w-full h-[1px] pointer-events-none opacity-30"
+                      style={{
+                        background: "linear-gradient(90deg, transparent, hsl(217 91% 60%), transparent)",
+                        animation: "scan-line 4s linear infinite",
+                      }}
+                    />
+                    {/* Bottom overlay with name */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent p-3">
                       <div className="font-tech text-lg text-foreground tracking-wider">
                         JULES MOREAU
                       </div>
@@ -137,6 +148,11 @@ export function AboutPanel({
                         RANK: SECOND MAITRE (NCO)
                       </div>
                     </div>
+                    {/* Corner brackets */}
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-primary/40" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-primary/40" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-primary/40" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-primary/40" />
                   </div>
                 </div>
 
