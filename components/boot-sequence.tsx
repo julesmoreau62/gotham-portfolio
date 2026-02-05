@@ -8,24 +8,24 @@ interface BootSequenceProps {
 
 const BOOT_LINES = [
   { text: "GOTHAM TACTICAL OS v2.7.1", delay: 0, type: "header" },
-  { text: "Initializing kernel...", delay: 200, type: "system" },
-  { text: "[OK] Memory check: 16384 MB available", delay: 400, type: "ok" },
-  { text: "[OK] Network interface: ENCRYPTED TUNNEL", delay: 600, type: "ok" },
-  { text: "[OK] Biometric scanner: ONLINE", delay: 800, type: "ok" },
-  { text: "[WARN] Threat level: ELEVATED", delay: 1000, type: "warn" },
-  { text: "Loading agent profile...", delay: 1300, type: "system" },
-  { text: ">>  AGENT: JULES MOREAU", delay: 1600, type: "agent" },
-  { text: ">>  RANK: M1 STAPS ISA // HEAD OF COMMS", delay: 1900, type: "agent" },
-  { text: ">>  CLEARANCE: LEVEL 4 - FULL ACCESS", delay: 2200, type: "clearance" },
-  { text: ">>  STATUS: ACTIVE OPERATIVE", delay: 2500, type: "status" },
-  { text: "Loading tactical modules...", delay: 2800, type: "system" },
-  { text: "[OK] STRATEGY module loaded", delay: 3000, type: "ok" },
-  { text: "[OK] FIELD OPS module loaded", delay: 3150, type: "ok" },
-  { text: "[OK] SIGNAL module loaded", delay: 3300, type: "ok" },
-  { text: "[OK] IMAGERY module loaded", delay: 3450, type: "ok" },
-  { text: "[OK] INTEL CORE module loaded", delay: 3600, type: "ok" },
-  { text: "", delay: 3800, type: "blank" },
-  { text: "All systems operational. Launching interface...", delay: 3800, type: "launch" },
+  { text: "Initializing kernel...", delay: 100, type: "system" },
+  { text: "[OK] Memory check: 16384 MB available", delay: 200, type: "ok" },
+  { text: "[OK] Network interface: ENCRYPTED TUNNEL", delay: 300, type: "ok" },
+  { text: "[OK] Biometric scanner: ONLINE", delay: 400, type: "ok" },
+  { text: "[WARN] Threat level: ELEVATED", delay: 500, type: "warn" },
+  { text: "Loading agent profile...", delay: 650, type: "system" },
+  { text: ">>  AGENT: JULES MOREAU", delay: 800, type: "agent" },
+  { text: ">>  RANK: M1 STAPS ISA", delay: 950, type: "agent" },
+  { text: ">>  CLEARANCE: LEVEL 4 - FULL ACCESS", delay: 1100, type: "clearance" },
+  { text: ">>  STATUS: ACTIVE OPERATIVE", delay: 1250, type: "status" },
+  { text: "Loading tactical modules...", delay: 1400, type: "system" },
+  { text: "[OK] STRATEGY module loaded", delay: 1500, type: "ok" },
+  { text: "[OK] FIELD OPS module loaded", delay: 1575, type: "ok" },
+  { text: "[OK] SIGNAL module loaded", delay: 1650, type: "ok" },
+  { text: "[OK] IMAGERY module loaded", delay: 1725, type: "ok" },
+  { text: "[OK] INTEL CORE module loaded", delay: 1800, type: "ok" },
+  { text: "", delay: 1900, type: "blank" },
+  { text: "All systems operational. Launching interface...", delay: 1900, type: "launch" },
 ]
 
 export function BootSequence({ onComplete }: BootSequenceProps) {
@@ -43,7 +43,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   }, [onComplete])
 
   useEffect(() => {
-    const skipTimer = setTimeout(() => setShowSkip(true), 800)
+    const skipTimer = setTimeout(() => setShowSkip(true), 400)
     const timers: ReturnType<typeof setTimeout>[] = []
 
     for (const line of BOOT_LINES) {
@@ -55,7 +55,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     }
 
     // Auto-complete after last line
-    timers.push(setTimeout(() => handleComplete(), 4600))
+    timers.push(setTimeout(() => handleComplete(), 2400))
 
     return () => {
       clearTimeout(skipTimer)
