@@ -411,12 +411,49 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
   const [time, setTime] = useState("")
-  const [aboutOpen, setAboutOpen] = useState(false)
-  const [strategyOpen, setStrategyOpen] = useState(false)
-  const [intelOpen, setIntelOpen] = useState(false)
-  const [fieldOpsOpen, setFieldOpsOpen] = useState(false)
-  const [signalOpen, setSignalOpen] = useState(false)
-  const [imageryOpen, setImageryOpen] = useState(false)
+  // Hash-based section navigation synced with browser history
+  type Section = "about" | "strategy" | "intel" | "field-ops" | "signal" | "imagery" | null
+  const VALID_SECTIONS = new Set<string>(["about", "strategy", "intel", "field-ops", "signal", "imagery"])
+
+  const readHash = (): Section => {
+    if (typeof window === "undefined") return null
+    const h = window.location.hash.replace("#", "")
+    return VALID_SECTIONS.has(h) ? (h as Section) : null
+  }
+
+  const [activeSection, setActiveSection] = useState<Section>(null)
+
+
+  const openSection = (section: Section) => {
+    if (!section) return
+    window.history.pushState(null, "", `#${section}`)
+    setActiveSection(section)
+  }
+
+  const closeSection = () => {
+    // Go back in history instead of just clearing, so the browser back stack stays correct
+    if (activeSection) {
+      window.history.back()
+    }
+  }
+
+  // Listen for browser back/forward buttons
+  useEffect(() => {
+    const onHashChange = () => setActiveSection(readHash())
+    const onPopState = () => setActiveSection(readHash())
+
+    window.addEventListener("hashchange", onHashChange)
+    window.addEventListener("popstate", onPopState)
+
+    // Read initial hash on mount (e.g. direct link to /#strategy)
+    setActiveSection(readHash())
+
+    return () => {
+      window.removeEventListener("hashchange", onHashChange)
+      window.removeEventListener("popstate", onPopState)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const update = () => {
@@ -517,7 +554,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
         {/* Center identity block - clickable to open About */}
         <button
           type="button"
-          onClick={() => setAboutOpen(true)}
+          onClick={() => openSection("about")}
           className={`text-center mb-5 md:mb-6 transition-all duration-1000 group cursor-pointer ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
           style={{ transitionDelay: "100ms" }}
           aria-label="Open agent profile dossier"
@@ -565,7 +602,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             index={0}
             mouseOffset={mouseOffset}
             visible={visible}
-            onSelect={() => setStrategyOpen(true)}
+            onSelect={() => openSection("strategy")}
           />
 
           {/* INTEL CORE - on mobile directly after STRATEGY, hidden on md+ */}
@@ -575,7 +612,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               index={1}
               mouseOffset={mouseOffset}
               visible={visible}
-              onSelect={() => setIntelOpen(true)}
+              onSelect={() => openSection("intel")}
             />
           </div>
 
@@ -585,7 +622,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             index={2}
             mouseOffset={mouseOffset}
             visible={visible}
-            onSelect={() => setFieldOpsOpen(true)}
+            onSelect={() => openSection("field-ops")}
           />
 
           {/* SIGNAL */}
@@ -594,7 +631,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             index={3}
             mouseOffset={mouseOffset}
             visible={visible}
-            onSelect={() => setSignalOpen(true)}
+            onSelect={() => openSection("signal")}
           />
 
           {/* IMAGERY */}
@@ -603,7 +640,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             index={4}
             mouseOffset={mouseOffset}
             visible={visible}
-            onSelect={() => setImageryOpen(true)}
+            onSelect={() => openSection("imagery")}
           />
 
           {/* INTEL CORE - on desktop at the bottom, hidden on mobile */}
@@ -613,7 +650,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               index={5}
               mouseOffset={mouseOffset}
               visible={visible}
-              onSelect={() => setIntelOpen(true)}
+              onSelect={() => openSection("intel")}
             />
           </div>
         </div>
@@ -672,12 +709,12 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       </footer>
 
       {/* About Panel overlay */}
-      <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
-      <StrategyPanel open={strategyOpen} onClose={() => setStrategyOpen(false)} />
-      <IntelCorePanel open={intelOpen} onClose={() => setIntelOpen(false)} />
-      <FieldOpsPanel open={fieldOpsOpen} onClose={() => setFieldOpsOpen(false)} />
-      <SignalPanel open={signalOpen} onClose={() => setSignalOpen(false)} />
-      <ImageryPanel open={imageryOpen} onClose={() => setImageryOpen(false)} />
+      <AboutPanel open={activeSection === "about"} onClose={closeSection} />
+      <StrategyPanel open={activeSection === "strategy"} onClose={closeSection} />
+      <IntelCorePanel open={activeSection === "intel"} onClose={closeSection} />
+      <FieldOpsPanel open={activeSection === "field-ops"} onClose={closeSection} />
+      <SignalPanel open={activeSection === "signal"} onClose={closeSection} />
+      <ImageryPanel open={activeSection === "imagery"} onClose={closeSection} />
     </div>
   )
 }
