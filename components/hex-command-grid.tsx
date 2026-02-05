@@ -579,32 +579,38 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             />
           </div>
 
-          {/* Secondary row: FIELD OPS, SIGNAL, IMAGERY */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-2.5">
-            {MODULES.slice(1, 4).map((mod, i) => {
-              const handlers: Record<string, () => void> = {
-                events: () => setFieldOpsOpen(true),
-                comms: () => setSignalOpen(true),
-                photo: () => setImageryOpen(true),
-              }
-              return (
-                <HexTile
-                  key={mod.id}
-                  module={mod}
-                  index={i + 2}
-                  mouseOffset={mouseOffset}
-                  visible={visible}
-                  onSelect={handlers[mod.id]}
-                />
-              )
-            })}
-          </div>
+          {/* FIELD OPS */}
+          <FeaturedTile
+            module={MODULES[1]}
+            index={2}
+            mouseOffset={mouseOffset}
+            visible={visible}
+            onSelect={() => setFieldOpsOpen(true)}
+          />
+
+          {/* SIGNAL */}
+          <FeaturedTile
+            module={MODULES[2]}
+            index={3}
+            mouseOffset={mouseOffset}
+            visible={visible}
+            onSelect={() => setSignalOpen(true)}
+          />
+
+          {/* IMAGERY */}
+          <FeaturedTile
+            module={MODULES[3]}
+            index={4}
+            mouseOffset={mouseOffset}
+            visible={visible}
+            onSelect={() => setImageryOpen(true)}
+          />
 
           {/* INTEL CORE - on desktop at the bottom, hidden on mobile */}
           <div className="hidden md:block">
             <FeaturedTile
               module={MODULES[4]}
-              index={4}
+              index={5}
               mouseOffset={mouseOffset}
               visible={visible}
               onSelect={() => setIntelOpen(true)}
