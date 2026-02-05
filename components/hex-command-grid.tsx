@@ -5,6 +5,7 @@ import React from "react"
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
 import { AboutPanel } from "./about-panel"
+import { StrategyPanel } from "./strategy-panel"
 
 interface HexModule {
   id: string
@@ -76,11 +77,13 @@ function FeaturedTile({
   index,
   mouseOffset,
   visible,
+  onSelect,
 }: {
   module: HexModule
   index: number
   mouseOffset: { x: number; y: number }
   visible: boolean
+  onSelect?: () => void
 }) {
   const Icon = module.icon
   const [hovered, setHovered] = useState(false)
@@ -100,8 +103,10 @@ function FeaturedTile({
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={onSelect}
       role="button"
       tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onSelect?.() }}
     >
       <div
         className={`relative transition-all duration-700 ${visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-90"}`}
@@ -399,6 +404,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
   const [time, setTime] = useState("")
   const [aboutOpen, setAboutOpen] = useState(false)
+  const [strategyOpen, setStrategyOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -547,6 +553,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             index={0}
             mouseOffset={mouseOffset}
             visible={visible}
+            onSelect={() => setStrategyOpen(true)}
           />
 
           {/* INTEL CORE - on mobile directly after STRATEGY, hidden on md+ */}
@@ -638,6 +645,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
 
       {/* About Panel overlay */}
       <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <StrategyPanel open={strategyOpen} onClose={() => setStrategyOpen(false)} />
     </div>
   )
 }
