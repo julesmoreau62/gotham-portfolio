@@ -377,27 +377,35 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { file: "VISUAL_ID.PNG", title: "GRAPHIC CHARTER", desc: "Color palette & typography system." },
-                { file: "RULES.JPG", title: "PARTICIPANT BRIEFING", desc: "Bilingual rules (FR/EN)." },
-                { file: "POSTER.PNG", title: "EVENT POSTER", desc: "Campus & social media promo." },
+                { file: "VISUAL_ID.PNG", title: "GRAPHIC CHARTER", desc: "Color palette & typography system.", src: "https://julesmoreau.eu/assets/events/charte.png", fit: "object-contain p-2" },
+                { file: "RULES.JPG", title: "PARTICIPANT BRIEFING", desc: "Bilingual rules (FR/EN).", src: "https://julesmoreau.eu/assets/events/regles.jpg", fit: "object-cover object-top" },
+                { file: "POSTER.PNG", title: "EVENT POSTER", desc: "Campus & social media promo.", src: "https://julesmoreau.eu/assets/events/affiche.png", fit: "object-contain" },
               ].map((asset, i) => (
                 <div key={asset.file}
                   className={`border rounded-lg overflow-hidden bg-card/40 border-border/40 hover:border-[hsl(var(--field-green))]/50 transition-all duration-700 group ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                   style={{ transitionDelay: `${700 + i * 120}ms` }}>
-                  <div className="relative h-32 bg-secondary/30 flex items-center justify-center overflow-hidden">
+                  <div className="relative h-40 bg-secondary/30 overflow-hidden">
                     <div className="absolute top-2 left-2 z-10 px-2 py-0.5 text-[7px] font-mono rounded bg-card/80 border border-[hsl(var(--field-green))]/30"
                       style={{ color: green }}>
                       {asset.file}
                     </div>
-                    {/* Placeholder pattern */}
-                    <div className="absolute inset-0 opacity-10"
+                    <img
+                      src={asset.src || "/placeholder.svg"}
+                      alt={asset.title}
+                      className={`w-full h-full ${asset.fit} opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500`}
+                    />
+                    {/* Scan line on hover */}
+                    <div className="absolute left-0 w-full h-[1px] pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity"
                       style={{
-                        backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, hsl(160 84% 39% / 0.15) 10px, hsl(160 84% 39% / 0.15) 11px)`,
+                        background: `linear-gradient(90deg, transparent, ${green}, transparent)`,
+                        animation: "scan-line 2s linear infinite",
                       }}
                     />
-                    <div className="text-muted-foreground/30">
-                      <Camera className="w-8 h-8" />
-                    </div>
+                    {/* Corner brackets */}
+                    <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: green }} />
+                    <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: green }} />
+                    <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: green }} />
+                    <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: green }} />
                   </div>
                   <div className="p-3 border-t border-border/20">
                     <h4 className="text-xs font-bold text-foreground font-tech mb-0.5">{asset.title}</h4>
