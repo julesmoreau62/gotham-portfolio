@@ -525,13 +525,15 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             >
               <Mail className="w-3 h-3 text-[hsl(var(--field-green))]" />
             </a>
-            <button
+            <a
+              href="/assets/cv-julesmoreau.pdf"
+              download
               className="hidden sm:flex h-7 px-2 items-center gap-1 rounded border border-accent/30 bg-accent/5 hover:bg-accent/20 transition-all"
               aria-label="Download CV"
             >
               <Download className="w-3 h-3 text-accent" />
               <span className="text-[8px] font-mono text-accent">CV</span>
-            </button>
+            </a>
           </div>
 
           <div className="h-5 w-px bg-border hidden md:block" />

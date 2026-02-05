@@ -183,7 +183,8 @@ export function AboutPanel({
 
                 {/* Download CV */}
                 <a
-                  href="#"
+                  href="/assets/cv-julesmoreau.pdf"
+                  download
                   className="flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-primary/40 bg-primary/5 text-primary hover:bg-primary hover:text-background transition-all text-[10px] font-mono font-bold tracking-widest uppercase"
                 >
                   <Download className="w-3 h-3" />

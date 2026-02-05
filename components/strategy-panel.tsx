@@ -359,7 +359,7 @@ export function StrategyPanel({ open, onClose }: StrategyPanelProps) {
               {/* ---- DOSSIER DOWNLOAD ---- */}
               <div className={`transition-all duration-700 ${briefReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "600ms" }}>
                 <a
-                  href="assets/blast-case-study.pdf"
+                  href="/assets/blast-case-study.pdf"
                   download
                   target="_blank"
                   rel="noopener noreferrer"
