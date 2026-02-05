@@ -377,9 +377,9 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { file: "VISUAL_ID.PNG", title: "GRAPHIC CHARTER", desc: "Color palette & typography system.", src: "https://julesmoreau.eu/assets/events/charte.png", fit: "object-contain p-2" },
-                { file: "RULES.JPG", title: "PARTICIPANT BRIEFING", desc: "Bilingual rules (FR/EN).", src: "https://julesmoreau.eu/assets/events/regles.jpg", fit: "object-cover object-top" },
-                { file: "POSTER.PNG", title: "EVENT POSTER", desc: "Campus & social media promo.", src: "https://julesmoreau.eu/assets/events/affiche.png", fit: "object-contain" },
+                { file: "VISUAL_ID.PNG", title: "GRAPHIC CHARTER", desc: "Color palette & typography system.", src: "/assets/events/charte.png", fit: "object-contain p-2" },
+                { file: "RULES.JPG", title: "PARTICIPANT BRIEFING", desc: "Bilingual rules (FR/EN).", src: "/assets/events/regles.jpg", fit: "object-cover object-top" },
+                { file: "POSTER.PNG", title: "EVENT POSTER", desc: "Campus & social media promo.", src: "/assets/events/affiche.png", fit: "object-contain" },
               ].map((asset, i) => (
                 <div key={asset.file}
                   className={`border rounded-lg overflow-hidden bg-card/40 border-border/40 hover:border-[hsl(var(--field-green))]/50 transition-all duration-700 group ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}

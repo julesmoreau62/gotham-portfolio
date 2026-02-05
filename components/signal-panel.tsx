@@ -40,9 +40,9 @@ const ACHIEVEMENTS = [
 ]
 
 const TOP_CONTENT = [
-  { label: "MATCH DAY 1",    type: "VIDEO",  reach: "412K", eng: "8.2K", src: "https://julesmoreau.eu/assets/comms/match-championnat.png" },
-  { label: "MATCH RESULT 1", type: "REEL",   reach: "287K", eng: "6.1K", src: "https://julesmoreau.eu/assets/comms/resultat-match.jpg" },
-  { label: "MATCH RESULT 2", type: "REEL",   reach: "198K", eng: "5.4K", src: "https://julesmoreau.eu/assets/comms/resultat-match-2.jpg" },
+  { label: "MATCH DAY 1",    type: "VIDEO",  reach: "412K", eng: "8.2K", src: "/assets/comms/match-championnat.png" },
+  { label: "MATCH RESULT 1", type: "REEL",   reach: "287K", eng: "6.1K", src: "/assets/comms/resultat-match.jpg" },
+  { label: "MATCH RESULT 2", type: "REEL",   reach: "198K", eng: "5.4K", src: "/assets/comms/resultat-match-2.jpg" },
 ]
 
 const SPONSOR_METRICS = [
@@ -712,7 +712,7 @@ function SponsorBlock({ visible }: { visible: boolean }) {
           {/* Sponsor visual */}
           <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group">
             <img
-              src="https://julesmoreau.eu/assets/comms/sponsor.png"
+              src="/assets/comms/sponsor.png"
               alt="Les Pronos du Sultan - Sultan Kebab Campaign"
               className="w-full h-full object-contain bg-background/50"
             />

@@ -118,7 +118,7 @@ export function AboutPanel({
                   <div className="w-full aspect-[3/4] bg-card relative overflow-hidden">
                     {/* Actual photo */}
                     <img
-                      src="https://julesmoreau.eu/assets/photo-cv.jpg"
+                      src="/assets/photo-cv.jpg"
                       alt="Jules Moreau - Agent Profile"
                       className="w-full h-full object-cover grayscale contrast-125"
                     />

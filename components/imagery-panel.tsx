@@ -22,7 +22,7 @@ interface PhotoAsset {
   cat: string
 }
 
-const BASE = "https://julesmoreau.eu/assets/photo"
+const BASE = "/assets/photo"
 const photos: PhotoAsset[] = [
   ...Array.from({ length: 15 }, (_, i) => ({
     src: `${BASE}/corporate-${i + 1}.jpg`,
