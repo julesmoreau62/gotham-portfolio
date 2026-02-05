@@ -494,59 +494,40 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
 
       {/* Main content area */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-3 md:py-0 overflow-hidden">
-        {/* Compact identity block: horizontal on desktop */}
+        {/* Center identity block */}
         <div
-          className={`flex flex-col md:flex-row items-center gap-3 md:gap-5 mb-4 md:mb-5 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`text-center mb-5 md:mb-6 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
           style={{ transitionDelay: "100ms" }}
         >
-          {/* Avatar ring - smaller */}
-          <div className="relative inline-flex items-center justify-center shrink-0">
+          {/* Avatar ring */}
+          <div className="relative inline-flex items-center justify-center mb-4">
+            {/* Outer rotating ring */}
             <div
-              className="absolute w-16 h-16 md:w-[4.5rem] md:h-[4.5rem] rounded-full border border-dashed border-primary/20"
+              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-primary/20"
               style={{ animation: "orbit-spin 20s linear infinite" }}
             >
-              <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(217_91%_60%)]" />
-              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_8px_hsl(186_100%_50%)]" />
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_10px_hsl(186_100%_50%)]" />
             </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center relative shadow-[0_0_30px_hsl(217_91%_60%/0.25)]">
-              <User className="w-5 h-5 md:w-6 md:h-6 text-primary/80" />
+
+            {/* Core circle */}
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)]">
+              <User className="w-8 h-8 md:w-10 md:h-10 text-primary/80" />
+              {/* Ping */}
               <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
             </div>
           </div>
 
-          <div className="text-center md:text-left">
-            <h1 className="font-tech text-xl md:text-2xl font-bold text-foreground tracking-[0.15em] leading-none">
-              JULES MOREAU
-            </h1>
-            <p className="font-mono text-[9px] md:text-[10px] text-primary tracking-[0.3em] mt-0.5">
-              M1 STAPS ISA // HEAD OF COMMS @ ASN95
-            </p>
-          </div>
-
-          {/* Skill tags inline on desktop */}
-          <div className="hidden lg:flex items-center gap-1.5 ml-auto">
-            {[
-              { label: "CRISIS MGMT", color: "primary" },
-              { label: "ENGLISH C1", color: "primary" },
-              { label: "ADOBE SUITE", color: "accent" },
-              { label: "DATA ANALYSIS", color: "accent" },
-              { label: "TEAM LEAD", color: "primary" },
-              { label: "OSINT", color: "cyan" },
-            ].map((skill) => (
-              <span
-                key={skill.label}
-                className={`text-[7px] font-mono px-2 py-0.5 rounded-sm border cursor-default transition-colors duration-300 hover:brightness-150 ${
-                  skill.color === "accent"
-                    ? "text-accent/70 bg-accent/5 border-accent/15 hover:border-accent/40"
-                    : skill.color === "cyan"
-                      ? "text-[hsl(var(--neon-cyan))]/70 bg-[hsl(var(--neon-cyan))]/5 border-[hsl(var(--neon-cyan))]/15 hover:border-[hsl(var(--neon-cyan))]/40"
-                      : "text-primary/70 bg-primary/5 border-primary/15 hover:border-primary/40"
-                }`}
-              >
-                {skill.label}
-              </span>
-            ))}
-          </div>
+          <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5">
+            JULES MOREAU
+          </h1>
+          <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
+            M1 STAPS ISA // HEAD OF COMMS @ ASN95
+          </p>
+          <p className="font-mono text-[9px] text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed hidden md:block">
+            Operative specialized in sport management, event logistics,
+            digital communication & competitive intelligence.
+          </p>
         </div>
 
         {/* Module grid: featured + secondary + featured */}
@@ -581,9 +562,9 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           />
         </div>
 
-        {/* Skill tags on mobile/tablet (below grid) */}
+        {/* Skill tags */}
         <div
-          className={`flex flex-wrap justify-center gap-1.5 mt-3 lg:hidden max-w-sm transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`flex flex-wrap justify-center gap-1.5 mt-3 max-w-lg transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           style={{ transitionDelay: "1200ms" }}
         >
           {[
