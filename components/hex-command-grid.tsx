@@ -9,6 +9,7 @@ import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
 import { FieldOpsPanel } from "./field-ops-panel"
 import { SignalPanel } from "./signal-panel"
+import { ImageryPanel } from "./imagery-panel"
 
 interface HexModule {
   id: string
@@ -415,6 +416,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const [intelOpen, setIntelOpen] = useState(false)
   const [fieldOpsOpen, setFieldOpsOpen] = useState(false)
   const [signalOpen, setSignalOpen] = useState(false)
+  const [imageryOpen, setImageryOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -583,6 +585,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               const handlers: Record<string, () => void> = {
                 events: () => setFieldOpsOpen(true),
                 comms: () => setSignalOpen(true),
+                photo: () => setImageryOpen(true),
               }
               return (
                 <HexTile
@@ -668,6 +671,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       <IntelCorePanel open={intelOpen} onClose={() => setIntelOpen(false)} />
       <FieldOpsPanel open={fieldOpsOpen} onClose={() => setFieldOpsOpen(false)} />
       <SignalPanel open={signalOpen} onClose={() => setSignalOpen(false)} />
+      <ImageryPanel open={imageryOpen} onClose={() => setImageryOpen(false)} />
     </div>
   )
 }
