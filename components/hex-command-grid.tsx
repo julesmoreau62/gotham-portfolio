@@ -605,16 +605,14 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             onSelect={() => openSection("strategy")}
           />
 
-          {/* INTEL CORE - on mobile directly after STRATEGY, hidden on md+ */}
-          <div className="md:hidden">
-            <FeaturedTile
-              module={MODULES[4]}
-              index={1}
-              mouseOffset={mouseOffset}
-              visible={visible}
-              onSelect={() => openSection("intel")}
-            />
-          </div>
+          {/* INTEL CORE - second on both mobile and desktop */}
+          <FeaturedTile
+            module={MODULES[4]}
+            index={1}
+            mouseOffset={mouseOffset}
+            visible={visible}
+            onSelect={() => openSection("intel")}
+          />
 
           {/* FIELD OPS */}
           <FeaturedTile
@@ -642,17 +640,6 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             visible={visible}
             onSelect={() => openSection("imagery")}
           />
-
-          {/* INTEL CORE - on desktop at the bottom, hidden on mobile */}
-          <div className="hidden md:block">
-            <FeaturedTile
-              module={MODULES[4]}
-              index={5}
-              mouseOffset={mouseOffset}
-              visible={visible}
-              onSelect={() => openSection("intel")}
-            />
-          </div>
         </div>
 
         {/* Skill tags */}
