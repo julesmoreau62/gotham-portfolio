@@ -40,9 +40,9 @@ const ACHIEVEMENTS = [
 ]
 
 const TOP_CONTENT = [
-  { label: "MATCH DAY 1",    type: "VIDEO",  reach: "412K", eng: "8.2K" },
-  { label: "MATCH RESULT 1", type: "REEL",   reach: "287K", eng: "6.1K" },
-  { label: "MATCH RESULT 2", type: "REEL",   reach: "198K", eng: "5.4K" },
+  { label: "MATCH DAY 1",    type: "VIDEO",  reach: "412K", eng: "8.2K", src: "https://julesmoreau.eu/assets/comms/match-championnat.png" },
+  { label: "MATCH RESULT 1", type: "REEL",   reach: "287K", eng: "6.1K", src: "https://julesmoreau.eu/assets/comms/resultat-match.jpg" },
+  { label: "MATCH RESULT 2", type: "REEL",   reach: "198K", eng: "5.4K", src: "https://julesmoreau.eu/assets/comms/resultat-match-2.jpg" },
 ]
 
 const SPONSOR_METRICS = [
@@ -493,8 +493,14 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
                         transition: `all 0.5s cubic-bezier(0.2,1,0.3,1) ${950 + i * 100}ms`,
                       }}
                     >
-                      <div className="w-8 h-8 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <MonitorPlay className="w-3.5 h-3.5 text-primary" />
+                      <div className="w-10 h-10 rounded-sm border border-primary/20 overflow-hidden shrink-0 relative">
+                        <img
+                          src={c.src || "/placeholder.svg"}
+                          alt={c.label}
+                          className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        />
+                        <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 border-t border-l border-primary/30" />
+                        <div className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 border-b border-r border-primary/30" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-[9px] font-tech text-foreground truncate">{c.label}</div>
