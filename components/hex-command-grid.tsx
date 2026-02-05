@@ -8,6 +8,7 @@ import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
 import { FieldOpsPanel } from "./field-ops-panel"
+import { SignalPanel } from "./signal-panel"
 
 interface HexModule {
   id: string
@@ -413,6 +414,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
   const [strategyOpen, setStrategyOpen] = useState(false)
   const [intelOpen, setIntelOpen] = useState(false)
   const [fieldOpsOpen, setFieldOpsOpen] = useState(false)
+  const [signalOpen, setSignalOpen] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -580,6 +582,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             {MODULES.slice(1, 4).map((mod, i) => {
               const handlers: Record<string, () => void> = {
                 events: () => setFieldOpsOpen(true),
+                comms: () => setSignalOpen(true),
               }
               return (
                 <HexTile
@@ -664,6 +667,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       <StrategyPanel open={strategyOpen} onClose={() => setStrategyOpen(false)} />
       <IntelCorePanel open={intelOpen} onClose={() => setIntelOpen(false)} />
       <FieldOpsPanel open={fieldOpsOpen} onClose={() => setFieldOpsOpen(false)} />
+      <SignalPanel open={signalOpen} onClose={() => setSignalOpen(false)} />
     </div>
   )
 }
