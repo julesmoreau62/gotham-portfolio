@@ -177,8 +177,23 @@
   box-shadow: 0 0 8px hsl(217 91% 60% / 0.5);
 }
 
+/* Crosshair cursor override */
+.cursor-crosshair {
+  cursor: crosshair;
+}
+.cursor-crosshair a,
+.cursor-crosshair button,
+.cursor-crosshair [role="button"] {
+  cursor: pointer;
+}
+
 /* Selection color */
 ::selection {
   background: hsl(217 91% 60% / 0.3);
   color: white;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
