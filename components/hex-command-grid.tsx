@@ -579,7 +579,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-2.5">
             {MODULES.slice(1, 4).map((mod, i) => {
               const handlers: Record<string, () => void> = {
-                "field-ops": () => setFieldOpsOpen(true),
+                events: () => setFieldOpsOpen(true),
               }
               return (
                 <HexTile
