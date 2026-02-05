@@ -530,9 +530,10 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           </p>
         </div>
 
-        {/* Module grid: featured + secondary + featured */}
+        {/* Module grid: on mobile STRATEGY + INTEL CORE together, then secondary.
+            On desktop: STRATEGY top, secondary middle, INTEL CORE bottom. */}
         <div className="w-full max-w-5xl flex flex-col gap-2 md:gap-2.5">
-          {/* STRATEGY - Featured primary */}
+          {/* STRATEGY - Featured primary (always first) */}
           <FeaturedTile
             module={MODULES[0]}
             index={0}
@@ -540,26 +541,38 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             visible={visible}
           />
 
+          {/* INTEL CORE - on mobile directly after STRATEGY, hidden on md+ */}
+          <div className="md:hidden">
+            <FeaturedTile
+              module={MODULES[4]}
+              index={1}
+              mouseOffset={mouseOffset}
+              visible={visible}
+            />
+          </div>
+
           {/* Secondary row: FIELD OPS, SIGNAL, IMAGERY */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-2.5">
             {MODULES.slice(1, 4).map((mod, i) => (
               <HexTile
                 key={mod.id}
                 module={mod}
-                index={i + 1}
+                index={i + 2}
                 mouseOffset={mouseOffset}
                 visible={visible}
               />
             ))}
           </div>
 
-          {/* INTEL CORE - Featured secondary */}
-          <FeaturedTile
-            module={MODULES[4]}
-            index={4}
-            mouseOffset={mouseOffset}
-            visible={visible}
-          />
+          {/* INTEL CORE - on desktop at the bottom, hidden on mobile */}
+          <div className="hidden md:block">
+            <FeaturedTile
+              module={MODULES[4]}
+              index={4}
+              mouseOffset={mouseOffset}
+              visible={visible}
+            />
+          </div>
         </div>
 
         {/* Skill tags */}
