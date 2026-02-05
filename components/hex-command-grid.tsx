@@ -511,7 +511,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
       </header>
 
       {/* Main content area */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-3 md:py-0 overflow-hidden">
+      <main className="flex-1 flex flex-col items-center md:justify-center px-4 py-6 md:py-0 overflow-y-auto overflow-x-hidden">
         {/* Center identity block - clickable to open About */}
         <button
           type="button"
