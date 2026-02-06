@@ -584,7 +584,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
                 priority
               />
               {/* Censorship bar at eyes level */}
-              <div className="absolute top-[25%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
+              <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
                 <span className="text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
                   CONFIDENTIAL
                 </span>
