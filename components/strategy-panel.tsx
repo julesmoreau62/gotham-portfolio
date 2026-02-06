@@ -3,6 +3,7 @@
 import React from "react"
 
 import { useState, useEffect, useRef, useCallback } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 import {
   X,
   Crosshair,
@@ -51,6 +52,7 @@ function useCountUp(end: number, duration: number, start: boolean, suffix = "") 
 }
 
 export function StrategyPanel({ open, onClose }: StrategyPanelProps) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState<"intro" | "brief">("intro")
   const [introStep, setIntroStep] = useState(0)
   const [briefReady, setBriefReady] = useState(false)
@@ -64,16 +66,21 @@ export function StrategyPanel({ open, onClose }: StrategyPanelProps) {
       setBriefReady(false)
       return
     }
-    const t1 = setTimeout(() => setIntroStep(1), 200)
-    const t2 = setTimeout(() => setIntroStep(2), 700)
-    const t3 = setTimeout(() => setIntroStep(3), 1300)
-    const t4 = setTimeout(() => setIntroStep(4), 2000)
+    // Mobile: 1.2s total / Desktop: 2.8s total
+    const timings = isMobile 
+      ? { t1: 100, t2: 300, t3: 500, t4: 800, t5: 1200 }
+      : { t1: 200, t2: 700, t3: 1300, t4: 2000, t5: 2800 }
+    
+    const t1 = setTimeout(() => setIntroStep(1), timings.t1)
+    const t2 = setTimeout(() => setIntroStep(2), timings.t2)
+    const t3 = setTimeout(() => setIntroStep(3), timings.t3)
+    const t4 = setTimeout(() => setIntroStep(4), timings.t4)
     const t5 = setTimeout(() => {
       setPhase("brief")
       setTimeout(() => setBriefReady(true), 80)
-    }, 2800)
+    }, timings.t5)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5) }
-  }, [open])
+  }, [open, isMobile])
 
   /* Escape to close */
   useEffect(() => {

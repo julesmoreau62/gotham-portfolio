@@ -16,6 +16,7 @@ import {
   BarChart3,
   ArrowUpRight,
 } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 /* ================================================================
    DATA
@@ -127,18 +128,20 @@ function FrequencyVisualizer({ active }: { active: boolean }) {
 /* ================================================================
    SIGNAL INTRO  -  Frequency Lock
    ================================================================ */
-function SignalIntro({ onDone }: { onDone: () => void }) {
+function SignalIntro({ onDone, isMobile }: { onDone: () => void; isMobile: boolean }) {
   const [step, setStep] = useState(0)
   const [freq, setFreq] = useState(87.5)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rafRef = useRef(0)
 
-  // Frequency scanning animation
+  // Frequency scanning animation - Mobile: 1s / Desktop: 2s
   useEffect(() => {
     const t0 = performance.now()
     const targetFreq = 143.7
+    const duration = isMobile ? 1000 : 2000
+    
     const tick = (now: number) => {
-      const p = Math.min((now - t0) / 2000, 1)
+      const p = Math.min((now - t0) / duration, 1)
       // Eased with some oscillation
       const eased = 1 - Math.pow(1 - p, 3)
       const jitter = p < 0.8 ? Math.sin(p * 40) * (1 - p) * 8 : 0
@@ -147,7 +150,7 @@ function SignalIntro({ onDone }: { onDone: () => void }) {
     }
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [])
+  }, [isMobile])
 
   // Waveform canvas
   useEffect(() => {
@@ -196,14 +199,18 @@ function SignalIntro({ onDone }: { onDone: () => void }) {
     return () => cancelAnimationFrame(raf)
   }, [step])
 
-  // Step progression
+  // Step progression - Mobile: 1.2s / Desktop: 2.8s
   useEffect(() => {
-    const t1 = setTimeout(() => setStep(1), 400)
-    const t2 = setTimeout(() => setStep(2), 1200)
-    const t3 = setTimeout(() => setStep(3), 2000)
-    const t4 = setTimeout(onDone, 2800)
+    const timings = isMobile
+      ? { t1: 150, t2: 500, t3: 800, t4: 1200 }
+      : { t1: 400, t2: 1200, t3: 2000, t4: 2800 }
+    
+    const t1 = setTimeout(() => setStep(1), timings.t1)
+    const t2 = setTimeout(() => setStep(2), timings.t2)
+    const t3 = setTimeout(() => setStep(3), timings.t3)
+    const t4 = setTimeout(onDone, timings.t4)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
-  }, [onDone])
+  }, [onDone, isMobile])
 
   const locked = step >= 2
 
@@ -317,6 +324,7 @@ function LiveSparkline({ data, color = "primary", active }: { data: number[]; co
    MAIN PANEL
    ================================================================ */
 export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [showIntro, setShowIntro] = useState(true)
   const [visible, setVisible] = useState(false)
 
@@ -340,7 +348,7 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
 
   return (
     <div className="fixed inset-0 z-[100] bg-background flex flex-col">
-      {showIntro && <SignalIntro onDone={handleIntroDone} />}
+      {showIntro && <SignalIntro onDone={handleIntroDone} isMobile={isMobile} />}
 
       {/* Header */}
       <header

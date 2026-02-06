@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   Satellite,
 } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 /* ================================================================
    INTEL CORE PANEL  -  Intelligence pipeline immersive view
@@ -135,6 +136,7 @@ const STATS = [
 ]
 
 export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState<"intro" | "main">("intro")
   const [introStep, setIntroStep] = useState(0)
   const [mainReady, setMainReady] = useState(false)
@@ -154,21 +156,25 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
     }
   }, [open])
 
-  /* Intro sequence */
+  /* Intro sequence - Mobile: 1.2s / Desktop: 3.2s */
   useEffect(() => {
     if (!open || phase !== "intro") return
+    const timings = isMobile
+      ? [80, 300, 600, 900, 1200]
+      : [200, 800, 1600, 2400, 3200]
+    
     const timers = [
-      setTimeout(() => setIntroStep(1), 200),
-      setTimeout(() => setIntroStep(2), 800),
-      setTimeout(() => setIntroStep(3), 1600),
-      setTimeout(() => setIntroStep(4), 2400),
+      setTimeout(() => setIntroStep(1), timings[0]),
+      setTimeout(() => setIntroStep(2), timings[1]),
+      setTimeout(() => setIntroStep(3), timings[2]),
+      setTimeout(() => setIntroStep(4), timings[3]),
       setTimeout(() => {
         setPhase("main")
         setTimeout(() => setMainReady(true), 100)
-      }, 3200),
+      }, timings[4]),
     ]
     return () => timers.forEach(clearTimeout)
-  }, [open, phase])
+  }, [open, phase, isMobile])
 
   /* Pipeline cascade animation */
   useEffect(() => {

@@ -14,6 +14,7 @@ import {
   Focus,
   ScanLine,
 } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 /* ---- Photo asset catalogue ---- */
 interface PhotoAsset {
@@ -101,17 +102,22 @@ const CATEGORIES: Category[] = [
 ]
 
 /* ---- Intro sequence ---- */
-function CameraIntro({ onDone }: { onDone: () => void }) {
+function CameraIntro({ onDone, isMobile }: { onDone: () => void; isMobile: boolean }) {
   const [phase, setPhase] = useState(0)
   const [shutterCount, setShutterCount] = useState(0)
 
+  // Mobile: 1.2s / Desktop: 3.4s
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 300)
-    const t2 = setTimeout(() => setPhase(2), 1200)
-    const t3 = setTimeout(() => setPhase(3), 2400)
-    const t4 = setTimeout(() => onDone(), 3400)
+    const timings = isMobile
+      ? { t1: 120, t2: 450, t3: 900, t4: 1200 }
+      : { t1: 300, t2: 1200, t3: 2400, t4: 3400 }
+    
+    const t1 = setTimeout(() => setPhase(1), timings.t1)
+    const t2 = setTimeout(() => setPhase(2), timings.t2)
+    const t3 = setTimeout(() => setPhase(3), timings.t3)
+    const t4 = setTimeout(() => onDone(), timings.t4)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
-  }, [onDone])
+  }, [onDone, isMobile])
 
   useEffect(() => {
     if (phase < 2) return
@@ -306,6 +312,7 @@ function Lightbox({
 
 /* ---- Main panel ---- */
 export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [showIntro, setShowIntro] = useState(true)
   const [visible, setVisible] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
@@ -342,7 +349,7 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
 
   return (
     <div className="fixed inset-0 z-[100] bg-background">
-      {showIntro && <CameraIntro onDone={handleIntroDone} />}
+      {showIntro && <CameraIntro onDone={handleIntroDone} isMobile={isMobile} />}
 
       {!showIntro && (
         <div className="flex flex-col h-full">

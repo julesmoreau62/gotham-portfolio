@@ -3,6 +3,7 @@
 import React from "react"
 
 import { useState, useEffect, useCallback } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 import {
   X, ArrowLeft, MapPin, Calendar, Users, Camera, AlertTriangle,
   ShieldCheck, Trophy, Target, CloudRain, Play, CheckCircle, Crosshair
@@ -13,6 +14,7 @@ import {
 /* ------------------------------------------------------------------ */
 
 export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState<"intro" | "main">("intro")
   const [introStep, setIntroStep] = useState(0)
   const [visible, setVisible] = useState(false)
@@ -33,18 +35,22 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
     }
   }, [open])
 
-  // Intro sequence
+  // Intro sequence - Mobile: 1.2s / Desktop: 3s
   useEffect(() => {
     if (!open || phase !== "intro") return
+    const timings = isMobile
+      ? [100, 300, 600, 900, 1200]
+      : [300, 900, 1600, 2300, 3000]
+    
     const timers = [
-      setTimeout(() => setIntroStep(1), 300),
-      setTimeout(() => setIntroStep(2), 900),
-      setTimeout(() => setIntroStep(3), 1600),
-      setTimeout(() => setIntroStep(4), 2300),
-      setTimeout(() => { setPhase("main"); setTimeout(() => setVisible(true), 50) }, 3000),
+      setTimeout(() => setIntroStep(1), timings[0]),
+      setTimeout(() => setIntroStep(2), timings[1]),
+      setTimeout(() => setIntroStep(3), timings[2]),
+      setTimeout(() => setIntroStep(4), timings[3]),
+      setTimeout(() => { setPhase("main"); setTimeout(() => setVisible(true), 50) }, timings[4]),
     ]
     return () => timers.forEach(clearTimeout)
-  }, [open, phase])
+  }, [open, phase, isMobile])
 
   const skipIntro = () => { setPhase("main"); setTimeout(() => setVisible(true), 50) }
 
