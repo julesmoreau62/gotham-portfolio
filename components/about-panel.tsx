@@ -12,6 +12,7 @@ import {
   Briefcase,
   ChevronRight,
 } from "lucide-react"
+import Image from "next/image"
 
 const DEPLOYMENTS = [
   {
@@ -115,12 +116,15 @@ export function AboutPanel({
               <div className="col-span-1 md:col-span-4 flex flex-col gap-4">
                 {/* Agent photo */}
                 <div className="relative bg-secondary/50 border border-border p-1 rounded overflow-hidden">
-                  <div className="w-full aspect-[3/4] bg-card relative overflow-hidden">
+                  <div className="w-full aspect-[3/4] bg-muted relative overflow-hidden">
                     {/* Actual photo */}
-                    <img
+                    <Image
                       src="/assets/photo-cv.jpg"
                       alt="Jules Moreau - Agent Profile"
+                      width={300}
+                      height={400}
                       className="w-full h-full object-cover grayscale contrast-125"
+                      priority
                     />
                     {/* Grid overlay */}
                     <div

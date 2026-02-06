@@ -16,6 +16,8 @@ import {
   BarChart3,
   ArrowUpRight,
 } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 
 /* ================================================================
    DATA
@@ -127,18 +129,20 @@ function FrequencyVisualizer({ active }: { active: boolean }) {
 /* ================================================================
    SIGNAL INTRO  -  Frequency Lock
    ================================================================ */
-function SignalIntro({ onDone }: { onDone: () => void }) {
+function SignalIntro({ onDone, isMobile }: { onDone: () => void; isMobile: boolean }) {
   const [step, setStep] = useState(0)
   const [freq, setFreq] = useState(87.5)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rafRef = useRef(0)
 
-  // Frequency scanning animation
+  // Frequency scanning animation - Mobile: 1s / Desktop: 2s
   useEffect(() => {
     const t0 = performance.now()
     const targetFreq = 143.7
+    const duration = isMobile ? 1000 : 2000
+    
     const tick = (now: number) => {
-      const p = Math.min((now - t0) / 2000, 1)
+      const p = Math.min((now - t0) / duration, 1)
       // Eased with some oscillation
       const eased = 1 - Math.pow(1 - p, 3)
       const jitter = p < 0.8 ? Math.sin(p * 40) * (1 - p) * 8 : 0
@@ -147,7 +151,7 @@ function SignalIntro({ onDone }: { onDone: () => void }) {
     }
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [])
+  }, [isMobile])
 
   // Waveform canvas
   useEffect(() => {
@@ -196,14 +200,18 @@ function SignalIntro({ onDone }: { onDone: () => void }) {
     return () => cancelAnimationFrame(raf)
   }, [step])
 
-  // Step progression
+  // Step progression - Mobile: 1.2s / Desktop: 2.8s
   useEffect(() => {
-    const t1 = setTimeout(() => setStep(1), 400)
-    const t2 = setTimeout(() => setStep(2), 1200)
-    const t3 = setTimeout(() => setStep(3), 2000)
-    const t4 = setTimeout(onDone, 2800)
+    const timings = isMobile
+      ? { t1: 150, t2: 500, t3: 800, t4: 1200 }
+      : { t1: 400, t2: 1200, t3: 2000, t4: 2800 }
+    
+    const t1 = setTimeout(() => setStep(1), timings.t1)
+    const t2 = setTimeout(() => setStep(2), timings.t2)
+    const t3 = setTimeout(() => setStep(3), timings.t3)
+    const t4 = setTimeout(onDone, timings.t4)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
-  }, [onDone])
+  }, [onDone, isMobile])
 
   const locked = step >= 2
 
@@ -317,6 +325,7 @@ function LiveSparkline({ data, color = "primary", active }: { data: number[]; co
    MAIN PANEL
    ================================================================ */
 export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [showIntro, setShowIntro] = useState(true)
   const [visible, setVisible] = useState(false)
 
@@ -340,7 +349,7 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
 
   return (
     <div className="fixed inset-0 z-[100] bg-background flex flex-col">
-      {showIntro && <SignalIntro onDone={handleIntroDone} />}
+      {showIntro && <SignalIntro onDone={handleIntroDone} isMobile={isMobile} />}
 
       {/* Header */}
       <header
@@ -493,10 +502,12 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
                         transition: `all 0.5s cubic-bezier(0.2,1,0.3,1) ${950 + i * 100}ms`,
                       }}
                     >
-                      <div className="w-10 h-10 rounded-sm border border-primary/20 overflow-hidden shrink-0 relative">
-                        <img
+                      <div className="w-10 h-10 rounded-sm border border-primary/20 overflow-hidden shrink-0 relative bg-muted">
+                        <Image
                           src={c.src || "/placeholder.svg"}
                           alt={c.label}
+                          width={40}
+                          height={40}
                           className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                         />
                         <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 border-t border-l border-primary/30" />
@@ -710,11 +721,13 @@ function SponsorBlock({ visible }: { visible: boolean }) {
       <div className="p-4 relative">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Sponsor visual */}
-          <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group">
-            <img
+          <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group bg-muted aspect-[4/3]">
+            <Image
               src="/assets/comms/sponsor.png"
               alt="Les Pronos du Sultan - Sultan Kebab Campaign"
-              className="w-full h-full object-contain bg-background/50"
+              fill
+              className="object-contain bg-background/50"
+              sizes="(max-width: 768px) 100vw, 192px"
             />
             {/* Corner brackets */}
             <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />

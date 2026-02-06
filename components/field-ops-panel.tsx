@@ -3,6 +3,8 @@
 import React from "react"
 
 import { useState, useEffect, useCallback } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 import {
   X, ArrowLeft, MapPin, Calendar, Users, Camera, AlertTriangle,
   ShieldCheck, Trophy, Target, CloudRain, Play, CheckCircle, Crosshair
@@ -13,6 +15,7 @@ import {
 /* ------------------------------------------------------------------ */
 
 export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState<"intro" | "main">("intro")
   const [introStep, setIntroStep] = useState(0)
   const [visible, setVisible] = useState(false)
@@ -33,18 +36,22 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
     }
   }, [open])
 
-  // Intro sequence
+  // Intro sequence - Mobile: 1.2s / Desktop: 3s
   useEffect(() => {
     if (!open || phase !== "intro") return
+    const timings = isMobile
+      ? [100, 300, 600, 900, 1200]
+      : [300, 900, 1600, 2300, 3000]
+    
     const timers = [
-      setTimeout(() => setIntroStep(1), 300),
-      setTimeout(() => setIntroStep(2), 900),
-      setTimeout(() => setIntroStep(3), 1600),
-      setTimeout(() => setIntroStep(4), 2300),
-      setTimeout(() => { setPhase("main"); setTimeout(() => setVisible(true), 50) }, 3000),
+      setTimeout(() => setIntroStep(1), timings[0]),
+      setTimeout(() => setIntroStep(2), timings[1]),
+      setTimeout(() => setIntroStep(3), timings[2]),
+      setTimeout(() => setIntroStep(4), timings[3]),
+      setTimeout(() => { setPhase("main"); setTimeout(() => setVisible(true), 50) }, timings[4]),
     ]
     return () => timers.forEach(clearTimeout)
-  }, [open, phase])
+  }, [open, phase, isMobile])
 
   const skipIntro = () => { setPhase("main"); setTimeout(() => setVisible(true), 50) }
 
@@ -384,15 +391,17 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
                 <div key={asset.file}
                   className={`border rounded-lg overflow-hidden bg-card/40 border-border/40 hover:border-[hsl(var(--field-green))]/50 transition-all duration-700 group ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                   style={{ transitionDelay: `${700 + i * 120}ms` }}>
-                  <div className="relative h-40 bg-secondary/30 overflow-hidden">
+                  <div className="relative h-40 bg-muted overflow-hidden">
                     <div className="absolute top-2 left-2 z-10 px-2 py-0.5 text-[7px] font-mono rounded bg-card/80 border border-[hsl(var(--field-green))]/30"
                       style={{ color: green }}>
                       {asset.file}
                     </div>
-                    <img
+                    <Image
                       src={asset.src || "/placeholder.svg"}
                       alt={asset.title}
-                      className={`w-full h-full ${asset.fit} opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500`}
+                      fill
+                      className={`${asset.fit} opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500`}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     {/* Scan line on hover */}
                     <div className="absolute left-0 w-full h-[1px] pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity"

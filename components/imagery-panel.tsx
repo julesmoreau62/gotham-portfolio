@@ -14,6 +14,8 @@ import {
   Focus,
   ScanLine,
 } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 
 /* ---- Photo asset catalogue ---- */
 interface PhotoAsset {
@@ -101,17 +103,22 @@ const CATEGORIES: Category[] = [
 ]
 
 /* ---- Intro sequence ---- */
-function CameraIntro({ onDone }: { onDone: () => void }) {
+function CameraIntro({ onDone, isMobile }: { onDone: () => void; isMobile: boolean }) {
   const [phase, setPhase] = useState(0)
   const [shutterCount, setShutterCount] = useState(0)
 
+  // Mobile: 1.2s / Desktop: 3.4s
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 300)
-    const t2 = setTimeout(() => setPhase(2), 1200)
-    const t3 = setTimeout(() => setPhase(3), 2400)
-    const t4 = setTimeout(() => onDone(), 3400)
+    const timings = isMobile
+      ? { t1: 120, t2: 450, t3: 900, t4: 1200 }
+      : { t1: 300, t2: 1200, t3: 2400, t4: 3400 }
+    
+    const t1 = setTimeout(() => setPhase(1), timings.t1)
+    const t2 = setTimeout(() => setPhase(2), timings.t2)
+    const t3 = setTimeout(() => setPhase(3), timings.t3)
+    const t4 = setTimeout(() => onDone(), timings.t4)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
-  }, [onDone])
+  }, [onDone, isMobile])
 
   useEffect(() => {
     if (phase < 2) return
@@ -285,11 +292,15 @@ function Lightbox({
           <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary/50 z-10" />
           <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary/50 z-10" />
 
-          <img
-            src={photo.src || "/placeholder.svg"}
-            alt={photo.title}
-            className="max-h-[75vh] max-w-[85vw] object-contain"
-          />
+          <div className="relative bg-muted rounded">
+            <Image
+              src={photo.src || "/placeholder.svg"}
+              alt={photo.title}
+              width={1200}
+              height={800}
+              className="max-h-[75vh] max-w-[85vw] object-contain"
+            />
+          </div>
         </div>
       </div>
 
@@ -306,6 +317,7 @@ function Lightbox({
 
 /* ---- Main panel ---- */
 export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const isMobile = useIsMobile()
   const [showIntro, setShowIntro] = useState(true)
   const [visible, setVisible] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
@@ -342,7 +354,7 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
 
   return (
     <div className="fixed inset-0 z-[100] bg-background">
-      {showIntro && <CameraIntro onDone={handleIntroDone} />}
+      {showIntro && <CameraIntro onDone={handleIntroDone} isMobile={isMobile} />}
 
       {!showIntro && (
         <div className="flex flex-col h-full">
@@ -428,11 +440,13 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
                         }}
                       >
                         {/* Cover image */}
-                        <div className="absolute inset-0">
-                          <img
+                        <div className="absolute inset-0 bg-muted">
+                          <Image
                             src={coverPhoto?.src || "/placeholder.svg"}
                             alt={cat.label}
-                            className="w-full h-full object-cover opacity-30 group-hover:opacity-60 transition-all duration-700 grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110"
+                            fill
+                            className="object-cover opacity-30 group-hover:opacity-60 transition-all duration-700 grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110"
+                            sizes="(max-width: 768px) 100vw, 33vw"
                           />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -546,23 +560,25 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
                       key={photo.src}
                       type="button"
                       onClick={() => setLightboxPhoto(photo)}
-                      className="group relative aspect-square overflow-hidden border border-border/30 bg-card/30 hover:border-primary/50 transition-all duration-500 cursor-pointer"
+                      className="group relative aspect-square overflow-hidden border border-border/30 bg-muted hover:border-primary/50 transition-all duration-500 cursor-pointer"
                       style={{
                         animationDelay: `${idx * 50}ms`,
                         animation: "fade-slide-in 0.5s cubic-bezier(0.2, 1, 0.3, 1) forwards",
                         opacity: 0,
                       }}
                     >
-                      <img
+                      <Image
                         src={photo.src || "/placeholder.svg"}
                         alt={photo.title}
-                        className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${loadedImages.has(photo.src) ? "opacity-80 group-hover:opacity-100 grayscale-[30%] group-hover:grayscale-0" : "opacity-0"}`}
+                        fill
+                        className={`object-cover transition-all duration-700 group-hover:scale-110 ${loadedImages.has(photo.src) ? "opacity-80 group-hover:opacity-100 grayscale-[30%] group-hover:grayscale-0" : "opacity-0"}`}
                         onLoad={() => setLoadedImages((prev) => new Set(prev).add(photo.src))}
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
                       />
 
                       {/* Loading placeholder */}
                       {!loadedImages.has(photo.src) && (
-                        <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="absolute inset-0 flex items-center justify-center bg-muted">
                           <div className="w-4 h-4 border border-primary/30 border-t-primary rounded-full animate-spin" />
                         </div>
                       )}

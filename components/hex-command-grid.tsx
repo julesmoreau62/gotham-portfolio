@@ -4,6 +4,7 @@ import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
+import Image from "next/image"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
@@ -203,7 +204,7 @@ function FeaturedTile({
               <div className="flex items-center gap-1.5 mb-1">
                 <div className={`w-1.5 h-1.5 rounded-full ${isCritical ? "bg-accent animate-pulse" : "bg-[hsl(var(--neon-cyan))] animate-pulse"}`} />
                 <span
-                  className="text-[8px] font-mono tracking-[0.25em] uppercase font-bold"
+                  className="text-xs font-mono tracking-[0.25em] uppercase font-bold"
                   style={{ color: module.color }}
                 >
                   {module.status} {isCritical ? "// PRIORITY ALPHA" : "// DEEP ANALYSIS"}
@@ -219,7 +220,7 @@ function FeaturedTile({
               >
                 {module.title}
               </h3>
-              <p className="text-[9px] md:text-[10px] font-mono text-muted-foreground tracking-wider leading-relaxed max-w-md">
+              <p className="text-xs md:text-sm font-mono text-muted-foreground tracking-wider leading-relaxed max-w-md">
                 {module.subtitle}
                 {isCritical && " // Strategic audit & competitive positioning for BLAST.tv Major"}
                 {isIntel && " // Deep-dive knowledge base: sport business intelligence & geospatial ops"}
@@ -234,10 +235,10 @@ function FeaturedTile({
                       style={{ width: hovered ? "85%" : "73%" }}
                     />
                   </div>
-                  <span className="text-[8px] font-mono text-accent font-bold tabular-nums">
+                  <span className="text-xs font-mono text-accent font-bold tabular-nums">
                     {hovered ? "85%" : "73%"}
                   </span>
-                  <span className="text-[7px] font-mono text-muted-foreground hidden md:inline">COMPLETION</span>
+                  <span className="text-xs font-mono text-muted-foreground hidden md:inline">COMPLETION</span>
                 </div>
               )}
               {isIntel && (
@@ -252,7 +253,7 @@ function FeaturedTile({
                       style={{ animation: "data-flow 3s linear infinite", animationDelay: "1s" }}
                     />
                   </div>
-                  <span className="text-[7px] font-mono text-[hsl(var(--neon-cyan))] hidden md:inline">STREAMING</span>
+                  <span className="text-xs font-mono text-[hsl(var(--neon-cyan))] hidden md:inline">STREAMING</span>
                 </div>
               )}
             </div>
@@ -375,7 +376,7 @@ function HexTile({
             <div className="flex items-center gap-1.5">
               <div className={`w-1.5 h-1.5 rounded-full ${statusDotClass}`} />
               <span
-                className="text-[7px] font-mono tracking-[0.2em] uppercase"
+                className="text-xs font-mono tracking-[0.2em] uppercase"
                 style={{ color: module.color }}
               >
                 {module.status}
@@ -398,7 +399,7 @@ function HexTile({
           >
             {module.title}
           </h3>
-          <p className="text-[8px] font-mono text-muted-foreground tracking-wider">
+          <p className="text-xs font-mono text-muted-foreground tracking-wider">
             {module.subtitle}
           </p>
         </div>
@@ -501,7 +502,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             </span>
           </div>
           <div className="h-5 w-px bg-border hidden sm:block" />
-          <span className="text-[9px] font-mono text-muted-foreground hidden md:inline tracking-wider">
+          <span className="text-xs font-mono text-muted-foreground hidden md:inline tracking-wider">
             OP: J.MOREAU // CLEARANCE: LV.4 // NODE: FR-LIL-01
           </span>
         </div>
@@ -513,26 +514,26 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               href="https://www.linkedin.com/in/jules-moreau-25405b363"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-7 h-7 flex items-center justify-center rounded border border-primary/30 bg-primary/5 hover:bg-primary/20 hover:border-primary/60 transition-all"
+              className="w-11 h-11 md:w-9 md:h-9 flex items-center justify-center rounded border border-primary/30 bg-primary/5 hover:bg-primary/20 hover:border-primary/60 transition-all"
               aria-label="LinkedIn Profile"
             >
-              <Linkedin className="w-3 h-3 text-primary" />
+              <Linkedin className="w-5 h-5 md:w-4 md:h-4 text-primary" />
             </a>
             <a
               href="mailto:jules.moreau1@outlook.com"
-              className="w-7 h-7 flex items-center justify-center rounded border border-[hsl(var(--field-green))]/30 bg-[hsl(var(--field-green))]/5 hover:bg-[hsl(var(--field-green))]/20 transition-all"
+              className="w-11 h-11 md:w-9 md:h-9 flex items-center justify-center rounded border border-[hsl(var(--field-green))]/30 bg-[hsl(var(--field-green))]/5 hover:bg-[hsl(var(--field-green))]/20 transition-all"
               aria-label="Send Email"
             >
-              <Mail className="w-3 h-3 text-[hsl(var(--field-green))]" />
+              <Mail className="w-5 h-5 md:w-4 md:h-4 text-[hsl(var(--field-green))]" />
             </a>
             <a
               href="/assets/cv-julesmoreau.pdf"
               download
-              className="hidden sm:flex h-7 px-2 items-center gap-1 rounded border border-accent/30 bg-accent/5 hover:bg-accent/20 transition-all"
+              className="w-11 h-11 md:w-9 md:h-9 flex items-center justify-center rounded border border-accent/30 bg-accent/5 hover:bg-accent/20 transition-all"
               aria-label="Download CV"
             >
-              <Download className="w-3 h-3 text-accent" />
-              <span className="text-[8px] font-mono text-accent">CV</span>
+              <Download className="w-5 h-5 md:w-4 md:h-4 text-accent" />
+              <span className="text-xs font-mono text-accent hidden md:inline ml-1">CV</span>
             </a>
           </div>
 
@@ -541,11 +542,11 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           {/* Live badge */}
           <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-destructive/10 border border-destructive/30">
             <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" />
-            <span className="text-[8px] font-mono text-destructive font-bold tracking-wider">LIVE</span>
+            <span className="text-xs font-mono text-destructive font-bold tracking-wider">LIVE</span>
           </div>
 
           {/* Clock */}
-          <span className="text-[10px] font-mono text-muted-foreground tabular-nums hidden md:inline">
+          <span className="text-xs font-mono text-muted-foreground tabular-nums hidden md:inline">
             {time}
           </span>
         </div>
@@ -573,8 +574,21 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             </div>
 
             {/* Core circle */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500">
-              <User className="w-8 h-8 md:w-10 md:h-10 text-primary/80 group-hover:text-primary transition-colors duration-300" />
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden">
+              <Image 
+                src="/assets/photo-cv.jpg" 
+                alt="Jules Moreau"
+                width={96}
+                height={96}
+                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                priority
+              />
+              {/* Censorship bar at eyes level */}
+              <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
+                <span className="text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
+                  CONFIDENTIAL
+                </span>
+              </div>
               {/* Ping */}
               <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
             </div>
@@ -583,14 +597,14 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5 group-hover:text-primary transition-colors duration-300">
             JULES MOREAU
           </h1>
-          <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
+          <p className="font-mono text-xs md:text-sm text-primary tracking-[0.3em]">
             M1 STAPS ISA
           </p>
-          <p className="font-mono text-[9px] text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed hidden md:block group-hover:text-muted-foreground/80 transition-colors">
+          <p className="font-mono text-xs text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
             Operative specialized in sport management, event logistics,
             digital communication & competitive intelligence.
           </p>
-          <span className="inline-block mt-1.5 text-[8px] font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
+          <span className="inline-block mt-1.5 text-xs font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
             [ CLICK TO OPEN DOSSIER ]
           </span>
         </button>
@@ -659,7 +673,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           ].map((skill) => (
             <span
               key={skill.label}
-              className={`text-[7px] font-mono px-2 py-0.5 rounded-sm border cursor-default transition-colors duration-300 hover:brightness-150 ${
+              className={`text-xs font-mono px-2 py-1 rounded-sm border cursor-default transition-colors duration-300 hover:brightness-150 ${
                 skill.color === "accent"
                   ? "text-accent/70 bg-accent/5 border-accent/15"
                   : skill.color === "cyan"
@@ -678,7 +692,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
         className={`h-6 flex items-center justify-between px-4 md:px-8 border-t border-border/30 bg-card/20 backdrop-blur shrink-0 transition-all duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
         style={{ transitionDelay: "400ms" }}
       >
-        <div className="flex items-center gap-3 text-[7px] font-mono text-muted-foreground">
+        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
           <span>
             SYS: <span className="text-[hsl(var(--field-green))]">OPERATIONAL</span>
           </span>
@@ -689,7 +703,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             THREAT: <span className="text-accent">LOW</span>
           </span>
         </div>
-        <div className="flex items-center gap-3 text-[7px] font-mono text-muted-foreground">
+        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
           <span className="hidden sm:inline">ENCRYPTION: AES-256</span>
           <span>
             NODE: <span className="text-foreground">FR-LIL-01</span>
