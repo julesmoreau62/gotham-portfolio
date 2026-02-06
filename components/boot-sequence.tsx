@@ -130,7 +130,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
         {showSkip && !exiting && (
           <button
             onClick={handleComplete}
-            className="absolute bottom-10 text-[10px] font-mono text-muted-foreground/50 hover:text-foreground transition-colors tracking-widest uppercase"
+            className="absolute bottom-10 text-xs font-mono text-muted-foreground/50 hover:text-foreground transition-colors tracking-widest uppercase min-h-[44px] min-w-[44px] flex items-center justify-center px-4"
           >
             {'[PRESS TO SKIP]'}
           </button>

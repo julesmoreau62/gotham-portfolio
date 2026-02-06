@@ -1,14 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BootSequence } from "@/components/boot-sequence"
 import { ParticleNetwork } from "@/components/particle-network"
 import { NoiseOverlay } from "@/components/noise-overlay"
 import { HexCommandGrid } from "@/components/hex-command-grid"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Page() {
+  const isMobile = useIsMobile()
   const [booting, setBooting] = useState(true)
   const [mainVisible, setMainVisible] = useState(false)
+
+  // Skip boot sequence on mobile
+  useEffect(() => {
+    if (isMobile) {
+      setBooting(false)
+      setMainVisible(true)
+    }
+  }, [isMobile])
 
   const handleBootComplete = () => {
     setBooting(false)
@@ -18,9 +28,9 @@ export default function Page() {
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-background relative tactical-grid cursor-crosshair">
-      {/* Ambient layers (always present) */}
-      <ParticleNetwork />
-      <NoiseOverlay />
+      {/* Ambient layers (disabled on mobile for performance) */}
+      {!isMobile && <ParticleNetwork />}
+      {!isMobile && <NoiseOverlay />}
 
       {/* Radial ambient glow */}
       <div
@@ -32,8 +42,8 @@ export default function Page() {
         aria-hidden="true"
       />
 
-      {/* Boot sequence */}
-      {booting && <BootSequence onComplete={handleBootComplete} />}
+      {/* Boot sequence (disabled on mobile) */}
+      {booting && !isMobile && <BootSequence onComplete={handleBootComplete} />}
 
       {/* Main interface */}
       <HexCommandGrid visible={mainVisible} />
