@@ -4,6 +4,7 @@ import React from "react"
 
 import { useState, useEffect, useCallback } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 import {
   X, ArrowLeft, MapPin, Calendar, Users, Camera, AlertTriangle,
   ShieldCheck, Trophy, Target, CloudRain, Play, CheckCircle, Crosshair
@@ -390,15 +391,17 @@ export function FieldOpsPanel({ open, onClose }: { open: boolean; onClose: () =>
                 <div key={asset.file}
                   className={`border rounded-lg overflow-hidden bg-card/40 border-border/40 hover:border-[hsl(var(--field-green))]/50 transition-all duration-700 group ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                   style={{ transitionDelay: `${700 + i * 120}ms` }}>
-                  <div className="relative h-40 bg-secondary/30 overflow-hidden">
+                  <div className="relative h-40 bg-muted overflow-hidden">
                     <div className="absolute top-2 left-2 z-10 px-2 py-0.5 text-[7px] font-mono rounded bg-card/80 border border-[hsl(var(--field-green))]/30"
                       style={{ color: green }}>
                       {asset.file}
                     </div>
-                    <img
+                    <Image
                       src={asset.src || "/placeholder.svg"}
                       alt={asset.title}
-                      className={`w-full h-full ${asset.fit} opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500`}
+                      fill
+                      className={`${asset.fit} opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500`}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     {/* Scan line on hover */}
                     <div className="absolute left-0 w-full h-[1px] pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity"

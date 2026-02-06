@@ -4,6 +4,7 @@ import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
+import Image from "next/image"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
@@ -573,11 +574,14 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             </div>
 
             {/* Core circle */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden">
-              <img 
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden">
+              <Image 
                 src="/assets/photo-cv.jpg" 
                 alt="Jules Moreau"
+                width={96}
+                height={96}
                 className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                priority
               />
               {/* Ping */}
               <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />

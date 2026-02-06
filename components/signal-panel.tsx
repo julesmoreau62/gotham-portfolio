@@ -17,6 +17,7 @@ import {
   ArrowUpRight,
 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 
 /* ================================================================
    DATA
@@ -501,10 +502,12 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
                         transition: `all 0.5s cubic-bezier(0.2,1,0.3,1) ${950 + i * 100}ms`,
                       }}
                     >
-                      <div className="w-10 h-10 rounded-sm border border-primary/20 overflow-hidden shrink-0 relative">
-                        <img
+                      <div className="w-10 h-10 rounded-sm border border-primary/20 overflow-hidden shrink-0 relative bg-muted">
+                        <Image
                           src={c.src || "/placeholder.svg"}
                           alt={c.label}
+                          width={40}
+                          height={40}
                           className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                         />
                         <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 border-t border-l border-primary/30" />
@@ -718,11 +721,13 @@ function SponsorBlock({ visible }: { visible: boolean }) {
       <div className="p-4 relative">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Sponsor visual */}
-          <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group">
-            <img
+          <div className="w-full md:w-48 shrink-0 rounded overflow-hidden border border-accent/20 relative group bg-muted aspect-[4/3]">
+            <Image
               src="/assets/comms/sponsor.png"
               alt="Les Pronos du Sultan - Sultan Kebab Campaign"
-              className="w-full h-full object-contain bg-background/50"
+              fill
+              className="object-contain bg-background/50"
+              sizes="(max-width: 768px) 100vw, 192px"
             />
             {/* Corner brackets */}
             <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />

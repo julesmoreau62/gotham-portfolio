@@ -15,6 +15,7 @@ import {
   ScanLine,
 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import Image from "next/image"
 
 /* ---- Photo asset catalogue ---- */
 interface PhotoAsset {
@@ -291,11 +292,15 @@ function Lightbox({
           <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary/50 z-10" />
           <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary/50 z-10" />
 
-          <img
-            src={photo.src || "/placeholder.svg"}
-            alt={photo.title}
-            className="max-h-[75vh] max-w-[85vw] object-contain"
-          />
+          <div className="relative bg-muted rounded">
+            <Image
+              src={photo.src || "/placeholder.svg"}
+              alt={photo.title}
+              width={1200}
+              height={800}
+              className="max-h-[75vh] max-w-[85vw] object-contain"
+            />
+          </div>
         </div>
       </div>
 
@@ -435,11 +440,13 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
                         }}
                       >
                         {/* Cover image */}
-                        <div className="absolute inset-0">
-                          <img
+                        <div className="absolute inset-0 bg-muted">
+                          <Image
                             src={coverPhoto?.src || "/placeholder.svg"}
                             alt={cat.label}
-                            className="w-full h-full object-cover opacity-30 group-hover:opacity-60 transition-all duration-700 grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110"
+                            fill
+                            className="object-cover opacity-30 group-hover:opacity-60 transition-all duration-700 grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110"
+                            sizes="(max-width: 768px) 100vw, 33vw"
                           />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -553,23 +560,25 @@ export function ImageryPanel({ open, onClose }: { open: boolean; onClose: () => 
                       key={photo.src}
                       type="button"
                       onClick={() => setLightboxPhoto(photo)}
-                      className="group relative aspect-square overflow-hidden border border-border/30 bg-card/30 hover:border-primary/50 transition-all duration-500 cursor-pointer"
+                      className="group relative aspect-square overflow-hidden border border-border/30 bg-muted hover:border-primary/50 transition-all duration-500 cursor-pointer"
                       style={{
                         animationDelay: `${idx * 50}ms`,
                         animation: "fade-slide-in 0.5s cubic-bezier(0.2, 1, 0.3, 1) forwards",
                         opacity: 0,
                       }}
                     >
-                      <img
+                      <Image
                         src={photo.src || "/placeholder.svg"}
                         alt={photo.title}
-                        className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${loadedImages.has(photo.src) ? "opacity-80 group-hover:opacity-100 grayscale-[30%] group-hover:grayscale-0" : "opacity-0"}`}
+                        fill
+                        className={`object-cover transition-all duration-700 group-hover:scale-110 ${loadedImages.has(photo.src) ? "opacity-80 group-hover:opacity-100 grayscale-[30%] group-hover:grayscale-0" : "opacity-0"}`}
                         onLoad={() => setLoadedImages((prev) => new Set(prev).add(photo.src))}
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
                       />
 
                       {/* Loading placeholder */}
                       {!loadedImages.has(photo.src) && (
-                        <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="absolute inset-0 flex items-center justify-center bg-muted">
                           <div className="w-4 h-4 border border-primary/30 border-t-primary rounded-full animate-spin" />
                         </div>
                       )}
