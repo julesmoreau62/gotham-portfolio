@@ -583,6 +583,12 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
                 className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
                 priority
               />
+              {/* Censorship bar at eyes level */}
+              <div className="absolute top-[35%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
+                <span className="text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
+                  CONFIDENTIAL
+                </span>
+              </div>
               {/* Ping */}
               <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
             </div>
