@@ -5,6 +5,7 @@ import React from "react"
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
 import { Crosshair, Radio, Camera, Brain, User, Linkedin, Mail, Download } from "lucide-react"
 import Image from "next/image"
+import { TacticalGlobe } from "./tactical-globe"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
 import { IntelCorePanel } from "./intel-core-panel"
@@ -552,138 +553,148 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
         </div>
       </header>
 
-      {/* Main content area */}
-      <main className="flex-1 flex flex-col items-center px-4 py-6 md:py-8 overflow-y-auto overflow-x-hidden">
-        {/* Center identity block - clickable to open About */}
-        <button
-          type="button"
-          onClick={() => openSection("about")}
-          className={`text-center mb-5 md:mb-6 transition-all duration-1000 group cursor-pointer ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          style={{ transitionDelay: "100ms" }}
-          aria-label="Open agent profile dossier"
+      {/* Main content area - split-screen on desktop */}
+      <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+        {/* Left column: Tactical Globe (desktop only) */}
+        <div
+          className={`hidden md:flex w-1/2 items-center justify-center border-r border-border/30 bg-background/50 relative transition-all duration-1000 ${visible ? "opacity-100" : "opacity-0"}`}
+          style={{ transitionDelay: "300ms" }}
         >
-          {/* Avatar ring */}
-          <div className="relative inline-flex items-center justify-center mb-4">
-            {/* Outer rotating ring */}
-            <div
-              className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-primary/20 group-hover:border-primary/50 transition-colors duration-500"
-              style={{ animation: "orbit-spin 20s linear infinite" }}
-            >
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_10px_hsl(186_100%_50%)]" />
-            </div>
-
-            {/* Core circle */}
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden">
-              <Image 
-                src="/assets/photo-cv.jpg" 
-                alt="Jules Moreau"
-                width={96}
-                height={96}
-                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-                priority
-              />
-              {/* Censorship bar at eyes level */}
-              <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
-                <span className="text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
-                  CONFIDENTIAL
-                </span>
-              </div>
-              {/* Ping */}
-              <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
-            </div>
-          </div>
-
-          <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5 group-hover:text-primary transition-colors duration-300">
-            JULES MOREAU
-          </h1>
-          <p className="font-mono text-xs md:text-sm text-primary tracking-[0.3em]">
-            M1 STAPS ISA
-          </p>
-          <p className="font-mono text-xs text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
-            Operative specialized in sport management, event logistics,
-            digital communication & competitive intelligence.
-          </p>
-          <span className="inline-block mt-1.5 text-xs font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
-            [ CLICK TO OPEN DOSSIER ]
-          </span>
-        </button>
-
-        {/* Module grid: on mobile STRATEGY + INTEL CORE together, then secondary.
-            On desktop: STRATEGY top, secondary middle, INTEL CORE bottom. */}
-        <div className="w-full max-w-5xl flex flex-col gap-2 md:gap-2.5">
-          {/* STRATEGY - Featured primary (always first) */}
-          <FeaturedTile
-            module={MODULES[0]}
-            index={0}
-            mouseOffset={mouseOffset}
-            visible={visible}
-            onSelect={() => openSection("strategy")}
-          />
-
-          {/* INTEL CORE - second on both mobile and desktop */}
-          <FeaturedTile
-            module={MODULES[4]}
-            index={1}
-            mouseOffset={mouseOffset}
-            visible={visible}
-            onSelect={() => openSection("intel")}
-          />
-
-          {/* FIELD OPS */}
-          <FeaturedTile
-            module={MODULES[1]}
-            index={2}
-            mouseOffset={mouseOffset}
-            visible={visible}
-            onSelect={() => openSection("field-ops")}
-          />
-
-          {/* SIGNAL */}
-          <FeaturedTile
-            module={MODULES[2]}
-            index={3}
-            mouseOffset={mouseOffset}
-            visible={visible}
-            onSelect={() => openSection("signal")}
-          />
-
-          {/* IMAGERY */}
-          <FeaturedTile
-            module={MODULES[3]}
-            index={4}
-            mouseOffset={mouseOffset}
-            visible={visible}
-            onSelect={() => openSection("imagery")}
-          />
+          <TacticalGlobe />
         </div>
 
-        {/* Skill tags */}
-        <div
-          className={`flex flex-wrap justify-center gap-1.5 mt-3 max-w-lg transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          style={{ transitionDelay: "1200ms" }}
-        >
-          {[
-            { label: "CRISIS MGMT", color: "primary" },
-            { label: "ENGLISH C1", color: "primary" },
-            { label: "ADOBE SUITE", color: "accent" },
-            { label: "DATA ANALYSIS", color: "accent" },
-            { label: "TEAM LEAD", color: "primary" },
-            { label: "OSINT", color: "cyan" },
-          ].map((skill) => (
-            <span
-              key={skill.label}
-              className={`text-xs font-mono px-2 py-1 rounded-sm border cursor-default transition-colors duration-300 hover:brightness-150 ${
-                skill.color === "accent"
-                  ? "text-accent/70 bg-accent/5 border-accent/15"
-                  : skill.color === "cyan"
-                    ? "text-[hsl(var(--neon-cyan))]/70 bg-[hsl(var(--neon-cyan))]/5 border-[hsl(var(--neon-cyan))]/15"
-                    : "text-primary/70 bg-primary/5 border-primary/15"
-              }`}
-            >
-              {skill.label}
+        {/* Right column: Profile + Cards (scrollable) */}
+        <div className="flex-1 md:w-1/2 flex flex-col items-center px-4 py-6 md:py-8 overflow-y-auto overflow-x-hidden">
+          {/* Center identity block - clickable to open About */}
+          <button
+            type="button"
+            onClick={() => openSection("about")}
+            className={`text-center mb-5 md:mb-6 transition-all duration-1000 group cursor-pointer ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+            style={{ transitionDelay: "100ms" }}
+            aria-label="Open agent profile dossier"
+          >
+            {/* Avatar ring */}
+            <div className="relative inline-flex items-center justify-center mb-4">
+              {/* Outer rotating ring */}
+              <div
+                className="absolute w-28 h-28 md:w-32 md:h-32 rounded-full border border-dashed border-primary/20 group-hover:border-primary/50 transition-colors duration-500"
+                style={{ animation: "orbit-spin 20s linear infinite" }}
+              >
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_10px_hsl(186_100%_50%)]" />
+              </div>
+
+              {/* Core circle */}
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden">
+                <Image 
+                  src="/assets/photo-cv.jpg" 
+                  alt="Jules Moreau"
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                  priority
+                />
+                {/* Censorship bar at eyes level */}
+                <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
+                  <span className="text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
+                    CONFIDENTIAL
+                  </span>
+                </div>
+                {/* Ping */}
+                <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
+              </div>
+            </div>
+
+            <h1 className="font-tech text-2xl md:text-4xl font-bold text-foreground tracking-[0.15em] mb-1.5 group-hover:text-primary transition-colors duration-300">
+              JULES MOREAU
+            </h1>
+            <p className="font-mono text-xs md:text-sm text-primary tracking-[0.3em]">
+              M1 STAPS ISA
+            </p>
+            <p className="font-mono text-xs text-muted-foreground mt-2 max-w-md mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
+              Operative specialized in sport management, event logistics,
+              digital communication & competitive intelligence.
+            </p>
+            <span className="inline-block mt-1.5 text-xs font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
+              [ CLICK TO OPEN DOSSIER ]
             </span>
-          ))}
+          </button>
+
+          {/* Module grid */}
+          <div className="w-full max-w-5xl flex flex-col gap-2 md:gap-2.5">
+            {/* STRATEGY */}
+            <FeaturedTile
+              module={MODULES[0]}
+              index={0}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("strategy")}
+            />
+
+            {/* INTEL CORE */}
+            <FeaturedTile
+              module={MODULES[4]}
+              index={1}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("intel")}
+            />
+
+            {/* FIELD OPS */}
+            <FeaturedTile
+              module={MODULES[1]}
+              index={2}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("field-ops")}
+            />
+
+            {/* SIGNAL */}
+            <FeaturedTile
+              module={MODULES[2]}
+              index={3}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("signal")}
+            />
+
+            {/* IMAGERY */}
+            <FeaturedTile
+              module={MODULES[3]}
+              index={4}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("imagery")}
+            />
+          </div>
+
+          {/* Skill tags */}
+          <div
+            className={`flex flex-wrap justify-center gap-1.5 mt-3 max-w-lg transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ transitionDelay: "1200ms" }}
+          >
+            {[
+              { label: "CRISIS MGMT", color: "primary" },
+              { label: "ENGLISH C1", color: "primary" },
+              { label: "ADOBE SUITE", color: "accent" },
+              { label: "DATA ANALYSIS", color: "accent" },
+              { label: "TEAM LEAD", color: "primary" },
+              { label: "OSINT", color: "cyan" },
+            ].map((skill) => (
+              <span
+                key={skill.label}
+                className={`text-xs font-mono px-2 py-1 rounded-sm border cursor-default transition-colors duration-300 hover:brightness-150 ${
+                  skill.color === "accent"
+                    ? "text-accent/70 bg-accent/5 border-accent/15"
+                    : skill.color === "cyan"
+                      ? "text-[hsl(var(--neon-cyan))]/70 bg-[hsl(var(--neon-cyan))]/5 border-[hsl(var(--neon-cyan))]/15"
+                      : "text-primary/70 bg-primary/5 border-primary/15"
+                }`}
+              >
+                {skill.label}
+              </span>
+            ))}
+          </div>
         </div>
       </main>
 
