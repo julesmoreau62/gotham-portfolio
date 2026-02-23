@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft, Shield } from "lucide-react"
 import { NoiseOverlay } from "@/components/noise-overlay"
 import { ParticleNetwork } from "@/components/particle-network"
@@ -9,6 +9,7 @@ import { BuildProcessFlowchart } from "@/components/build-process-flowchart"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function BuildProcessPage() {
+  const router = useRouter()
   const isMobile = useIsMobile()
   const [headerVisible, setHeaderVisible] = useState(false)
   const [legendVisible, setLegendVisible] = useState(false)
@@ -54,13 +55,20 @@ export default function BuildProcessPage() {
             transform: headerVisible ? "translateY(0)" : "translateY(-12px)",
           }}
         >
-          <Link
-            href="/#intel"
-            className="inline-flex items-center gap-2 text-[10px] font-mono text-[hsl(var(--neon-cyan))]/70 hover:text-[hsl(var(--neon-cyan))] tracking-[0.2em] uppercase transition-colors duration-200"
+          <button
+            type="button"
+            onClick={() => {
+              router.push("/")
+              // Wait for navigation then set the hash so hashchange fires on the homepage
+              setTimeout(() => {
+                window.location.hash = "intel"
+              }, 100)
+            }}
+            className="inline-flex items-center gap-2 text-[10px] font-mono text-[hsl(var(--neon-cyan))]/70 hover:text-[hsl(var(--neon-cyan))] tracking-[0.2em] uppercase transition-colors duration-200 cursor-pointer bg-transparent border-none"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             {'BACK TO INTEL CORE'}
-          </Link>
+          </button>
         </div>
 
         {/* Header */}
