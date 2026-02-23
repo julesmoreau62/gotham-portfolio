@@ -55,7 +55,7 @@ export default function BuildProcessPage() {
           }}
         >
           <Link
-            href="/"
+            href="/#intel"
             className="inline-flex items-center gap-2 text-[10px] font-mono text-[hsl(var(--neon-cyan))]/70 hover:text-[hsl(var(--neon-cyan))] tracking-[0.2em] uppercase transition-colors duration-200"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
