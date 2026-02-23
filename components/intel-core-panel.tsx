@@ -634,7 +634,6 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                 <div className="mt-6 flex justify-center">
                   <Link
                     href="/intel-core/build-process"
-                    onClick={onClose}
                     className="group relative flex items-center gap-3 px-6 py-3.5 border-2 border-[hsl(var(--neon-cyan))]/50 hover:border-[hsl(var(--neon-cyan))] rounded bg-[hsl(var(--neon-cyan))]/5 hover:bg-[hsl(var(--neon-cyan))]/10 text-[hsl(var(--neon-cyan))] text-xs font-mono font-bold tracking-[0.2em] uppercase transition-all duration-300"
                     style={{
                       boxShadow: "0 0 20px hsl(186 100% 50% / 0.15), inset 0 0 20px hsl(186 100% 50% / 0.05)",
