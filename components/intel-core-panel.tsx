@@ -18,7 +18,9 @@ import {
   ArrowDown,
   CheckCircle2,
   Satellite,
+  Unlock,
 } from "lucide-react"
+import Link from "next/link"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 /* ================================================================
@@ -626,6 +628,24 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                     <Github className="w-3.5 h-3.5" />
                     INTEL ENGINE REPO
                   </a>
+                </div>
+
+                {/* Declassify Build Process CTA */}
+                <div className="mt-6 flex justify-center">
+                  <Link
+                    href="/intel-core/build-process"
+                    onClick={onClose}
+                    className="group relative flex items-center gap-3 px-6 py-3.5 border-2 border-[hsl(var(--neon-cyan))]/50 hover:border-[hsl(var(--neon-cyan))] rounded bg-[hsl(var(--neon-cyan))]/5 hover:bg-[hsl(var(--neon-cyan))]/10 text-[hsl(var(--neon-cyan))] text-xs font-mono font-bold tracking-[0.2em] uppercase transition-all duration-300"
+                    style={{
+                      boxShadow: "0 0 20px hsl(186 100% 50% / 0.15), inset 0 0 20px hsl(186 100% 50% / 0.05)",
+                    }}
+                  >
+                    {/* Animated glow ring */}
+                    <span className="absolute inset-0 rounded border border-[hsl(var(--neon-cyan))]/20 animate-[node-ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
+                    <Unlock className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" style={{ filter: "drop-shadow(0 0 6px hsl(186 100% 50%))" }} />
+                    <span>{'HOW WAS IT DONE? // DECLASSIFY BUILD PROCESS'}</span>
+                    <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </Link>
                 </div>
               </section>
 
