@@ -287,7 +287,7 @@ function SponsorV1({ visible }: { visible: boolean }) {
           {/* Text content — left column */}
           <div className="min-w-0">
             <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
-              In 2024, ASN95 partnered with Sultan Kebab for a simple bet: could a weekly prediction game turn passive followers into an active community? The mechanic was deliberately low-tech — submit your match score prediction via form, top 3 predictors win a free meal. No app, no platform, just a Google Form and a leaderboard posted manually every week. It worked beyond expectations. <span className="text-accent font-bold">+467% CTR</span>. Followers didn{"'"}t just participate — they came back. Every. Single. Week. The sponsor got measurable ROI. The club got data. The community got a reason to care beyond the 90 minutes. The infrastructure couldn{"'"}t scale. But the proof of concept was undeniable.
+              In 2024, ASN95 partnered with Sultan Kebab on a simple bet: a weekly prediction game to turn passive followers into an active community. Low-tech by design — a Google Form, a manual leaderboard, a free meal for the top 3. It drove <span className="text-accent font-bold">+467% CTR</span>. Followers came back. Every. Single. Week. The infrastructure couldn{"'"}t scale. The proof of concept was undeniable.
             </p>
           </div>
 
@@ -347,7 +347,7 @@ function SponsorV2({ visible }: { visible: boolean }) {
                 ASN95 Predict
               </h3>
               <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
-                If the V1 proved the concept, the V2 builds the machine. ASN95 Predict is a dedicated fan engagement platform — designed from the ground up to make this activation replicable, scalable, and sponsor-ready. Every feature exists for a reason: live rankings to drive weekly return visits, user profiles to build a persistent community, and a structured data capture layer to give future sponsors something they can actually measure. No more manual tracking. No more weekly rebuilds. Just a model that any partner can plug into.
+                ASN95 Predict is the real thing. Live rankings, user profiles, sponsor-ready data capture — built to make this activation replicable for any future partner. No more manual tracking. Just a model that scales.
               </p>
             </div>
 
