@@ -11,7 +11,6 @@ import {
   BarChart3,
   Zap,
   Smartphone,
-  ArrowRight,
 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import Image from "next/image"
@@ -278,36 +277,27 @@ function SponsorV1({ visible }: { visible: boolean }) {
       </div>
 
       {/* Body */}
-      <div className="p-4 relative">
+      <div className="p-4 md:p-5 relative">
         <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight mb-3">
           {"\"Les Pronos du Sultan\""}
         </h3>
 
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-5">
           {/* Text content */}
-          <div className="flex-1 flex flex-col gap-3">
-            <p className="text-[11px] font-mono text-muted-foreground leading-relaxed">
-              Followers submit match predictions weekly. Top 3 win meals at Sultan Kebab. A simple mechanic that drove{" "}
-              <span className="text-accent font-bold">+467% CTR</span> and built a recurring engagement loop
-              — but the infrastructure couldn{"'"}t keep up.
+          <div className="flex-1 order-1">
+            <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
+              In 2024, ASN95 partnered with Sultan Kebab for a simple bet: could a weekly prediction game turn passive followers into an active community? The mechanic was deliberately low-tech — submit your match score prediction via form, top 3 predictors win a free meal. No app, no platform, just a Google Form and a leaderboard posted manually every week. It worked beyond expectations. <span className="text-accent font-bold">+467% CTR</span>. Followers didn{"'"}t just participate — they came back. Every. Single. Week. The sponsor got measurable ROI. The club got data. The community got a reason to care beyond the 90 minutes. The infrastructure couldn{"'"}t scale. But the proof of concept was undeniable.
             </p>
-
-            {/* Connector line */}
-            <div className="flex items-center gap-2 mt-auto pt-2">
-              <div className="flex-1 h-px bg-gradient-to-r from-accent/40 to-accent/10" />
-              <ArrowRight className="w-3.5 h-3.5 text-accent/60" />
-              <span className="text-[8px] font-mono text-accent/60 uppercase tracking-wider">Evolution</span>
-            </div>
           </div>
 
           {/* Image placeholder */}
-          <div className="w-full md:w-48 shrink-0 border border-accent/20 relative group bg-muted aspect-[4/3] overflow-hidden">
+          <div className="w-full md:w-52 shrink-0 order-2 border border-accent/20 relative group bg-muted aspect-[4/3] overflow-hidden">
             <Image
               src="/assets/comms/sponsor.png"
               alt="Les Pronos du Sultan - Sultan Kebab Campaign"
               fill
               className="object-contain bg-background/50"
-              sizes="(max-width: 768px) 100vw, 192px"
+              sizes="(max-width: 768px) 100vw, 208px"
             />
             {/* Corner brackets */}
             <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />
@@ -355,9 +345,8 @@ function SponsorV2({ visible }: { visible: boolean }) {
               <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight mb-2">
                 ASN95 Predict
               </h3>
-              <p className="text-[11px] font-mono text-muted-foreground leading-relaxed">
-                A dedicated platform. Live rankings, user profiles, sponsor-ready data capture. Turning a one-off
-                activation into a replicable model.
+              <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
+                If the V1 proved the concept, the V2 builds the machine. ASN95 Predict is a dedicated fan engagement platform — designed from the ground up to make this activation replicable, scalable, and sponsor-ready. Every feature exists for a reason: live rankings to drive weekly return visits, user profiles to build a persistent community, and a structured data capture layer to give future sponsors something they can actually measure. No more manual tracking. No more weekly rebuilds. Just a model that any partner can plug into.
               </p>
             </div>
 
@@ -555,6 +544,22 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
 
           {/* V1 SPONSOR ACTIVATION */}
           <SponsorV1 visible={visible} />
+
+          {/* BRIDGE LINE */}
+          <div
+            className="flex items-center gap-3 py-2 md:py-3"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(12px)",
+              transition: "all 0.7s cubic-bezier(0.2,1,0.3,1) 800ms",
+            }}
+          >
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+            <p className="text-xs md:text-sm font-mono text-accent font-bold text-center tracking-wide shrink-0 px-2">
+              {"→ The +467% wasn't a campaign. It was a blueprint."}
+            </p>
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+          </div>
 
           {/* V2 SPONSOR ACTIVATION */}
           <SponsorV2 visible={visible} />
