@@ -282,22 +282,23 @@ function SponsorV1({ visible }: { visible: boolean }) {
           {"\"Les Pronos du Sultan\""}
         </h3>
 
-        <div className="flex flex-col md:flex-row gap-4 md:gap-5">
-          {/* Text content */}
-          <div className="flex-1 order-1">
+        {/* Mobile: stack vertically | Desktop: strict 55/45 grid */}
+        <div className="flex flex-col lg:grid lg:gap-6" style={{ gridTemplateColumns: "55fr 45fr" }}>
+          {/* Text content — left column */}
+          <div className="min-w-0">
             <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
               In 2024, ASN95 partnered with Sultan Kebab for a simple bet: could a weekly prediction game turn passive followers into an active community? The mechanic was deliberately low-tech — submit your match score prediction via form, top 3 predictors win a free meal. No app, no platform, just a Google Form and a leaderboard posted manually every week. It worked beyond expectations. <span className="text-accent font-bold">+467% CTR</span>. Followers didn{"'"}t just participate — they came back. Every. Single. Week. The sponsor got measurable ROI. The club got data. The community got a reason to care beyond the 90 minutes. The infrastructure couldn{"'"}t scale. But the proof of concept was undeniable.
             </p>
           </div>
 
-          {/* Image placeholder */}
-          <div className="w-full md:w-52 shrink-0 order-2 border border-accent/20 relative group bg-muted aspect-[4/3] overflow-hidden">
+          {/* Image — right column, contained */}
+          <div className="mt-4 lg:mt-0 w-full border border-accent/20 relative group bg-muted aspect-[4/3] overflow-hidden">
             <Image
               src="/assets/comms/sponsor.png"
               alt="Les Pronos du Sultan - Sultan Kebab Campaign"
               fill
               className="object-contain bg-background/50"
-              sizes="(max-width: 768px) 100vw, 208px"
+              sizes="(max-width: 1024px) 100vw, 45vw"
             />
             {/* Corner brackets */}
             <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />
@@ -545,20 +546,47 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
           {/* V1 SPONSOR ACTIVATION */}
           <SponsorV1 visible={visible} />
 
-          {/* BRIDGE LINE */}
+          {/* BRIDGE — prominent transition bar */}
           <div
-            className="flex items-center gap-3 py-2 md:py-3"
+            className="relative overflow-hidden border-2 border-accent/40 bg-accent/[0.06]"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(12px)",
               transition: "all 0.7s cubic-bezier(0.2,1,0.3,1) 800ms",
             }}
           >
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
-            <p className="text-xs md:text-sm font-mono text-accent font-bold text-center tracking-wide shrink-0 px-2">
-              {"→ The +467% wasn't a campaign. It was a blueprint."}
-            </p>
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+            {/* Decorative top/bottom accent lines */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
+            <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
+            {/* Background glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/[0.04] via-accent/[0.12] to-accent/[0.04] pointer-events-none" />
+
+            <div className="relative flex items-center gap-3 md:gap-5 px-4 md:px-6 py-4 md:py-5">
+              {/* Left arrow cluster */}
+              <div className="shrink-0 flex items-center gap-1 text-accent/50">
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+              </div>
+
+              {/* Divider */}
+              <div className="w-px h-8 bg-accent/30 shrink-0 hidden md:block" />
+
+              {/* Text */}
+              <p className="text-xs md:text-sm font-mono text-accent font-bold tracking-wide leading-relaxed flex-1 text-center md:text-left">
+                {"The +467% wasn't a campaign. It was a blueprint."}
+              </p>
+
+              {/* Divider */}
+              <div className="w-px h-8 bg-accent/30 shrink-0 hidden md:block" />
+
+              {/* Right arrow cluster */}
+              <div className="shrink-0 flex items-center gap-1 text-accent/50">
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+                <span className="text-sm md:text-lg font-mono">{">"}</span>
+              </div>
+            </div>
           </div>
 
           {/* V2 SPONSOR ACTIVATION */}
