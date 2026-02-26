@@ -288,14 +288,12 @@ function SecondaryTile({
   mouseOffset,
   visible,
   onSelect,
-  isMobile,
 }: {
   module: HexModule
   index: number
   mouseOffset: { x: number; y: number }
   visible: boolean
   onSelect?: () => void
-  isMobile?: boolean
 }) {
   const Icon = module.icon
   const [hovered, setHovered] = useState(false)
@@ -314,9 +312,9 @@ function SecondaryTile({
 
   return (
     <div
-      className={`relative group cursor-pointer ${isMobile ? "min-w-[75vw] snap-center" : ""}`}
+      className="relative group cursor-pointer"
       style={{
-        transform: isMobile ? undefined : `translate(${parallaxX}px, ${parallaxY}px)`,
+        transform: `translate(${parallaxX}px, ${parallaxY}px)`,
         transition: "transform 0.3s cubic-bezier(0.2, 1, 0.3, 1)",
       }}
       onMouseEnter={() => setHovered(true)}
@@ -566,8 +564,8 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
         </div>
       </header>
 
-      {/* Main content area - no overflow, fit in viewport */}
-      <main className="flex-1 flex flex-col items-center px-3 md:px-4 py-3 md:py-4 overflow-hidden">
+      {/* Main content area - scrollable on mobile */}
+      <main className="flex-1 flex flex-col items-center px-3 md:px-4 py-3 md:py-4 overflow-y-auto overflow-x-hidden">
         {/* Compact identity block - clickable to open About */}
         <button
           type="button"
@@ -660,8 +658,8 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
           </div>
 
           {/* Row 2: Secondary cards (STRATEGY, FIELD OPS, IMAGERY) */}
-          {/* On mobile: horizontal scroll with snap */}
-          <div className={`${isMobile ? "flex overflow-x-auto gap-3 pb-2 snap-x snap-mandatory scrollbar-hide" : "grid grid-cols-3 gap-4"}`}>
+          {/* On mobile: vertical stack, on desktop: 3-column grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
             {/* STRATEGY */}
             <SecondaryTile
               module={MODULES[0]}
@@ -669,7 +667,6 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               mouseOffset={mouseOffset}
               visible={visible}
               onSelect={() => openSection("strategy")}
-              isMobile={isMobile}
             />
 
             {/* FIELD OPS */}
@@ -679,7 +676,6 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               mouseOffset={mouseOffset}
               visible={visible}
               onSelect={() => openSection("field-ops")}
-              isMobile={isMobile}
             />
 
             {/* IMAGERY */}
@@ -689,18 +685,8 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               mouseOffset={mouseOffset}
               visible={visible}
               onSelect={() => openSection("imagery")}
-              isMobile={isMobile}
             />
           </div>
-
-          {/* Mobile scroll indicator dots */}
-          {isMobile && (
-            <div className="flex justify-center gap-1.5 -mt-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent/60" />
-              <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
-              <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
-            </div>
-          )}
         </div>
 
         {/* Skill tags - smaller on mobile */}
