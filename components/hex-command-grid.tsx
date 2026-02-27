@@ -688,12 +688,12 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
             />
           </div>
 
-          {/* Skill tags - inside grid container, below secondary cards */}
+          {/* Skill tags - hidden on mobile, visible on desktop */}
           <div
-            className={`w-full flex justify-center mt-2 md:mt-0 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            className={`hidden md:flex w-full justify-center transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{ transitionDelay: "800ms" }}
           >
-            <div className="grid grid-cols-3 md:flex md:flex-wrap md:justify-center gap-1.5 md:gap-2 max-w-md md:max-w-lg">
+            <div className="flex flex-wrap justify-center gap-2 max-w-lg">
               {[
                 { label: "CRISIS MGMT", color: "primary" },
                 { label: "ENGLISH C1", color: "primary" },
@@ -704,7 +704,7 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               ].map((skill) => (
                 <span
                   key={skill.label}
-                  className={`text-[8px] md:text-xs font-mono px-1.5 md:px-2.5 py-1 md:py-1.5 rounded border text-center whitespace-nowrap cursor-default transition-colors duration-300 hover:brightness-150 ${
+                  className={`text-xs font-mono px-2.5 py-1.5 rounded border text-center whitespace-nowrap cursor-default transition-colors duration-300 hover:brightness-150 ${
                     skill.color === "accent"
                       ? "text-accent/80 bg-accent/5 border-accent/20"
                       : skill.color === "cyan"
