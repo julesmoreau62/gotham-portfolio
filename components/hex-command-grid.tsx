@@ -687,35 +687,35 @@ export function HexCommandGrid({ visible }: { visible: boolean }) {
               onSelect={() => openSection("imagery")}
             />
           </div>
-        </div>
 
-        {/* Skill tags - below categories */}
-        <div
-          className={`w-full max-w-lg mt-6 md:mt-4 px-4 md:px-0 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          style={{ transitionDelay: "800ms" }}
-        >
-          <div className="grid grid-cols-3 md:flex md:flex-wrap md:justify-center gap-1.5 md:gap-2">
-            {[
-              { label: "CRISIS MGMT", color: "primary" },
-              { label: "ENGLISH C1", color: "primary" },
-              { label: "ADOBE SUITE", color: "accent" },
-              { label: "DATA ANALYSIS", color: "accent" },
-              { label: "TEAM LEAD", color: "primary" },
-              { label: "OSINT", color: "cyan" },
-            ].map((skill) => (
-              <span
-                key={skill.label}
-                className={`text-[8px] md:text-xs font-mono px-1.5 md:px-2.5 py-1 md:py-1.5 rounded border text-center whitespace-nowrap cursor-default transition-colors duration-300 hover:brightness-150 ${
-                  skill.color === "accent"
-                    ? "text-accent/80 bg-accent/5 border-accent/20"
-                    : skill.color === "cyan"
-                      ? "text-[hsl(var(--neon-cyan))]/80 bg-[hsl(var(--neon-cyan))]/5 border-[hsl(var(--neon-cyan))]/20"
-                      : "text-primary/80 bg-primary/5 border-primary/20"
-                }`}
-              >
-                {skill.label}
-              </span>
-            ))}
+          {/* Skill tags - inside grid container, below secondary cards */}
+          <div
+            className={`w-full flex justify-center mt-2 md:mt-0 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ transitionDelay: "800ms" }}
+          >
+            <div className="grid grid-cols-3 md:flex md:flex-wrap md:justify-center gap-1.5 md:gap-2 max-w-md md:max-w-lg">
+              {[
+                { label: "CRISIS MGMT", color: "primary" },
+                { label: "ENGLISH C1", color: "primary" },
+                { label: "ADOBE SUITE", color: "accent" },
+                { label: "DATA ANALYSIS", color: "accent" },
+                { label: "TEAM LEAD", color: "primary" },
+                { label: "OSINT", color: "cyan" },
+              ].map((skill) => (
+                <span
+                  key={skill.label}
+                  className={`text-[8px] md:text-xs font-mono px-1.5 md:px-2.5 py-1 md:py-1.5 rounded border text-center whitespace-nowrap cursor-default transition-colors duration-300 hover:brightness-150 ${
+                    skill.color === "accent"
+                      ? "text-accent/80 bg-accent/5 border-accent/20"
+                      : skill.color === "cyan"
+                        ? "text-[hsl(var(--neon-cyan))]/80 bg-[hsl(var(--neon-cyan))]/5 border-[hsl(var(--neon-cyan))]/20"
+                        : "text-primary/80 bg-primary/5 border-primary/20"
+                  }`}
+                >
+                  {skill.label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </main>
