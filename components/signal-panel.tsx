@@ -11,6 +11,7 @@ import {
   BarChart3,
   Zap,
   Smartphone,
+  Camera,
 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import Image from "next/image"
@@ -227,12 +228,22 @@ function SignalIntro({ onDone, isMobile }: { onDone: () => void; isMobile: boole
 /* ================================================================
    PULSING BADGE
    ================================================================ */
-function PulsingBadge({ label }: { label: string }) {
+function PulsingBadge({ label, color = "accent" }: { label: string; color?: "accent" | "teal" }) {
+  const colorClasses = color === "teal" 
+    ? "border-[hsl(var(--field-green))]/50 bg-[hsl(var(--field-green))]/10 text-[hsl(var(--field-green))]"
+    : "border-accent/50 bg-accent/10 text-accent"
+  const pulseColor = color === "teal" 
+    ? "bg-[hsl(var(--field-green))]/60" 
+    : "bg-accent/60"
+  const dotColor = color === "teal" 
+    ? "bg-[hsl(var(--field-green))]" 
+    : "bg-accent"
+
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-accent/50 bg-accent/10 text-accent text-[9px] font-mono font-bold uppercase tracking-widest">
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 border ${colorClasses} text-[9px] font-mono font-bold uppercase tracking-widest`}>
       <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping bg-accent/60" />
-        <span className="relative inline-flex h-2 w-2 bg-accent" />
+        <span className={`absolute inline-flex h-full w-full animate-ping ${pulseColor}`} />
+        <span className={`relative inline-flex h-2 w-2 ${dotColor}`} />
       </span>
       {label}
     </span>
@@ -240,14 +251,41 @@ function PulsingBadge({ label }: { label: string }) {
 }
 
 /* ================================================================
-   V1 SPONSOR CARD
+   HOVER IMAGE COMPONENT
    ================================================================ */
-function SponsorV1({ visible }: { visible: boolean }) {
+function HoverImage({ src, alt, className = "", aspectRatio = "aspect-[4/3]" }: { 
+  src: string; 
+  alt: string; 
+  className?: string;
+  aspectRatio?: string;
+}) {
+  return (
+    <div className={`relative group overflow-hidden border border-accent/20 bg-muted ${aspectRatio} ${className}`}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
+      {/* Corner brackets */}
+      <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />
+      <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r border-accent/40" />
+      <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l border-accent/40" />
+      <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r border-accent/40" />
+    </div>
+  )
+}
+
+/* ================================================================
+   BLOCK 1: ACTIVATION - SPONSOR ENGAGEMENT
+   ================================================================ */
+function ActivationBlock({ visible }: { visible: boolean }) {
   const ctrVal = useCountUp(467, visible, 2000)
 
   return (
     <div
-      className="border-2 border-accent/30 bg-card/30 overflow-hidden relative"
+      className="border border-accent/30 bg-card/30 overflow-hidden relative"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -257,55 +295,257 @@ function SponsorV1({ visible }: { visible: boolean }) {
       {/* Background glow */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-accent/8 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Header */}
-      <div className="border-b border-accent/20 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 relative">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-accent" />
-            <span className="text-[9px] font-bold text-accent uppercase tracking-widest font-mono">V1 // Sponsor Activation</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <div
-            className="text-2xl md:text-3xl font-bold text-accent font-mono tabular-nums leading-none"
-            style={{ textShadow: "0 0 30px hsl(24 95% 53% / 0.4)" }}
-          >
-            +{ctrVal}%
-          </div>
-          <span className="text-[8px] font-mono text-accent/70 uppercase">CTR</span>
-        </div>
+      {/* Block Header */}
+      <div className="border-b border-accent/20 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent px-4 py-3 flex items-center gap-2">
+        <Zap className="w-4 h-4 text-accent" />
+        <span className="text-[9px] font-bold text-accent uppercase tracking-widest font-mono">
+          ACTIVATION // SPONSOR ENGAGEMENT
+        </span>
       </div>
 
-      {/* Body */}
-      <div className="p-4 md:p-5 relative">
-        <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight mb-3">
-          {"\"Les Pronos du Sultan\""}
-        </h3>
+      {/* Block Content */}
+      <div className="p-4 md:p-5 flex flex-col gap-6">
 
-        {/* Mobile: stack vertically | Desktop: strict 55/45 grid */}
-        <div className="flex flex-col lg:grid lg:gap-6" style={{ gridTemplateColumns: "55fr 45fr" }}>
-          {/* Text content — left column */}
-          <div className="min-w-0">
-            <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
-              In 2024, ASN95 partnered with Sultan Kebab on a simple bet: a weekly prediction game to turn passive followers into an active community. Low-tech by design — a Google Form, a manual leaderboard, a free meal for the top 3. It drove <span className="text-accent font-bold">+467% CTR</span>. Followers came back. Every. Single. Week. The infrastructure couldn{"'"}t scale. The proof of concept was undeniable.
+        {/* V1 Section */}
+        <div className="relative">
+          {/* V1 Header with KPI */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+            <div>
+              <span className="text-[8px] font-mono text-muted-foreground uppercase tracking-widest">V1</span>
+              <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight">
+                {"\"Les Pronos du Sultan\""}
+              </h3>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <div
+                className="text-2xl md:text-3xl font-bold text-accent font-mono tabular-nums leading-none"
+                style={{ textShadow: "0 0 30px hsl(24 95% 53% / 0.4)" }}
+              >
+                +{ctrVal}%
+              </div>
+              <span className="text-[8px] font-mono text-accent/70 uppercase">CTR</span>
+            </div>
+          </div>
+
+          {/* V1 Content Grid */}
+          <div className="flex flex-col lg:grid lg:gap-6" style={{ gridTemplateColumns: "55fr 45fr" }}>
+            <div className="min-w-0">
+              <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
+                In 2024, ASN95 partnered with Sultan Kebab on a simple bet: a weekly prediction game to turn passive followers into an active community. Low-tech by design — a Google Form, a manual leaderboard, a free meal for the top 3. It drove <span className="text-accent font-bold">+467% CTR</span>. Followers came back. Every. Single. Week. The infrastructure couldn{"'"}t scale. The proof of concept was undeniable.
+              </p>
+            </div>
+            <div className="mt-4 lg:mt-0">
+              <HoverImage 
+                src="/assets/comms/sponsor.png" 
+                alt="Les Pronos du Sultan - Sultan Kebab Campaign"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Bridge Quote */}
+        <div className="relative overflow-hidden border border-accent/40 bg-accent/[0.06]">
+          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
+          <div className="flex items-center gap-3 px-4 py-3">
+            <div className="shrink-0 flex items-center gap-0.5 text-accent/50">
+              <span className="text-sm font-mono">{">"}</span>
+              <span className="text-sm font-mono">{">"}</span>
+              <span className="text-sm font-mono">{">"}</span>
+            </div>
+            <p className="text-xs font-mono text-accent font-bold tracking-wide flex-1 text-center">
+              {"The +467% wasn't a campaign. It was a blueprint."}
+            </p>
+            <div className="shrink-0 flex items-center gap-0.5 text-accent/50">
+              <span className="text-sm font-mono">{">"}</span>
+              <span className="text-sm font-mono">{">"}</span>
+              <span className="text-sm font-mono">{">"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* V2 Section */}
+        <div className="relative border border-accent/20 bg-card/20 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <span className="text-[8px] font-mono text-muted-foreground uppercase tracking-widest">V2</span>
+              <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight">
+                ASN95 Predict
+              </h3>
+            </div>
+            <PulsingBadge label="In Development" />
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-5">
+            <div className="flex-1 flex flex-col gap-4">
+              <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
+                ASN95 Predict is the real thing. Live rankings, user profiles, sponsor-ready data capture — built to make this activation replicable for any future partner. No more manual tracking. Just a model that scales.
+              </p>
+
+              {/* Progress bar */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8px] font-mono text-muted-foreground uppercase tracking-widest">
+                    STATUS — BETA
+                  </span>
+                  <span className="text-[9px] font-mono font-bold text-accent tabular-nums">80%</span>
+                </div>
+                <div className="h-1.5 bg-accent/10 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-accent via-accent/80 to-accent/60"
+                    style={{
+                      width: visible ? "80%" : "0%",
+                      transition: "width 1.5s cubic-bezier(0.2,1,0.3,1) 1200ms",
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Feature pills */}
+              <div className="flex flex-wrap gap-1.5">
+                {V2_FEATURES.map((feat) => (
+                  <span
+                    key={feat}
+                    className="px-2.5 py-1 border border-accent/25 bg-accent/5 text-[9px] font-mono text-accent uppercase tracking-wider"
+                  >
+                    {feat}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Smartphone mockup */}
+            <div className="w-full md:w-44 shrink-0 flex items-center justify-center">
+              <div className="relative w-32 md:w-36 aspect-[9/18] border-2 border-accent/30 bg-background/80 overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-2 bg-accent/15" />
+                <div className="absolute inset-2 top-4 flex flex-col items-center justify-center gap-2">
+                  <Smartphone className="w-6 h-6 text-accent/30" />
+                  <div className="flex flex-col gap-1 w-full px-2">
+                    <div className="h-1 bg-accent/15 w-full" />
+                    <div className="h-1 bg-accent/10 w-3/4" />
+                    <div className="h-1 bg-accent/10 w-5/6" />
+                    <div className="h-4 bg-accent/8 w-full mt-1" />
+                    <div className="h-1 bg-accent/10 w-2/3" />
+                    <div className="h-1 bg-accent/10 w-4/5" />
+                    <div className="h-3 bg-accent/6 w-full mt-1" />
+                    <div className="h-3 bg-accent/6 w-full" />
+                    <div className="h-3 bg-accent/6 w-full" />
+                  </div>
+                </div>
+                <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-accent/30" />
+                <div className="absolute top-1 right-1 w-3 h-3 border-t border-r border-accent/30" />
+                <div className="absolute bottom-1 left-1 w-3 h-3 border-b border-l border-accent/30" />
+                <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-accent/30" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
+/* ================================================================
+   BLOCK 2: COMMS - MATCHDAY CONTENT PRODUCTION
+   ================================================================ */
+function CommsBlock({ visible }: { visible: boolean }) {
+  return (
+    <div
+      className="border border-accent/30 bg-card/30 overflow-hidden relative"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(20px)",
+        transition: "all 0.8s cubic-bezier(0.2,1,0.3,1) 900ms",
+      }}
+    >
+      {/* Block Header */}
+      <div className="border-b border-accent/20 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent px-4 py-3 flex items-center gap-2">
+        <Zap className="w-4 h-4 text-accent" />
+        <span className="text-[9px] font-bold text-accent uppercase tracking-widest font-mono">
+          COMMS // MATCHDAY CONTENT PRODUCTION
+        </span>
+      </div>
+
+      {/* 3-Column Grid */}
+      <div className="p-4 md:p-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+          {/* Column 1: Match Posters */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider">
+              Match Posters
+            </h4>
+            <HoverImage 
+              src="/assets/comms/match-championnat.png" 
+              alt="Match Poster - Pre-game announcement"
+            />
+            <p className="text-[10px] font-mono text-muted-foreground leading-relaxed">
+              Pre-game announcements. Team identity meets local branding. Date, venue, opponent, sponsors — all in one visual asset.
             </p>
           </div>
 
-          {/* Image — right column, contained */}
-          <div className="mt-4 lg:mt-0 w-full border border-accent/20 relative group bg-muted aspect-[4/3] overflow-hidden">
-            <Image
-              src="/assets/comms/sponsor.png"
-              alt="Les Pronos du Sultan - Sultan Kebab Campaign"
-              fill
-              className="object-contain bg-background/50"
-              sizes="(max-width: 1024px) 100vw, 45vw"
-            />
-            {/* Corner brackets */}
-            <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t border-l border-accent/40" />
-            <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t border-r border-accent/40" />
-            <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b border-l border-accent/40" />
-            <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b border-r border-accent/40" />
+          {/* Column 2: Result Graphics */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider">
+              Result Graphics
+            </h4>
+            <div className="flex flex-col gap-2">
+              <HoverImage 
+                src="/assets/comms/resultat-match.jpg" 
+                alt="Result Graphic - Brise légère"
+                aspectRatio="aspect-[4/3]"
+              />
+              <HoverImage 
+                src="/assets/comms/resultat-match-2.jpg" 
+                alt="Result Graphic - Le soleil tape"
+                aspectRatio="aspect-[4/3]"
+              />
+            </div>
+            {/* Quote block with custom punchlines */}
+            <div className="border border-accent/30 bg-accent/5 p-3">
+              <div className="flex flex-col gap-2 text-[10px] font-mono">
+                <div>
+                  <p className="text-foreground font-bold">{'"Brise légère, 3 points dans l\'air"'}</p>
+                  <p className="text-muted-foreground italic">Light breeze, 3 points in the air</p>
+                </div>
+                <div>
+                  <p className="text-foreground font-bold">{'"Le soleil tape ? Nous aussi."'}</p>
+                  <p className="text-muted-foreground italic">The sun hits hard? So do we.</p>
+                </div>
+              </div>
+              <p className="text-[9px] font-mono text-accent mt-2 uppercase tracking-wide">
+                Every result tells a story — not just a score.
+              </p>
+            </div>
           </div>
+
+          {/* Column 3: Interview Series */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider">
+              Interview Series
+            </h4>
+            <HoverImage 
+              src="/assets/photo/football-1.jpg" 
+              alt="Interview Series - Weekly content"
+            />
+            <p className="text-[10px] font-mono text-muted-foreground leading-relaxed">
+              Serialized weekly content. Building recurring engagement around club figures and coaches.
+            </p>
+          </div>
+
+        </div>
+
+        {/* Stats Row */}
+        <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-border/30">
+          {["15+ visuals / season", "3 recurring formats", "5+ sponsors integrated per visual"].map((stat) => (
+            <span
+              key={stat}
+              className="px-3 py-1.5 border border-primary/20 bg-primary/[0.04] text-[10px] font-mono text-foreground font-bold tracking-wide"
+            >
+              {stat}
+            </span>
+          ))}
         </div>
       </div>
     </div>
@@ -313,103 +553,101 @@ function SponsorV1({ visible }: { visible: boolean }) {
 }
 
 /* ================================================================
-   V2 SPONSOR CARD
+   BLOCK 3: IMAGERY - FIELD PHOTOGRAPHY & SPONSOR SHOOTS
    ================================================================ */
-function SponsorV2({ visible }: { visible: boolean }) {
+function ImageryBlock({ visible }: { visible: boolean }) {
   return (
     <div
-      className="border-2 border-accent/30 bg-card/30 overflow-hidden relative"
+      className="border border-accent/30 bg-card/30 overflow-hidden relative"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(20px)",
-        transition: "all 0.8s cubic-bezier(0.2,1,0.3,1) 900ms",
+        transition: "all 0.8s cubic-bezier(0.2,1,0.3,1) 1100ms",
       }}
     >
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/6 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Header */}
-      <div className="border-b border-accent/20 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent px-4 py-3 flex items-center justify-between relative">
+      {/* Block Header */}
+      <div className="border-b border-accent/20 bg-gradient-to-r from-accent/10 via-accent/5 to-transparent px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Zap className="w-4 h-4 text-accent" />
-          <span className="text-[9px] font-bold text-accent uppercase tracking-widest font-mono">V2 // Platform Build</span>
+          <span className="text-[9px] font-bold text-accent uppercase tracking-widest font-mono">
+            IMAGERY // FIELD PHOTOGRAPHY & SPONSOR SHOOTS
+          </span>
         </div>
-        <PulsingBadge label="In Development" />
+        <PulsingBadge label="Photographer" color="teal" />
       </div>
 
-      {/* Body */}
-      <div className="p-4 relative">
-        <div className="flex flex-col md:flex-row gap-5">
-          {/* Text content */}
-          <div className="flex-1 flex flex-col gap-4">
-            <div>
-              <h3 className="text-base md:text-lg font-bold text-foreground font-tech leading-tight mb-2">
-                ASN95 Predict
-              </h3>
-              <p className="text-[11px] md:text-xs font-mono text-muted-foreground leading-relaxed">
-                ASN95 Predict is the real thing. Live rankings, user profiles, sponsor-ready data capture — built to make this activation replicable for any future partner. No more manual tracking. Just a model that scales.
-              </p>
-            </div>
+      {/* Two Sub-blocks */}
+      <div className="p-4 md:p-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
-            {/* Progress bar */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-[8px] font-mono text-muted-foreground uppercase tracking-widest">
-                  Status — Beta
-                </span>
-                <span className="text-[9px] font-mono font-bold text-accent tabular-nums">80%</span>
-              </div>
-              <div className="h-1.5 bg-accent/10 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-accent via-accent/80 to-accent/60"
-                  style={{
-                    width: visible ? "80%" : "0%",
-                    transition: "width 1.5s cubic-bezier(0.2,1,0.3,1) 1200ms",
-                  }}
-                />
-              </div>
+          {/* Left: Match Coverage */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider flex items-center gap-2">
+              <Camera className="w-3.5 h-3.5 text-accent" />
+              Match Coverage
+            </h4>
+            <div className="grid grid-cols-2 gap-2">
+              <HoverImage 
+                src="/assets/photo/football-2.jpg" 
+                alt="Match action - Goal celebration"
+                aspectRatio="aspect-[3/2]"
+              />
+              <HoverImage 
+                src="/assets/photo/football-3.jpg" 
+                alt="Match action - Intense duel"
+                aspectRatio="aspect-[3/2]"
+              />
             </div>
-
-            {/* Feature pills */}
-            <div className="flex flex-wrap gap-1.5">
-              {V2_FEATURES.map((feat) => (
-                <span
-                  key={feat}
-                  className="px-2.5 py-1 border border-accent/25 bg-accent/5 text-[9px] font-mono text-accent uppercase tracking-wider"
-                >
-                  {feat}
-                </span>
-              ))}
+            <div className="text-accent font-mono text-[11px] font-bold leading-relaxed">
+              33 events covered — 500+ shots per match — ~50 delivered per session — 1,650+ edited photos across one full season
             </div>
+            <p className="text-[10px] font-mono text-muted-foreground leading-relaxed">
+              Near-complete season coverage: 26 league matches, 4 youth training camps, 2 general assemblies, and the club{"'"}s 30th anniversary event. From the pitch to the feed.
+            </p>
           </div>
 
-          {/* Smartphone mockup placeholder */}
-          <div className="w-full md:w-44 shrink-0 flex items-center justify-center">
-            <div className="relative w-32 md:w-36 aspect-[9/18] border-2 border-accent/30 bg-background/80 overflow-hidden">
-              {/* Phone notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-2 bg-accent/15" />
-              {/* Phone screen content placeholder */}
-              <div className="absolute inset-2 top-4 flex flex-col items-center justify-center gap-2">
-                <Smartphone className="w-6 h-6 text-accent/30" />
-                <div className="flex flex-col gap-1 w-full px-2">
-                  <div className="h-1 bg-accent/15 w-full" />
-                  <div className="h-1 bg-accent/10 w-3/4" />
-                  <div className="h-1 bg-accent/10 w-5/6" />
-                  <div className="h-4 bg-accent/8 w-full mt-1" />
-                  <div className="h-1 bg-accent/10 w-2/3" />
-                  <div className="h-1 bg-accent/10 w-4/5" />
-                  <div className="h-3 bg-accent/6 w-full mt-1" />
-                  <div className="h-3 bg-accent/6 w-full" />
-                  <div className="h-3 bg-accent/6 w-full" />
-                </div>
-              </div>
-              {/* Corner brackets */}
-              <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-accent/30" />
-              <div className="absolute top-1 right-1 w-3 h-3 border-t border-r border-accent/30" />
-              <div className="absolute bottom-1 left-1 w-3 h-3 border-b border-l border-accent/30" />
-              <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-accent/30" />
+          {/* Right: Sponsor Photoshoot */}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider flex items-center gap-2">
+              <Camera className="w-3.5 h-3.5 text-accent" />
+              Sponsor Photoshoot
+            </h4>
+            {/* Main wide image */}
+            <HoverImage 
+              src="/assets/photo/football-4.jpg" 
+              alt="Youth academy group photo with sponsor kits"
+              aspectRatio="aspect-[16/9]"
+            />
+            {/* Three smaller portraits */}
+            <div className="grid grid-cols-3 gap-2">
+              <HoverImage 
+                src="/assets/photo/football-5.jpg" 
+                alt="Individual portrait 1"
+                aspectRatio="aspect-[3/4]"
+              />
+              <HoverImage 
+                src="/assets/photo/football-6.jpg" 
+                alt="Individual portrait 2"
+                aspectRatio="aspect-[3/4]"
+              />
+              <HoverImage 
+                src="/assets/photo/football-7.jpg" 
+                alt="Individual portrait 3"
+                aspectRatio="aspect-[3/4]"
+              />
             </div>
+            <p className="text-[10px] font-mono text-muted-foreground leading-relaxed">
+              Youth academy photoshoot — sponsor visibility through authentic club moments. Not a logo on a banner. A brand woven into the heartbeat of the club.
+            </p>
           </div>
+
+        </div>
+
+        {/* Gear line */}
+        <div className="mt-5 pt-4 border-t border-border/30">
+          <span className="text-[9px] font-mono text-muted-foreground/60 uppercase tracking-widest">
+            GEAR // Sony a6400 + SEL70350G
+          </span>
         </div>
       </div>
     </div>
@@ -543,54 +781,14 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
             })}
           </section>
 
-          {/* V1 SPONSOR ACTIVATION */}
-          <SponsorV1 visible={visible} />
+          {/* BLOCK 1: ACTIVATION */}
+          <ActivationBlock visible={visible} />
 
-          {/* BRIDGE — prominent transition bar */}
-          <div
-            className="relative overflow-hidden border-2 border-accent/40 bg-accent/[0.06]"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(12px)",
-              transition: "all 0.7s cubic-bezier(0.2,1,0.3,1) 800ms",
-            }}
-          >
-            {/* Decorative top/bottom accent lines */}
-            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
-            <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
-            {/* Background glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-accent/[0.04] via-accent/[0.12] to-accent/[0.04] pointer-events-none" />
+          {/* BLOCK 2: COMMS */}
+          <CommsBlock visible={visible} />
 
-            <div className="relative flex items-center gap-3 md:gap-5 px-4 md:px-6 py-4 md:py-5">
-              {/* Left arrow cluster */}
-              <div className="shrink-0 flex items-center gap-1 text-accent/50">
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-              </div>
-
-              {/* Divider */}
-              <div className="w-px h-8 bg-accent/30 shrink-0 hidden md:block" />
-
-              {/* Text */}
-              <p className="text-xs md:text-sm font-mono text-accent font-bold tracking-wide leading-relaxed flex-1 text-center md:text-left">
-                {"The +467% wasn't a campaign. It was a blueprint."}
-              </p>
-
-              {/* Divider */}
-              <div className="w-px h-8 bg-accent/30 shrink-0 hidden md:block" />
-
-              {/* Right arrow cluster */}
-              <div className="shrink-0 flex items-center gap-1 text-accent/50">
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-                <span className="text-sm md:text-lg font-mono">{">"}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* V2 SPONSOR ACTIVATION */}
-          <SponsorV2 visible={visible} />
+          {/* BLOCK 3: IMAGERY */}
+          <ImageryBlock visible={visible} />
 
         </div>
       </div>
