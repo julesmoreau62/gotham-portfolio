@@ -1,0 +1,113 @@
+# Jules Moreau — Esports & Sport Operations Portfolio
+# julesmoreau.eu | contact@julesmoreau.eu
+
+## IDENTITY
+Name: Jules Moreau
+Current role: M1 International Sport Administration student, Université de Lille (STAPS/ISA program)
+Location: Lille, France
+Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO)
+Status: Seeking internship in Esports Operations & Event Management — April to August 2026
+Target organizations: ESL FACEIT Group, BLAST, Twisted Minds, Talon Esports, Aspire Zone Foundation
+
+## PROFILE SUMMARY
+Jules Moreau is a hybrid sport-management/esports strategist combining military precision,
+international mobility (French Guiana, New Caledonia, Congo), and hands-on production experience.
+Former French Navy Reserve NCO. Grandmaster-level Overwatch 2 player.
+Fluent in French (native) and English (C1). No formal coding background —
+builds production-grade tools through AI-augmented workflows.
+
+## ACADEMIC
+Master's in Sport Sciences — International Sport Administration (ISA)
+Université de Lille (STAPS) — 2025–2027
+Specialization: Esports management, sport governance, sustainability
+
+Bachelor's in Sport Sciences — Sport Management
+ULCO — 2022–2025
+
+## EXPERIENCE
+
+### Head of Communications — ASN95 (AS Nortkerque football club)
+Jan–Jun 2025 | Hauts-de-France, France
+- Built complete digital presence from scratch (no prior content calendar, no visual guidelines)
+- Created "Les Pronos du Sultan": weekly sponsor prediction game → +467% CTR
+- Developed ASN95 Predict platform (beta, 88% complete): live rankings, user profiles, sponsor data layer
+- 15+ visuals per season across 3 recurring formats, 5+ sponsors integrated per visual
+- Match photography: 33 events covered, 500+ shots per match, 1,650+ edited photos across full season
+- Managed matchday operations, visual identity, sponsor activation
+
+### Infrastructure Tech — Bolt Echafaudage (via French Guiana mission)
+Aug 2025 | Kourou, French Guiana
+- Kourou Beach Festival & Tour de Guyane logistics
+- Heavy material handling (Telehandlers), VIP complex construction under strict timing constraints
+
+### Sales & Ops Support — Guyane Matériels
+Jun–Jul 2025 | French Guiana
+- Customer operations in tropical environment
+- Product photography asset production
+
+### French Navy Reservist — Petty Officer (Second Maître)
+Since Jul 2022 | France
+- Ecole de Maîtrance: military rigor, crisis management, team leadership
+- NATO Secret clearance
+
+## PROJECTS
+
+### BLAST Strategic Case Study — "David vs. Goliath 2.0"
+Type: Academic strategic analysis (23 pages)
+Frameworks: PESTEL, VRIO, SWOT
+Key findings: BLAST faces critical asymmetry vs EFG (Saudi PIF-backed ESL, $1.5Bn valuation vs $11M cash).
+Valve 2025 regulation banning franchised partner leagues collapses BLAST's Louvre Agreement advantage.
+Strategic recommendation: India pivot via JV with Reliance — 600M mobile gamers, bypass EFG's Western saturation.
+3-phase execution roadmap: H1 2026 (Mumbai hub), H2 2026 (D2C gamification, Watch-to-Earn), 2027 (break-even).
+CSR differentiation: "Brand Safety Shield" to attract Western sponsors avoiding EFG's Saudi PIF reputational risk.
+Output: Full dossier PDF + interactive HTML presentation on portfolio
+
+### Sport Business Watch — AI Intelligence Dashboard
+Type: Automated intelligence pipeline (production)
+Tech stack: Python 3.11 + feedparser (crawling), GitHub Actions CRON (daily 06:00 UTC),
+OpenRouter → Gemini 2.0 Flash (AI filtering, 2-pass system), Notion API (Sport DB + Spatial DB),
+Next.js 14 dashboard, Netlify deployment
+Scale: 35+ RSS sources, 6 geographic regions, 2 AI passes, 1x daily CRON
+Cost: ~$1.17/month operational
+Status: Fully operational — live at sport-business-watch.netlify.app
+
+### ASI Multisports Tournament — Event Management
+Type: Field Operations (Comms Chief)
+Date: December 2025 | Location: UFRSS Lille | Personnel: 500+
+Sports: Disc Golf, Wheelchair BBL, Laser Tag, Spikeball
+Equipment: Sony a6400 (primary), GoPro x2 (action cam)
+Crisis management: 2 critical incidents resolved with zero event disruption
+  - R-0200 FACILITY CONFLICT: Venue unavailable 2h before start → alternate gym secured in 45min, zero impact
+  - R-0030 WEATHER HAZARD: Heavy rainfall → indoor fallback activated in 30min, 100% adaptability
+Visual assets produced: Graphic charter, participant briefing (FR/EN bilingual), event poster
+
+### Overwatch 2 Stats Dashboard
+Type: Personal tool (production)
+Tech: OverFast API, tactical/military aesthetic
+Creator context: Grandmaster-level competitive player (former Top 500)
+
+### Personal Portfolio — julesmoreau.eu
+Type: Next.js single-page application
+Aesthetic: Dark tactical/military "GOTHAM system"
+Sections: Strategy (BLAST case study), Intel Core (Sport Business Watch),
+Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive)
+
+## PHOTOGRAPHY ARCHIVE
+Total files: 50+ | Sectors: 3 (Corporate, Events, Sport) | Field shots: 50+
+Equipment: Sony a6400 (mirrorless APS-C), GoPro x2, edited in Lightroom + Premiere
+Corporate: Industrial & corporate photography, professional environments, product shots
+Events: Tournament and event coverage, ASI Tournament, matchday operations, competition documentation
+Sport: Action sports photography, football, golf, kitesurfing, volleyball — multiple events
+
+## SKILLS & TOOLS
+Sport governance, esports business analysis, event operations, crisis management,
+sponsor activation, visual identity, content strategy, sport photography,
+Next.js, Python (AI-augmented), Notion API, GitHub Actions, Gemini AI, RSS aggregation,
+Lightroom, Premiere, Canva, Sony a6400
+
+## DIFFERENTIATORS
+- International mobility: lived and worked in French Guiana, New Caledonia, Congo
+- Military background: NATO Secret clearance, crisis management, command under pressure
+- Esports depth: M1 thesis on LEC/GRP vs CS2 economic models (interviews with BLAST VP James Woollard)
+- Production-grade builder: deploys real tools with no formal coding background
+- Grandmaster Overwatch 2 player: credibility inside competitive esports communities
