@@ -1,8 +1,12 @@
 # Jules Moreau — Portfolio
 
+![Boot Sequence](.github/images/intro.gif)
+
 **A production-grade tactical portfolio built entirely with AI — zero coding background.**
 
 **Live:** [julesmoreau.eu](https://www.julesmoreau.eu)
+
+---
 
 ## The Challenge
 
@@ -14,7 +18,7 @@ I needed a portfolio for esports operations & event management applications. The
 
 ## The Solution: AI as Creative Co-Pilots
 
-I built this site from scratch using a **dual-AI workflow** — rough sketches to production in iterations.
+Built from scratch using a **dual-AI workflow** — rough sketches to production in iterations.
 
 ### Gemini — Design & Architecture
 - Transformed rough sketches into a cohesive tactical/military UI
@@ -27,35 +31,33 @@ I built this site from scratch using a **dual-AI workflow** — rough sketches t
 - Solved complex layering and z-index issues
 - Fine-tuned performance and interactions
 
-## From Sketch to Production
+---
 
-The site went through a full design-to-code pipeline, all AI-assisted:
-
-**Boot Sequence** — Wireframe concept to animated military-style boot screen with typing effects
-
-**GOTHAM Command Grid** — Sketch of hexagonal navigation to fully interactive hub with orbital rings, data streams, and agent profile panel
-
-**Strategy Panel** — Layout mockup to interactive BLAST case study with live data visualizations, roadmap timeline, and map component
-
-**Signal Panel** — KPI dashboard wireframe to full social media analytics display with sponsor activation metrics and content gallery
-
-## Design System: GOTHAM
+## Design System: GOTHAM V.2.7.1
 
 Dark tactical/military aesthetic — single-page application featuring:
 - Animated boot sequence with terminal typing effect
 - Particle network background with ambient glow
-- Hexagonal command grid navigation with orbital animations
+- Modular command grid with status indicators (CRITICAL / ACTIVE / ONLINE / STORAGE)
+- Live intel feed ticker (incoming BLAST.tv data stream)
+- Geolocated map overlays per module (Copenhagen HQ, Lille campus...)
 - Custom cursor, scan lines, glitch effects, and noise overlay
+
+---
 
 ## Portfolio Sections
 
-| Code Name | Content |
-|-----------|---------|
-| **Strategy** | BLAST Strategic Case Study — "David vs. Goliath 2.0" (23-page analysis) |
-| **Intel Core** | Sport Business Watch — AI Intelligence Dashboard (live production tool) |
-| **Field Ops** | ASI Multisports Tournament — Event Management (500+ personnel) |
-| **Signal** | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
-| **Imagery** | Photography archive — corporate, events, sport (50+ files) |
+![GOTHAM Command Grid](.github/images/categories.jpg)
+
+| Code Name | Status | Content |
+|-----------|--------|---------|
+| **Strategy** | 🔴 CRITICAL | BLAST Strategic Case Study — "David vs. Goliath 2.0" (23-page analysis) |
+| **Intel Core** | 🔵 SCANNING | Sport Business Watch — AI Intelligence Dashboard (live production tool) |
+| **Field Ops** | 🟢 ACTIVE | ASI Multisports Tournament — Event Management (450+ personnel) |
+| **Signal** | 🟢 ONLINE | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
+| **Imagery** | 🟡 STORAGE | Photography archive — corporate, events, sport (50+ files) |
+
+---
 
 ## Tech Stack
 
@@ -65,29 +67,31 @@ Dark tactical/military aesthetic — single-page application featuring:
 - **UI Components:** Radix UI + shadcn/ui
 - **Fonts:** Rajdhani, JetBrains Mono, Share Tech Mono
 
+---
+
 ## AI/Crawler Accessibility Layer
 
 The site is a JS-rendered SPA invisible to most crawlers. To fix this:
 
 - **`/llms.txt`** — Plain-text portfolio summary for LLM crawlers
 - **JSON-LD** — Schema.org `Person` structured data in `<head>`
-- **sr-only fallback** — Full HTML content readable by crawlers and screen readers, invisible to sighted users
+- **`sr-only` fallback** — Full HTML content readable by crawlers and screen readers, invisible to sighted users
 
-## Getting Started
+---
 
-```bash
-npm install --legacy-peer-deps
-npm run dev
-```
+## From Sketch to Production
 
-Opens at [localhost:3000](http://localhost:3000).
+**Boot Sequence** — Wireframe concept to animated military-style boot screen with terminal typing effects
 
-## Build
+**GOTHAM Command Grid** — Sketch of modular status panels to fully interactive hub with live feed ticker, geo overlays, and agent profile dossier
 
-```bash
-npm run build
-npm start
-```
+**Strategy Panel** — Layout mockup to interactive BLAST case study with live financial data, threat analysis, execution roadmap, and geolocated HQ map (Copenhagen)
+
+**Field Ops Panel** — Brief to immersive field operation UI with body cam simulation, graphic assets viewer, and logistics report
+
+**Signal Panel** — KPI wireframe to full social media analytics display with sponsor activation mechanics and bilingual copywriting gallery
+
+---
 
 ## Project Structure
 
@@ -97,7 +101,7 @@ app/
   page.tsx            # Main page + sr-only crawler fallback
   globals.css         # Global styles + tactical grid
 components/
-  hex-command-grid.tsx # Main navigation hub
+  command-grid.tsx     # Main navigation hub
   boot-sequence.tsx    # Animated boot sequence
   strategy-panel.tsx   # BLAST case study panel
   intel-core-panel.tsx # Sport Business Watch panel
@@ -110,12 +114,14 @@ public/
   llms.txt            # LLM crawler content
   assets/             # PDFs, photos, event visuals
   signal/             # ASN95 media assets
+.github/
+  images/             # README assets (GIF, screenshots)
 ```
 
-## Key Takeaway
+---
 
-> AI doesn't replace creativity — it amplifies execution. You don't need to be a developer to build something unique. Prompt engineering is becoming an essential skill.
+> AI doesn't replace creativity — it amplifies execution. You don't need to be a developer to build something that stands out. Prompt engineering is a real skill.
 
-## License
+---
 
-Private project. All rights reserved.
+*Private project. All rights reserved.*
