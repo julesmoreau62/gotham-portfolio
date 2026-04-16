@@ -9,9 +9,19 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Page() {
   const isMobile = useIsMobile()
-  const alreadyBooted = typeof window !== "undefined" && !!sessionStorage.getItem("booted")
-  const [booting, setBooting] = useState(!alreadyBooted)
-  const [mainVisible, setMainVisible] = useState(alreadyBooted)
+  const [booting, setBooting] = useState(true)
+  const [mainVisible, setMainVisible] = useState(false)
+  const [alreadyBooted, setAlreadyBooted] = useState(false)
+
+  // Read sessionStorage only after mount to avoid SSR/client hydration mismatch
+  useEffect(() => {
+    const booted = !!sessionStorage.getItem("booted")
+    if (booted) {
+      setAlreadyBooted(true)
+      setBooting(false)
+      setMainVisible(true)
+    }
+  }, [])
 
   // Skip boot sequence on mobile
   useEffect(() => {

@@ -90,7 +90,40 @@ Creator context: Grandmaster-level competitive player (former Top 500)
 Type: Next.js single-page application
 Aesthetic: Dark tactical/military "GOTHAM system"
 Sections: Strategy (BLAST case study), Intel Core (Sport Business Watch),
-Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive)
+Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive),
+Build (client web deployments — Ferrant PHE, AS Nortkerque 95)
+
+## CLIENT WEB BUILDS
+
+### Ferrant P.H.E — ferrantphe.fr
+Status: LIVE in production
+Client: Family-owned essential oils & concentrates manufacturer (Rodelinghem, Hauts-de-France, est. 1989)
+Scale: 16 products, 30 metric tons processed daily, supplies world's leading flavor houses
+Tech stack: HTML5, CSS3, vanilla JavaScript, Tailwind CSS (CDN), Playfair Display + Lato fonts
+Performance: PWA-ready (manifest, theme-color, Apple touch icon), lazy loading
+SEO: JSON-LD schema, Open Graph, sitemap.xml, robots.txt
+Discoverability: LLM layer via /llms.txt, structured data
+Sections: Home (hero + FIE Frankfurt event badge), Products (16 SKUs filterable Oils/Concentrates with PDF datasheets), About (3-act company history + industrial specs: 4 extractors, 316L SS, biomass boiler), Contact (M. Adrien Ferrant)
+Highlights: Bilingual FR/EN full UI, 16 downloadable PDF technical datasheets (FR+EN),
+dynamic product catalog with category filter, no-JS fallback,
+responsive (sidebar nav desktop / hamburger mobile), Kosher certification messaging
+Build method: AI-augmented (GitHub Codex + Claude Code)
+
+### AS Nortkerque 95 — asnortkerque95
+Status: IN DEV (~50% complete)
+Client: Local football club (Nortkerque, Pas-de-Calais, founded 1995)
+Scale: 250+ members, 14 squads (Seniors A/B, U23, U18→U7, Women's, Futsal, Veterans, Animation Football),
+youth academy U7→U17
+Context: Club's first-ever official website — full digital debut, no prior web presence
+Tech stack: HTML5, CSS3, vanilla JavaScript, Tailwind CSS (CDN), Bebas Neue + Inter fonts
+Performance: WebP images, lazy loading
+SEO: Open Graph, meta tags, sitemap.xml, local SEO targeting Nortkerque/Pas-de-Calais
+Sections: Home ("More than a club, a family"), Teams (all 14 squads),
+Gallery (matches & training with lightbox), Football School (U7→U17 academy),
+Contact (info + form)
+Design: Dark theme with club identity colors (green/yellow), mobile-first responsive
+Strategic CTAs: "Join us" / "Our matches"
+Build method: AI-augmented (GitHub Codex + Claude Code)
 
 ## PHOTOGRAPHY ARCHIVE
 Total files: 50+ | Sectors: 3 (Corporate, Events, Sport) | Field shots: 50+

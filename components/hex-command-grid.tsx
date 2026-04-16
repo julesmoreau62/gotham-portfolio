@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
-import { Crosshair, Radio, Camera, Brain, Linkedin, Mail, Download } from "lucide-react"
+import { Crosshair, Radio, Camera, Brain, Globe, Linkedin, Mail, Download } from "lucide-react"
 import Image from "next/image"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
@@ -11,6 +11,7 @@ import { IntelCorePanel } from "./intel-core-panel"
 import { FieldOpsPanel } from "./field-ops-panel"
 import { SignalPanel } from "./signal-panel"
 import { ImageryPanel } from "./imagery-panel"
+import { BuildPanel } from "./build-panel"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 interface HexModule {
@@ -74,6 +75,16 @@ const MODULES: HexModule[] = [
     glowColor: "186 100% 50%",
     status: "SCANNING",
     statusType: "intel",
+  },
+  {
+    id: "build",
+    title: "BUILD",
+    subtitle: "Web Deployments",
+    icon: Globe,
+    color: "hsl(262 83% 58%)",
+    glowColor: "262 83% 58%",
+    status: "LIVE",
+    statusType: "active",
   },
 ]
 
@@ -284,6 +295,41 @@ function PriorityTile({
 }
 
 /* ---- Secondary Tile (compact) for STRATEGY, FIELD OPS, IMAGERY ---- */
+/* Mini typewriter terminal for the BUILD tile */
+function BuildTerminal({ color }: { color: string }) {
+  const CMDS = ["claude --code", "codex deploy", "ai-augmented", "2 sites built"]
+  const [idx, setIdx] = useState(0)
+  const [len, setLen] = useState(0)
+  const [cursor, setCursor] = useState(true)
+
+  useEffect(() => {
+    const t = setInterval(() => setCursor(c => !c), 530)
+    return () => clearInterval(t)
+  }, [])
+
+  useEffect(() => {
+    if (len < CMDS[idx].length) {
+      const t = setTimeout(() => setLen(l => l + 1), 55)
+      return () => clearTimeout(t)
+    }
+    const t = setTimeout(() => { setIdx(i => (i + 1) % CMDS.length); setLen(0) }, 1800)
+    return () => clearTimeout(t)
+  }, [len, idx])
+
+  return (
+    <div className="mt-2 flex items-center gap-1 min-h-[14px]">
+      <span className="text-[9px] font-mono select-none" style={{ color: `${color}55` }}>&gt;_</span>
+      <span className="text-[9px] font-mono tracking-wide" style={{ color: `${color}cc` }}>
+        {CMDS[idx].slice(0, len)}
+      </span>
+      <span
+        className="text-[9px] font-mono leading-none"
+        style={{ color, opacity: cursor ? 1 : 0, transition: "opacity 0.1s" }}
+      >▋</span>
+    </div>
+  )
+}
+
 function SecondaryTile({
   module,
   index,
@@ -403,6 +449,9 @@ function SecondaryTile({
             {module.subtitle}
           </p>
 
+          {/* Typewriter terminal for BUILD */}
+          {module.id === "build" && <BuildTerminal color={module.color} />}
+
           {/* Progress bar for STRATEGY */}
           {isCritical && (
             <div className="flex items-center gap-2 mt-2">
@@ -429,8 +478,8 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
   const [time, setTime] = useState("")
   // Hash-based section navigation synced with browser history
-  type Section = "about" | "strategy" | "intel" | "field-ops" | "signal" | "imagery" | null
-  const VALID_SECTIONS = new Set<string>(["about", "strategy", "intel", "field-ops", "signal", "imagery"])
+  type Section = "about" | "strategy" | "intel" | "field-ops" | "signal" | "imagery" | "build" | null
+  const VALID_SECTIONS = new Set<string>(["about", "strategy", "intel", "field-ops", "signal", "imagery", "build"])
 
   const readHash = (): Section => {
     if (typeof window === "undefined") return null
@@ -667,9 +716,9 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
             />
           </div>
 
-          {/* Row 2: Secondary cards (STRATEGY, FIELD OPS, IMAGERY) */}
-          {/* On mobile: vertical stack, on desktop: 3-column grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+          {/* Row 2: Secondary cards (STRATEGY, FIELD OPS, IMAGERY, BUILD) */}
+          {/* On mobile: 2-column grid, on desktop: 4-column grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {/* STRATEGY */}
             <SecondaryTile
               module={MODULES[0]}
@@ -697,6 +746,16 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
               mouseOffset={mouseOffset}
               visible={visible}
               onSelect={() => openSection("imagery")}
+              skipTransitions={skipTransitions}
+            />
+
+            {/* BUILD */}
+            <SecondaryTile
+              module={MODULES[5]}
+              index={3}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("build")}
               skipTransitions={skipTransitions}
             />
           </div>
@@ -764,6 +823,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
       <FieldOpsPanel open={activeSection === "field-ops"} onClose={closeSection} />
       <SignalPanel open={activeSection === "signal"} onClose={closeSection} />
       <ImageryPanel open={activeSection === "imagery"} onClose={closeSection} />
+      <BuildPanel open={activeSection === "build"} onClose={closeSection} />
     </div>
   )
 }
