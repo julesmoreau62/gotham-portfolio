@@ -52,71 +52,67 @@ function useCountUp(end: number, dur: number, start: boolean, suffix = "") {
   return val
 }
 
+/* ---------- Telegram channels ---------- */
+const CHANNELS = [
+  { label: "Bloomberg",       domain: "Finance · Markets" },
+  { label: "SCMP",            domain: "Asia · Geopolitics" },
+  { label: "BBC Breaking",    domain: "World News" },
+  { label: "Reuters World",   domain: "International" },
+  { label: "Politico Europe", domain: "Europe · Politics" },
+  { label: "Al Jazeera EN",  domain: "Middle East · Global" },
+  { label: "Clash Report",    domain: "Conflicts" },
+  { label: "Our Wars Today",  domain: "Conflicts" },
+  { label: "Intel Slava",     domain: "Conflicts", bias: "PRO-RUSSIAN ⚠" },
+]
+
 /* ---------- Pipeline node types ---------- */
 const PIPELINE_NODES = [
   {
     id: "cron",
     label: "GitHub Actions",
-    sub: "Daily 06:00 UTC",
+    sub: "Daily 18:00 Paris (16:00 UTC)",
     icon: Clock,
     color: "hsl(var(--foreground))",
     border: "border-foreground/20",
     bg: "bg-foreground/5",
   },
   {
-    id: "scripts",
-    label: "Dual Crawlers",
-    sub: "veille_sport.py + veille_spatial.py",
+    id: "crawler",
+    label: "Telegram Crawler",
+    sub: "telegram_veille.py — Telethon API",
     icon: Satellite,
     color: "hsl(var(--neon-cyan))",
     border: "border-[hsl(var(--neon-cyan))]/30",
     bg: "bg-[hsl(var(--neon-cyan))]/5",
-    split: [
-      { label: "veille_sport.py", color: "hsl(var(--neon-cyan))", border: "border-[hsl(var(--neon-cyan))]/30", bg: "bg-[hsl(var(--neon-cyan))]/8" },
-      { label: "veille_spatial.py", color: "hsl(var(--field-green))", border: "border-[hsl(var(--field-green))]/30", bg: "bg-[hsl(var(--field-green))]/8" },
-    ],
   },
   {
-    id: "rss",
-    label: "RSS Aggregation",
-    sub: "35+ sources, 6 geographic regions",
+    id: "channels",
+    label: "Channel Aggregation",
+    sub: "9 sources — messages since midnight Paris time",
     icon: Rss,
     color: "hsl(var(--foreground))",
     border: "border-foreground/20",
     bg: "bg-foreground/5",
+    showRoster: true,
   },
   {
     id: "filter",
-    label: "AI Relevance Filter",
-    sub: "OpenRouter -> Gemini 2.0 Flash",
+    label: "AI Top-10 Selector",
+    sub: "OpenRouter → Gemini 2.0 Flash",
     icon: Filter,
     color: "hsl(var(--neon-cyan))",
     border: "border-[hsl(var(--neon-cyan))]/30",
     bg: "bg-[hsl(var(--neon-cyan))]/5",
-    badge: "PASS 1",
-  },
-  {
-    id: "deep",
-    label: "AI Deep Analysis",
-    sub: "Priority scoring / Category extraction / Insights",
-    icon: Cpu,
-    color: "hsl(var(--foreground))",
-    border: "border-foreground/20",
-    bg: "bg-foreground/5",
-    badge: "PASS 2",
+    badge: "AI PASS",
   },
   {
     id: "notion",
-    label: "Notion Databases",
-    sub: "Indexed & categorized intel",
+    label: "Notion Database",
+    sub: "Auto-rotation — max 100 entries — indexed & categorized",
     icon: Database,
     color: "hsl(var(--neon-cyan))",
     border: "border-[hsl(var(--neon-cyan))]/30",
     bg: "bg-[hsl(var(--neon-cyan))]/5",
-    split: [
-      { label: "Notion Sport DB", color: "hsl(var(--neon-cyan))", border: "border-[hsl(var(--neon-cyan))]/30", bg: "bg-[hsl(var(--neon-cyan))]/8" },
-      { label: "Notion Spatial DB", color: "hsl(var(--field-green))", border: "border-[hsl(var(--field-green))]/30", bg: "bg-[hsl(var(--field-green))]/8" },
-    ],
   },
   {
     id: "dash",
@@ -131,9 +127,9 @@ const PIPELINE_NODES = [
 
 /* ---------- Stats ---------- */
 const STATS = [
-  { label: "RSS SOURCES", value: 35, suffix: "+", color: "text-[hsl(var(--neon-cyan))]" },
-  { label: "GEO REGIONS", value: 6, suffix: "", color: "text-primary" },
-  { label: "AI PASSES", value: 2, suffix: "", color: "text-[hsl(var(--field-green))]" },
+  { label: "TELEGRAM CHANNELS", value: 9, suffix: "", color: "text-[hsl(var(--neon-cyan))]" },
+  { label: "CATEGORIES", value: 8, suffix: "", color: "text-primary" },
+  { label: "DAILY TOP", value: 10, suffix: "", color: "text-[hsl(var(--field-green))]" },
   { label: "DAILY CRON", value: 1, suffix: "x", color: "text-accent" },
 ]
 
@@ -316,7 +312,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
             <p
               className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             >
-              CONNECTING TO NOTION DATABASES...
+              CONNECTING TO NOTION DATABASE...
             </p>
             <p
               className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
@@ -326,7 +322,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
             <p
               className={`font-mono text-[9px] text-[hsl(var(--field-green))] tracking-[0.2em] transition-all duration-500 ${introStep >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             >
-              PIPELINE OPERATIONAL // 35+ SOURCES ACTIVE
+              PIPELINE OPERATIONAL // 9 CHANNELS ACTIVE
             </p>
           </div>
 
@@ -365,9 +361,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
             </div>
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-4 text-[9px] font-mono text-muted-foreground mr-4">
-                <span>PRIMARY: <span className="text-foreground font-bold">Sport Business</span></span>
-                <span className="w-px h-3 bg-border" />
-                <span>SECONDARY: <span className="text-foreground/70 font-bold">Spatial Intelligence</span></span>
+                <span>DOMAIN: <span className="text-foreground font-bold">Business · Finance · Geopolitics</span></span>
               </div>
               <button
                 onClick={onClose}
@@ -538,6 +532,25 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                             </div>
                           </div>
                         )}
+
+                        {/* Channel roster */}
+                        {"showRoster" in node && node.showRoster && (
+                          <div
+                            className={`w-full mt-3 grid grid-cols-3 gap-1.5 transition-all duration-700 ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+                            style={{ transitionDelay: "200ms" }}
+                          >
+                            {CHANNELS.map((ch) => (
+                              <div
+                                key={ch.label}
+                                className={`px-2 py-1.5 rounded border ${ch.bias ? "border-destructive/30 bg-destructive/5" : "border-border/20 bg-card/30"} transition-all duration-500`}
+                              >
+                                <span className={`text-[9px] font-mono font-bold block ${ch.bias ? "text-destructive/80" : "text-foreground/70"}`}>{ch.label}</span>
+                                <span className="text-[8px] font-mono text-muted-foreground block">{ch.domain}</span>
+                                {ch.bias && <span className="text-[7px] font-mono text-destructive block mt-0.5">{ch.bias}</span>}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )
                   })}
@@ -573,10 +586,10 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-[hsl(var(--neon-cyan))]/50 via-transparent to-[hsl(var(--neon-cyan))]/10" />
                     <h3 className="font-tech text-sm text-[hsl(var(--neon-cyan))] tracking-wider mb-3">CRAWLING LAYER</h3>
                     <ul className="space-y-2 text-[10px] font-mono text-foreground/70">
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />Python 3.11 + feedparser</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />Python 3.11 + Telethon</li>
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />GitHub Actions (CRON)</li>
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />RSS/Atom feed parsing</li>
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />35+ curated sources</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />Telegram API (Telethon)</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[hsl(var(--neon-cyan))]" />9 curated channels</li>
                     </ul>
                   </div>
 
@@ -587,8 +600,8 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                     <ul className="space-y-2 text-[10px] font-mono text-foreground/70">
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />OpenRouter API Gateway</li>
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />Google Gemini 2.0 Flash</li>
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />2-pass filter system</li>
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />Priority scoring engine</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />Top-10 selection engine</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" />Bias-aware ranking</li>
                     </ul>
                   </div>
 
@@ -597,7 +610,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-accent/50 via-transparent to-accent/10" />
                     <h3 className="font-tech text-sm text-accent tracking-wider mb-3">OUTPUT LAYER</h3>
                     <ul className="space-y-2 text-[10px] font-mono text-foreground/70">
-                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-accent" />Notion API integration</li>
+                      <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-accent" />Notion API + DB rotation</li>
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-accent" />Next.js 14 dashboard</li>
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-accent" />Netlify deployment</li>
                       <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-accent" />Real-time intelligence feed</li>

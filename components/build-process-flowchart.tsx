@@ -128,8 +128,8 @@ export function BuildProcessFlowchart() {
         </div>
         <h3 className="font-tech text-base md:text-lg text-foreground tracking-[0.1em] mb-2">NEED IDENTIFICATION</h3>
         <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-          Automate a daily sport business intelligence watch covering 35+ international sources across 6 geographic
-          regions. Goal: replace 2 hours of manual monitoring with a smart, automated system.
+          Automate a daily business, finance and geopolitical intelligence briefing, aggregating and ranking the most
+          important information from 9 Telegram channels. Goal: replace manual monitoring with an AI-powered daily top-10 system.
         </p>
       </PhaseCard>
 
@@ -146,7 +146,7 @@ export function BuildProcessFlowchart() {
           {'FEASIBILITY STUDY & ARCHITECTURE'}
         </h3>
         <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-          {'AI consultation to validate the technical approach: RSS + AI filtering selected over scraping. API selection: OpenRouter \u2192 Gemini 2.0 Flash for processing, Notion API for storage. Output format and priority scoring system defined.'}
+          {'AI consultation to validate the technical approach: Telegram API (Telethon) selected for real-time channel monitoring. API selection: OpenRouter \u2192 Gemini 2.0 Flash for top-10 selection, Notion API for storage with auto-rotation. Category classification and bias-awareness rules defined.'}
         </p>
       </PhaseCard>
 
@@ -195,7 +195,7 @@ export function BuildProcessFlowchart() {
           >
             <h4 className="font-tech text-sm text-accent tracking-[0.1em] mb-2">PIPELINE SPECIFICATIONS</h4>
             <p className="text-[11px] font-mono text-muted-foreground leading-relaxed">
-              RSS source list, AI filtering rules, CRON frequency, Notion DB structure.
+              Telegram channel list, AI top-10 selection rules, CRON schedule (18:00 Paris), Notion DB structure with rotation.
             </p>
           </div>
         </div>
@@ -256,7 +256,7 @@ export function BuildProcessFlowchart() {
               </span>
             </div>
             <p className="text-[11px] font-mono text-muted-foreground leading-relaxed">
-              Python 3.11, GitHub Actions CRON, 2-pass AI filter.
+              Python 3.11 + Telethon, GitHub Actions CRON, single-pass AI top-10 selector.
             </p>
           </div>
         </div>
@@ -322,10 +322,10 @@ export function BuildProcessFlowchart() {
           {/* Stats row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { value: "35+", label: "Sources" },
-              { value: "6", label: "Regions" },
-              { value: "06:00", label: "Daily UTC" },
-              { value: "$1.17", label: "/month" },
+              { value: "9", label: "Channels" },
+              { value: "8", label: "Categories" },
+              { value: "18:00", label: "Daily Paris" },
+              { value: "~$1", label: "/month" },
             ].map((stat) => (
               <div
                 key={stat.label}

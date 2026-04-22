@@ -91,7 +91,7 @@ export default function BuildProcessPage() {
             AI-AUGMENTED DEVELOPMENT
           </p>
           <p className="text-[10px] font-mono text-muted-foreground tracking-[0.2em]">
-            {'Sport Business Watch \u2014 Creation Methodology'}
+            {'Telegram Veille \u2014 Creation Methodology'}
           </p>
           <div className="mt-4 h-px bg-gradient-to-r from-[hsl(var(--neon-cyan))]/20 via-border/30 to-transparent" />
         </header>
@@ -138,7 +138,7 @@ export default function BuildProcessPage() {
           }}
         >
           <p className="text-[8px] font-mono text-muted-foreground/40 tracking-[0.3em]">
-            {'CLASSIFICATION: OPERATIONAL // AI-AUGMENTED BUILD PROCESS // SPORT BUSINESS WATCH v2.0'}
+            {'CLASSIFICATION: OPERATIONAL // AI-AUGMENTED BUILD PROCESS // TELEGRAM VEILLE v2.0'}
           </p>
         </footer>
       </div>

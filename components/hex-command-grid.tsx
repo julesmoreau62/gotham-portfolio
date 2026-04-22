@@ -69,7 +69,7 @@ const MODULES: HexModule[] = [
   {
     id: "intel",
     title: "INTEL CORE",
-    subtitle: "Sport Biz + Spatial",
+    subtitle: "Business · Finance · Geopolitics",
     icon: Brain,
     color: "hsl(186 100% 50%)",
     glowColor: "186 100% 50%",
@@ -240,7 +240,7 @@ function PriorityTile({
                 </h3>
                 <p className="text-[10px] md:text-xs font-mono text-muted-foreground tracking-wider leading-relaxed">
                   {module.subtitle}
-                  {isIntel && " // Sport business intelligence & geospatial ops"}
+                  {isIntel && " // Business, finance & geopolitical intelligence"}
                   {isOnline && " // Social media strategy & community growth"}
                 </p>
               </div>
@@ -692,9 +692,9 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
               onSelect={() => openSection("intel")}
               skipTransitions={skipTransitions}
               stats={[
-                { value: "35+", label: "RSS SOURCES" },
-                { value: "6", label: "GEO REGIONS" },
-                { value: "2", label: "AI PASSES" },
+                { value: "9", label: "TG CHANNELS" },
+                { value: "8", label: "CATEGORIES" },
+                { value: "10", label: "DAILY TOP" },
                 { value: "1x", label: "DAILY CRON" },
               ]}
             />
