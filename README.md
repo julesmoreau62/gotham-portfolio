@@ -55,7 +55,7 @@ Dark tactical/military aesthetic — single-page application featuring:
 | **Intel Core** | 🔵 SCANNING | Telegram Veille — AI Intelligence Dashboard — Business, Finance & Geopolitics (live production tool) |
 | **Field Ops** | 🟢 ACTIVE | ASI Multisports Tournament — Event Management (450+ personnel) |
 | **Signal** | 🟢 ONLINE | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
-| **Build** | 🟣 LIVE | Client Web Deployments — FerrantPHE (essential oils, live) + AS Nortkerque 95 (football club, in dev) |
+| **Build** | 🟣 LIVE | Client Web Deployments — [FerrantPHE](https://ferrantphe.fr) (essential oils, live) + AS Nortkerque 95 (football club, in dev) |
 | **Imagery** | 🟡 STORAGE | Photography archive — corporate, events, sport (50+ files) |
 
 ---

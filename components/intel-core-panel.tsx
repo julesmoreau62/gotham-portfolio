@@ -117,7 +117,7 @@ const PIPELINE_NODES = [
   {
     id: "dash",
     label: "Intelligence Dashboard",
-    sub: "Next.js // sport-business-watch.netlify.app",
+    sub: "Next.js // intel-dashboard-telegram.netlify.app",
     icon: BarChart3,
     color: "hsl(var(--alert-orange))",
     border: "border-accent/30",
@@ -626,7 +626,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
               >
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://sport-business-watch.netlify.app"
+                    href="https://intel-dashboard-telegram.netlify.app"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2.5 bg-[hsl(var(--neon-cyan))]/10 border border-[hsl(var(--neon-cyan))]/40 hover:bg-[hsl(var(--neon-cyan))]/20 hover:border-[hsl(var(--neon-cyan))]/60 rounded text-[hsl(var(--neon-cyan))] text-[10px] font-mono font-bold tracking-[0.15em] uppercase transition-all group"

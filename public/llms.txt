@@ -62,14 +62,16 @@ Strategic recommendation: India pivot via JV with Reliance — 600M mobile gamer
 CSR differentiation: "Brand Safety Shield" to attract Western sponsors avoiding EFG's Saudi PIF reputational risk.
 Output: Full dossier PDF + interactive HTML presentation on portfolio
 
-### Sport Business Watch — AI Intelligence Dashboard
-Type: Automated intelligence pipeline (production)
-Tech stack: Python 3.11 + feedparser (crawling), GitHub Actions CRON (daily 06:00 UTC),
-OpenRouter → Gemini 2.0 Flash (AI filtering, 2-pass system), Notion API (Sport DB + Spatial DB),
+### Telegram Veille — AI Intelligence Dashboard
+Type: Automated intelligence pipeline (production) — Business, Finance & Geopolitics
+Tech stack: Python 3.11 + Telethon (Telegram crawling), GitHub Actions CRON (daily 18:00 Paris),
+OpenRouter → Gemini 2.0 Flash (AI top-10 selection, single pass), Notion API (auto-rotating DB, max 100 entries),
 Next.js 14 dashboard, Netlify deployment
-Scale: 35+ RSS sources, 6 geographic regions, 2 AI passes, 1x daily CRON
-Cost: ~$1.17/month operational
-Status: Fully operational — live at sport-business-watch.netlify.app
+Scale: 9 curated Telegram channels (Bloomberg, Reuters, BBC Breaking, Al Jazeera, Politico Europe,
+SCMP, Clash Report, Our Wars Today, Intel Slava), 8 categories, top 10 daily briefing
+Bias-awareness: Intel Slava flagged as pro-Russian — cross-referenced with other sources
+Cost: ~$1/month operational
+Status: Fully operational — live at intel-dashboard-telegram.netlify.app
 
 ### ASI Multisports Tournament — Event Management
 Type: Field Operations (Comms Chief)
@@ -89,7 +91,7 @@ Creator context: Grandmaster-level competitive player (former Top 500)
 ### Personal Portfolio — julesmoreau.eu
 Type: Next.js single-page application
 Aesthetic: Dark tactical/military "GOTHAM system"
-Sections: Strategy (BLAST case study), Intel Core (Sport Business Watch),
+Sections: Strategy (BLAST case study), Intel Core (Telegram Veille — Business/Finance/Geopolitics),
 Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive),
 Build (client web deployments — Ferrant PHE, AS Nortkerque 95)
 
@@ -135,7 +137,7 @@ Sport: Action sports photography, football, golf, kitesurfing, volleyball — mu
 ## SKILLS & TOOLS
 Sport governance, esports business analysis, event operations, crisis management,
 sponsor activation, visual identity, content strategy, sport photography,
-Next.js, Python (AI-augmented), Notion API, GitHub Actions, Gemini AI, RSS aggregation,
+Next.js, Python (AI-augmented), Telethon, Notion API, GitHub Actions, Gemini AI, Telegram API,
 Lightroom, Premiere, Canva, Sony a6400
 
 ## DIFFERENTIATORS
