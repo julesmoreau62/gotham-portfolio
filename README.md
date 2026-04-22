@@ -55,6 +55,7 @@ Dark tactical/military aesthetic — single-page application featuring:
 | **Intel Core** | 🔵 SCANNING | Telegram Veille — AI Intelligence Dashboard — Business, Finance & Geopolitics (live production tool) |
 | **Field Ops** | 🟢 ACTIVE | ASI Multisports Tournament — Event Management (450+ personnel) |
 | **Signal** | 🟢 ONLINE | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
+| **Build** | 🟣 LIVE | Client Web Deployments — FerrantPHE (essential oils, live) + AS Nortkerque 95 (football club, in dev) |
 | **Imagery** | 🟡 STORAGE | Photography archive — corporate, events, sport (50+ files) |
 
 ---
@@ -105,6 +106,7 @@ components/
   boot-sequence.tsx    # Animated boot sequence
   strategy-panel.tsx   # BLAST case study panel
   intel-core-panel.tsx # Telegram Veille panel
+  build-panel.tsx      # Client web deployments panel (FerrantPHE + AS Nortkerque 95)
   field-ops-panel.tsx  # ASI Tournament panel
   signal-panel.tsx     # ASN95 comms panel
   imagery-panel.tsx    # Photography panel
