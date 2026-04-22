@@ -52,7 +52,7 @@ Dark tactical/military aesthetic — single-page application featuring:
 | Code Name | Status | Content |
 |-----------|--------|---------|
 | **Strategy** | 🔴 CRITICAL | BLAST Strategic Case Study — "David vs. Goliath 2.0" (23-page analysis) |
-| **Intel Core** | 🔵 SCANNING | Sport Business Watch — AI Intelligence Dashboard (live production tool) |
+| **Intel Core** | 🔵 SCANNING | Telegram Veille — AI Intelligence Dashboard — Business, Finance & Geopolitics (live production tool) |
 | **Field Ops** | 🟢 ACTIVE | ASI Multisports Tournament — Event Management (450+ personnel) |
 | **Signal** | 🟢 ONLINE | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
 | **Imagery** | 🟡 STORAGE | Photography archive — corporate, events, sport (50+ files) |
@@ -104,7 +104,7 @@ components/
   command-grid.tsx     # Main navigation hub
   boot-sequence.tsx    # Animated boot sequence
   strategy-panel.tsx   # BLAST case study panel
-  intel-core-panel.tsx # Sport Business Watch panel
+  intel-core-panel.tsx # Telegram Veille panel
   field-ops-panel.tsx  # ASI Tournament panel
   signal-panel.tsx     # ASN95 comms panel
   imagery-panel.tsx    # Photography panel
