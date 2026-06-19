@@ -83,6 +83,21 @@ Crisis management: 2 critical incidents resolved with zero event disruption
   - R-0030 WEATHER HAZARD: Heavy rainfall → indoor fallback activated in 30min, 100% adaptability
 Visual assets produced: Graphic charter, participant briefing (FR/EN bilingual), event poster
 
+### Royal Daring HC — Communication & Sponsoring
+Type: ISA Master internship / sport communication case study
+Client context: Royal Daring Club de Molenbeek, Brussels field hockey club founded in 1922
+Season: 2025–26
+Problem statement: How can an amateur club professionalize its image and funding with limited human and financial resources?
+Deliverables: Complete brand guidelines, bilingual FR/NL partner website, 9-page partner PDF brochure,
+social media adaptations, sponsor communication assets, LinkedIn page creation
+Partner website: leafy-pavlova-69305b.netlify.app
+Tech stack: HTML5, CSS3, vanilla JavaScript, Python ReportLab for programmatic PDF generation
+Design system: Royal Daring red/black/gold identity, sponsor-focused storytelling, bilingual content architecture
+Portfolio section: Daring case file with visual archive, brand identity, website preview, brochure access,
+social templates, and build/process documentation
+Build method: AI-augmented workflow using Claude Code and Codex, with human ownership of product direction,
+content architecture, integration decisions, visual QA, and final delivery
+
 ### Overwatch 2 Stats Dashboard
 Type: Personal tool (production)
 Tech: OverFast API, tactical/military aesthetic
@@ -93,6 +108,7 @@ Type: Next.js single-page application
 Aesthetic: Dark tactical/military "GOTHAM system"
 Sections: Strategy (BLAST case study), Intel Core (Telegram Veille — Business/Finance/Geopolitics),
 Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive),
+Daring (Royal Daring HC communication & sponsoring case study),
 Build (client web deployments — Ferrant PHE, AS Nortkerque 95)
 
 ## CLIENT WEB BUILDS
