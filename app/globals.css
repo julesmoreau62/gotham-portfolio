@@ -212,3 +212,223 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Royal Daring case-file entrance */
+.daring-panel-shell {
+  --daring-red: #C8102E;
+  --daring-black: #0D0D0D;
+  --daring-gold: #C9A84C;
+  --daring-white: #F4F0E8;
+}
+
+.daring-intro {
+  animation: daring-intro-hide 1.9s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(200, 16, 46, 0.22), transparent 28rem),
+    var(--daring-black);
+}
+
+.daring-intro__gate {
+  position: absolute;
+  inset: -20vh -12vw;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 22%),
+    linear-gradient(90deg, #180407, var(--daring-red) 48%, #4c0714);
+  box-shadow: 0 0 60px rgba(200, 16, 46, 0.4);
+}
+
+.daring-intro__gate--top {
+  clip-path: polygon(0 0, 100% 0, 100% 52%, 0 68%);
+  animation: daring-gate-top 1.45s cubic-bezier(0.77, 0, 0.18, 1) 0.38s forwards;
+}
+
+.daring-intro__gate--bottom {
+  clip-path: polygon(0 48%, 100% 32%, 100% 100%, 0 100%);
+  animation: daring-gate-bottom 1.45s cubic-bezier(0.77, 0, 0.18, 1) 0.38s forwards;
+}
+
+.daring-intro__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(201, 168, 76, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 168, 76, 0.18) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black 0 35%, transparent 72%);
+  animation: daring-grid-lock 1.2s ease-out forwards;
+}
+
+.daring-intro__crest {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: clamp(72px, 10vw, 132px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0.78);
+  filter: drop-shadow(0 0 28px rgba(201, 168, 76, 0.45));
+  opacity: 0;
+  animation: daring-crest-lock 1.35s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
+}
+
+.daring-intro__copy {
+  position: absolute;
+  left: 50%;
+  top: calc(46% + clamp(58px, 8vw, 98px));
+  display: grid;
+  gap: 0.35rem;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  animation: daring-copy-out 0.45s ease 1.08s forwards;
+}
+
+.daring-intro__copy span,
+.daring-intro__copy strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+}
+
+.daring-intro__copy span {
+  color: rgba(244, 240, 232, 0.72);
+  font-size: 0.64rem;
+}
+
+.daring-intro__copy strong {
+  color: var(--daring-gold);
+  font-size: clamp(0.72rem, 1.5vw, 1rem);
+}
+
+.daring-intro__scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(244, 240, 232, 0.82), rgba(200, 16, 46, 0.92), transparent);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-115%) skewX(-12deg);
+  animation: daring-scan 1.05s cubic-bezier(0.4, 0, 0.2, 1) 0.62s forwards;
+}
+
+.daring-enter {
+  opacity: 0;
+  transform: translateY(-12px);
+  animation: daring-enter-down 0.62s ease-out 1.08s forwards;
+}
+
+.daring-hero__image {
+  transform: scale(1.08);
+  filter: saturate(0.8) contrast(1.08) brightness(0.68);
+  animation: daring-hero-image 1.8s cubic-bezier(0.19, 1, 0.22, 1) 0.62s forwards;
+}
+
+.daring-hero__content {
+  opacity: 0;
+  animation: daring-content-rise 0.85s ease-out 1.02s forwards;
+}
+
+.daring-hero__sweep {
+  background: linear-gradient(105deg, transparent 18%, rgba(201, 168, 76, 0.2) 45%, rgba(200, 16, 46, 0.24) 50%, transparent 72%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-60%);
+  animation: daring-hero-sweep 1.25s ease-out 1.18s forwards;
+}
+
+.daring-stagger {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(10px);
+  animation: daring-stagger-in 0.76s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.daring-stagger--1 { animation-delay: 1.18s; }
+.daring-stagger--2 { animation-delay: 1.28s; }
+.daring-stagger--3 { animation-delay: 1.38s; }
+.daring-stagger--4 { animation-delay: 1.52s; }
+.daring-stagger--5 { animation-delay: 1.66s; }
+.daring-stagger--6 { animation-delay: 1.78s; }
+
+@keyframes daring-intro-hide {
+  0%, 82% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes daring-gate-top {
+  0% { transform: translateY(0) skewY(-2deg); }
+  100% { transform: translateY(-108%) skewY(-2deg); }
+}
+
+@keyframes daring-gate-bottom {
+  0% { transform: translateY(0) skewY(-2deg); }
+  100% { transform: translateY(108%) skewY(-2deg); }
+}
+
+@keyframes daring-grid-lock {
+  0% { transform: scale(1.2); opacity: 0; }
+  45% { opacity: 0.34; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes daring-crest-lock {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.58) rotate(-8deg); }
+  42% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(0deg); }
+  72% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+}
+
+@keyframes daring-copy-out {
+  to { opacity: 0; transform: translateX(-50%) translateY(12px); }
+}
+
+@keyframes daring-scan {
+  0% { opacity: 0; transform: translateX(-115%) skewX(-12deg); }
+  18% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateX(115%) skewX(-12deg); }
+}
+
+@keyframes daring-enter-down {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes daring-hero-image {
+  to {
+    transform: scale(1);
+    filter: saturate(1.02) contrast(1) brightness(1);
+  }
+}
+
+@keyframes daring-content-rise {
+  to { opacity: 1; }
+}
+
+@keyframes daring-hero-sweep {
+  0% { opacity: 0; transform: translateX(-60%); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(60%); }
+}
+
+@keyframes daring-stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .daring-intro {
+    display: none;
+  }
+
+  .daring-enter,
+  .daring-hero__image,
+  .daring-hero__content,
+  .daring-hero__sweep,
+  .daring-stagger {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

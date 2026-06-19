@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
-import { Crosshair, Radio, Camera, Brain, Globe, Linkedin, Mail, Download } from "lucide-react"
+import { Crosshair, Radio, Camera, Brain, Globe, Linkedin, Mail, Download, ShieldCheck } from "lucide-react"
 import Image from "next/image"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
@@ -12,6 +12,7 @@ import { FieldOpsPanel } from "./field-ops-panel"
 import { SignalPanel } from "./signal-panel"
 import { ImageryPanel } from "./imagery-panel"
 import { BuildPanel } from "./build-panel"
+import { DaringPanel } from "./daring-panel"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 interface HexModule {
@@ -84,6 +85,16 @@ const MODULES: HexModule[] = [
     color: "hsl(262 83% 58%)",
     glowColor: "262 83% 58%",
     status: "LIVE",
+    statusType: "active",
+  },
+  {
+    id: "daring",
+    title: "DARING",
+    subtitle: "Communication & Sponsoring",
+    icon: ShieldCheck,
+    color: "#C8102E",
+    glowColor: "348 85% 42%",
+    status: "CASE",
     statusType: "active",
   },
 ]
@@ -225,7 +236,7 @@ function PriorityTile({
                     className="text-[10px] font-mono tracking-[0.2em] uppercase font-bold"
                     style={{ color: module.color }}
                   >
-                    {module.status} // DEEP ANALYSIS
+                    {module.status} // {module.id === "daring" ? "Intership ISA" : "DEEP ANALYSIS"}
                   </span>
                 </div>
 
@@ -478,8 +489,8 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
   const [time, setTime] = useState("")
   // Hash-based section navigation synced with browser history
-  type Section = "about" | "strategy" | "intel" | "field-ops" | "signal" | "imagery" | "build" | null
-  const VALID_SECTIONS = new Set<string>(["about", "strategy", "intel", "field-ops", "signal", "imagery", "build"])
+  type Section = "about" | "strategy" | "intel" | "field-ops" | "signal" | "imagery" | "build" | "daring" | null
+  const VALID_SECTIONS = new Set<string>(["about", "strategy", "intel", "field-ops", "signal", "imagery", "build", "daring"])
 
   const readHash = (): Section => {
     if (typeof window === "undefined") return null
@@ -681,6 +692,24 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
 
         {/* Module grid: 2 rows on desktop, stacked + scroll on mobile */}
         <div className="w-full max-w-5xl flex flex-col gap-4 flex-1 min-h-0">
+          {/* Dedicated case study */}
+          <div className="grid grid-cols-1">
+            <PriorityTile
+              module={MODULES[6]}
+              index={0}
+              mouseOffset={mouseOffset}
+              visible={visible}
+              onSelect={() => openSection("daring")}
+              skipTransitions={skipTransitions}
+              stats={[
+                { value: "1922", label: "SINCE" },
+                { value: "FR/NL", label: "BILINGUAL" },
+                { value: "9", label: "PDF PAGES" },
+                { value: "2025-26", label: "Intership" },
+              ]}
+            />
+          </div>
+
           {/* Row 1: Priority cards (INTEL CORE + SIGNAL) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* INTEL CORE */}
@@ -824,6 +853,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
       <SignalPanel open={activeSection === "signal"} onClose={closeSection} />
       <ImageryPanel open={activeSection === "imagery"} onClose={closeSection} />
       <BuildPanel open={activeSection === "build"} onClose={closeSection} />
+      <DaringPanel open={activeSection === "daring"} onClose={closeSection} />
     </div>
   )
 }

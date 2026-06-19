@@ -70,6 +70,9 @@ export default function Page() {
         <h3>French Navy Reservist — Petty Officer (Second Maître)</h3>
         <p>Since Jul 2022, France. Ecole de Maîtrance: military rigor, crisis management, team leadership. NATO Secret clearance.</p>
 
+        <h2>Royal Daring HC — Communication &amp; Sponsoring</h2>
+        <p>Final ISA Master internship at Royal Daring Club de Molenbeek, a field hockey club founded in 1922 and based in Brussels. Problem statement: how can an amateur club professionalize its image and funding with limited human and financial resources? Deliverables: complete brand guidelines, live bilingual FR/NL partner website deployed on Netlify at leafy-pavlova-69305b.netlify.app, 9-page partner PDF brochure generated in Python with ReportLab, social media adaptations, and creation of the club&apos;s LinkedIn page. The website was built through an AI-augmented development workflow using Claude Code and Codex, with ownership of product direction, content architecture, visual QA, integration decisions, and final delivery. The work covers art direction, brand identity, web design, vanilla front-end development, programmatic PDF generation, sports social media strategy, and bilingual FR/NL production.</p>
+
         <h2>Projects</h2>
 
         <h3>BLAST Strategic Case Study — &quot;David vs. Goliath 2.0&quot;</h3>
