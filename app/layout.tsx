@@ -23,9 +23,20 @@ const shareTechMono = Share_Tech_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "CLASSIFIED // AGENT PROFILE - Jules Moreau",
+  title: "Jules Moreau | Esports Operations Portfolio",
   description:
-    "Jules Moreau - M2 STAPS ISA Sport Management Student. Specialized in event management, digital communication & strategic business analysis.",
+    "M2 International Sport Administration student seeking an Esports Operations / Event Management internship, February to June 2027. Event logistics, sponsor activation, digital communication and competitive intelligence.",
+  alternates: {
+    canonical: "https://www.julesmoreau.eu",
+  },
+  openGraph: {
+    title: "Jules Moreau | Esports Operations Portfolio",
+    description:
+      "Seeking an Esports Operations / Event Management internship, February to June 2027. Event logistics, sponsor activation, digital communication and AI-augmented intelligence workflows.",
+    url: "https://www.julesmoreau.eu",
+    siteName: "Jules Moreau Portfolio",
+    type: "profile",
+  },
 }
 
 export const viewport: Viewport = {
@@ -48,8 +59,16 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Jules Moreau",
               "url": "https://www.julesmoreau.eu",
+              "email": "mailto:jules.moreau1@outlook.com",
               "jobTitle": "M2 International Sport Administration — Esports Operations",
-              "description": "Hybrid sport-management/esports strategist. Former French Navy Reserve NCO (NATO Secret). M2 ISA Université de Lille. Seeking esports operations internship Apr–Aug 2026.",
+              "description": "Hybrid sport-management and esports operations profile. Former French Navy Reserve NCO, M2 ISA Université de Lille. Seeking an Esports Operations / Event Management internship from February to June 2027, focused on event logistics, sponsor activation, digital communication and competitive intelligence.",
+              "seeks": {
+                "@type": "Demand",
+                "name": "Esports Operations / Event Management internship",
+                "availabilityStarts": "2027-02-01",
+                "availabilityEnds": "2027-06-30",
+                "areaServed": ["FR", "BE", "EU"]
+              },
               "knowsAbout": ["Esports Management", "Event Operations", "Sport Governance", "Sponsor Activation", "Strategic Analysis", "Crisis Management", "Sport Photography"],
               "alumniOf": [
                 {"@type": "CollegeOrUniversity", "name": "Université de Lille (STAPS/ISA)"},

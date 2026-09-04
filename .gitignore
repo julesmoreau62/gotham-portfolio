@@ -11,3 +11,5 @@ node_modules/
 .env*.local
 .DS_Store
 .claude/
+# TypeScript incremental build cache
+*.tsbuildinfo

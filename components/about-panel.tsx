@@ -286,10 +286,10 @@ export function AboutPanel({
           {/* Footer */}
           <footer className="px-5 md:px-6 py-2 border-t border-border/30 bg-card/30 flex items-center justify-between shrink-0">
             <span className="text-[8px] font-mono text-muted-foreground">
-              ENCRYPTION: AES-256 // CLASSIFICATION: CONFIDENTIAL
+              FOCUS: ESPORTS OPS // EVENT LOGISTICS
             </span>
             <span className="text-[8px] font-mono text-muted-foreground">
-              DOSSIER REF: JM-2025-ALPHA
+              LOCATION: LILLE, FR
             </span>
           </footer>
 

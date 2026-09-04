@@ -41,63 +41,24 @@ export default function Page() {
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-background relative tactical-grid cursor-crosshair">
-      {/* Plain-text portfolio content for crawlers and screen readers */}
+      {/* Concise accessible summary; full text version lives at /briefing. */}
       <div className="sr-only">
         <h2>Jules Moreau — Esports &amp; Sport Operations Portfolio</h2>
-        <p>julesmoreau.eu | contact@julesmoreau.eu</p>
-
-        <h2>Identity</h2>
-        <p>Jules Moreau. Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program). Location: Lille, France. Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO). Status: Seeking internship in Esports Operations &amp; Event Management — April to August 2026. Target organizations: ESL FACEIT Group, BLAST, Twisted Minds, Talon Esports, Aspire Zone Foundation.</p>
-
-        <h2>Profile Summary</h2>
-        <p>Jules Moreau is a hybrid sport-management/esports strategist combining military precision, international mobility (French Guiana, New Caledonia, Congo), and hands-on production experience. Former French Navy Reserve NCO. Grandmaster-level Overwatch 2 player. Fluent in French (native) and English (C1). No formal coding background — builds production-grade tools through AI-augmented workflows.</p>
-
-        <h2>Academic</h2>
-        <p>Master&apos;s in Sport Sciences — International Sport Administration (ISA), Université de Lille (STAPS) — 2025–2027. Specialization: Esports management, sport governance, sustainability.</p>
-        <p>Bachelor&apos;s in Sport Sciences — Sport Management, ULCO — 2022–2025.</p>
-
-        <h2>Experience</h2>
-
-        <h3>Head of Communications — ASN95 (AS Nortkerque football club)</h3>
-        <p>Jan–Jun 2025, Hauts-de-France, France. Built complete digital presence from scratch (no prior content calendar, no visual guidelines). Created &quot;Les Pronos du Sultan&quot;: weekly sponsor prediction game with +467% CTR. Developed ASN95 Predict platform (beta, 88% complete): live rankings, user profiles, sponsor data layer. 15+ visuals per season across 3 recurring formats, 5+ sponsors integrated per visual. Match photography: 33 events covered, 500+ shots per match, 1,650+ edited photos across full season. Managed matchday operations, visual identity, sponsor activation.</p>
-
-        <h3>Infrastructure Tech — Bolt Echafaudage (via French Guiana mission)</h3>
-        <p>Aug 2025, Kourou, French Guiana. Kourou Beach Festival &amp; Tour de Guyane logistics. Heavy material handling (Telehandlers), VIP complex construction under strict timing constraints.</p>
-
-        <h3>Sales &amp; Ops Support — Guyane Matériels</h3>
-        <p>Jun–Jul 2025, French Guiana. Customer operations in tropical environment. Product photography asset production.</p>
-
-        <h3>French Navy Reservist — Petty Officer (Second Maître)</h3>
-        <p>Since Jul 2022, France. Ecole de Maîtrance: military rigor, crisis management, team leadership. NATO Secret clearance.</p>
-
-        <h2>Royal Daring HC — Communication &amp; Sponsoring</h2>
-        <p>Final ISA Master internship at Royal Daring Club de Molenbeek, a field hockey club founded in 1922 and based in Brussels. Problem statement: how can an amateur club professionalize its image and funding with limited human and financial resources? Deliverables: complete brand guidelines, live bilingual FR/NL partner website deployed on Netlify at leafy-pavlova-69305b.netlify.app, 9-page partner PDF brochure generated in Python with ReportLab, social media adaptations, and creation of the club&apos;s LinkedIn page. The website was built through an AI-augmented development workflow using Claude Code and Codex, with ownership of product direction, content architecture, visual QA, integration decisions, and final delivery. The work covers art direction, brand identity, web design, vanilla front-end development, programmatic PDF generation, sports social media strategy, and bilingual FR/NL production.</p>
-
-        <h2>Projects</h2>
-
-        <h3>BLAST Strategic Case Study — &quot;David vs. Goliath 2.0&quot;</h3>
-        <p>Academic strategic analysis (23 pages). Frameworks: PESTEL, VRIO, SWOT. Key findings: BLAST faces critical asymmetry vs EFG (Saudi PIF-backed ESL, $1.5Bn valuation vs $11M cash). Valve 2025 regulation banning franchised partner leagues collapses BLAST&apos;s Louvre Agreement advantage. Strategic recommendation: India pivot via JV with Reliance — 600M mobile gamers, bypass EFG&apos;s Western saturation. 3-phase execution roadmap: H1 2026 (Mumbai hub), H2 2026 (D2C gamification, Watch-to-Earn), 2027 (break-even). CSR differentiation: &quot;Brand Safety Shield&quot; to attract Western sponsors avoiding EFG&apos;s Saudi PIF reputational risk. Output: Full dossier PDF + interactive HTML presentation on portfolio.</p>
-
-        <h3>Telegram Veille — AI Intelligence Dashboard (Business, Finance & Geopolitics)</h3>
-        <p>Automated intelligence pipeline (production). Tech stack: Python 3.11 + Telethon (Telegram crawling), GitHub Actions CRON (daily 18:00 Paris), OpenRouter to Gemini 2.0 Flash (AI top-10 selection, single pass), Notion API (auto-rotating DB, max 100 entries), Next.js 14 dashboard, Netlify deployment. Scale: 9 curated Telegram channels, 8 categories, top 10 daily briefing. Cost: ~$1/month operational. Status: Fully operational — live at intel-dashboard-telegram.netlify.app.</p>
-
-        <h3>ASI Multisports Tournament — Event Management</h3>
-        <p>Field Operations (Comms Chief). December 2025, UFRSS Lille, 500+ personnel. Sports: Disc Golf, Wheelchair BBL, Laser Tag, Spikeball. Equipment: Sony a6400 (primary), GoPro x2 (action cam). Crisis management: 2 critical incidents resolved with zero event disruption. R-0200 FACILITY CONFLICT: Venue unavailable 2h before start, alternate gym secured in 45min, zero impact. R-0030 WEATHER HAZARD: Heavy rainfall, indoor fallback activated in 30min, 100% adaptability. Visual assets produced: Graphic charter, participant briefing (FR/EN bilingual), event poster.</p>
-
-        <h3>Overwatch 2 Stats Dashboard</h3>
-        <p>Personal tool (production). Tech: OverFast API, tactical/military aesthetic. Creator context: Grandmaster-level competitive player (former Top 500).</p>
-
-        <h3>Personal Portfolio — julesmoreau.eu</h3>
-        <p>Next.js single-page application. Aesthetic: Dark tactical/military &quot;GOTHAM system&quot;. Sections: Strategy (BLAST case study), Intel Core (Sport Business Watch), Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive).</p>
-
-        <h2>Photography Archive</h2>
-        <p>Total files: 50+. Sectors: 3 (Corporate, Events, Sport). Field shots: 50+. Equipment: Sony a6400 (mirrorless APS-C), GoPro x2, edited in Lightroom + Premiere. Corporate: Industrial &amp; corporate photography, professional environments, product shots. Events: Tournament and event coverage, ASI Tournament, matchday operations, competition documentation. Sport: Action sports photography, football, golf, kitesurfing, volleyball — multiple events.</p>
-
-        <h2>Skills &amp; Tools</h2>
-        <p>Sport governance, esports business analysis, event operations, crisis management, sponsor activation, visual identity, content strategy, sport photography, Next.js, Python (AI-augmented), Notion API, GitHub Actions, Gemini AI, RSS aggregation, Lightroom, Premiere, Canva, Sony a6400.</p>
-
-        <h2>Differentiators</h2>
-        <p>International mobility: lived and worked in French Guiana, New Caledonia, Congo. Military background: NATO Secret clearance, crisis management, command under pressure. Esports depth: M1 thesis on LEC/GRP vs CS2 economic models (interviews with BLAST VP James Woollard). Production-grade builder: deploys real tools with no formal coding background. Grandmaster Overwatch 2 player: credibility inside competitive esports communities.</p>
+        <p>
+          M2 International Sport Administration student seeking an Esports Operations /
+          Event Management internship from February to June 2027, focused on event logistics,
+          sponsor activation and competitive intelligence.
+        </p>
+        <p>
+          Featured work includes the Royal Daring HC sponsor system, ASN95 digital
+          communication, BLAST strategic analysis, ASI event operations, AI intelligence
+          tooling and sport photography.
+        </p>
+        <p>
+          Open the concise recruiter version at <a href="/briefing">/briefing</a>,
+          download the CV at <a href="/assets/cv-julesmoreau.pdf">/assets/cv-julesmoreau.pdf</a>,
+          or contact Jules at <a href="mailto:jules.moreau1@outlook.com">jules.moreau1@outlook.com</a>.
+        </p>
       </div>
 
       {/* Ambient layers (disabled on mobile for performance) */}

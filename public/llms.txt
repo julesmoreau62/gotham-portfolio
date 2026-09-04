@@ -1,13 +1,15 @@
 # Jules Moreau — Esports & Sport Operations Portfolio
-# julesmoreau.eu | contact@julesmoreau.eu
+# julesmoreau.eu | jules.moreau1@outlook.com | /briefing
 
 ## IDENTITY
 Name: Jules Moreau
 Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program)
 Location: Lille, France
 Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO)
-Status: Seeking internship in Esports Operations & Event Management — April to August 2026
-Target organizations: ESL FACEIT Group, BLAST, Twisted Minds, Talon Esports, Aspire Zone Foundation
+Status: Actively seeking an Esports Operations / Event Management internship, February to June 2027
+Availability: February 2027 - June 2027 (final ISA Master internship)
+Target roles: Esports operations, event management, event logistics, sponsor activation, competitive intelligence
+Recruiter briefing: https://www.julesmoreau.eu/briefing
 
 ## PROFILE SUMMARY
 Jules Moreau is a hybrid sport-management/esports strategist combining military precision,
@@ -71,7 +73,7 @@ Scale: 9 curated Telegram channels (Bloomberg, Reuters, BBC Breaking, Al Jazeera
 SCMP, Clash Report, Our Wars Today, Intel Slava), 8 categories, top 10 daily briefing
 Bias-awareness: Intel Slava flagged as pro-Russian — cross-referenced with other sources
 Cost: ~$1/month operational
-Status: Fully operational — live at intel-dashboard-telegram.netlify.app
+Status: Shipped prototype and archived public build — live demo at intel-dashboard-telegram.netlify.app
 
 ### ASI Multisports Tournament — Event Management
 Type: Field Operations (Comms Chief)

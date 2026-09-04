@@ -1118,7 +1118,7 @@ export function SignalPanel({ open, onClose }: { open: boolean; onClose: () => v
       >
         <div className="flex items-center gap-3 text-[7px] font-mono text-muted-foreground">
           <span>CHANNEL: <span className="text-primary">SOCIAL-MEDIA</span></span>
-          <span className="hidden sm:inline">ENCRYPTION: <span className="text-[hsl(var(--field-green))]">ACTIVE</span></span>
+          <span className="hidden sm:inline">PROOF: <span className="text-[hsl(var(--field-green))]">MEASURED GROWTH</span></span>
         </div>
         <div className="text-[7px] font-mono text-muted-foreground">
           FREQ: <span className="text-foreground">143.7 MHz</span>

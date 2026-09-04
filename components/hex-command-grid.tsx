@@ -3,7 +3,7 @@
 import React from "react"
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react"
-import { Crosshair, Radio, Camera, Brain, Globe, Linkedin, Mail, Download, ShieldCheck } from "lucide-react"
+import { Crosshair, Radio, Camera, Brain, Globe, Linkedin, Mail, Download, ShieldCheck, FileText } from "lucide-react"
 import Image from "next/image"
 import { AboutPanel } from "./about-panel"
 import { StrategyPanel } from "./strategy-panel"
@@ -24,8 +24,10 @@ interface HexModule {
   glowColor: string
   status: string
   statusType: "critical" | "active" | "online" | "standby" | "intel"
-  /* Module built and shipped, but execution deliberately suspended */
-  paused?: boolean
+  /* Plain-language reading aids for the compact tiles: what the role was,
+     and the single hardest piece of evidence behind it. */
+  role?: string
+  proof?: string
 }
 
 const MODULES: HexModule[] = [
@@ -36,8 +38,10 @@ const MODULES: HexModule[] = [
     icon: Crosshair,
     color: "hsl(24 95% 53%)",
     glowColor: "24 95% 53%",
-    status: "CRITICAL",
+    status: "CASE STUDY",
     statusType: "critical",
+    role: "Strategic analyst",
+    proof: "23-page market entry dossier",
   },
   {
     id: "events",
@@ -46,8 +50,10 @@ const MODULES: HexModule[] = [
     icon: Radio,
     color: "hsl(186 100% 50%)",
     glowColor: "186 100% 50%",
-    status: "ACTIVE",
+    status: "DELIVERED",
     statusType: "active",
+    role: "Event operations & crisis",
+    proof: "2 incidents solved, zero disruption",
   },
   {
     id: "comms",
@@ -66,8 +72,10 @@ const MODULES: HexModule[] = [
     icon: Camera,
     color: "hsl(215 20% 45%)",
     glowColor: "215 20% 45%",
-    status: "STANDBY",
+    status: "ARCHIVE",
     statusType: "standby",
+    role: "Sport & event photographer",
+    proof: "Matchday, corporate and action sets",
   },
   {
     id: "intel",
@@ -76,9 +84,8 @@ const MODULES: HexModule[] = [
     icon: Brain,
     color: "hsl(186 100% 50%)",
     glowColor: "186 100% 50%",
-    status: "PAUSED",
+    status: "R&D",
     statusType: "intel",
-    paused: true,
   },
   {
     id: "build",
@@ -89,6 +96,8 @@ const MODULES: HexModule[] = [
     glowColor: "262 83% 58%",
     status: "LIVE",
     statusType: "active",
+    role: "AI-assisted web delivery",
+    proof: "2 client sites shipped in production",
   },
   {
     id: "daring",
@@ -128,8 +137,8 @@ function PriorityTile({
 
   const isIntel = module.statusType === "intel"
   const isOnline = module.statusType === "online"
-  const isPaused = !!module.paused
-  const statusColor = isPaused ? "hsl(var(--alert-orange))" : module.color
+  const isDaring = module.id === "daring"
+  const statusColor = module.color
 
   return (
     <div
@@ -238,9 +247,7 @@ function PriorityTile({
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <div
                     className={`w-1.5 h-1.5 rounded-full ${
-                      isPaused
-                        ? "bg-[hsl(var(--alert-orange))] animate-[pulse_2.4s_ease-in-out_infinite]"
-                        : isIntel || isOnline
+                      isIntel || isOnline
                           ? "bg-[hsl(var(--neon-cyan))] animate-pulse"
                           : "bg-primary animate-pulse"
                     }`}
@@ -250,7 +257,7 @@ function PriorityTile({
                     style={{ color: statusColor }}
                   >
                     {module.status} //{" "}
-                    {isPaused ? "ON HOLD" : module.id === "daring" ? "Intership ISA" : "DEEP ANALYSIS"}
+                    {isDaring ? "FEATURED CASE" : isIntel ? "RESEARCH BUILD" : "DEEP ANALYSIS"}
                   </span>
                 </div>
 
@@ -269,10 +276,15 @@ function PriorityTile({
                   {isOnline && " // Social media strategy & community growth"}
                 </p>
 
-                {/* Pause reason — resources moved to another project */}
-                {isPaused && (
-                  <p className="mt-1 text-[9px] md:text-[10px] font-mono text-[hsl(var(--alert-orange))]/80 leading-snug">
-                    {"⏸ Paused — engineering time on a Qwen3 27B fine-tune for sport management"}
+                {isDaring && (
+                  <p className="mt-1 text-[9px] md:text-[10px] font-mono text-[#C9A84C]/85 leading-snug">
+                    Flagship case: sponsor website, brand system, PDF brochure and handover toolkit.
+                  </p>
+                )}
+
+                {isIntel && (
+                  <p className="mt-1 text-[9px] md:text-[10px] font-mono text-[hsl(var(--neon-cyan))]/80 leading-snug">
+                    Prototype shipped and documented; current R&D focus moved to sport-management AI fine-tuning.
                   </p>
                 )}
               </div>
@@ -477,9 +489,21 @@ function SecondaryTile({
           >
             {module.title}
           </h3>
-          <p className="text-[10px] font-mono text-muted-foreground tracking-wider">
-            {module.subtitle}
+
+          {/* Role — what Jules actually did */}
+          <p className="text-[10px] font-mono text-foreground/70 tracking-wide leading-snug">
+            {module.role ?? module.subtitle}
           </p>
+
+          {/* Proof — the evidence behind it */}
+          {module.proof && (
+            <p
+              className="mt-1 text-[9px] font-mono leading-snug transition-colors duration-300"
+              style={{ color: hovered ? module.color : `hsl(${module.glowColor} / 0.7)` }}
+            >
+              {module.proof}
+            </p>
+          )}
 
           {/* Typewriter terminal for BUILD */}
           {module.id === "build" && <BuildTerminal color={module.color} />}
@@ -599,13 +623,14 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
             </span>
           </div>
           <div className="h-5 w-px bg-border hidden md:block" />
-          <span className="text-xs font-mono text-muted-foreground hidden md:inline tracking-wider">
-            OP: J.MOREAU // CLEARANCE: LV.4 // NODE: FR-LIL-01
+          <span className="text-xs font-mono text-muted-foreground hidden lg:inline tracking-wider whitespace-nowrap">
+            J.MOREAU // ESPORTS OPERATIONS // EVENT MANAGEMENT
           </span>
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
-          {/* Contact links - hidden on mobile, shown in hamburger */}
+          {/* Contact links - hidden on mobile (the identity block carries them there).
+              CV and Briefing live in the hero CTA row, so they are not repeated here. */}
           <div className="hidden md:flex items-center gap-1.5">
             <a
               href="https://www.linkedin.com/in/jules-moreau-25405b363"
@@ -622,15 +647,6 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
               aria-label="Send Email"
             >
               <Mail className="w-4 h-4 text-[hsl(var(--field-green))]" />
-            </a>
-            <a
-              href="/assets/cv-julesmoreau.pdf"
-              download
-              className="w-9 h-9 flex items-center justify-center rounded border border-accent/30 bg-accent/5 hover:bg-accent/20 transition-all"
-              aria-label="Download CV"
-            >
-              <Download className="w-4 h-4 text-accent" />
-              <span className="text-xs font-mono text-accent ml-1">CV</span>
             </a>
           </div>
 
@@ -651,68 +667,120 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
 
       {/* Main content area - scrollable on mobile */}
       <main className="flex-1 flex flex-col items-center px-3 md:px-4 py-3 md:py-4 overflow-y-auto overflow-x-hidden">
-        {/* Compact identity block - clickable to open About */}
-        <button
-          type="button"
-          onClick={() => openSection("about")}
-          className={`text-center mb-3 md:mb-4 ${skipTransitions ? "" : "transition-all duration-1000"} group cursor-pointer ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        {/* Compact identity block */}
+        <section
+          className={`text-center mb-3 md:mb-4 [@media(max-height:900px)]:mb-2 ${skipTransitions ? "" : "transition-all duration-1000"} ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
           style={skipTransitions ? undefined : { transitionDelay: "100ms" }}
-          aria-label="Open agent profile dossier"
+          aria-labelledby="portfolio-identity-title"
         >
-          {/* Avatar ring - smaller on mobile */}
-          <div className="relative inline-flex items-center justify-center mb-2 md:mb-3">
+          <button
+            type="button"
+            onClick={() => openSection("about")}
+            className="group cursor-pointer"
+            aria-label="Open agent profile dossier"
+          >
+            {/* Avatar ring - smaller on mobile */}
+            <div className="relative inline-flex items-center justify-center mb-2 md:mb-3 [@media(max-height:900px)]:mb-1">
             {/* Outer rotating ring */}
-            <div
-              className="absolute w-16 h-16 md:w-24 md:h-24 rounded-full border border-dashed border-primary/20 group-hover:border-primary/50 transition-colors duration-500"
-              style={{ animation: "orbit-spin 20s linear infinite" }}
-            >
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_10px_hsl(186_100%_50%)]" />
-            </div>
-
-            {/* Core circle */}
-            <div className="w-12 h-12 md:w-20 md:h-20 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden animate-[avatar-pulse_2.5s_ease-in-out_infinite] md:animate-none">
-              <Image 
-                src="/assets/photo-cv.jpg" 
-                alt="Jules Moreau"
-                width={80}
-                height={80}
-                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-                priority
-              />
-              {/* Censorship bar at eyes level */}
-              <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
-                <span className="text-[5px] md:text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
-                  CONFIDENTIAL
-                </span>
+              <div
+                className="absolute w-16 h-16 md:w-24 md:h-24 [@media(max-height:900px)]:md:w-16 [@media(max-height:900px)]:md:h-16 rounded-full border border-dashed border-primary/20 group-hover:border-primary/50 transition-colors duration-500"
+                style={{ animation: "orbit-spin 20s linear infinite" }}
+              >
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary shadow-[0_0_10px_hsl(217_91%_60%)]" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[hsl(var(--neon-cyan))] shadow-[0_0_10px_hsl(186_100%_50%)]" />
               </div>
-              {/* Ping */}
-              <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
-            </div>
-          </div>
 
-          <h1 className="font-tech text-lg md:text-2xl lg:text-3xl font-bold text-foreground tracking-[0.15em] mb-0.5 group-hover:text-primary transition-colors duration-300">
-            JULES MOREAU
-          </h1>
-          <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
-            M2 STAPS ISA
-          </p>
-          {/* Tagline hidden on mobile */}
-          <p className="hidden md:block font-mono text-xs text-muted-foreground mt-1.5 max-w-md mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
-            Operative specialized in sport management, event logistics,
-            digital communication & competitive intelligence.
-          </p>
-          <span className="hidden md:inline-block mt-1 text-xs font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
-            [ CLICK TO OPEN DOSSIER ]
-          </span>
-          {/* Mobile-only tap hint */}
-          <span className="inline-block md:hidden mt-1.5 text-[10px] font-mono text-primary/60 tracking-[0.2em] animate-pulse">
-            [ TAP TO OPEN ]
-          </span>
-        </button>
+              {/* Core circle */}
+              <div className="w-12 h-12 md:w-20 md:h-20 [@media(max-height:900px)]:md:w-14 [@media(max-height:900px)]:md:h-14 rounded-full bg-muted border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_60px_hsl(217_91%_60%/0.5)] flex items-center justify-center relative shadow-[0_0_40px_hsl(217_91%_60%/0.3)] transition-all duration-500 overflow-hidden animate-[avatar-pulse_2.5s_ease-in-out_infinite] md:animate-none">
+                <Image 
+                  src="/assets/photo-cv.jpg" 
+                  alt="Jules Moreau"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                  priority
+                />
+                {/* Censorship bar at eyes level */}
+                <div className="absolute top-[20%] left-0 right-0 h-[18%] bg-black flex items-center justify-center z-10">
+                  <span className="text-[5px] md:text-[6px] font-mono font-bold text-white tracking-[0.15em] uppercase">
+                    CONFIDENTIAL
+                  </span>
+                </div>
+                {/* Ping */}
+                <div className="absolute inset-0 rounded-full border border-primary/30 animate-node-ping" />
+              </div>
+            </div>
+
+            <h1 id="portfolio-identity-title" className="font-tech text-lg md:text-2xl lg:text-3xl font-bold text-foreground tracking-[0.15em] mb-0.5 group-hover:text-primary transition-colors duration-300">
+              JULES MOREAU
+            </h1>
+            <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
+              M2 STAPS ISA
+            </p>
+            <p className="font-mono text-[11px] md:text-sm text-foreground mt-2 max-w-3xl mx-auto leading-snug">
+              Seeking an{" "}
+              <span className="text-[hsl(var(--field-green))] font-semibold">
+                Esports Operations / Event Management internship
+              </span>
+              , February to June 2027.
+            </p>
+            <p className="font-mono text-[10px] md:text-xs text-muted-foreground mt-1 max-w-3xl mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
+              Event logistics, sponsor activation, digital communication & competitive intelligence.
+            </p>
+            <span className="hidden md:inline-block mt-1 text-xs font-mono text-primary/0 group-hover:text-primary/60 transition-all duration-300 tracking-[0.2em]">
+              [ CLICK TO OPEN DOSSIER ]
+            </span>
+            <span className="inline-block md:hidden mt-1.5 text-[10px] font-mono text-primary/60 tracking-[0.2em] animate-pulse">
+              [ TAP TO OPEN ]
+            </span>
+          </button>
+
+          {/* Primary recruiter actions */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => openSection("daring")}
+              className="flex min-h-10 items-center gap-2 rounded border-2 border-[#C8102E]/70 bg-[#C8102E]/20 px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-[#F4F0E8] shadow-[0_0_20px_rgba(200,16,46,0.18)] transition-all hover:bg-[#C8102E]/35 hover:border-[#C8102E] hover:shadow-[0_0_28px_rgba(200,16,46,0.3)]"
+            >
+              <ShieldCheck className="w-4 h-4 text-[#C9A84C]" />
+              View best case study
+            </button>
+            <a
+              href="/assets/cv-julesmoreau.pdf"
+              download
+              className="flex min-h-10 items-center gap-2 rounded border-2 border-accent/70 bg-accent/20 px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-accent shadow-[0_0_20px_hsl(var(--accent)/0.15)] transition-all hover:bg-accent/30 hover:border-accent hover:shadow-[0_0_28px_hsl(var(--accent)/0.28)]"
+            >
+              <Download className="w-4 h-4" />
+              Download CV
+            </a>
+            <a
+              href="/briefing"
+              className="flex min-h-9 items-center gap-2 rounded border border-primary/30 bg-primary/[0.06] px-3 py-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.16em] text-primary/80 transition-all hover:bg-primary/15 hover:border-primary/55 hover:text-primary"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              30-second briefing
+            </a>
+            <a
+              href="mailto:jules.moreau1@outlook.com"
+              className="flex min-h-9 items-center gap-2 rounded border border-[hsl(var(--field-green))]/30 bg-[hsl(var(--field-green))]/[0.06] px-3 py-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.16em] text-[hsl(var(--field-green))]/85 transition-all hover:bg-[hsl(var(--field-green))]/15 hover:border-[hsl(var(--field-green))]/55 md:hidden"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              Email
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jules-moreau-25405b363"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-9 items-center gap-2 rounded border border-primary/30 bg-primary/[0.06] px-3 py-1.5 text-[9px] font-mono font-bold uppercase tracking-[0.16em] text-primary/80 transition-all hover:bg-primary/15 hover:border-primary/55 hover:text-primary md:hidden"
+            >
+              <Linkedin className="w-3.5 h-3.5" />
+              LinkedIn
+            </a>
+          </div>
+        </section>
 
         {/* Module grid: 2 rows on desktop, stacked + scroll on mobile */}
-        <div className="w-full max-w-5xl flex flex-col gap-4 flex-1 min-h-0">
+        <div className="w-full max-w-5xl flex flex-col gap-4 [@media(max-height:900px)]:gap-2.5 flex-1 min-h-0">
           {/* Dedicated case study */}
           <div className="grid grid-cols-1">
             <PriorityTile
@@ -726,7 +794,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
                 { value: "1922", label: "SINCE" },
                 { value: "FR/NL", label: "BILINGUAL" },
                 { value: "9", label: "PDF PAGES" },
-                { value: "2025-26", label: "Intership" },
+                { value: "2025-26", label: "Internship" },
               ]}
             />
           </div>
@@ -745,7 +813,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
                 { value: "9", label: "TG CHANNELS" },
                 { value: "8", label: "CATEGORIES" },
                 { value: "10", label: "DAILY TOP" },
-                { value: "PAUSED", label: "DAILY CRON", color: "hsl(var(--alert-orange))" },
+                { value: "ARCHIVE", label: "STATUS", color: "hsl(var(--neon-cyan))" },
               ]}
             />
 
@@ -812,7 +880,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
 
           {/* Skill tags - hidden on mobile, visible on desktop */}
           <div
-            className={`hidden md:flex w-full justify-center ${skipTransitions ? "" : "transition-all duration-700"} ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            className={`hidden md:flex [@media(max-height:900px)]:md:hidden w-full justify-center ${skipTransitions ? "" : "transition-all duration-700"} ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={skipTransitions ? undefined : { transitionDelay: "800ms" }}
           >
             <div className="flex flex-wrap justify-center gap-2 max-w-lg">
@@ -847,21 +915,20 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
         className={`hidden md:flex h-6 items-center justify-between px-4 md:px-8 border-t border-border/30 bg-card/20 backdrop-blur shrink-0 ${skipTransitions ? "" : "transition-all duration-700"} ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
         style={skipTransitions ? undefined : { transitionDelay: "400ms" }}
       >
-        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
+        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground whitespace-nowrap">
           <span>
-            SYS: <span className="text-[hsl(var(--field-green))]">OPERATIONAL</span>
+            AVAILABLE: <span className="text-[hsl(var(--field-green))]">FEB — JUN 2027</span>
           </span>
           <span>
-            UPLINK: <span className="text-primary">STABLE</span>
+            TARGET: <span className="text-primary">ESPORTS OPS / EVENT MGMT INTERNSHIP</span>
           </span>
-          <span>
-            THREAT: <span className="text-accent">LOW</span>
+          <span className="hidden lg:inline">
+            PROOF: <span className="text-accent">LIVE CASES</span>
           </span>
         </div>
-        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
-          <span>ENCRYPTION: AES-256</span>
+        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground whitespace-nowrap">
           <span>
-            NODE: <span className="text-foreground">FR-LIL-01</span>
+            LOCATION: <span className="text-foreground">LILLE, FR</span>
           </span>
         </div>
       </footer>
