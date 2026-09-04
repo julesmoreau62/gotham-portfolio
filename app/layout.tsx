@@ -25,7 +25,7 @@ const shareTechMono = Share_Tech_Mono({
 export const metadata: Metadata = {
   title: "CLASSIFIED // AGENT PROFILE - Jules Moreau",
   description:
-    "Jules Moreau - M1 STAPS ISA Sport Management Student. Specialized in event management, digital communication & strategic business analysis.",
+    "Jules Moreau - M2 STAPS ISA Sport Management Student. Specialized in event management, digital communication & strategic business analysis.",
 }
 
 export const viewport: Viewport = {
@@ -48,8 +48,8 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Jules Moreau",
               "url": "https://www.julesmoreau.eu",
-              "jobTitle": "M1 International Sport Administration — Esports Operations",
-              "description": "Hybrid sport-management/esports strategist. Former French Navy Reserve NCO (NATO Secret). M1 ISA Université de Lille. Seeking esports operations internship Apr–Aug 2026.",
+              "jobTitle": "M2 International Sport Administration — Esports Operations",
+              "description": "Hybrid sport-management/esports strategist. Former French Navy Reserve NCO (NATO Secret). M2 ISA Université de Lille. Seeking esports operations internship Apr–Aug 2026.",
               "knowsAbout": ["Esports Management", "Event Operations", "Sport Governance", "Sponsor Activation", "Strategic Analysis", "Crisis Management", "Sport Photography"],
               "alumniOf": [
                 {"@type": "CollegeOrUniversity", "name": "Université de Lille (STAPS/ISA)"},

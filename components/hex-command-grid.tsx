@@ -24,6 +24,8 @@ interface HexModule {
   glowColor: string
   status: string
   statusType: "critical" | "active" | "online" | "standby" | "intel"
+  /* Module built and shipped, but execution deliberately suspended */
+  paused?: boolean
 }
 
 const MODULES: HexModule[] = [
@@ -74,8 +76,9 @@ const MODULES: HexModule[] = [
     icon: Brain,
     color: "hsl(186 100% 50%)",
     glowColor: "186 100% 50%",
-    status: "SCANNING",
+    status: "PAUSED",
     statusType: "intel",
+    paused: true,
   },
   {
     id: "build",
@@ -114,7 +117,7 @@ function PriorityTile({
   mouseOffset: { x: number; y: number }
   visible: boolean
   onSelect?: () => void
-  stats: { label: string; value: string }[]
+  stats: { label: string; value: string; color?: string }[]
   skipTransitions?: boolean
 }) {
   const Icon = module.icon
@@ -125,6 +128,8 @@ function PriorityTile({
 
   const isIntel = module.statusType === "intel"
   const isOnline = module.statusType === "online"
+  const isPaused = !!module.paused
+  const statusColor = isPaused ? "hsl(var(--alert-orange))" : module.color
 
   return (
     <div
@@ -231,12 +236,21 @@ function PriorityTile({
               <div className="flex-1 min-w-0">
                 {/* Status */}
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <div className={`w-1.5 h-1.5 rounded-full ${isIntel || isOnline ? "bg-[hsl(var(--neon-cyan))] animate-pulse" : "bg-primary animate-pulse"}`} />
+                  <div
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      isPaused
+                        ? "bg-[hsl(var(--alert-orange))] animate-[pulse_2.4s_ease-in-out_infinite]"
+                        : isIntel || isOnline
+                          ? "bg-[hsl(var(--neon-cyan))] animate-pulse"
+                          : "bg-primary animate-pulse"
+                    }`}
+                  />
                   <span
                     className="text-[10px] font-mono tracking-[0.2em] uppercase font-bold"
-                    style={{ color: module.color }}
+                    style={{ color: statusColor }}
                   >
-                    {module.status} // {module.id === "daring" ? "Intership ISA" : "DEEP ANALYSIS"}
+                    {module.status} //{" "}
+                    {isPaused ? "ON HOLD" : module.id === "daring" ? "Intership ISA" : "DEEP ANALYSIS"}
                   </span>
                 </div>
 
@@ -254,6 +268,13 @@ function PriorityTile({
                   {isIntel && " // Business, finance & geopolitical intelligence"}
                   {isOnline && " // Social media strategy & community growth"}
                 </p>
+
+                {/* Pause reason — resources moved to another project */}
+                {isPaused && (
+                  <p className="mt-1 text-[9px] md:text-[10px] font-mono text-[hsl(var(--alert-orange))]/80 leading-snug">
+                    {"⏸ Paused — engineering time on a Qwen3 27B fine-tune for sport management"}
+                  </p>
+                )}
               </div>
 
               {/* Arrow indicator */}
@@ -287,7 +308,7 @@ function PriorityTile({
                   <div key={i} className="text-center md:text-left">
                     <span
                       className="block text-sm md:text-base font-mono font-bold tabular-nums"
-                      style={{ color: module.color }}
+                      style={{ color: stat.color ?? module.color }}
                     >
                       {stat.value}
                     </span>
@@ -674,7 +695,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
             JULES MOREAU
           </h1>
           <p className="font-mono text-[10px] md:text-xs text-primary tracking-[0.3em]">
-            M1 STAPS ISA
+            M2 STAPS ISA
           </p>
           {/* Tagline hidden on mobile */}
           <p className="hidden md:block font-mono text-xs text-muted-foreground mt-1.5 max-w-md mx-auto leading-relaxed group-hover:text-muted-foreground/80 transition-colors">
@@ -724,7 +745,7 @@ export function HexCommandGrid({ visible, skipTransitions = false }: { visible: 
                 { value: "9", label: "TG CHANNELS" },
                 { value: "8", label: "CATEGORIES" },
                 { value: "10", label: "DAILY TOP" },
-                { value: "1x", label: "DAILY CRON" },
+                { value: "PAUSED", label: "DAILY CRON", color: "hsl(var(--alert-orange))" },
               ]}
             />
 

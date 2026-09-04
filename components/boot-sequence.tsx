@@ -15,7 +15,7 @@ const BOOT_LINES = [
   { text: "[WARN] Threat level: ELEVATED", delay: 500, type: "warn" },
   { text: "Loading agent profile...", delay: 650, type: "system" },
   { text: ">>  AGENT: JULES MOREAU", delay: 800, type: "agent" },
-  { text: ">>  RANK: M1 STAPS ISA", delay: 950, type: "agent" },
+  { text: ">>  RANK: M2 STAPS ISA", delay: 950, type: "agent" },
   { text: ">>  CLEARANCE: LEVEL 4 - FULL ACCESS", delay: 1100, type: "clearance" },
   { text: ">>  STATUS: ACTIVE OPERATIVE", delay: 1250, type: "status" },
   { text: "Loading tactical modules...", delay: 1400, type: "system" },

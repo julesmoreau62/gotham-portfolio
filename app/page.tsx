@@ -47,7 +47,7 @@ export default function Page() {
         <p>julesmoreau.eu | contact@julesmoreau.eu</p>
 
         <h2>Identity</h2>
-        <p>Jules Moreau. Current role: M1 International Sport Administration student, Université de Lille (STAPS/ISA program). Location: Lille, France. Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO). Status: Seeking internship in Esports Operations &amp; Event Management — April to August 2026. Target organizations: ESL FACEIT Group, BLAST, Twisted Minds, Talon Esports, Aspire Zone Foundation.</p>
+        <p>Jules Moreau. Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program). Location: Lille, France. Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO). Status: Seeking internship in Esports Operations &amp; Event Management — April to August 2026. Target organizations: ESL FACEIT Group, BLAST, Twisted Minds, Talon Esports, Aspire Zone Foundation.</p>
 
         <h2>Profile Summary</h2>
         <p>Jules Moreau is a hybrid sport-management/esports strategist combining military precision, international mobility (French Guiana, New Caledonia, Congo), and hands-on production experience. Former French Navy Reserve NCO. Grandmaster-level Overwatch 2 player. Fluent in French (native) and English (C1). No formal coding background — builds production-grade tools through AI-augmented workflows.</p>

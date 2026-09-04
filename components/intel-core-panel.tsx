@@ -19,6 +19,8 @@ import {
   CheckCircle2,
   Satellite,
   Unlock,
+  PauseCircle,
+  FlaskConical,
 } from "lucide-react"
 import Link from "next/link"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -70,11 +72,13 @@ const PIPELINE_NODES = [
   {
     id: "cron",
     label: "GitHub Actions",
-    sub: "Daily 18:00 Paris (16:00 UTC)",
+    sub: "Schedule disabled — was daily 18:00 Paris (16:00 UTC)",
     icon: Clock,
-    color: "hsl(var(--foreground))",
-    border: "border-foreground/20",
-    bg: "bg-foreground/5",
+    color: "hsl(var(--alert-orange))",
+    border: "border-accent/30",
+    bg: "bg-accent/5",
+    badge: "SUSPENDED",
+    suspended: true,
   },
   {
     id: "crawler",
@@ -130,7 +134,22 @@ const STATS = [
   { label: "TELEGRAM CHANNELS", value: 9, suffix: "", color: "text-[hsl(var(--neon-cyan))]" },
   { label: "CATEGORIES", value: 8, suffix: "", color: "text-primary" },
   { label: "DAILY TOP", value: 10, suffix: "", color: "text-[hsl(var(--field-green))]" },
-  { label: "DAILY CRON", value: 1, suffix: "x", color: "text-accent" },
+  { label: "DAILY CRON", value: 1, suffix: "x", color: "text-accent", text: "PAUSED" },
+]
+
+/* ---- Pause context — why the pipeline is idle ---- */
+const PAUSE_PIPELINE_STATE = [
+  { k: "Codebase", v: "Intact — no regression" },
+  { k: "Cron schedule", v: "Disabled on GitHub Actions" },
+  { k: "Notion database", v: "Frozen on last snapshot" },
+  { k: "Dashboard", v: "Still online — read-only archive" },
+]
+
+const PAUSE_REASSIGNMENT = [
+  { k: "Model", v: "Qwen3 27B (open weights)" },
+  { k: "Task", v: "Domain fine-tuning — sport management" },
+  { k: "Scope", v: "Dataset curation · LoRA training · eval" },
+  { k: "Status", v: "In progress" },
 ]
 
 export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
@@ -141,6 +160,8 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
   const [activePipe, setActivePipe] = useState(-1)
   const scrollRef = useRef<HTMLDivElement>(null)
   const hasPlayedIntro = useRef(false)
+  const isMobileRef = useRef(isMobile)
+  isMobileRef.current = isMobile
 
   /* Reset on close */
   useEffect(() => {
@@ -169,7 +190,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
     }
 
     hasPlayedIntro.current = true
-    const timings = isMobile
+    const timings = isMobileRef.current
       ? [80, 300, 600, 900, 1200]
       : [200, 800, 1600, 2400, 3200]
 
@@ -184,7 +205,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
       }, timings[4]),
     ]
     return () => timers.forEach(clearTimeout)
-  }, [open, phase, isMobile])
+  }, [open, phase])
 
   /* Pipeline cascade animation */
   useEffect(() => {
@@ -223,74 +244,63 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
 
       {/* ============ INTRO PHASE ============ */}
       {phase === "intro" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-          {/* Neural network animation */}
-          <div className="relative w-48 h-48 md:w-64 md:h-64 mb-8">
-            {/* Central brain */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 overflow-hidden">
+          {/* Channel intake ring — one node per real Telegram source */}
+          <div className="relative w-48 h-48 md:w-60 md:h-60 mb-6">
+            {/* Core */}
             <div
-              className={`absolute inset-0 m-auto w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[hsl(var(--neon-cyan))]/50 flex items-center justify-center transition-all duration-700 ${introStep >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
+              className={`absolute inset-0 m-auto w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[hsl(var(--neon-cyan))]/50 flex items-center justify-center transition-all duration-700 ${introStep >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
               style={{
                 boxShadow: introStep >= 2 ? "0 0 40px hsl(186 100% 50% / 0.3), inset 0 0 20px hsl(186 100% 50% / 0.1)" : "none",
               }}
             >
               <Brain
-                className="w-8 h-8 md:w-10 md:h-10 text-[hsl(var(--neon-cyan))]"
+                className="w-7 h-7 md:w-9 md:h-9 text-[hsl(var(--neon-cyan))]"
                 style={{ filter: introStep >= 2 ? "drop-shadow(0 0 10px hsl(186 100% 50%))" : "none" }}
               />
             </div>
 
-            {/* Orbiting data nodes */}
-            {[0, 1, 2, 3, 4, 5].map((i) => {
-              const angle = (i / 6) * Math.PI * 2 - Math.PI / 2
-              const r = 80
-              const x = 50 + (r / 128) * 100 * Math.cos(angle)
-              const y = 50 + (r / 128) * 100 * Math.sin(angle)
-              const colors = [
-                "bg-[hsl(var(--neon-cyan))]",
-                "bg-primary",
-                "bg-[hsl(var(--field-green))]",
-                "bg-accent",
-                "bg-[hsl(var(--neon-cyan))]",
-                "bg-primary",
-              ]
+            {/* Channel nodes (9 = actual source count) */}
+            {CHANNELS.map((ch, i) => {
+              const angle = (i / CHANNELS.length) * Math.PI * 2 - Math.PI / 2
+              const r = 58
+              const x = 50 + (r / 120) * 100 * Math.cos(angle)
+              const y = 50 + (r / 120) * 100 * Math.sin(angle)
               return (
                 <div
-                  key={i}
-                  className={`absolute w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${colors[i]} transition-all duration-500`}
+                  key={ch.label}
+                  className="absolute w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[hsl(var(--neon-cyan))] transition-all duration-500"
                   style={{
                     left: `${x}%`,
                     top: `${y}%`,
                     transform: "translate(-50%, -50%)",
                     opacity: introStep >= 2 ? 1 : 0,
-                    transitionDelay: `${i * 100}ms`,
-                    boxShadow: introStep >= 3 ? `0 0 12px currentColor` : "none",
+                    transitionDelay: `${i * 55}ms`,
+                    boxShadow: introStep >= 3 ? "0 0 8px hsl(186 100% 50%)" : "none",
                   }}
                 />
               )
             })}
 
-            {/* Connection lines (SVG) */}
+            {/* Spokes converging — data ingestion toward the core */}
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-              {[0, 1, 2, 3, 4, 5].map((i) => {
-                const angle = (i / 6) * Math.PI * 2 - Math.PI / 2
-                const r = 62
+              {CHANNELS.map((ch, i) => {
+                const angle = (i / CHANNELS.length) * Math.PI * 2 - Math.PI / 2
+                const r = 48
                 const ex = 100 + r * Math.cos(angle)
                 const ey = 100 + r * Math.sin(angle)
                 return (
                   <line
-                    key={i}
-                    x1="100"
-                    y1="100"
-                    x2={ex}
-                    y2={ey}
-                    stroke="hsl(186 100% 50% / 0.2)"
+                    key={ch.label}
+                    x1={ex}
+                    y1={ey}
+                    x2="100"
+                    y2="100"
+                    stroke="hsl(186 100% 50% / 0.18)"
                     strokeWidth="1"
-                    strokeDasharray="4 4"
-                    className={`transition-opacity duration-500`}
-                    style={{
-                      opacity: introStep >= 3 ? 1 : 0,
-                      transitionDelay: `${i * 80}ms`,
-                    }}
+                    strokeDasharray="3 5"
+                    className="transition-opacity duration-500"
+                    style={{ opacity: introStep >= 3 ? 1 : 0, transitionDelay: `${i * 50}ms` }}
                   />
                 )
               })}
@@ -298,40 +308,74 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
 
             {/* Pulse ring */}
             {introStep >= 3 && (
-              <div className="absolute inset-0 m-auto w-20 h-20 md:w-24 md:h-24 rounded-full border border-[hsl(var(--neon-cyan))]/30 animate-[node-ping_2s_cubic-bezier(0,0,0.2,1)_infinite]" />
+              <div className="absolute inset-0 m-auto w-16 h-16 md:w-20 md:h-20 rounded-full border border-[hsl(var(--neon-cyan))]/30 animate-[node-ping_2s_cubic-bezier(0,0,0.2,1)_infinite]" />
             )}
           </div>
 
-          {/* Text lines */}
-          <div className="text-center space-y-2">
-            <p
-              className={`font-mono text-[10px] text-[hsl(var(--neon-cyan))] tracking-[0.4em] uppercase transition-all duration-500 ${introStep >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          {/* Channel ticker — scrolling feed of live sources */}
+          <div
+            className="w-56 md:w-72 h-4 overflow-hidden mb-6 transition-opacity duration-500"
+            style={{
+              opacity: introStep >= 2 ? 1 : 0,
+              maskImage: "linear-gradient(90deg, transparent, black 15%, black 85%, transparent)",
+              WebkitMaskImage: "linear-gradient(90deg, transparent, black 15%, black 85%, transparent)",
+            }}
+          >
+            <div
+              className="flex gap-4 whitespace-nowrap font-mono text-[8px] tracking-[0.15em] text-[hsl(var(--neon-cyan))]/60 w-max"
+              style={{ animation: introStep >= 2 ? "marquee-x 9s linear infinite" : "none" }}
             >
-              INITIALIZING INTELLIGENCE SYSTEM
-            </p>
-            <p
-              className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            >
-              CONNECTING TO NOTION DATABASE...
-            </p>
-            <p
-              className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            >
-              LOADING AI FILTER MODELS // GEMINI 2.0 FLASH
-            </p>
-            <p
-              className={`font-mono text-[9px] text-[hsl(var(--field-green))] tracking-[0.2em] transition-all duration-500 ${introStep >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            >
-              PIPELINE OPERATIONAL // 9 CHANNELS ACTIVE
-            </p>
+              {[...CHANNELS, ...CHANNELS].map((ch, i) => (
+                <span key={i}>// {ch.label.toUpperCase()}</span>
+              ))}
+            </div>
           </div>
 
-          {/* Loading bar */}
-          <div className="w-48 md:w-64 h-0.5 bg-border/30 rounded-full mt-6 overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[hsl(var(--neon-cyan))] to-primary rounded-full transition-all duration-[3000ms] ease-out"
-              style={{ width: introStep >= 1 ? "100%" : "0%" }}
-            />
+          {/* Terminal log — typewriter reveal */}
+          <div className="text-center space-y-1.5">
+            {[
+              { step: 1, text: "INITIALIZING INTELLIGENCE SYSTEM", color: "text-[hsl(var(--neon-cyan))]" },
+              { step: 2, text: "CONNECTING TO NOTION DATABASE...", color: "text-muted-foreground" },
+              { step: 3, text: "LOADING AI FILTER MODELS // GEMINI 2.0 FLASH", color: "text-muted-foreground" },
+              { step: 4, text: "CRON SUSPENDED // MISSION ON HOLD", color: "text-accent" },
+            ].map((line) => {
+              const active = introStep === line.step
+              const shown = introStep >= line.step
+              return (
+                <div key={line.step} className="h-4 flex items-center justify-center">
+                  <span
+                    className={`inline-block overflow-hidden whitespace-nowrap font-mono text-[9px] md:text-[10px] tracking-[0.25em] uppercase ${line.color}`}
+                    style={{
+                      width: shown ? `${line.text.length}ch` : "0ch",
+                      transition: `width ${Math.min(0.9, line.text.length * 0.02)}s steps(${line.text.length}, end)`,
+                    }}
+                  >
+                    {line.text}
+                  </span>
+                  {active && (
+                    <span
+                      className="inline-block w-[5px] h-[10px] ml-1 bg-[hsl(var(--neon-cyan))]"
+                      style={{ animation: "cursor-blink 0.8s step-end infinite" }}
+                    />
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Signal strength meter */}
+          <div className="flex items-end gap-1.5 h-5 mt-6">
+            {[1, 2, 3, 4].map((n) => (
+              <div
+                key={n}
+                className="w-2 rounded-sm bg-[hsl(var(--neon-cyan))] transition-all duration-300"
+                style={{
+                  height: `${n * 22 + 12}%`,
+                  opacity: introStep >= n ? 1 : 0.12,
+                  boxShadow: introStep >= n ? "0 0 8px hsl(186 100% 50% / 0.6)" : "none",
+                }}
+              />
+            ))}
           </div>
 
           {/* Skip */}
@@ -355,7 +399,10 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
               <Brain className="w-4 h-4 text-[hsl(var(--neon-cyan))]" style={{ filter: "drop-shadow(0 0 6px hsl(186 100% 50%))" }} />
               <div className="flex items-center gap-2">
                 <span className="font-tech text-sm md:text-base text-foreground tracking-[0.15em]">INTEL CORE</span>
-                <span className="text-[8px] font-mono border border-[hsl(var(--neon-cyan))]/40 text-[hsl(var(--neon-cyan))] px-1.5 py-0.5 rounded">LIVE</span>
+                <span className="flex items-center gap-1 text-[8px] font-mono border border-accent/50 bg-accent/10 text-accent px-1.5 py-0.5 rounded tracking-wider">
+                  <PauseCircle className="w-2.5 h-2.5" />
+                  PAUSED
+                </span>
                 <span className="text-[8px] font-mono bg-[hsl(var(--neon-cyan))]/15 text-[hsl(var(--neon-cyan))] px-1.5 py-0.5 rounded">AI FILTERED</span>
               </div>
             </div>
@@ -377,6 +424,79 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
           <div ref={scrollRef} className="flex-1 overflow-y-auto">
             <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8 space-y-8 md:space-y-10">
 
+              {/* ---- Status banner: mission on hold ---- */}
+              <section
+                className={`transition-all duration-700 ${mainReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+                style={{ transitionDelay: "100ms" }}
+              >
+                <div className="relative overflow-hidden rounded-lg border-2 border-accent/40 bg-accent/[0.06]">
+                  {/* Hazard stripes */}
+                  <div
+                    className="absolute inset-0 pointer-events-none opacity-[0.06]"
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(45deg, hsl(var(--alert-orange)) 0 10px, transparent 10px 20px)",
+                    }}
+                  />
+                  <div className="absolute left-0 top-0 h-full w-1 bg-accent/60" />
+
+                  <div className="relative p-4 md:p-5">
+                    {/* Banner header */}
+                    <div className="flex flex-wrap items-center gap-2.5 mb-3">
+                      <PauseCircle
+                        className="w-4 h-4 text-accent shrink-0"
+                        style={{ filter: "drop-shadow(0 0 6px hsl(var(--alert-orange) / 0.6))" }}
+                      />
+                      <span className="font-tech text-sm md:text-base text-accent tracking-[0.15em]">
+                        MISSION ON HOLD
+                      </span>
+                      <span className="text-[8px] font-mono border border-accent/40 text-accent/80 px-1.5 py-0.5 rounded tracking-[0.15em]">
+                        CRON SUSPENDED
+                      </span>
+                    </div>
+
+                    <p className="text-[10px] md:text-[11px] font-mono text-foreground/70 leading-relaxed max-w-3xl">
+                      The pipeline is fully built and functional — nothing is broken. The daily run has been
+                      switched off while engineering time is reallocated to a higher-priority project.
+                      Reactivation is a one-line change: re-enable the GitHub Actions schedule.
+                    </p>
+
+                    {/* Two columns: current state / reassignment */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                      <div className="rounded border border-border/40 bg-card/50 p-3">
+                        <h3 className="flex items-center gap-1.5 font-tech text-[11px] text-foreground/80 tracking-[0.15em] mb-2.5">
+                          <Clock className="w-3 h-3 text-muted-foreground" />
+                          PIPELINE STATE
+                        </h3>
+                        <ul className="space-y-1.5">
+                          {PAUSE_PIPELINE_STATE.map((row) => (
+                            <li key={row.k} className="flex items-baseline justify-between gap-3">
+                              <span className="text-[9px] font-mono text-muted-foreground shrink-0">{row.k}</span>
+                              <span className="text-[9px] font-mono text-foreground/70 text-right">{row.v}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="rounded border border-accent/30 bg-accent/[0.04] p-3">
+                        <h3 className="flex items-center gap-1.5 font-tech text-[11px] text-accent tracking-[0.15em] mb-2.5">
+                          <FlaskConical className="w-3 h-3" />
+                          REASSIGNED TO
+                        </h3>
+                        <ul className="space-y-1.5">
+                          {PAUSE_REASSIGNMENT.map((row) => (
+                            <li key={row.k} className="flex items-baseline justify-between gap-3">
+                              <span className="text-[9px] font-mono text-muted-foreground shrink-0">{row.k}</span>
+                              <span className="text-[9px] font-mono text-accent/90 text-right">{row.v}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               {/* ---- Stats row ---- */}
               <div
                 className={`grid grid-cols-2 md:grid-cols-4 gap-3 transition-all duration-700 ${mainReady ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
@@ -387,8 +507,12 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                     key={s.label}
                     className="bg-card/60 border border-border/50 rounded-lg p-3 md:p-4 text-center relative overflow-hidden group hover:border-[hsl(var(--neon-cyan))]/30 transition-colors"
                   >
-                    <div className={`text-2xl md:text-3xl font-tech font-bold ${s.color} leading-none mb-1`}>
-                      {statVals[i]}
+                    <div
+                      className={`font-tech font-bold ${s.color} leading-none mb-1 ${
+                        "text" in s && s.text ? "text-base md:text-lg pt-1.5 md:pt-2.5" : "text-2xl md:text-3xl"
+                      }`}
+                    >
+                      {"text" in s && s.text ? s.text : statVals[i]}
                     </div>
                     <div className="text-[8px] font-mono text-muted-foreground tracking-[0.2em]">{s.label}</div>
                   </div>
@@ -516,10 +640,17 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                                     </span>
                                   )}
                                   {isActive && i <= activePipe && (
-                                    <CheckCircle2
-                                      className="w-3 h-3 ml-auto shrink-0 transition-all duration-500"
-                                      style={{ color: "hsl(var(--field-green))" }}
-                                    />
+                                    "suspended" in node && node.suspended ? (
+                                      <PauseCircle
+                                        className="w-3 h-3 ml-auto shrink-0 transition-all duration-500"
+                                        style={{ color: "hsl(var(--alert-orange))" }}
+                                      />
+                                    ) : (
+                                      <CheckCircle2
+                                        className="w-3 h-3 ml-auto shrink-0 transition-all duration-500"
+                                        style={{ color: "hsl(var(--field-green))" }}
+                                      />
+                                    )
                                   )}
                                 </div>
                                 <p
@@ -557,9 +688,9 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
 
                   {/* Pipeline completion status */}
                   {activePipe >= PIPELINE_NODES.length - 1 && (
-                    <div className="mt-4 flex items-center gap-2 text-[9px] font-mono text-[hsl(var(--field-green))] animate-[fade-slide-in_0.6s_ease_forwards]">
+                    <div className="mt-4 flex items-center gap-2 text-[9px] font-mono text-accent animate-[fade-slide-in_0.6s_ease_forwards]">
                       <Zap className="w-3 h-3" />
-                      <span className="tracking-[0.2em]">PIPELINE FULLY OPERATIONAL // ALL NODES GREEN</span>
+                      <span className="tracking-[0.2em] text-center">PIPELINE INTACT // EXECUTION SUSPENDED — READY TO RESUME</span>
                     </div>
                   )}
                 </div>
@@ -679,7 +810,7 @@ export function IntelCorePanel({ open, onClose }: IntelCorePanelProps) {
                 style={{ transitionDelay: "1200ms" }}
               >
                 <p className="text-[8px] font-mono text-muted-foreground/40 tracking-[0.3em]">
-                  CLASSIFICATION: OPERATIONAL // INTEL CORE v2.0 // AI-POWERED INTELLIGENCE SYSTEM
+                  CLASSIFICATION: ON HOLD // INTEL CORE v2.0 // AI-POWERED INTELLIGENCE SYSTEM
                 </p>
               </div>
             </div>
