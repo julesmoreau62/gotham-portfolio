@@ -82,6 +82,7 @@ export function DaringPanel({ open, onClose }: { open: boolean; onClose: () => v
             ["Website", "daring-website"],
             ["Build", "daring-build"],
             ["Brand", "daring-brand"],
+            ["Handover", "daring-handover"],
             ["Brochure", "daring-brochure"],
             ["Social", "daring-social"],
           ].map(([label, id]) => (
@@ -445,6 +446,39 @@ export function DaringPanel({ open, onClose }: { open: boolean; onClose: () => v
 
                 <AssetLink href={`${B}/chartegraphiquedemo.pdf`} label="Download full guidelines" icon={Download} />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ━━━━━━━━━━ EDITORIAL HANDOVER SYSTEM ━━━━━━━━━━ */}
+        <section id="daring-handover" className="py-16 md:py-20 px-5 md:px-10 scroll-mt-12" style={{ background: BK }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-2 h-12" style={{ background: G }} />
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-[0.35em] mb-2" style={{ color: G }}>Continuity system</p>
+                <h2 className="font-tech text-2xl md:text-4xl font-bold uppercase tracking-[0.1em]" style={{ color: W }}>Editorial handover, built to outlast the internship</h2>
+              </div>
+            </div>
+            <p className="text-sm text-white/50 mb-10 max-w-2xl ml-6">
+              A Notion workspace for the club's volunteers and the next intern: a diagnostic of the starting point, a prescriptive editorial charter, 11 ready-to-use post templates, and a live task tracker — exported in Markdown so any AI assistant can reuse it directly.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { img: "playbook.png", title: "PlayBook", body: "Mission, space contents, and reading priorities for the incoming intern." },
+                { img: "charte-editoriale.png", title: "Editorial charter", body: "Diagnostic of the starting point — reach, video, storytelling, cadence — versus the prescriptive target." },
+                { img: "typologies.png", title: "Post typology", body: "11 formats, each with context, visual brief, caption template, and channel." },
+              ].map(item => (
+                <div key={item.title} className="border overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
+                  <div className="relative aspect-[4/3]">
+                    <Image src={`${B}/notion/${item.img}`} alt={item.title} fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-xs font-mono uppercase tracking-[0.2em] mb-2" style={{ color: G }}>{item.title}</h3>
+                    <p className="text-xs leading-relaxed text-white/50">{item.body}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

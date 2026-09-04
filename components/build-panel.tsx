@@ -18,8 +18,8 @@ const GOLD_PHE = "#C5A065"
 const ASN_BG = "#0D0D0A"
 const ASN_YELLOW = "#F0C000"
 
-/* Intro orbital nodes */
-const ORBIT_NODES = ["DNS", "CDN", "SSL", "HTTP", "PWA", "SEO"]
+/* Intro deploy pipeline steps */
+const DEPLOY_STEPS = ["BUILD", "BUNDLE", "DEPLOY", "LIVE"]
 
 /* ================================================================
    FERRANTPHE — Rich detail data
@@ -148,6 +148,8 @@ export function BuildPanel({ open, onClose }: { open: boolean; onClose: () => vo
   const [visible, setVisible] = useState(false)
   const hasPlayedIntro = useRef(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const isMobileRef = useRef(isMobile)
+  isMobileRef.current = isMobile
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => { if (e.key === "Escape") onClose() },
@@ -180,7 +182,7 @@ export function BuildPanel({ open, onClose }: { open: boolean; onClose: () => vo
     }
 
     hasPlayedIntro.current = true
-    const timings = isMobile
+    const timings = isMobileRef.current
       ? [80, 300, 600, 900, 1200]
       : [200, 800, 1600, 2400, 3200]
 
@@ -195,7 +197,7 @@ export function BuildPanel({ open, onClose }: { open: boolean; onClose: () => vo
       }, timings[4]),
     ]
     return () => timers.forEach(clearTimeout)
-  }, [open, phase, isMobile])
+  }, [open, phase])
 
   const skipIntro = () => {
     hasPlayedIntro.current = true
@@ -222,137 +224,94 @@ export function BuildPanel({ open, onClose }: { open: boolean; onClose: () => vo
           style={{ background: `radial-gradient(ellipse at 50% 50%, hsl(${PURPLE_VAL} / 0.08) 0%, transparent 60%)` }}
         />
 
-        {/* Deployment network */}
-        <div className="relative w-48 h-48 md:w-64 md:h-64 mb-8">
-          {/* Central globe */}
+        {/* Deploy terminal */}
+        <div
+          className={`relative w-[19rem] md:w-[26rem] border rounded-md overflow-hidden mb-6 transition-all duration-700 ${introStep >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+          style={{ borderColor: `hsl(${PURPLE_VAL} / 0.35)`, background: "rgba(0,0,0,0.55)" }}
+        >
+          {/* Chrome header */}
           <div
-            className={`absolute inset-0 m-auto w-20 h-20 md:w-24 md:h-24 rounded-full border-2 flex items-center justify-center transition-all duration-700 ${introStep >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
-            style={{
-              borderColor: `hsl(${PURPLE_VAL} / 0.5)`,
-              boxShadow: introStep >= 2 ? `0 0 40px hsl(${PURPLE_VAL} / 0.3), inset 0 0 20px hsl(${PURPLE_VAL} / 0.1)` : "none",
-            }}
+            className="h-8 flex items-center justify-between px-3 border-b"
+            style={{ borderColor: `hsl(${PURPLE_VAL} / 0.25)`, background: "rgba(0,0,0,0.4)" }}
           >
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full" style={{ background: PURPLE }} />
+              <span className="w-2 h-2 rounded-full bg-white/25" />
+              <span className="w-2 h-2 rounded-full bg-white/15" />
+            </div>
+            <span className="text-[8px] font-mono tracking-[0.15em] text-white/40">deploy.sh</span>
             <Globe
-              className="w-8 h-8 md:w-10 md:h-10"
-              style={{
-                color: PURPLE,
-                filter: introStep >= 2 ? `drop-shadow(0 0 10px ${PURPLE})` : "none",
-                animation: introStep >= 2 ? "orbit-spin 12s linear infinite" : "none",
-              }}
+              className="w-3 h-3"
+              style={{ color: PURPLE, filter: introStep >= 2 ? `drop-shadow(0 0 6px ${PURPLE})` : "none" }}
             />
           </div>
 
-          {/* Orbital nodes */}
-          {ORBIT_NODES.map((node, i) => {
-            const angle = (i / ORBIT_NODES.length) * Math.PI * 2 - Math.PI / 2
-            const r = 80
-            const x = 50 + (r / 128) * 100 * Math.cos(angle)
-            const y = 50 + (r / 128) * 100 * Math.sin(angle)
-            return (
-              <div
-                key={node}
-                className="absolute transition-all duration-500"
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                  transform: "translate(-50%, -50%)",
-                  opacity: introStep >= 2 ? 1 : 0,
-                  transitionDelay: `${i * 100}ms`,
-                }}
-              >
-                <div
-                  className="w-9 h-9 md:w-10 md:h-10 rounded-full border flex items-center justify-center backdrop-blur-sm"
-                  style={{
-                    borderColor: `hsl(${PURPLE_VAL} / 0.6)`,
-                    background: `hsl(${PURPLE_VAL} / 0.1)`,
-                    boxShadow: introStep >= 3 ? `0 0 12px hsl(${PURPLE_VAL} / 0.6)` : "none",
-                  }}
-                >
-                  <span className="text-[8px] font-mono font-bold tracking-wider" style={{ color: PURPLE }}>
-                    {node}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-
-          {/* Connection lines */}
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-            {ORBIT_NODES.map((_, i) => {
-              const angle = (i / ORBIT_NODES.length) * Math.PI * 2 - Math.PI / 2
-              const r = 62
-              const ex = 100 + r * Math.cos(angle)
-              const ey = 100 + r * Math.sin(angle)
+          {/* Log body — typewriter reveal */}
+          <div className="p-3 md:p-4 space-y-1.5 min-h-[104px]">
+            {[
+              { step: 1, text: "$ git push origin main" },
+              { step: 2, text: "→ resolving DNS · connecting to CDN edge" },
+              { step: 3, text: "→ provisioning SSL · compiling assets" },
+              { step: 4, text: "✓ deployment operational · 2 sites live", color: "hsl(160 84% 39%)" },
+            ].map((line) => {
+              const active = introStep === line.step
+              const shown = introStep >= line.step
               return (
-                <line
-                  key={i}
-                  x1="100"
-                  y1="100"
-                  x2={ex}
-                  y2={ey}
-                  stroke={`hsl(${PURPLE_VAL} / 0.35)`}
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  className="transition-opacity duration-500"
-                  style={{
-                    opacity: introStep >= 3 ? 1 : 0,
-                    transitionDelay: `${i * 80}ms`,
-                  }}
-                />
+                <div key={line.step} className="h-4 flex items-center">
+                  <span
+                    className="inline-block overflow-hidden whitespace-nowrap font-mono text-[9px] md:text-[10px] tracking-wider"
+                    style={{
+                      width: shown ? `${line.text.length}ch` : "0ch",
+                      transition: `width ${Math.min(0.9, line.text.length * 0.02)}s steps(${line.text.length}, end)`,
+                      color: line.color ?? "rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    {line.text}
+                  </span>
+                  {active && (
+                    <span
+                      className="inline-block w-[5px] h-[10px] ml-1"
+                      style={{ background: PURPLE, animation: "cursor-blink 0.8s step-end infinite" }}
+                    />
+                  )}
+                </div>
               )
             })}
-          </svg>
-
-          {/* Pulse ring */}
-          {introStep >= 3 && (
-            <div
-              className="absolute inset-0 m-auto w-20 h-20 md:w-24 md:h-24 rounded-full border animate-[node-ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"
-              style={{ borderColor: `hsl(${PURPLE_VAL} / 0.35)` }}
-            />
-          )}
+          </div>
         </div>
 
-        {/* Text lines */}
-        <div className="text-center space-y-2">
-          <p
-            className={`font-mono text-[10px] tracking-[0.4em] uppercase transition-all duration-500 ${introStep >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ color: PURPLE }}
-          >
-            INITIALIZING DEPLOYMENT PIPELINE
-          </p>
-          <p
-            className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          >
-            RESOLVING DNS // CONNECTING TO CDN EDGE
-          </p>
-          <p
-            className={`font-mono text-[9px] text-muted-foreground tracking-[0.2em] transition-all duration-500 ${introStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          >
-            PROVISIONING SSL // COMPILING ASSETS
-          </p>
-          <p
-            className={`font-mono text-[9px] tracking-[0.2em] transition-all duration-500 ${introStep >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-            style={{ color: "hsl(160 84% 39%)" }}
-          >
-            DEPLOYMENT OPERATIONAL // 2 SITES LIVE
-          </p>
-        </div>
-
-        {/* Loading bar */}
-        <div className="w-48 md:w-64 h-0.5 bg-border/30 rounded-full mt-6 overflow-hidden">
-          <div
-            className="h-full rounded-full transition-all duration-[3000ms] ease-out"
-            style={{
-              width: introStep >= 1 ? "100%" : "0%",
-              background: `linear-gradient(90deg, hsl(${PURPLE_VAL}), hsl(${PURPLE_VAL} / 0.6))`,
-            }}
-          />
+        {/* Pipeline steps */}
+        <div className="flex items-center mb-8">
+          {DEPLOY_STEPS.map((label, i) => (
+            <div key={label} className="flex items-center">
+              <div
+                className="px-2.5 py-1 rounded border text-[8px] font-mono tracking-[0.15em] uppercase transition-all duration-400"
+                style={{
+                  borderColor: introStep >= i + 1 ? PURPLE : "rgba(255,255,255,0.12)",
+                  color: introStep >= i + 1 ? PURPLE : "rgba(255,255,255,0.3)",
+                  background: introStep >= i + 1 ? `hsl(${PURPLE_VAL} / 0.12)` : "transparent",
+                  boxShadow: introStep >= i + 1 ? `0 0 10px hsl(${PURPLE_VAL} / 0.4)` : "none",
+                }}
+              >
+                {label}
+              </div>
+              {i < DEPLOY_STEPS.length - 1 && (
+                <div
+                  className="w-6 md:w-9 h-px mx-1"
+                  style={{
+                    background: introStep >= i + 2 ? PURPLE : "rgba(255,255,255,0.12)",
+                    transition: "background 0.4s ease",
+                  }}
+                />
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Skip */}
         <button
           onClick={skipIntro}
-          className="mt-6 text-[8px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors tracking-[0.3em] uppercase"
+          className="text-[8px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors tracking-[0.3em] uppercase"
         >
           SKIP INIT
         </button>

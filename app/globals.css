@@ -166,6 +166,12 @@
   to { width: 100%; }
 }
 
+/* Horizontal marquee (ticker feed) */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
