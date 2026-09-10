@@ -1,189 +1,124 @@
-# Jules Moreau — Esports & Sport Operations Portfolio
-# julesmoreau.eu | jules.moreau1@outlook.com | /briefing
+# Jules Moreau — Event Management Portfolio
+# julesmoreau.eu | jules.moreau1@outlook.com | /briefing (30-second recruiter version)
 
 ## IDENTITY
 Name: Jules Moreau
-Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program)
-Location: Lille, France
-Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO)
-Status: Actively seeking an Esports Operations / Event Management internship, February to June 2027
-Availability: February 2027 - June 2027 (final ISA Master internship)
-Target roles: Esports operations, event management, event logistics, sponsor activation, competitive intelligence
+Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program), 2025–2027
+Location: Lille, France (50.6292° N / 3.0573° E)
+Clearance: NATO Secret (French Navy Reserve, Second Maître / Petty Officer NCO, since July 2022)
+Status: Actively seeking an Event Management internship, February to June 2027 (final ISA Master internship)
+Target roles: Event management, event logistics, sponsor activation, competitive intelligence
+Areas: France, Belgium, Europe
+Languages: French (native), English (C1); Dutch production experience (FR/NL deliverables)
 Recruiter briefing: https://www.julesmoreau.eu/briefing
+CV: https://www.julesmoreau.eu/assets/cv-julesmoreau.pdf
+LinkedIn: https://www.linkedin.com/in/jules-moreau-25405b363
 
 ## PROFILE SUMMARY
-Jules Moreau is a hybrid sport-management/esports strategist combining military precision,
-international mobility (French Guiana, New Caledonia, Congo), and hands-on production experience.
-Former French Navy Reserve NCO. Grandmaster-level Overwatch 2 player.
-Fluent in French (native) and English (C1). No formal coding background —
-builds production-grade tools through AI-augmented workflows.
+Sport-management profile combining military precision, international mobility
+(French Guiana, New Caledonia, Congo) and hands-on production experience. Former French Navy Reserve NCO.
+Grandmaster-level Overwatch 2 player (former Top 500). No formal coding background: builds production-grade
+tools and client websites through AI-augmented workflows (Claude Code, Codex).
+
+## SITE STRUCTURE
+/                         Home: profile, contracts index, deployment log, loadout, contact
+/briefing                 30-second recruiter briefing
+/contracts/daring         Royal Daring HC — Communication & Sponsoring (featured case)
+/contracts/signal         ASN95 — Head of Communications
+/contracts/strategy       BLAST strategic case study "David vs Goliath 2.0"
+/contracts/field-ops      ASI Multisports Tournament — field operations
+/contracts/intel-core     Telegram Veille — AI intelligence dashboard (archived prototype)
+/contracts/build          Client web builds: Ferrant P.H.E, AS Nortkerque 95
+/contracts/imagery        Photography archive (50 files, 3 sectors)
 
 ## ACADEMIC
-Master's in Sport Sciences — International Sport Administration (ISA)
-Université de Lille (STAPS) — 2025–2027
-Specialization: Esports management, sport governance, sustainability
+Master's in Sport Sciences — International Sport Administration (ISA), Université de Lille (STAPS), 2025–2027.
+Specialization: esports management, sport governance, sustainability.
+Bachelor's in Sport Sciences — Sport Management, ULCO, 2022–2025.
+M1 thesis: LEC/GRP vs CS2 economic models (interviews including BLAST VP James Woollard).
 
-Bachelor's in Sport Sciences — Sport Management
-ULCO — 2022–2025
+## EXPERIENCE (reverse chronological)
 
-## EXPERIENCE
+### Communication & Sponsoring Intern — Royal Daring Hockey Club ASBL (Brussels) · May–Jul 2026 · ISA Master internship
+- Led the club's communication and sponsoring overhaul ahead of its promotion to Division Honneur
+- First graphic charter + reusable Canva template system across 4 content formats (matchday, institutional, event, recruitment)
+- Sponsorship offer rebuilt from a static 3-tier PDF into a 5-tier package + Youth Pack, delivered as a bilingual FR/NL partner website
+- Notion handover system (PlayBook, editorial charter, 11-format content library) for post-internship continuity
 
-### Head of Communications — ASN95 (AS Nortkerque football club)
-Jan–Jun 2025 | Hauts-de-France, France
-- Built complete digital presence from scratch (no prior content calendar, no visual guidelines)
-- Created "Les Pronos du Sultan": weekly sponsor prediction game → +467% CTR
-- Developed ASN95 Predict platform (beta, 88% complete): live rankings, user profiles, sponsor data layer
-- 15+ visuals per season across 3 recurring formats, 5+ sponsors integrated per visual
-- Match photography: 33 events covered, 500+ shots per match, 1,650+ edited photos across full season
-- Managed matchday operations, visual identity, sponsor activation
+### Comms Chief — ASI Multisports Tournament, UFR3S Lille · December 2025
+- 500+ personnel, 4 disciplines (Disc Golf, Wheelchair BBL, Laser Tag, Spikeball)
+- 2 critical incidents resolved with zero event disruption (venue conflict H-2h solved in 45 min; weather hazard H-30min solved in 30 min)
 
-### Infrastructure Tech — Bolt Echafaudage (via French Guiana mission)
-Aug 2025 | Kourou, French Guiana
-- Kourou Beach Festival & Tour de Guyane logistics
-- Heavy material handling (Telehandlers), VIP complex construction under strict timing constraints
+### Event Infrastructure Technician — Bolt Echafaudage · Aug 2025 · Kourou, French Guiana
+- Kourou Beach Festival & Tour de Guyane: VIP hospitality complex, sponsor arches, heavy material handling (telehandlers)
 
-### Sales & Ops Support — Guyane Matériels
-Jun–Jul 2025 | French Guiana
-- Customer operations in tropical environment
-- Product photography asset production
+### Sales & Ops Support — Guyane Matériels Groupe · Jun–Jul 2025 · French Guiana
+- Customer operations in tropical environment; product photography for sales campaigns
 
-### French Navy Reservist — Petty Officer (Second Maître)
-Since Jul 2022 | France
-- Ecole de Maîtrance: military rigor, crisis management, team leadership
-- NATO Secret clearance
+### Head of Communications — AS Nortkerque 95 (ASN95) · Jan–Jun 2025
+- Built the club's digital presence from scratch (no content calendar, no visual guidelines)
+- "Les Pronos du Sultan" weekly sponsor prediction game: +467% CTR
+- ASN95 Predict platform (beta): live rankings, user profiles, sponsor data layer
+- 15+ visuals per season, 3 recurring formats, 5+ sponsors per visual
+- Season photography: 33 events, 500+ shots per match, 1,650+ edited photos
+- Results: 1M+ views, 44K accounts reached (+24%), 24.2K interactions (+93.8%), +28.2% follower growth, +162% watch time
 
-## PROJECTS
+### Volleyball Coach — LISSP Calais VB · Sep 2024–Jun 2025
+- Head Coach U15, Assistant U13; full team logistics including international travel for the Ensisheim tournament
 
-### BLAST Strategic Case Study — "David vs. Goliath 2.0"
-Type: Academic strategic analysis (23 pages)
-Frameworks: PESTEL, VRIO, SWOT
-Key findings: BLAST faces critical asymmetry vs EFG (Saudi PIF-backed ESL, $1.5Bn valuation vs $11M cash).
-Valve 2025 regulation banning franchised partner leagues collapses BLAST's Louvre Agreement advantage.
-Strategic recommendation: India pivot via JV with Reliance — 600M mobile gamers, bypass EFG's Western saturation.
-3-phase execution roadmap: H1 2026 (Mumbai hub), H2 2026 (D2C gamification, Watch-to-Earn), 2027 (break-even).
-CSR differentiation: "Brand Safety Shield" to attract Western sponsors avoiding EFG's Saudi PIF reputational risk.
-Output: Full dossier PDF + interactive HTML presentation on portfolio
+### French Navy Reservist — Petty Officer (Second Maître) · since July 2022
+- École de Maistrance: military rigor, crisis management, team leadership; NATO Secret clearance
 
-### Telegram Veille — AI Intelligence Dashboard
-Type: Automated intelligence pipeline (production) — Business, Finance & Geopolitics
-Tech stack: Python 3.11 + Telethon (Telegram crawling), GitHub Actions CRON (daily 18:00 Paris),
-OpenRouter → Gemini 2.0 Flash (AI top-10 selection, single pass), Notion API (auto-rotating DB, max 100 entries),
-Next.js 14 dashboard, Netlify deployment
-Scale: 9 curated Telegram channels (Bloomberg, Reuters, BBC Breaking, Al Jazeera, Politico Europe,
-SCMP, Clash Report, Our Wars Today, Intel Slava), 8 categories, top 10 daily briefing
-Bias-awareness: Intel Slava flagged as pro-Russian — cross-referenced with other sources
-Cost: ~$1/month operational
-Status: Shipped prototype and archived public build — live demo at intel-dashboard-telegram.netlify.app
+## CASE FILES ("CONTRACTS")
 
-### ASI Multisports Tournament — Event Management
-Type: Field Operations (Comms Chief)
-Date: December 2025 | Location: UFRSS Lille | Personnel: 500+
-Sports: Disc Golf, Wheelchair BBL, Laser Tag, Spikeball
-Equipment: Sony a6400 (primary), GoPro x2 (action cam)
-Crisis management: 2 critical incidents resolved with zero event disruption
-  - R-0200 FACILITY CONFLICT: Venue unavailable 2h before start → alternate gym secured in 45min, zero impact
-  - R-0030 WEATHER HAZARD: Heavy rainfall → indoor fallback activated in 30min, 100% adaptability
-Visual assets produced: Graphic charter, participant briefing (FR/EN bilingual), event poster
+### 01 Royal Daring HC — Communication & Sponsoring (featured)
+Royal Daring Club de Molenbeek, Brussels field hockey club founded in 1922, 19 teams, ~620 members. Season 2025-26.
+Problem: how can an amateur club professionalize its image and funding with limited human and financial resources?
+Deliverables: complete brand guidelines (Daring Red #C8102E, Black, Gold #C9A84C, Off-white; Playfair Display + DM Sans),
+bilingual FR/NL partner website (Netlify: leafy-pavlova-69305b.netlify.app), 9-page partner PDF brochure generated with
+Python + ReportLab, sponsor packages (5 tiers + Youth Pack; LED board, jersey, field assets, match posters, social,
+CSR/youth), social media adaptations (weekend recap carousel, matchday stories, playoff poster, merchandising,
+bilingual camps, portrait template), physical bilingual signage, LinkedIn page creation, Notion editorial handover.
+Stack: HTML5, CSS3, vanilla JavaScript, Python ReportLab, GitHub, Netlify, Claude Code, Codex.
 
-### Royal Daring HC — Communication & Sponsoring
-Type: Final ISA Master internship / sport communication & sponsorship professionalization case study
-Organization: Royal Daring Club de Molenbeek, Brussels field hockey club founded in 1922
-Season: 2025–26 | Location: Molenbeek, Brussels, Belgium | Languages: French + Dutch
-Mission: Help an amateur sports club professionalize its public image, sponsor offer, and funding materials
-despite limited human and financial resources.
-Core problem statement: How can an amateur club transform scattered communication assets into a coherent,
-credible, sponsor-ready identity capable of supporting partner acquisition and long-term club development?
-Strategic angle: Reposition the club as a historic Brussels hockey institution with a clear partner narrative:
-heritage since 1922, local roots in Molenbeek, youth development, social impact, matchday visibility,
-and business-network value for sponsors.
-Deliverables:
-- Complete brand guidelines: colors, typography, tone, logo usage, visual hierarchy, social media adaptation rules
-- Bilingual FR/NL partner website for sponsorship acquisition and institutional credibility
-- 9-page partner PDF brochure generated programmatically with Python + ReportLab
-- Sponsor package storytelling: Gold, Silver, Bronze, visibility formats, field assets, jersey assets, LED board,
-  match posters, social media placements, CSR/youth program framing
-- Social media adaptations: match poster, event visuals, info posts, playoff and community content
-- LinkedIn page creation and professional positioning for the club
-- Portfolio Daring case file: interactive section with website preview, brochure access, visual archive,
-  brand identity breakdown, build process, and sponsor communication assets
-Website artifact: Royal Daring partner site deployed on Netlify at leafy-pavlova-69305b.netlify.app
-Technical stack: HTML5, CSS3, vanilla JavaScript, responsive front-end, bilingual static pages,
-Python ReportLab PDF generation, GitHub versioning, Netlify deployment
-Design system: Royal Daring red/black/gold identity, sport-premium direction, strong editorial rhythm,
-high-contrast sponsor presentation, bilingual content architecture, club heritage visual cues
-Content architecture: Homepage hero, club figures, "Why Daring", sponsor visibility formats,
-partner packages, CSR/youth program, business club/network, contact section, existing partner logos
-Production method: AI-augmented workflow using Claude Code and Codex for implementation acceleration,
-while Jules Moreau owned product direction, content structure, editorial decisions, integration,
-visual QA, deployment choices, and final delivery.
-Skills demonstrated: Sport sponsorship strategy, amateur club communication, brand identity,
-web design, front-end development, bilingual FR/NL production, PDF generation, sponsor storytelling,
-visual QA, social media asset direction, sports marketing, AI-assisted development workflow
-Output on portfolio: Dedicated Daring module in the GOTHAM interface with a red "case file" card,
-opening a full-screen Royal Daring panel that documents the internship, assets, website, brochure,
-identity system, and production process.
+### 02 ASN95 Signal — Head of Communications
+Sponsor activation (+467% CTR), visual identity built week by week, season-long matchday photography
+(Sony α6400 + SEL70350G). 26 league matches, 4 youth camps, 2 general assemblies, 30th anniversary covered.
 
-### Overwatch 2 Stats Dashboard
-Type: Personal tool (production)
-Tech: OverFast API, tactical/military aesthetic
-Creator context: Grandmaster-level competitive player (former Top 500)
+### 03 BLAST Strategy — "David vs Goliath 2.0" (23 pages, PESTEL / VRIO / SWOT)
+BLAST ($11M cash, FY24 revenue 82.1M +13%, net result -3.96M, gross margin 15.7%) vs EFG (Saudi PIF-backed, $1.5Bn valuation).
+Valve 2025 regulation ends franchised partner leagues and the Louvre Agreement advantage.
+Recommendation: India pivot via JV with Reliance (600M mobile gamers, 19% CAGR, $9.2Bn by 2029, 480M JioGames subscribers,
+-80% cost structure). Roadmap: H1 2026 Mumbai hub + Jio/Paytm; H2 2026 D2C & Watch-to-Earn (ARPU +50%); 2027 break-even
+(mix EU 60% / India 20% / MENA 20%). CSR "Brand Safety Shield" for CSRD-bound Western sponsors.
+PDF: /assets/blast-case-study.pdf
 
-### Personal Portfolio — julesmoreau.eu
-Type: Next.js single-page application
-Aesthetic: Dark tactical/military "GOTHAM system"
-Sections: Strategy (BLAST case study), Intel Core (Telegram Veille — Business/Finance/Geopolitics),
-Field Ops (ASI Tournament), Signal (ASN95), Imagery (photography archive),
-Daring (Royal Daring HC communication & sponsoring case study),
-Build (client web deployments — Ferrant PHE, AS Nortkerque 95)
+### 04 ASI Tournament — Field operations
+December 2025, UFR3S Lille, 500+ personnel. Equipment: Sony α6400, GoPro ×2. Body-cam footage on Vimeo.
+Visual assets: graphic charter, bilingual FR/EN participant briefing, event poster.
 
-## CLIENT WEB BUILDS
+### 05 Intel Core — Telegram Veille (Business · Finance · Geopolitics)
+Python 3.11 + Telethon crawler, GitHub Actions CRON (daily 18:00 Paris), OpenRouter → Gemini 2.0 Flash top-10 selection,
+Notion API auto-rotating DB (max 100), Next.js 14 dashboard on Netlify (intel-dashboard-telegram.netlify.app).
+9 channels (Bloomberg, Reuters, BBC Breaking, Al Jazeera, Politico Europe, SCMP, Clash Report, Our Wars Today,
+Intel Slava flagged pro-Russian), 8 categories, ~$1/month. Status: shipped prototype, public archive.
+Current R&D: Qwen3 27B fine-tuning for sport management (dataset curation, LoRA training, evaluation).
+Repos: github.com/julesmoreau62/sport-business-watch · github.com/julesmoreau62/veille-sport-biz
 
-### Ferrant P.H.E — ferrantphe.fr
-Status: LIVE in production
-Client: Family-owned essential oils & concentrates manufacturer (Rodelinghem, Hauts-de-France, est. 1989)
-Scale: 16 products, 30 metric tons processed daily, supplies world's leading flavor houses
-Tech stack: HTML5, CSS3, vanilla JavaScript, Tailwind CSS (CDN), Playfair Display + Lato fonts
-Performance: PWA-ready (manifest, theme-color, Apple touch icon), lazy loading
-SEO: JSON-LD schema, Open Graph, sitemap.xml, robots.txt
-Discoverability: LLM layer via /llms.txt, structured data
-Sections: Home (hero + FIE Frankfurt event badge), Products (16 SKUs filterable Oils/Concentrates with PDF datasheets), About (3-act company history + industrial specs: 4 extractors, 316L SS, biomass boiler), Contact (M. Adrien Ferrant)
-Highlights: Bilingual FR/EN full UI, 16 downloadable PDF technical datasheets (FR+EN),
-dynamic product catalog with category filter, no-JS fallback,
-responsive (sidebar nav desktop / hamburger mobile), Kosher certification messaging
-Build method: AI-augmented (GitHub Codex + Claude Code)
+### 06 Client builds
+Ferrant P.H.E (ferrantphe.fr, LIVE): essential oils & concentrates manufacturer (Rodelinghem, est. 1989, 16 products,
+30 t/day), bilingual FR/EN, 16 PDF datasheets, PWA, JSON-LD, sitemap, llms.txt. AS Nortkerque 95 (IN DEV, ~50%):
+first-ever website of a 250-member, 14-squad football club founded in 1995. Built with Claude Code + GitHub Codex.
 
-### AS Nortkerque 95 — asnortkerque95
-Status: IN DEV (~50% complete)
-Client: Local football club (Nortkerque, Pas-de-Calais, founded 1995)
-Scale: 250+ members, 14 squads (Seniors A/B, U23, U18→U7, Women's, Futsal, Veterans, Animation Football),
-youth academy U7→U17
-Context: Club's first-ever official website — full digital debut, no prior web presence
-Tech stack: HTML5, CSS3, vanilla JavaScript, Tailwind CSS (CDN), Bebas Neue + Inter fonts
-Performance: WebP images, lazy loading
-SEO: Open Graph, meta tags, sitemap.xml, local SEO targeting Nortkerque/Pas-de-Calais
-Sections: Home ("More than a club, a family"), Teams (all 14 squads),
-Gallery (matches & training with lightbox), Football School (U7→U17 academy),
-Contact (info + form)
-Design: Dark theme with club identity colors (green/yellow), mobile-first responsive
-Strategic CTAs: "Join us" / "Our matches"
-Build method: AI-augmented (GitHub Codex + Claude Code)
-
-## PHOTOGRAPHY ARCHIVE
-Total files: 50+ | Sectors: 3 (Corporate, Events, Sport) | Field shots: 50+
-Equipment: Sony a6400 (mirrorless APS-C), GoPro x2, edited in Lightroom + Premiere
-Corporate: Industrial & corporate photography, professional environments, product shots
-Events: Tournament and event coverage, ASI Tournament, matchday operations, competition documentation
-Sport: Action sports photography, football, golf, kitesurfing, volleyball — multiple events
+### 07 Imagery
+50 selected photographs: corporate/industrial (15), events/ASI (5), sport (football 10, golf 6, kitesurf 8, volleyball 6).
 
 ## SKILLS & TOOLS
-Sport governance, esports business analysis, event operations, crisis management,
-sponsor activation, visual identity, content strategy, sport photography,
-Next.js, Python (AI-augmented), Telethon, Notion API, GitHub Actions, Gemini AI, Telegram API,
-Lightroom, Premiere, Canva, Sony a6400
+Event logistics, crisis management, matchday operations, sponsor activation, brand identity, content strategy,
+sport governance, esports business analysis, competitive intelligence, OSINT, data analysis, sport photography,
+Sony α6400, GoPro, Lightroom, Premiere, Canva, Adobe Suite, Notion, Next.js, Tailwind, Python, Telethon, ReportLab,
+GitHub Actions, Notion API, OpenRouter, Gemini, Claude Code, Codex, Netlify.
 
-## DIFFERENTIATORS
-- International mobility: lived and worked in French Guiana, New Caledonia, Congo
-- Military background: NATO Secret clearance, crisis management, command under pressure
-- Esports depth: M1 thesis on LEC/GRP vs CS2 economic models (interviews with BLAST VP James Woollard)
-- Production-grade builder: deploys real tools with no formal coding background
-- Grandmaster Overwatch 2 player: credibility inside competitive esports communities
+## SIDE PROJECTS
+Overwatch 2 stats dashboard (OverFast API). Sport-management model fine-tuning (Qwen3 27B). This portfolio
+(Next.js 15, React 19, three.js, framer-motion), designed and shipped through an AI-augmented workflow.

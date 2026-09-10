@@ -1,87 +1,96 @@
-import React from "react"
 import type { Metadata, Viewport } from "next"
-import { Rajdhani, JetBrains_Mono, Share_Tech_Mono } from "next/font/google"
-
+import { Archivo, JetBrains_Mono } from "next/font/google"
+import { Providers } from "@/components/fx/providers"
+import { PROFILE, SITE } from "@/lib/profile"
 import "./globals.css"
 
-const rajdhani = Rajdhani({
-  weight: ["300", "400", "500", "600", "700"],
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-rajdhani",
+  axes: ["wdth"],
+  variable: "--font-archivo",
   display: "swap",
 })
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ["latin"], 
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-})
-const shareTechMono = Share_Tech_Mono({
-  weight: "400",
+
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-share-tech-mono",
-  display: "optional",
+  variable: "--font-mono",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "Jules Moreau | Esports Operations Portfolio",
-  description:
-    "M2 International Sport Administration student seeking an Esports Operations / Event Management internship, February to June 2027. Event logistics, sponsor activation, digital communication and competitive intelligence.",
-  alternates: {
-    canonical: "https://www.julesmoreau.eu",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.title,
+    template: "%s — Jules Moreau",
   },
+  description: SITE.description,
+  alternates: { canonical: SITE.url },
   openGraph: {
-    title: "Jules Moreau | Esports Operations Portfolio",
-    description:
-      "Seeking an Esports Operations / Event Management internship, February to June 2027. Event logistics, sponsor activation, digital communication and AI-augmented intelligence workflows.",
-    url: "https://www.julesmoreau.eu",
-    siteName: "Jules Moreau Portfolio",
+    title: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    siteName: "Jules Moreau",
     type: "profile",
+    locale: "en_US",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+  },
+  robots: { index: true, follow: true },
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0b1121",
+  themeColor: "#070707",
+  colorScheme: "dark",
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jules Moreau",
+  url: SITE.url,
+  email: `mailto:${PROFILE.email}`,
+  jobTitle: `${PROFILE.degree} — ${PROFILE.role}`,
+  description: SITE.description,
+  seeks: {
+    "@type": "Demand",
+    name: PROFILE.seeking,
+    availabilityStarts: "2027-02-01",
+    availabilityEnds: "2027-06-30",
+    areaServed: ["FR", "BE", "EU"],
+  },
+  knowsAbout: [
+    "Esports Management",
+    "Event Operations",
+    "Sport Governance",
+    "Sponsor Activation",
+    "Strategic Analysis",
+    "Crisis Management",
+    "Sport Photography",
+  ],
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "Université de Lille (STAPS/ISA)" },
+    { "@type": "CollegeOrUniversity", name: "ULCO" },
+  ],
+  nationality: "French",
+  address: { "@type": "PostalAddress", addressLocality: "Lille", addressCountry: "FR" },
+  sameAs: [PROFILE.linkedin],
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${rajdhani.variable} ${jetbrainsMono.variable} ${shareTechMono.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Jules Moreau",
-              "url": "https://www.julesmoreau.eu",
-              "email": "mailto:jules.moreau1@outlook.com",
-              "jobTitle": "M2 International Sport Administration — Esports Operations",
-              "description": "Hybrid sport-management and esports operations profile. Former French Navy Reserve NCO, M2 ISA Université de Lille. Seeking an Esports Operations / Event Management internship from February to June 2027, focused on event logistics, sponsor activation, digital communication and competitive intelligence.",
-              "seeks": {
-                "@type": "Demand",
-                "name": "Esports Operations / Event Management internship",
-                "availabilityStarts": "2027-02-01",
-                "availabilityEnds": "2027-06-30",
-                "areaServed": ["FR", "BE", "EU"]
-              },
-              "knowsAbout": ["Esports Management", "Event Operations", "Sport Governance", "Sponsor Activation", "Strategic Analysis", "Crisis Management", "Sport Photography"],
-              "alumniOf": [
-                {"@type": "CollegeOrUniversity", "name": "Université de Lille (STAPS/ISA)"},
-                {"@type": "CollegeOrUniversity", "name": "ULCO"}
-              ],
-              "nationality": "French",
-              "address": {"@type": "PostalAddress", "addressLocality": "Lille", "addressCountry": "FR"},
-              "sameAs": ["https://www.linkedin.com/in/jules-moreau-25405b363"]
-            })
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="min-h-screen bg-bg text-ink antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }

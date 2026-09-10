@@ -1,139 +1,72 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss"
 
 const config: Config = {
-  darkMode: ['class'],
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    '*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        chart: {
-          '1': 'hsl(var(--chart-1))',
-          '2': 'hsl(var(--chart-2))',
-          '3': 'hsl(var(--chart-3))',
-          '4': 'hsl(var(--chart-4))',
-          '5': 'hsl(var(--chart-5))',
-        },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
-        },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        bg: "var(--bg)",
+        surface: "var(--surface)",
+        ink: "var(--ink)",
+        mute: "var(--mute)",
+        line: "var(--line)",
+        acid: "var(--acid)",
+        magenta: "#ff2e88",
+        ember: "#ff5c1a",
+        cyan: "#2ee6ff",
+        violet: "#9d6bff",
+        amber: "#ffb000",
+        crimson: "#ff2a3c",
+        gold: "#e8c15a",
       },
       fontFamily: {
-        sans: ['var(--font-rajdhani)'],
-        mono: ['var(--font-jetbrains-mono)'],
-        tech: ['var(--font-share-tech-mono)'],
+        display: ["var(--font-archivo)", "Archivo", "Helvetica Neue", "Arial", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      letterSpacing: {
+        label: "0.22em",
+        tight2: "-0.03em",
       },
       keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+        "marquee-rev": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
         },
-        'orbit-spin': {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
         },
-        'orbit-reverse': {
-          from: { transform: 'rotate(360deg)' },
-          to: { transform: 'rotate(0deg)' },
+        scan: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
         },
-        'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 20px hsl(24 95% 53% / 0.3)' },
-          '50%': { boxShadow: '0 0 50px hsl(24 95% 53% / 0.6)' },
+        spin: {
+          to: { transform: "rotate(360deg)" },
         },
-        'node-ping': {
-          '75%, 100%': { transform: 'scale(2.5)', opacity: '0' },
+        "spin-rev": {
+          to: { transform: "rotate(-360deg)" },
         },
-        'scan-line': {
-          '0%': { top: '-10%' },
-          '100%': { top: '110%' },
-        },
-        'fade-slide-in': {
-          from: { opacity: '0', transform: 'translateY(20px)', filter: 'blur(8px)' },
-          to: { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
-        },
-        'data-stream': {
-          '0%': { transform: 'translateY(0)' },
-          '100%': { transform: 'translateY(-50%)' },
-        },
-        'glitch-flicker': {
-          '0%, 91%, 94%, 97%, 100%': { opacity: '1' },
-          '92%': { opacity: '0.2' },
-          '93%': { opacity: '0.8' },
-          '95%': { opacity: '0.3' },
-          '96%': { opacity: '0.9' },
+        pulse2: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.35" },
         },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'orbit-slow': 'orbit-spin 60s linear infinite',
-        'orbit-med': 'orbit-spin 40s linear infinite',
-        'orbit-fast': 'orbit-spin 25s linear infinite',
-        'orbit-rev-slow': 'orbit-reverse 60s linear infinite',
-        'orbit-rev-med': 'orbit-reverse 40s linear infinite',
-        'orbit-rev-fast': 'orbit-reverse 25s linear infinite',
-        'glow-pulse': 'glow-pulse 3s infinite',
-        'node-ping': 'node-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'scan-line': 'scan-line 3s linear infinite',
-        'fade-in': 'fade-slide-in 0.6s cubic-bezier(0.2, 1, 0.3, 1) forwards',
-        'data-stream': 'data-stream 40s linear infinite',
-        'glitch': 'glitch-flicker 4s infinite',
+        marquee: "marquee 28s linear infinite",
+        "marquee-rev": "marquee-rev 28s linear infinite",
+        blink: "blink 1s steps(2, start) infinite",
+        scan: "scan 7s linear infinite",
+        "spin-slow": "spin 24s linear infinite",
+        "spin-rev": "spin-rev 36s linear infinite",
+        pulse2: "pulse2 1.6s ease-in-out infinite",
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 }
+
 export default config

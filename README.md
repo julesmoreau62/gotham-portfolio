@@ -1,128 +1,70 @@
-# Jules Moreau — Portfolio
-
-![Boot Sequence](.github/images/intro.gif)
-
-**A production-grade tactical portfolio built entirely with AI — zero coding background.**
+# Jules Moreau — Portfolio (v4 · "Runner profile")
 
 **Live:** [julesmoreau.eu](https://www.julesmoreau.eu)
 
----
+An esports-operations portfolio built as a full experience: acid green on black, wide grotesk display type,
+registration marks, a real-time 3D artifact, boot sequence, wipe transitions and seven long-form case files
+("contracts"). Art direction inspired by graphic-realism game UI.
 
-## The Challenge
+Designed and shipped by a non-developer with an AI-augmented workflow (Claude Code).
 
-I needed a portfolio for esports operations & event management applications. The problem:
+## Stack
 
-- Zero coding skills
-- Every Wix/WordPress template looked the same
-- Couldn't create the tactical/strategic identity I envisioned
+- **Next.js 15** (App Router, React 19, TypeScript)
+- **Tailwind CSS 3** + a small custom design system in `app/globals.css`
+- **framer-motion** for reveals, staggers, page wipes
+- **three.js / @react-three/fiber / drei** for the hero artifact (desktop only, static reticle fallback)
+- **lenis** for smooth scrolling (disabled on touch / reduced motion)
+- Fonts: Archivo (variable width axis) + JetBrains Mono via `next/font`
 
-## The Solution: AI as Creative Co-Pilots
-
-Built from scratch using a **dual-AI workflow** — rough sketches to production in iterations.
-
-### Gemini — Design & Architecture
-- Transformed rough sketches into a cohesive tactical/military UI
-- Generated the visual identity reflecting a strategic mindset
-- Created the foundation and layout architecture
-
-### Claude — Technical Execution
-- Built custom CSS animations and particle effects
-- Optimized mobile responsiveness
-- Solved complex layering and z-index issues
-- Fine-tuned performance and interactions
-
----
-
-## Design System: GOTHAM V.2.7.1
-
-Dark tactical/military aesthetic — single-page application featuring:
-- Animated boot sequence with terminal typing effect
-- Particle network background with ambient glow
-- Modular command grid with status indicators (CRITICAL / ACTIVE / ONLINE / STORAGE)
-- Live intel feed ticker (incoming BLAST.tv data stream)
-- Geolocated map overlays per module (Copenhagen HQ, Lille campus...)
-- Custom cursor, scan lines, glitch effects, and noise overlay
-
----
-
-## Portfolio Sections
-
-![GOTHAM Command Grid](.github/images/categories.jpg)
-
-| Code Name | Status | Content |
-|-----------|--------|---------|
-| **Strategy** | 🔴 CRITICAL | BLAST Strategic Case Study — "David vs. Goliath 2.0" (23-page analysis) |
-| **Intel Core** | 🔵 SCANNING | Telegram Veille — AI Intelligence Dashboard — Business, Finance & Geopolitics (live production tool) |
-| **Field Ops** | 🟢 ACTIVE | ASI Multisports Tournament — Event Management (450+ personnel) |
-| **Signal** | 🟢 ONLINE | ASN95 — Head of Communications (+467% CTR, 1,650+ photos) |
-| **Build** | 🟣 LIVE | Client Web Deployments — [FerrantPHE](https://ferrantphe.fr) (essential oils, live) + AS Nortkerque 95 (football club, in dev) |
-| **Imagery** | 🟡 STORAGE | Photography archive — corporate, events, sport (50+ files) |
-
----
-
-## Tech Stack
-
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 3 + `tailwindcss-animate`
-- **UI Components:** Radix UI + shadcn/ui
-- **Fonts:** Rajdhani, JetBrains Mono, Share Tech Mono
-
----
-
-## AI/Crawler Accessibility Layer
-
-The site is a JS-rendered SPA invisible to most crawlers. To fix this:
-
-- **`/llms.txt`** — Plain-text portfolio summary for LLM crawlers
-- **JSON-LD** — Schema.org `Person` structured data in `<head>`
-- **`sr-only` fallback** — Full HTML content readable by crawlers and screen readers, invisible to sighted users
-
----
-
-## From Sketch to Production
-
-**Boot Sequence** — Wireframe concept to animated military-style boot screen with terminal typing effects
-
-**GOTHAM Command Grid** — Sketch of modular status panels to fully interactive hub with live feed ticker, geo overlays, and agent profile dossier
-
-**Strategy Panel** — Layout mockup to interactive BLAST case study with live financial data, threat analysis, execution roadmap, and geolocated HQ map (Copenhagen)
-
-**Field Ops Panel** — Brief to immersive field operation UI with body cam simulation, graphic assets viewer, and logistics report
-
-**Signal Panel** — KPI wireframe to full social media analytics display with sponsor activation mechanics and bilingual copywriting gallery
-
----
-
-## Project Structure
+## Structure
 
 ```
 app/
-  layout.tsx          # Root layout + JSON-LD structured data
-  page.tsx            # Main page + sr-only crawler fallback
-  globals.css         # Global styles + tactical grid
+  layout.tsx                 fonts, metadata, JSON-LD, providers (smooth scroll, cursor, grain, wipe)
+  page.tsx                   home: boot → hero → operator → contracts → log → loadout → extraction
+  briefing/page.tsx          30-second recruiter briefing
+  contracts/[slug]/page.tsx  case files (static params)
+  not-found.tsx · sitemap.ts · robots.ts
 components/
-  command-grid.tsx     # Main navigation hub
-  boot-sequence.tsx    # Animated boot sequence
-  strategy-panel.tsx   # BLAST case study panel
-  intel-core-panel.tsx # Telegram Veille panel
-  build-panel.tsx      # Client web deployments panel (FerrantPHE + AS Nortkerque 95)
-  field-ops-panel.tsx  # ASI Tournament panel
-  signal-panel.tsx     # ASN95 comms panel
-  imagery-panel.tsx    # Photography panel
-  about-panel.tsx      # Agent profile panel
-  ui/                  # shadcn/ui components
+  fx/        boot-less effects: cursor, page wipe, reveal, counter, marquee, scramble, 3D artifact
+  ui/        primitives: buttons, chips, labels, section heads, stats, barcode, registration marks
+  home/      boot sequence + home sections
+  contracts/ case-study shell, primitives and the seven case files
+lib/
+  profile.ts   identity, experience, education, skills (single source of truth)
+  contracts.ts case-file index metadata
 public/
-  llms.txt            # LLM crawler content
-  assets/             # PDFs, photos, event visuals
-  signal/             # ASN95 media assets
-.github/
-  images/             # README assets (GIF, screenshots)
+  llms.txt     plain-text portfolio summary for LLM crawlers
+  assets/      PDFs, photos, case-file media
 ```
 
----
+## Case files
 
-> AI doesn't replace creativity — it amplifies execution. You don't need to be a developer to build something that stands out. Prompt engineering is a real skill.
+| # | Contract | Role | Proof |
+|---|----------|------|-------|
+| 01 | Royal Daring HC | Communication & Sponsoring | FR/NL sponsor website, 9-page ReportLab brochure, brand system, Notion handover |
+| 02 | ASN95 Signal | Head of Communications | +467% sponsor CTR, 1M+ views, 1,650+ edited photos |
+| 03 | BLAST Strategy | Strategic analyst | 23-page dossier, PESTEL / VRIO / SWOT, India pivot roadmap |
+| 04 | ASI Tournament | Comms Chief | 500+ personnel, 2 incidents solved, zero disruption |
+| 05 | Intel Core | Product owner | Telegram → Gemini → Notion → Next.js pipeline, ~$1/month |
+| 06 | Client builds | AI-assisted web delivery | ferrantphe.fr (live), AS Nortkerque 95 (in dev) |
+| 07 | Imagery | Photographer | 50 frames, 3 sectors |
+
+## Develop
+
+```bash
+npm install
+npm run dev
+```
+
+`npm run typecheck` · `npm run lint` · `npm run build`
+
+## Discoverability
+
+- `/llms.txt` plain-text summary for LLM crawlers
+- Schema.org `Person` JSON-LD in the root layout
+- Real semantic HTML (no hidden fallback needed), sitemap and robots
 
 ---
 

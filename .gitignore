@@ -1,15 +1,18 @@
-# v0 runtime files (should only exist in preview, not in git)
-__v0_runtime_loader.js
-__v0_devtools.tsx
-__v0_jsx-dev-runtime.ts
-instrumentation-client.js
-instrumentation-client.ts
-
-# Common ignores
+# dependencies
 node_modules/
+
+# next.js
 .next/
+out/
+
+# env
 .env*.local
+
+# os / editor
 .DS_Store
+.vscode/
 .claude/
-# TypeScript incremental build cache
+
+# typescript
 *.tsbuildinfo
+next-env.d.ts
