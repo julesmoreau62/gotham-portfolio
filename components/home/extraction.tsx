@@ -7,7 +7,7 @@ import { SectionHead, Btn, Barcode, RegMarks, Kv, ArrowUpRight } from "@/compone
 export function Extraction() {
   return (
     <section id="extraction" className="relative px-5 py-20 md:px-8 md:py-28 scroll-mt-14">
-      <SectionHead index={5} kicker="Extraction point" title="Contact" right={<span>Response within 24h · FR / EN</span>} />
+      <SectionHead index={6} kicker="Extraction point" title="Contact" right={<span>Response within 24h · FR / EN</span>} />
 
       <div className="relative mt-12 overflow-hidden border border-line bg-surface">
         <RegMarks />

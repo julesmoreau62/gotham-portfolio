@@ -12,7 +12,8 @@ const NAV = [
   { id: "contracts", label: "Contracts", n: "02" },
   { id: "log", label: "Log", n: "03" },
   { id: "loadout", label: "Loadout", n: "04" },
-  { id: "extraction", label: "Contact", n: "05" },
+  { id: "more-about-me", label: "About me", n: "05" },
+  { id: "extraction", label: "Contact", n: "06" },
 ]
 
 export function Clock() {
@@ -72,7 +73,7 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
           <span className="label text-mute hidden lg:inline">{"// Runner profile"}</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1" aria-label="Sections">
+        <nav className="hidden xl:flex items-center gap-1" aria-label="Sections">
           {NAV.map((n) => (
             <a
               key={n.id}

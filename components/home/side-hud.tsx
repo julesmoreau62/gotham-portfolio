@@ -10,7 +10,8 @@ const SECTIONS = [
   { id: "contracts", n: "02", label: "Contracts" },
   { id: "log", n: "03", label: "Log" },
   { id: "loadout", n: "04", label: "Loadout" },
-  { id: "extraction", n: "05", label: "Extraction" },
+  { id: "more-about-me", n: "05", label: "More about me" },
+  { id: "extraction", n: "06", label: "Extraction" },
 ]
 
 export function SideHud() {

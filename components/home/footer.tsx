@@ -18,6 +18,7 @@ export function Footer() {
           <div className="label text-mute">Links</div>
           <ul className="mt-3 flex flex-col gap-2 mono text-[12px]">
             <li><Link href="/briefing" className="hover:text-acid transition-colors">Recruiter briefing</Link></li>
+            <li><Link href="/#more-about-me" className="hover:text-acid transition-colors">More about me</Link></li>
             <li><a href={PROFILE.cv} download className="hover:text-acid transition-colors">CV · PDF</a></li>
             <li><a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-acid transition-colors">LinkedIn</a></li>
             <li><a href={`mailto:${PROFILE.email}`} className="hover:text-acid transition-colors">{PROFILE.email}</a></li>

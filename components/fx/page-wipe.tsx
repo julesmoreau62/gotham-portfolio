@@ -35,7 +35,7 @@ export function PageWipe() {
       // These cases own their entrance, including direct visits and reloads.
       const targetPath = href.split(/[?#]/)[0].replace(/\/$/, "")
       const slug = targetPath.startsWith("/contracts/") ? targetPath.slice("/contracts/".length) : ""
-      if (hasContractEntrance(slug) && targetPath !== pathname) {
+      if ((hasContractEntrance(slug) || targetPath === "/about/games") && targetPath !== pathname) {
         router.push(href)
         return
       }
@@ -52,7 +52,10 @@ export function PageWipe() {
             const el = document.getElementById(hash)
             if (el) {
               const lenis = getLenis()
-              if (lenis) lenis.scrollTo(el, { immediate: true })
+              if (lenis) {
+                lenis.resize()
+                lenis.scrollTo(el, { immediate: true, offset: -56 })
+              }
               else el.scrollIntoView()
             }
           } else {
@@ -79,7 +82,12 @@ export function PageWipe() {
           const el = document.getElementById(hash)
           if (el) {
             const lenis = getLenis()
-            if (lenis) lenis.scrollTo(el, { immediate: true })
+              if (lenis) {
+                // The destination can be much taller than the page we just left.
+                // Refresh the scroll limit before jumping to a deep section.
+                lenis.resize()
+                lenis.scrollTo(el, { immediate: true, offset: -56 })
+              }
             else el.scrollIntoView()
           }
         }, 30)

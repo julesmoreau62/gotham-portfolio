@@ -6,6 +6,7 @@ import { Operator } from "@/components/home/operator"
 import { ContractsIndex } from "@/components/home/contracts-index"
 import { DeploymentLog } from "@/components/home/deployment-log"
 import { Loadout } from "@/components/home/loadout"
+import { MoreAboutMe } from "@/components/home/more-about-me"
 import { Extraction } from "@/components/home/extraction"
 import { Footer } from "@/components/home/footer"
 
@@ -20,6 +21,7 @@ export default function HomePage() {
         <ContractsIndex />
         <DeploymentLog />
         <Loadout />
+        <MoreAboutMe />
         <Extraction />
       </main>
       <Footer />
