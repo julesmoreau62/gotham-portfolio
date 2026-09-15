@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mux/mux-video-react": "^0.31.3",
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
     "clsx": "^2.1.1",

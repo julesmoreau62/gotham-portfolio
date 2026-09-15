@@ -1,22 +1,24 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
+import MuxVideo from "@mux/mux-video-react"
 import { ArrowDown, ArrowUpRight, Pause, Play, Volume2, VolumeX } from "lucide-react"
 import { TopBar } from "@/components/home/top-bar"
 import { WipeLink } from "@/components/fx/page-wipe"
-import { GAMES, GAMES_BACKGROUND_VIDEO } from "@/lib/games"
+import { GAMES, GAMES_BACKGROUND_POSTER, GAMES_MUX_PLAYBACK_ID } from "@/lib/games"
 import { GamesEntrance } from "./games-entrance"
 import styles from "./games.module.css"
 
 type Playback = "loading" | "playing" | "paused" | "error"
 
 export function GamesPage() {
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLVideoElement | undefined>(undefined)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const wantsPlayback = useRef(false)
   const playAttempt = useRef(0)
   const [introDone, setIntroDone] = useState(false)
   const [ready, setReady] = useState(false)
+  const [posterReady, setPosterReady] = useState(false)
   const [playback, setPlayback] = useState<Playback>("loading")
   const [muted, setMuted] = useState(true)
   const [cinema, setCinema] = useState(false)
@@ -32,7 +34,6 @@ export function GamesPage() {
     wantsPlayback.current = true
     const attempt = ++playAttempt.current
     setPlayback("loading")
-    if (!video.getAttribute("src")) video.src = GAMES_BACKGROUND_VIDEO
     if (video.error) video.load()
     void video.play().catch(() => {
       if (attempt !== playAttempt.current) return
@@ -68,8 +69,6 @@ export function GamesPage() {
       wantsPlayback.current = false
       playAttempt.current += 1
       video.pause()
-      video.removeAttribute("src")
-      video.load()
     }
   }, [play])
 
@@ -100,10 +99,24 @@ export function GamesPage() {
     <div className={styles.page} data-cinema={cinema}>
       <div className={styles.background} aria-hidden="true">
         <div className={styles.fallback}><span>PLAY.</span><span>CREATE.</span><span>REPEAT.</span></div>
-        <video
+        {/* Mux already serves a resized, cached WebP; a raw img also preserves its native load event. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className={styles.poster}
+          src={GAMES_BACKGROUND_POSTER}
+          alt=""
+          data-hidden={ready}
+          decoding="async"
+          fetchPriority="high"
+          onLoad={() => setPosterReady(true)}
+        />
+        <MuxVideo
           ref={videoRef}
           className={styles.video}
           data-ready={ready}
+          playbackId={GAMES_MUX_PLAYBACK_ID}
+          streamType="on-demand"
+          capRenditionToPlayerSize
           muted={muted}
           loop
           playsInline
@@ -120,7 +133,7 @@ export function GamesPage() {
         <div className={styles.backgroundGrid} />
       </div>
 
-      {!introDone && <GamesEntrance settled={ready || playback === "paused" || playback === "error"} onComplete={finishIntro} />}
+      {!introDone && <GamesEntrance settled={ready || posterReady || playback === "paused" || playback === "error"} onComplete={finishIntro} />}
 
       <div inert={!introDone}>
         <div className={styles.navigation}><TopBar variant="page" /></div>

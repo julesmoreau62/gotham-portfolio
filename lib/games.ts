@@ -1,6 +1,5 @@
-// Replace this path with a hosted/optimised video URL when it is available.
-// The file is requested only on the games page, never on the homepage.
-export const GAMES_BACKGROUND_VIDEO = "/assets/games/CS/CSPORTFOLIO.mp4"
+export const GAMES_MUX_PLAYBACK_ID = "rXy7eZY1FY6X020001gjC8gaX0233Ok901LMy00GavzkHr02Xs"
+export const GAMES_BACKGROUND_POSTER = `https://image.mux.com/${GAMES_MUX_PLAYBACK_ID}/thumbnail.webp?time=0&width=1920`
 
 export const GAMES = [
   {

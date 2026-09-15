@@ -1,5 +1,7 @@
 .page { position: relative; isolation: isolate; background: #080b07; }
 .background { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #10170e; pointer-events: none; }
+.poster { position: absolute; inset: 56px 0 0; width: 100%; height: calc(100% - 56px); object-fit: contain; background: #080b07; opacity: 1; transition: opacity .6s; }
+.poster[data-hidden="true"] { opacity: 0; }
 .video { position: absolute; inset: 56px 0 0; width: 100%; height: calc(100% - 56px); object-fit: contain; background: #080b07; opacity: 0; transition: opacity 1.2s; }
 .video[data-ready="true"] { opacity: 1; }
 .fallback { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding: 8vw; background: radial-gradient(ellipse at 85% 35%, #4a5d2a55, transparent 65%), #10170e; }
@@ -59,7 +61,7 @@
 .filmControls button { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px; min-height: 44px; border-left: 1px solid #f2f1ec26; color: #d6dbce; white-space: nowrap; }.filmControls button:hover { background: #c8ff001c; color: var(--acid); }
 .page[data-cinema="true"] main, .page[data-cinema="true"] .navigation { visibility: hidden; }
 .page[data-cinema="true"] .shade { opacity: .08; }.page[data-cinema="true"] .backgroundGrid { opacity: 0; }
-.page[data-cinema="true"] .video { inset: 0; height: 100%; object-fit: contain; background: #000; }
+.page[data-cinema="true"] .poster, .page[data-cinema="true"] .video { inset: 0; height: 100%; object-fit: contain; background: #000; }
 .entrance { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; justify-content: space-between; padding: 35px 4vw; background: #080c07; transition: clip-path .65s cubic-bezier(.76, 0, .24, 1); clip-path: inset(0); }
 .entrance[data-exiting="true"] { clip-path: inset(0 0 100% 0); }
 .introGrid { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 70% 40%, #c8ff0010, transparent 60%), repeating-linear-gradient(90deg, transparent 0 99px, #c8ff0008 99px 100px); }
@@ -80,7 +82,7 @@
 @media (min-width: 1600px) { .stories { padding-left: max(4vw, calc((100vw - 1480px) / 2)); padding-right: max(4vw, calc((100vw - 1480px) / 2)); } }
 @media (max-width: 1023px) { .heroContent { padding: 40px 0; }.heroCopy, .heroBottom { width: min(42vw, 360px); }.title { font-size: clamp(32px, 4vw, 42px); }.filmCaption { display: none; }.hero { min-height: 92svh; }.stories { padding-top: 60px; }.gameIdentity, .gameStory { padding: 26px; }.gameIdentity h3 { font-size: 32px; }.gameIndex { font-size: 8px; } }
 @media (max-width: 639px) {
-  .hero { padding: 82px 20px 95px; }.heroTop { justify-content: space-between; gap: 10px; }.heroCopy, .heroBottom { width: 100%; }.video { inset: 0; height: 100%; object-fit: cover; }.back, .fileLabel { font-size: 8px; letter-spacing: .06em; }
+  .hero { padding: 82px 20px 95px; }.heroTop { justify-content: space-between; gap: 10px; }.heroCopy, .heroBottom { width: 100%; }.poster, .video { inset: 0; height: 100%; object-fit: cover; }.back, .fileLabel { font-size: 8px; letter-spacing: .06em; }
   .heroContent { padding: 60px 0 40px; }.eyebrow { font-size: 9px; }.title { font-size: clamp(40px, 10.3vw, 64px); margin-top: 24px; }
   .lead { font-size: 21px; margin-top: 25px; }.description { font-size: 14px; }.heroBottom { grid-template-columns: 1fr 1fr; gap: 16px; }.heroBottom strong { font-size: 23px; }.heroBottom span { font-size: 8px; letter-spacing: .06em; }.heroFootnote { display: none; }
   .shade { background: linear-gradient(90deg, #030603e6, #03060399), linear-gradient(0deg, #060806cc, transparent); }.stories { padding: 55px 20px 110px; }
@@ -90,4 +92,4 @@
   .filmControls { left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); max-width: none; justify-content: center; }.filmControls button { flex: 1; padding: 11px 8px; font-size: 8px; }.filmStatus { display: none; }
   .introTop { font-size: 8px; }.entrance { padding: 25px 20px; }.introContent h2 { font-size: clamp(36px, 9.9vw, 62px); }.introContent p { margin-top: 25px; }.introSequence { gap: 15px; font-size: 8px; }.introBottom { gap: 14px; font-size: 8px; }.introBottom button { padding: 12px; }.introBottom button span { margin-left: 8px; }
 }
-@media (prefers-reduced-motion: reduce) { .video, .shade, .entrance { transition: none; }.introKicker, .introContent h2 > span, .introContent p, .introSequence span, .loadingLine::after { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .poster, .video, .shade, .entrance { transition: none; }.introKicker, .introContent h2 > span, .introContent p, .introSequence span, .loadingLine::after { animation: none; } }
