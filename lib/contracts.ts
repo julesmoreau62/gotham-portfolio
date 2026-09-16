@@ -57,14 +57,14 @@ export const CONTRACTS: Contract[] = [
       "Turned a century-old amateur hockey club's fragmented communication into a sponsor-ready acquisition system: brand guidelines, bilingual partner website, programmatic PDF brochure, social templates and a Notion handover.",
     accent: "#ff2a3c",
     accent2: "#e8c15a",
-    cover: "/assets/Royal%20daring%20/Daring%20Vitrine%20Marketing/img/hero.jpg",
+    cover: "/assets/Royal%20daring/Daring%20Vitrine%20Marketing/img/hero.jpg",
     tags: ["Brand system", "Sponsor funnel", "FR/NL website", "PDF brochure", "Handover"],
     stack: ["HTML", "CSS", "JavaScript", "Python", "ReportLab", "Netlify", "Claude Code", "Codex"],
     links: [
       { label: "Live website", href: "https://leafy-pavlova-69305b.netlify.app" },
       {
         label: "PDF brochure",
-        href: "/assets/Royal%20daring%20/Daring%20Vitrine%20Marketing/Royal_Daring_Partenaires_2025-26.pdf",
+        href: "/assets/Royal%20daring/Daring%20Vitrine%20Marketing/Royal_Daring_Partenaires_2025-26.pdf",
         download: true,
       },
     ],

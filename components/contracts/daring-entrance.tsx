@@ -24,7 +24,7 @@ export function DaringEntrance(callbacks: EntranceCallbacks) {
         <div className={styles.identity}>
           <div className={styles.crest}>
             <Image
-              src="/assets/Royal%20daring%20/logo-DARING.png"
+              src="/assets/Royal%20daring/logo-DARING.png"
               alt=""
               width={144}
               height={144}

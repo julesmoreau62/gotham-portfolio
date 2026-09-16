@@ -6,7 +6,7 @@ import { Section, Stats, Card, Figure, Gallery, Quote, Bullets, Chips, Links, Pr
 import { Reveal, Stagger, Wipe } from "@/components/fx/reveal"
 import { Btn, ArrowUpRight } from "@/components/ui/primitives"
 
-const B = "/assets/Royal%20daring%20"
+const B = "/assets/Royal%20daring"
 const V = `${B}/Daring%20Vitrine%20Marketing`
 const LIVE = "https://leafy-pavlova-69305b.netlify.app"
 const PDF = `${V}/Royal_Daring_Partenaires_2025-26.pdf`
