@@ -49,6 +49,7 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
   }, [])
 
   const go = (id: string) => (e: React.MouseEvent) => {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
     e.preventDefault()
     if (variant === "home") {
       const el = document.getElementById(id)

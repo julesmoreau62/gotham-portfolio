@@ -46,6 +46,10 @@ export function PageWipe() {
         const [path, hash] = href.split("#")
         // Same path: just scroll, then release.
         if ((path || "/") === pathname) {
+          // Keep the address and browser history aligned with the visible section.
+          if (new URL(href, window.location.href).href !== window.location.href) {
+            window.history.pushState(window.history.state, "", href)
+          }
           setState("out")
           getLenis()?.start()
           if (hash) {
@@ -54,11 +58,13 @@ export function PageWipe() {
               const lenis = getLenis()
               if (lenis) {
                 lenis.resize()
-                lenis.scrollTo(el, { immediate: true, offset: -56 })
+                // Lenis already respects the section's CSS scroll margin.
+                lenis.scrollTo(el, { immediate: true })
               }
               else el.scrollIntoView()
             }
           } else {
+            getLenis()?.scrollTo(0, { immediate: true })
             window.scrollTo(0, 0)
           }
           return
@@ -86,7 +92,7 @@ export function PageWipe() {
                 // The destination can be much taller than the page we just left.
                 // Refresh the scroll limit before jumping to a deep section.
                 lenis.resize()
-                lenis.scrollTo(el, { immediate: true, offset: -56 })
+                lenis.scrollTo(el, { immediate: true })
               }
             else el.scrollIntoView()
           }

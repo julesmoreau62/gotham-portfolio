@@ -50,7 +50,7 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
       {/* Top bar */}
       <header className="fixed inset-x-0 top-0 z-[120] h-14 border-b border-line bg-bg/85 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-4 md:px-8">
-          <WipeLink href="/#contracts" className="group flex items-center gap-3 label text-ink" data-cursor="back">
+          <WipeLink href="/#contracts" className="group flex min-h-11 min-w-11 items-center gap-3 label text-ink" aria-label="Back to contract index" data-cursor="back">
             <span className="grid h-7 w-7 place-items-center bg-ink text-black mono text-[10px] font-bold group-hover:bg-acid transition-colors">
               ←
             </span>
