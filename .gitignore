@@ -4,6 +4,8 @@ node_modules/
 # next.js
 .next/
 out/
+.npm-cache/
+.qa/
 
 # env
 .env*.local

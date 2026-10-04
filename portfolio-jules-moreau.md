@@ -34,7 +34,6 @@ M2 International Sport Administration student seeking an Esports Operations / Ev
 - LinkedIn — https://www.linkedin.com/in/jules-moreau-25405b363
 - Website — https://www.julesmoreau.eu
 - CV — /assets/cv-julesmoreau.pdf
-- Photo — /assets/photo-cv.jpg
 
 ---
 

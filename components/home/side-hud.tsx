@@ -3,16 +3,9 @@
 import { useEffect, useState } from "react"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { HOME_SECTIONS } from "@/lib/journey"
 
-const SECTIONS = [
-  { id: "hero", n: "00", label: "Profile" },
-  { id: "operator", n: "01", label: "Operator" },
-  { id: "contracts", n: "02", label: "Contracts" },
-  { id: "log", n: "03", label: "Log" },
-  { id: "loadout", n: "04", label: "Loadout" },
-  { id: "more-about-me", n: "05", label: "More about me" },
-  { id: "extraction", n: "06", label: "Extraction" },
-]
+const SECTIONS = HOME_SECTIONS
 
 export function SideHud() {
   const [active, setActive] = useState("hero")
@@ -51,17 +44,21 @@ export function SideHud() {
               key={s.id}
               href={`#${s.id}`}
               onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
                 e.preventDefault()
-                document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" })
+                const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                document.getElementById(s.id)?.scrollIntoView({ behavior: reduced ? "instant" : "smooth" })
+                history.replaceState(history.state, "", `#${s.id}`)
               }}
-              className="group relative flex items-center gap-2 py-0.5"
+              className="group relative flex min-h-8 items-center gap-2 py-0.5"
+              aria-label={s.label}
               aria-current={on ? "true" : undefined}
             >
               <span
                 className={cn(
                   "pointer-events-none absolute right-full mr-3 whitespace-nowrap label bg-bg/90 px-2 py-1 transition-opacity duration-200",
                   on ? "text-acid" : "text-ink",
-                  "opacity-0 group-hover:opacity-100"
+                  "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
                 )}
               >
                 {s.label}

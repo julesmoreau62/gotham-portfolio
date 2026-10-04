@@ -11,6 +11,7 @@ import { Chip, Kv, Btn, Arrow, RegMarks, Barcode } from "@/components/ui/primiti
 import { Clock } from "@/components/home/top-bar"
 import { ContractEntrance } from "@/components/contracts/contract-entrance"
 import { hasContractEntrance } from "@/lib/contract-entrances"
+import { PROJECT_STORIES } from "@/lib/journey"
 
 const EASE = [0.2, 1, 0.3, 1] as const
 
@@ -23,6 +24,7 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
   const complete = useCallback(() => setEntryStage("ready"), [])
   const { prev, next } = siblingContracts(c.slug)
   const light = c.accent === "#f2f1ec"
+  const story = c.slug in PROJECT_STORIES ? PROJECT_STORIES[c.slug as keyof typeof PROJECT_STORIES] : null
   const longestWord = Math.max(...c.title.split(" ").map((w) => w.length))
   const titleSize = longestWord >= 9 ? "text-[clamp(40px,6.3vw,110px)]" : "text-[clamp(48px,7.6vw,132px)]"
 
@@ -50,15 +52,15 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
       {/* Top bar */}
       <header className="fixed inset-x-0 top-0 z-[120] h-14 border-b border-line bg-bg/85 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-4 md:px-8">
-          <WipeLink href="/#contracts" className="group flex min-h-11 min-w-11 items-center gap-3 label text-ink" aria-label="Back to contract index" data-cursor="back">
+          <WipeLink href="/#contracts" className="group flex min-h-11 min-w-11 items-center gap-3 label text-ink" aria-label="Back to project index" data-cursor="back">
             <span className="grid h-7 w-7 place-items-center bg-ink text-black mono text-[10px] font-bold group-hover:bg-acid transition-colors">
               ←
             </span>
-            <span className="hidden sm:inline">Index</span>
+            <span className="hidden sm:inline">Projects</span>
           </WipeLink>
 
           <div className="flex items-center gap-3 label">
-            <span className="text-mute hidden sm:inline">Contract</span>
+            <span className="text-mute hidden sm:inline">Project</span>
             <span className="tnum text-ink">
               {pad2(c.index)}/{pad2(CONTRACTS.length)}
             </span>
@@ -163,7 +165,13 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
         <div className="absolute inset-x-0 bottom-0 z-10 h-1.5 hazard opacity-80" aria-hidden="true" />
       </section>
 
-      <main>{children}</main>
+      <main>
+        {story && <section className="border-b border-line px-5 py-10 md:px-8 md:py-12" aria-label="How this project fits my journey">
+          <div className="label text-acid">My journey / {story.chapter}</div>
+          <p className="mt-4 max-w-3xl text-[clamp(20px,2.4vw,32px)] leading-snug">{story.takeaway}</p>
+        </section>}
+        {children}
+      </main>
 
       {/* Footer nav */}
       <footer className="border-t border-line">
@@ -191,7 +199,7 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line px-5 py-5 md:px-8">
           <Btn href="/#contracts" tone="ghost" wipe>
-            All contracts
+            Back to the projects
           </Btn>
           <span className="label text-mute">
             Contract {pad2(c.index)} · {c.code} · Jules Moreau

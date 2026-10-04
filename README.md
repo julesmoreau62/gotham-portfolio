@@ -1,11 +1,11 @@
 <div align="center">
 
-<code>RUNNER PROFILE // V4.0</code>
+<code>A PLAYER'S PERSPECTIVE // JULES MOREAU</code>
 
 # JULES MOREAU — PORTFOLIO
 
-**Event operations × communications × AI-assisted products.**<br />
-A portfolio built as a browsable operations dossier — not a conventional landing page.
+**From playing to making it happen.**<br />
+A personal journey from competitive gaming and volleyball coaching to sport event management.
 
 [![Next.js](https://img.shields.io/badge/Next.js_15-0A0A0A?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React_19-0A0A0A?style=flat-square&logo=react&logoColor=C8FF00)](https://react.dev/)
@@ -21,13 +21,9 @@ A portfolio built as a browsable operations dossier — not a conventional landi
 
 ## The experience
 
-Acid green on black. Wide grotesk type. Registration marks, tactical telemetry and a real-time 3D artifact. The interface moves from a boot sequence to an operator profile, seven contract files, a deployment log and a final extraction point.
+Acid green on black. Wide grotesk type, registration marks, a real-time 3D artifact and scroll-driven photography. The homepage follows a personal story: gaming sparked an interest in esports events; coaching a U13 volleyball team at a smoothly organised tournament made that interest concrete; real projects show how it developed into event operations, communication and partnerships.
 
-<div align="center">
-  <img src=".github/readme/portfolio-tour.gif" alt="Animated tour through the Jules Moreau portfolio" width="800" />
-  <br />
-  <sub>Home page tour — from runner profile to extraction.</sub>
-</div>
+The selected projects follow three ideas: **make it run** (ASI Tournament), **make it seen** (ASN95), and **make it last** (Royal Daring). A compact approach section, education, an expandable experience log and internship contact complete the journey. Volleyball photos are labelled as personal archive imagery rather than presented as photos of the U13 turning point.
 
 ### Built for two reading speeds
 
@@ -56,7 +52,7 @@ Acid green on black. Wide grotesk type. Registration marks, tactical telemetry a
 
 ```text
 app/
-├── page.tsx                   home: boot → hero → operator → contracts → extraction
+├── page.tsx                   home: play → discover → coach → projects → next chapter
 ├── briefing/page.tsx         recruiter-focused fast path
 └── contracts/[slug]/page.tsx seven statically generated case files
 

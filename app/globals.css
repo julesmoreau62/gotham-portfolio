@@ -60,10 +60,6 @@
     outline: 2px solid var(--acid);
     outline-offset: 3px;
   }
-  html.has-cursor,
-  html.has-cursor * {
-    cursor: none !important;
-  }
   html.lenis,
   html.lenis body {
     height: auto;
@@ -297,7 +293,28 @@
   will-change: transform;
 }
 
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 255, 0, 0.3) 0%, rgba(200, 255, 0, 0.12) 28%, rgba(200, 255, 0, 0.035) 48%, transparent 70%);
+  filter: blur(3px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .cursor-glow { display: none; }
   .grain-layer {
     animation: none;
   }

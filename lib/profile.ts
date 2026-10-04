@@ -27,7 +27,6 @@ export const PROFILE = {
   email: "jules.moreau1@outlook.com",
   linkedin: "https://www.linkedin.com/in/jules-moreau-25405b363",
   cv: "/assets/cv-julesmoreau.pdf",
-  photo: "/assets/photo-cv.jpg",
   languages: [
     { label: "French", level: "Native" },
     { label: "English", level: "C1" },

@@ -1,6 +1,7 @@
 "use client"
 
 import { motion, useInView, type Variants } from "framer-motion"
+import { useReducedMotion } from "@/hooks/use-media"
 import { useRef } from "react"
 import { cn } from "@/lib/utils"
 
@@ -26,14 +27,15 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once, amount })
+  const reduced = useReducedMotion()
   const M = motion[Tag] as typeof motion.div
   return (
     <M
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      transition={{ duration: 0.9, ease: EASE, delay }}
+      initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : y }}
+      animate={inView || reduced ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ duration: reduced ? 0 : 0.9, ease: EASE, delay: reduced ? 0 : delay }}
     >
       {children}
     </M>
@@ -61,14 +63,15 @@ export function Lines({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.3 })
-  const active = play ?? inView
+  const reduced = useReducedMotion()
+  const active = reduced || (play ?? inView)
   const container: Variants = {
     hidden: {},
-    show: { transition: { staggerChildren: stagger, delayChildren: delay } },
+    show: { transition: { staggerChildren: reduced ? 0 : stagger, delayChildren: reduced ? 0 : delay } },
   }
   const line: Variants = {
-    hidden: { y: "125%", rotate: 1.5 },
-    show: { y: "0%", rotate: 0, transition: { duration: 0.95, ease: EASE } },
+    hidden: { y: reduced ? "0%" : "125%", rotate: reduced ? 0 : 1.5 },
+    show: { y: "0%", rotate: 0, transition: { duration: reduced ? 0 : 0.95, ease: EASE } },
   }
   const M = motion[Tag] as typeof motion.div
   return (
@@ -98,6 +101,7 @@ export function Wipe({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.25 })
+  const reduced = useReducedMotion()
   const hidden =
     from === "bottom"
       ? "inset(100% 0 0 0)"
@@ -107,9 +111,9 @@ export function Wipe({
   return (
     <div ref={ref} className={className}>
       <motion.div
-        initial={{ clipPath: hidden }}
-        animate={{ clipPath: inView ? "inset(0 0 0 0)" : hidden }}
-        transition={{ duration: 1.1, ease: EASE, delay }}
+        initial={{ clipPath: reduced ? "inset(0 0 0 0)" : hidden }}
+        animate={{ clipPath: inView || reduced ? "inset(0 0 0 0)" : hidden }}
+        transition={{ duration: reduced ? 0 : 1.1, ease: EASE, delay: reduced ? 0 : delay }}
       >
         {children}
       </motion.div>
@@ -133,20 +137,21 @@ export function Stagger({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, amount })
+  const reduced = useReducedMotion()
   return (
     <motion.div
       ref={ref}
       className={className}
       initial="hidden"
-      animate={inView ? "show" : "hidden"}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
+      animate={inView || reduced ? "show" : "hidden"}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: reduced ? 0 : stagger, delayChildren: reduced ? 0 : delay } } }}
     >
       {children.map((c, i) => (
         <motion.div
           key={i}
           variants={{
-            hidden: { opacity: 0, y: 18 },
-            show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+            hidden: { opacity: reduced ? 1 : 0, y: reduced ? 0 : 18 },
+            show: { opacity: 1, y: 0, transition: { duration: reduced ? 0 : 0.7, ease: EASE } },
           }}
         >
           {c}

@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import { PROFILE } from "@/lib/profile"
-import { CONTRACTS, FEATURED_CONTRACTS } from "@/lib/contracts"
+import { CONTRACTS } from "@/lib/contracts"
+import { STORY_PROJECT_SLUGS } from "@/lib/journey"
 import { TopBar } from "@/components/home/top-bar"
 import { Footer } from "@/components/home/footer"
 import { Btn, Chip, Kv, SectionHead, RegMarks, Barcode, ArrowUpRight } from "@/components/ui/primitives"
@@ -20,6 +21,8 @@ const FOCUS = [
   "Sport communication and sponsor activation",
   "AI-augmented digital products and intelligence workflows",
 ]
+
+const FEATURED_CONTRACTS = STORY_PROJECT_SLUGS.map(slug => CONTRACTS.find(c => c.slug === slug)!)
 
 const CAPABILITIES = [
   "Event logistics",
@@ -52,8 +55,9 @@ export default function BriefingPage() {
                 Seeking an <span className="text-acid">{PROFILE.seeking.toLowerCase()}</span>, {PROFILE.window}.
               </Reveal>
               <Reveal delay={0.05} className="mt-4 max-w-2xl mono text-[13px] leading-relaxed text-mute">
-                M2 International Sport Administration student (Université de Lille) focused on event management,
-                event logistics, sponsor activation and AI-augmented digital systems. Former French Navy Reserve NCO.
+                Competitive gaming led me to esports and the organisation behind events. Coaching my U13
+                volleyball team at a well-run tournament made that interest concrete. Today, I study International
+                Sport Administration and put it into practice through event operations, communication and partnerships.
               </Reveal>
               <Reveal delay={0.1} className="mt-8 flex flex-wrap gap-3">
                 <Btn href={PROFILE.cv} download tone="acid">
@@ -66,7 +70,7 @@ export default function BriefingPage() {
                   LinkedIn
                 </Btn>
                 <Btn href="/" tone="line" wipe>
-                  Full experience
+                  Follow my story
                 </Btn>
               </Reveal>
             </div>

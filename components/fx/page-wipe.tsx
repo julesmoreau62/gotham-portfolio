@@ -140,7 +140,7 @@ export function PageWipe() {
           transition: `opacity 200ms ${state === "in" ? IN_MS - 160 : 0}ms`,
         }}
       >
-        <span className="label text-acid">Loading contract</span>
+        <span className="label text-acid">Next chapter</span>
       </div>
     </div>
   )
