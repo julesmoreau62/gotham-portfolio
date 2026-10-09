@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Archivo, JetBrains_Mono } from "next/font/google"
 import { Providers } from "@/components/fx/providers"
+import { SiteAnalytics } from "@/components/fx/site-analytics"
 import { PROFILE, SITE } from "@/lib/profile"
 import "./globals.css"
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
         <Providers>{children}</Providers>
+        <SiteAnalytics />
       </body>
     </html>
   )
