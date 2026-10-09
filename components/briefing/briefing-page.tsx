@@ -10,11 +10,13 @@ import { Btn, Chip, Kv, SectionHead, RegMarks, Barcode, ArrowUpRight } from "@/c
 import { WipeLink } from "@/components/fx/page-wipe"
 import { Reveal, Lines, Stagger } from "@/components/fx/reveal"
 import { pad2 } from "@/lib/utils"
+import { ogImages } from "@/lib/og-image"
 
 const FEATURED_CONTRACTS = ["field-ops", "daring", "signal"].map(slug => CONTRACTS.find(c => c.slug === slug)!)
 
 export function briefingMetadata(locale: Locale): Metadata {
   const { meta } = COPY[locale].briefing
+  const images = ogImages(locale)
   return {
     title: meta.title,
     description: meta.description,
@@ -25,8 +27,9 @@ export function briefingMetadata(locale: Locale): Metadata {
       url: BRIEFING_PATH[locale],
       type: "website",
       locale: locale === "fr" ? "fr_FR" : "en_US",
+      images: images.openGraph,
     },
-    twitter: { card: "summary_large_image", title: meta.ogTitle, description: meta.ogDescription },
+    twitter: { card: "summary_large_image", title: meta.ogTitle, description: meta.ogDescription, images: images.twitter },
   }
 }
 
