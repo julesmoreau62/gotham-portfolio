@@ -31,43 +31,6 @@ export const PROFILE = {
     { label: "French", level: "Native" },
     { label: "English", level: "C1" },
   ],
-  bio: [
-    "Sport-management profile: military precision, international mobility and hands-on production experience.",
-    "Former French Navy Reserve NCO (Second Maître, NATO Secret clearance). Grandmaster-level Overwatch 2 player, former Top 500.",
-    "No formal coding background — ships production-grade tools and websites through AI-augmented workflows.",
-  ],
-  facts: [
-    { k: "Clearance", v: "NATO Secret" },
-    { k: "Reserve", v: "French Navy · Petty Officer" },
-    { k: "Status", v: "Active reserve" },
-    { k: "Languages", v: "FR native · EN C1" },
-    { k: "Mobility", v: "French Guiana · New Caledonia · Congo" },
-    { k: "Competitive", v: "OW2 Grandmaster · ex Top 500" },
-    { k: "Driving", v: "Licence B" },
-    { k: "Areas", v: "FR · BE · EU" },
-  ],
-  differentiators: [
-    {
-      n: "01",
-      title: "International mobility",
-      body: "Lived and worked in French Guiana, New Caledonia and Congo. Comfortable operating far from base, in tropical and remote environments.",
-    },
-    {
-      n: "02",
-      title: "Military background",
-      body: "French Navy Reserve NCO with NATO Secret clearance. Crisis management, command under pressure, discipline in execution.",
-    },
-    {
-      n: "03",
-      title: "Esports depth",
-      body: "Former Top 500 Overwatch player and French Championship finalist.",
-    },
-    {
-      n: "04",
-      title: "Production-grade builder",
-      body: "Deploys real tools and client websites with no formal coding background, directing Claude Code and Codex end to end.",
-    },
-  ],
 }
 
 export type Deployment = {
@@ -130,7 +93,7 @@ export const DEPLOYMENTS: Deployment[] = [
     where: "FRANCE",
     title: "French Navy Reservist — Petty Officer (Second Maître)",
     org: "Marine Nationale",
-    body: "École de Maistrance. Military rigor, crisis management and team leadership. Operational reserve duties focused on discipline and organisation. NATO Secret clearance.",
+    body: "École de Maistrance. Military rigor, crisis management and team leadership. Operational reserve duties focused on discipline and organisation.",
     tag: "ACTIVE RESERVE",
   },
 ]
@@ -148,97 +111,4 @@ export const EDUCATION = [
     school: "ULCO",
     detail: "Third-year internship at ASN95 (Head of Communications).",
   },
-]
-
-export type SkillGroup = { label: string; accent: string; items: string[] }
-
-export const LOADOUT: SkillGroup[] = [
-  {
-    label: "Operations",
-    accent: "#2ee6ff",
-    items: [
-      "Event logistics",
-      "Crisis management",
-      "Matchday operations",
-      "Team leadership",
-      "Venue & equipment coordination",
-      "Sport governance",
-    ],
-  },
-  {
-    label: "Communication",
-    accent: "#ff2e88",
-    items: [
-      "Sponsor activation",
-      "Brand identity & guidelines",
-      "Content strategy",
-      "Social media formats",
-      "Bilingual FR/NL/EN production",
-      "Copywriting",
-    ],
-  },
-  {
-    label: "Intelligence",
-    accent: "#9d6bff",
-    items: [
-      "Esports business analysis",
-      "PESTEL · VRIO · SWOT",
-      "Competitive intelligence",
-      "OSINT",
-      "Data analysis",
-      "Market entry strategy",
-    ],
-  },
-  {
-    label: "Production",
-    accent: "#c8ff00",
-    items: [
-      "Sport & event photography",
-      "Sony α6400 · GoPro",
-      "Lightroom · Premiere",
-      "Canva · Adobe Suite",
-      "Notion systems",
-      "Physical signage",
-    ],
-  },
-  {
-    label: "AI-augmented build",
-    accent: "#ffb000",
-    items: [
-      "Claude Code · Codex",
-      "Next.js · Tailwind",
-      "Python · Telethon · ReportLab",
-      "GitHub Actions",
-      "Notion API · OpenRouter · Gemini",
-      "Netlify · Vercel",
-    ],
-  },
-]
-
-export const SIDE_PROJECTS = [
-  {
-    title: "Overwatch 2 Stats Dashboard",
-    body: "Personal production tool on the OverFast API, built from a Grandmaster / former Top 500 player's perspective.",
-  },
-  {
-    title: "Sport-management model fine-tuning",
-    body: "Current R&D: dataset curation, LoRA training and evaluation on Qwen3 27B (open weights) for sport-management tasks.",
-  },
-  {
-    title: "julesmoreau.eu",
-    body: "This site. Next.js, three.js and framer-motion, art-directed and shipped through an AI-augmented workflow with zero coding background.",
-  },
-]
-
-export const TICKER = [
-  "EVENT LOGISTICS",
-  "SPONSOR ACTIVATION",
-  "CRISIS MANAGEMENT",
-  "DIGITAL COMMUNICATION",
-  "COMPETITIVE INTELLIGENCE",
-  "SPORT PHOTOGRAPHY",
-  "AI-AUGMENTED BUILD",
-  "NATO SECRET",
-  "GRANDMASTER OW2",
-  "FR / EN / NL",
 ]

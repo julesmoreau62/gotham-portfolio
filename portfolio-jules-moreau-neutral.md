@@ -42,7 +42,6 @@ workflows, with no formal coding background.
 
 | Item | Detail |
 |---|---|
-| Security clearance | NATO Secret |
 | Military reserve | French Navy, Petty Officer (Second Maître), active reserve since July 2022 |
 | International experience | French Guiana, New Caledonia, Congo |
 | Competitive gaming | Overwatch 2 Grandmaster, former Top 500 |
@@ -55,7 +54,7 @@ workflows, with no formal coding background.
 Hybrid sport-management and esports operations profile: military precision,
 international mobility and hands-on production experience.
 
-Former French Navy Reserve NCO (Second Maître, NATO Secret clearance). Grandmaster-level
+Former French Navy Reserve NCO (Second Maître). Grandmaster-level
 Overwatch 2 player, former Top 500.
 
 No formal coding background — ships production-grade tools and websites through
@@ -70,7 +69,7 @@ Lived and worked in French Guiana, New Caledonia and Congo. Comfortable operatin
 from base, in tropical and remote environments.
 
 **Military background**
-French Navy Reserve NCO with NATO Secret clearance. Crisis management, command under
+French Navy Reserve NCO. Crisis management, command under
 pressure, discipline in execution.
 
 **Esports depth**
@@ -130,7 +129,7 @@ the Ensisheim tournament.
 Since July 2022 · France
 
 École de Maistrance. Military rigour, crisis management and team leadership. Operational
-reserve duties focused on discipline and organisation. NATO Secret clearance.
+reserve duties focused on discipline and organisation.
 
 ---
 

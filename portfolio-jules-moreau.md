@@ -41,7 +41,6 @@ M2 International Sport Administration student seeking an Esports Operations / Ev
 
 | Key | Value |
 |---|---|
-| Clearance | NATO Secret |
 | Reserve | French Navy · Petty Officer (Second Maître) |
 | Status | Active reserve |
 | Languages | FR native · EN C1 |
@@ -57,7 +56,7 @@ M2 International Sport Administration student seeking an Esports Operations / Ev
 Sport-management training, military discipline, field-tested execution.
 
 - Hybrid sport-management / esports operations profile: military precision, international mobility and hands-on production experience.
-- Former French Navy Reserve NCO (Second Maître, NATO Secret clearance). Grandmaster-level Overwatch 2 player, former Top 500.
+- Former French Navy Reserve NCO (Second Maître). Grandmaster-level Overwatch 2 player, former Top 500.
 - No formal coding background — ships production-grade tools and websites through AI-augmented workflows.
 
 ---
@@ -68,7 +67,7 @@ Sport-management training, military discipline, field-tested execution.
 Lived and worked in French Guiana, New Caledonia and Congo. Comfortable operating far from base, in tropical and remote environments.
 
 **02 · Military background**
-French Navy Reserve NCO with NATO Secret clearance. Crisis management, command under pressure, discipline in execution.
+French Navy Reserve NCO. Crisis management, command under pressure, discipline in execution.
 
 **03 · Esports depth**
 M1 thesis on LEC/GRP vs CS2 economic models, with interviews including BLAST VP James Woollard. Grandmaster Overwatch 2 player.
@@ -108,7 +107,7 @@ Complete team logistics, including international travel (transport, accommodatio
 
 ### Since Jul 2022 · France — *Active reserve*
 **French Navy Reservist — Petty Officer (Second Maître)** — Marine Nationale
-École de Maistrance. Military rigor, crisis management and team leadership. Operational reserve duties focused on discipline and organisation. NATO Secret clearance.
+École de Maistrance. Military rigor, crisis management and team leadership. Operational reserve duties focused on discipline and organisation.
 
 ---
 
@@ -288,7 +287,7 @@ Hybrid profile combining sport-management training, military reserve discipline,
 
 ## 13. Art direction (current site)
 
-**Tone** — Military / operations dossier. Sections are named like a mission file: *Operator file*, *Contracts*, *Deployment log*, *Loadout*, *Extraction*. Copy is terse, uppercase, technical. Numbers are zero-padded (01, 02 …). Coordinates, clearance levels and status chips are used as texture.
+**Tone** — Military / operations dossier. Sections are named like a mission file: *Operator file*, *Contracts*, *Deployment log*, *Loadout*, *Extraction*. Copy is terse, uppercase, technical. Numbers are zero-padded (01, 02 …). Coordinates and status chips are used as texture.
 
 **Palette**
 | Token | Value | Use |
@@ -309,4 +308,4 @@ Per-case accents: crimson `#ff2a3c`, magenta `#ff2e88`, ember `#ff5c1a`, cyan `#
 **Layout language** — 12-column index tables with mono column headers, hairline dividers, full-bleed dark sections, marquee ticker, registration marks and barcodes as decor, grain overlay.
 
 **Ticker keywords**
-EVENT LOGISTICS · SPONSOR ACTIVATION · CRISIS MANAGEMENT · DIGITAL COMMUNICATION · COMPETITIVE INTELLIGENCE · SPORT PHOTOGRAPHY · AI-AUGMENTED BUILD · NATO SECRET · GRANDMASTER OW2 · FR / EN / NL
+EVENT LOGISTICS · SPONSOR ACTIVATION · CRISIS MANAGEMENT · DIGITAL COMMUNICATION · COMPETITIVE INTELLIGENCE · SPORT PHOTOGRAPHY · AI-AUGMENTED BUILD · GRANDMASTER OW2 · FR / EN / NL

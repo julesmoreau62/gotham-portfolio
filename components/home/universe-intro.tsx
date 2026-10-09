@@ -79,7 +79,7 @@ export function UniverseIntro({ phase, compact, skipButton, onSkip }: {
               "--angle": `${fragment.angle}deg`, "--width": `${fragment.width}px`, "--ratio": fragment.ratio,
               "--gather-x": `${fragment.gather[0]}px`, "--gather-y": `${fragment.gather[1]}px`,
               "--accent": fragment.accent ?? "#c8ff00", "--index": index,
-              "--delay": `${index * 24}ms`, "--float-delay": `${index * -230}ms`,
+              "--delay": `${index * 18}ms`, "--float-delay": `${index * -230}ms`,
             } as CSSProperties
             return (
               <div key={fragment.id} className={styles.fragment} style={properties} data-kind={fragment.kind ?? fragment.image}>

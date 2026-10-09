@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useInView } from "framer-motion"
 
 export function Counter({
@@ -23,10 +23,24 @@ export function Counter({
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.6 })
   const active = play ?? inView
-  const [val, setVal] = useState(0)
+  // The server HTML always carries the real figure (crawlers, no-JS, slow hydration).
+  const [val, setVal] = useState(to)
+  const [armed, setArmed] = useState(false)
+
+  // Count up only when the figure is still off screen at hydration, so nobody
+  // sees it drop to zero. Reduced-motion visitors keep the static value.
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const rect = el.getBoundingClientRect()
+    if (play === false || rect.top > window.innerHeight || rect.bottom < 0) {
+      setVal(0)
+      setArmed(true)
+    }
+  }, [play])
 
   useEffect(() => {
-    if (!active) return
+    if (!armed || !active) return
     let raf = 0
     const t0 = performance.now()
     const tick = (now: number) => {
@@ -38,7 +52,7 @@ export function Counter({
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [active, to, duration])
+  }, [armed, active, to, duration])
 
   const text = val.toLocaleString("en-US", {
     minimumFractionDigits: decimals,

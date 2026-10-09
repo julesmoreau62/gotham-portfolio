@@ -6,14 +6,14 @@ import { UniverseIntro, type IntroPhase } from "./universe-intro"
 import styles from "./universe-intro.module.css"
 
 const SESSION_KEY = "jm-universe-intro-v1"
-const GATHER_MS = 1650
-const DIVE_MS = 2750
-const END_MS = 3600
+const GATHER_MS = 1100
+const DIVE_MS = 1850
+const END_MS = 2500
 let playedInThisTab = false
 
 // Hide the first paint only when the intro will play. Without JavaScript the
 // server-rendered portfolio stays visible; a failed hydration also fails open.
-const primer = `(function(){var cover=document.getElementById('home-intro-primer');var content=document.getElementById('home-content');var seen=false;try{seen=sessionStorage.getItem('${SESSION_KEY}')==='1'}catch(e){}if(cover&&content&&!seen&&!location.hash&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cover.dataset.state='pending';content.inert=true;setTimeout(function(){if(cover.dataset.state==='pending'){cover.dataset.state='expired';content.inert=false}},4500)}})()`
+const primer = `(function(){var cover=document.getElementById('home-intro-primer');var content=document.getElementById('home-content');var seen=false;try{seen=sessionStorage.getItem('${SESSION_KEY}')==='1'}catch(e){}if(cover&&content&&!seen&&!location.hash&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cover.dataset.state='pending';content.inert=true;setTimeout(function(){if(cover.dataset.state==='pending'){cover.dataset.state='expired';content.inert=false}},3400)}})()`
 
 export function HomeEntrance({ children }: { children: ReactNode }) {
   const [phase, setPhase] = useState<IntroPhase | null>(null)

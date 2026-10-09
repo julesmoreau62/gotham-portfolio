@@ -3,10 +3,10 @@
 .primer[data-state="pending"] ~ .content { opacity: 0; }
 .primer[data-state="pending"] { display: block; position: fixed; inset: 0; z-index: 300; background: #070707; }
 .content[data-intro-phase="drift"], .content[data-intro-phase="gather"] { opacity: 0; }
-.content[data-intro-phase="dive"] { animation: home-arrival 850ms cubic-bezier(.16, 1, .3, 1) both; }
+.content[data-intro-phase="dive"] { animation: home-arrival 700ms cubic-bezier(.16, 1, .3, 1) both; }
 /* No transform or stacking context remains on the content after the sequence. */
 .intro { position: fixed; inset: 0; z-index: 300; overflow: hidden; color: #f2f1ec; isolation: isolate; background: transparent; }
-.backdrop { position: absolute; inset: 0; z-index: -2; background: #070707; transition: opacity 720ms ease-in; }
+.backdrop { position: absolute; inset: 0; z-index: -2; background: #070707; transition: opacity 600ms ease-in; }
 .backdrop::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 47%, rgba(200,255,0,.055), transparent 53%); }
 .grid {
   position: absolute; inset: 0; z-index: -1; opacity: .5;
@@ -22,7 +22,7 @@
 .topline i { width: 5px; height: 5px; background: #c8ff00; box-shadow: 0 0 14px rgba(200,255,0,.35); }
 .bottomline { bottom: max(24px, env(safe-area-inset-bottom)); }
 .viewport { position: absolute; inset: 0; perspective: 1000px; perspective-origin: 50% 47%; pointer-events: none; }
-.camera { position: absolute; inset: 0; transform-style: preserve-3d; transform-origin: 50% 47%; transition: transform 850ms cubic-bezier(.65,.02,.95,.55), opacity 800ms ease-in; }
+.camera { position: absolute; inset: 0; transform-style: preserve-3d; transform-origin: 50% 47%; transition: transform 650ms cubic-bezier(.65,.02,.95,.55), opacity 600ms ease-in; }
 .fragment {
   --card-width: clamp(70px, calc(var(--width) * .85), var(--width));
   --spread-x: var(--x); --spread-y: var(--y); --depth: var(--z);
@@ -30,8 +30,8 @@
   margin-left: calc(var(--card-width) * -.5); margin-top: calc(var(--card-width) / var(--ratio) * -.5); aspect-ratio: var(--ratio);
   transform: translate3d(var(--spread-x), var(--spread-y), var(--depth)) rotateX(calc(var(--angle) * -.45)) rotateY(calc(var(--angle) * .7)) rotateZ(var(--angle));
   transform-style: preserve-3d; will-change: transform;
-  transition: transform 1050ms cubic-bezier(.76, 0, .18, 1) calc(var(--index) * 8ms);
-  animation: fragment-appear 700ms ease-out var(--delay) both;
+  transition: transform 750ms cubic-bezier(.76, 0, .18, 1) calc(var(--index) * 6ms);
+  animation: fragment-appear 550ms ease-out var(--delay) both;
 }
 .float { transform-style: preserve-3d; animation: drift 2600ms ease-in-out var(--float-delay) infinite alternate; }
 .plate { position: relative; aspect-ratio: var(--ratio); background: #131313; border: 1px solid rgba(242,241,236,.22); box-shadow: 0 16px 40px rgba(0,0,0,.42); overflow: hidden; }
@@ -53,11 +53,11 @@
 .coordinates { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 7px; padding: 13px; font-family: var(--font-mono), monospace; font-size: 7px; color: rgba(242,241,236,.5); }
 .coordinates strong { color: #c8ff00; font-size: 19px; letter-spacing: -.03em; }
 .ball { width: 100%; height: 100%; stroke: #c8ff00; stroke-width: 1; opacity: .75; }
-.orbit { position: absolute; left: 50%; top: 47%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border: 1px solid rgba(200,255,0,.12); border-radius: 50%; transform: rotateX(64deg) rotateZ(-22deg); opacity: 0; transition: transform 1000ms, opacity 800ms; }
+.orbit { position: absolute; left: 50%; top: 47%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border: 1px solid rgba(200,255,0,.12); border-radius: 50%; transform: rotateX(64deg) rotateZ(-22deg); opacity: 0; transition: transform 750ms, opacity 600ms; }
 .orbit::before { content: ""; position: absolute; inset: 20px; border: 1px dashed rgba(242,241,236,.18); border-radius: 50%; }
 .orbit i { position: absolute; width: 5px; height: 5px; background: #c8ff00; }
 .orbit i:nth-child(1) { left: 50%; top: -3px; }.orbit i:nth-child(2) { right: -3px; top: 50%; }.orbit i:nth-child(3) { left: 50%; bottom: -3px; }.orbit i:nth-child(4) { left: -3px; top: 50%; }
-.core { position: absolute; left: 50%; top: 47%; width: 300px; transform: translate3d(-50%, -50%, 180px); display: flex; flex-direction: column; align-items: center; text-align: center; animation: core-appear 900ms 180ms both; transition: scale 1050ms cubic-bezier(.76, 0, .18, 1); }
+.core { position: absolute; left: 50%; top: 47%; width: 300px; transform: translate3d(-50%, -50%, 180px); display: flex; flex-direction: column; align-items: center; text-align: center; animation: core-appear 700ms 120ms both; transition: scale 750ms cubic-bezier(.76, 0, .18, 1); }
 .coreKicker { font-size: 8px; color: rgba(242,241,236,.45); text-transform: uppercase; margin-bottom: 9px; transition: opacity 350ms; }
 .monogram { position: relative; font-family: var(--font-archivo), sans-serif; font-size: clamp(82px, 9vw, 138px); line-height: .86; font-weight: 900; font-variation-settings: "wdth" 112; letter-spacing: -.08em; padding-right: .08em; }
 .monogram > span { color: #c8ff00; }
@@ -66,7 +66,7 @@
 .coreNote { font-size: 9px; color: rgba(242,241,236,.42); margin-top: 5px; transition: opacity 350ms; }
 .sequence { display: flex; align-items: center; gap: 13px; color: rgba(242,241,236,.54); }
 .progress { width: 54px; height: 2px; background: rgba(242,241,236,.14); overflow: hidden; }
-.progress > span { display: block; width: 100%; height: 100%; background: #c8ff00; transform-origin: left; animation: progress 3600ms linear both; }
+.progress > span { display: block; width: 100%; height: 100%; background: #c8ff00; transform-origin: left; animation: progress 2500ms linear both; }
 .skip { min-height: 44px; padding: 8px 0 8px 16px; display: inline-flex; align-items: center; gap: 19px; font-family: inherit; font-size: 10px; letter-spacing: .06em; color: rgba(242,241,236,.7); transition: color 150ms; }
 .skip span { color: #c8ff00; font-size: 18px; }.skip:hover { color: #c8ff00; }.skip:focus-visible { outline-offset: 5px; }
 .intro[data-phase="gather"] .fragment, .intro[data-phase="dive"] .fragment { transform: translate3d(var(--gather-x), var(--gather-y), -100px) rotateX(0deg) rotateY(0deg) rotateZ(calc(var(--angle) * .4)) scale(.4); }
