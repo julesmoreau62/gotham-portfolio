@@ -1,5 +1,5 @@
 # Jules Moreau — Event Management Portfolio
-# julesmoreau.eu | jules.moreau1@outlook.com | /briefing (30-second recruiter version)
+# julesmoreau.eu | jules.moreau1@outlook.com | /briefing (30-second recruiter version) | /fr (version française)
 
 ## IDENTITY
 Name: Jules Moreau
@@ -22,6 +22,8 @@ tools and client websites through AI-augmented workflows (Claude Code, Codex).
 ## SITE STRUCTURE
 /                         Home: internship profile, selected projects, personal story, approach, field experience, education and contact
 /briefing                 30-second recruiter briefing
+/fr                       French version of the home page (version française)
+/fr/briefing              French version of the recruiter briefing
 /contracts/daring         Royal Daring HC — Communication & Sponsoring (featured case)
 /contracts/signal         ASN95 — Head of Communications
 /contracts/strategy       BLAST strategic case study "David vs Goliath 2.0"
