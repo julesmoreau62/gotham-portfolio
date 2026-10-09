@@ -4,25 +4,46 @@ import Image from "next/image"
 import { Reveal, Lines } from "@/components/fx/reveal"
 import { WipeLink } from "@/components/fx/page-wipe"
 import { ArrowUpRight } from "@/components/ui/primitives"
+import { COPY } from "@/lib/copy"
+import type { Locale } from "@/lib/i18n"
 import { CompetitionVideo } from "./competition-video"
 import styles from "./journey.module.css"
 
-export function Journey() {
+export function Journey({ locale = "en" }: { locale?: Locale }) {
+  const t = COPY[locale].story
   return (
     <section id="origin" className={styles.origin} aria-labelledby="story-title">
-      <div className={styles.chapterTop}><span>02 / The person behind the work</span><span>Competition → Coaching → Event management</span></div>
+      <div className={styles.chapterTop}><span>{t.chapter}</span><span>{t.chapterRight}</span></div>
       <div className={styles.storyLayout}>
         <div className={styles.storyCopy}>
-          <div id="story-title"><Lines as="h2" className={styles.chapterTitle} lines={["A player's", <span key="perspective" className="text-acid">perspective.</span>]} /></div>
-          <Reveal className={styles.bodyCopy}>Competitive gaming made me curious about everything around the match: the people, the preparation and the experience.</Reveal>
-          <Reveal className={styles.bodyCopy}>Coaching volleyball brought that curiosity onto the court. At a well-organised U13 tournament, I could focus on my team because the details had already been taken care of.</Reveal>
-          <div id="turning-point" className={styles.storyTakeaway}><span className={styles.eyebrow}>What stayed with me</span><p>Prepare the details.<br /><strong>Let the game happen.</strong></p></div>
-          <WipeLink href="/about/games" className={styles.textLink} data-cursor="open">Beyond the work / My gaming story <ArrowUpRight /></WipeLink>
+          <div id="story-title"><Lines as="h2" className={styles.chapterTitle} lines={[t.title[0], <span key="perspective" className="text-acid">{t.title[1]}</span>]} /></div>
+          {t.body.map(paragraph => <Reveal key={paragraph} className={styles.bodyCopy}>{paragraph}</Reveal>)}
+          <div id="turning-point" className={styles.storyTakeaway}><span className={styles.eyebrow}>{t.takeawayLabel}</span><p>{t.takeaway[0]}<br /><strong>{t.takeaway[1]}</strong></p></div>
+          <WipeLink href="/about/games" className={styles.textLink} data-cursor="open">{t.gamesLink} <ArrowUpRight /></WipeLink>
         </div>
         <Reveal className={styles.storyVisual}>
-          <div className={styles.storyPhoto}><Image src="/assets/portfolio/volleyball-story.webp" alt="Volleyball match photographed by Jules Moreau" fill sizes="(min-width: 801px) 42vw, 100vw" className={styles.courtPhoto} /><span className={styles.imageTag}>My photography / LISSP Calais</span></div>
-          <p className={styles.storyCaption}>Personal photography archive · Volleyball</p>
-          <details className={styles.storyArchive}><summary>Watch my competitive gaming highlights <span aria-hidden="true">+</span></summary><CompetitionVideo /></details>
+          <div className={styles.storyPhoto}><Image src="/assets/portfolio/volleyball-story.webp" alt={t.photoAlt} fill sizes="(min-width: 801px) 42vw, 100vw" className={styles.courtPhoto} /><span className={styles.imageTag}>{t.photoTag}</span></div>
+          <p className={styles.storyCaption}>{t.caption}</p>
+          <details className={styles.storyArchive}><summary>{t.highlights} <span aria-hidden="true">+</span></summary><CompetitionVideo locale={locale} /></details>
+        </Reveal>
+      </div>
+      <div id="places" className={styles.places}>
+        <div className={styles.placesTop}><span>{t.places.kicker}</span><span>{t.places.count}</span></div>
+        <div className={styles.placesIntro}>
+          <h3 id="places-title" className={styles.placesTitle}>{t.places.title[0]}<br /><span className="text-acid">{t.places.title[1]}</span></h3>
+          <Reveal className={styles.placesLead}>{t.places.intro}</Reveal>
+        </div>
+        <Reveal amount={0.1}>
+          <ol className={styles.placesList}>
+            {t.places.stops.map((stop, i) => (
+              <li key={`${stop.place}-${i}`} className={styles.place}>
+                <span className={styles.placeIndex}>{String(i + 1).padStart(2, "0")}</span>
+                <h4>{stop.place}</h4>
+                <span className={styles.placeLesson}>{stop.lesson}</span>
+                <p>{stop.text}</p>
+              </li>
+            ))}
+          </ol>
         </Reveal>
       </div>
     </section>

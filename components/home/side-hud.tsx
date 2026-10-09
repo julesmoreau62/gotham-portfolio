@@ -4,10 +4,13 @@ import { useEffect, useState } from "react"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { HOME_SECTIONS } from "@/lib/journey"
+import { COPY } from "@/lib/copy"
+import type { Locale } from "@/lib/i18n"
 
 const SECTIONS = HOME_SECTIONS
 
-export function SideHud() {
+export function SideHud({ locale = "en" }: { locale?: Locale }) {
+  const labels = COPY[locale].sections
   const [active, setActive] = useState("hero")
   const { scrollYProgress } = useScroll()
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 })
@@ -35,7 +38,7 @@ export function SideHud() {
       />
       <nav
         className="fixed right-3 top-1/2 z-[110] hidden -translate-y-1/2 flex-col items-end gap-2.5 lg:flex"
-        aria-label="Section index"
+        aria-label={COPY[locale].nav.sectionIndex}
       >
         {SECTIONS.map((s) => {
           const on = active === s.id
@@ -51,7 +54,7 @@ export function SideHud() {
                 history.replaceState(history.state, "", `#${s.id}`)
               }}
               className="group relative flex min-h-8 items-center gap-2 py-0.5"
-              aria-label={s.label}
+              aria-label={labels[s.id]}
               aria-current={on ? "true" : undefined}
             >
               <span
@@ -61,7 +64,7 @@ export function SideHud() {
                   "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
                 )}
               >
-                {s.label}
+                {labels[s.id]}
               </span>
               <span className={cn("mono text-[9px] tnum transition-colors", on ? "text-acid" : "text-dim group-hover:text-ink")}>{s.n}</span>
               <span

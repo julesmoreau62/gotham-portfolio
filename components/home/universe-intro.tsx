@@ -1,6 +1,8 @@
 "use client"
 
 import type { CSSProperties, RefObject } from "react"
+import { COPY } from "@/lib/copy"
+import type { Locale } from "@/lib/i18n"
 import styles from "./universe-intro.module.css"
 
 export type IntroPhase = "drift" | "gather" | "dive"
@@ -38,7 +40,7 @@ const fragments: Fragment[] = [
   { id: "ball", label: "A player's perspective", kind: "ball", x: 19, y: 10, z: -100, angle: 16, width: 95, ratio: 1, gather: [91, 37] },
 ]
 
-function FragmentArt({ fragment }: { fragment: Fragment }) {
+function FragmentArt({ fragment, coordinates }: { fragment: Fragment; coordinates: string }) {
   if (fragment.image) {
     return (
       // These dedicated thumbnails are already resized and compressed.
@@ -48,26 +50,28 @@ function FragmentArt({ fragment }: { fragment: Fragment }) {
   }
   if (fragment.kind === "rhythm") return <span className={styles.rhythm}><i />osu!</span>
   if (fragment.kind === "rank") return <span className={styles.rank}><small>FACEIT</small><strong>10</strong><span>LEVEL</span></span>
-  if (fragment.kind === "coordinates") return <span className={styles.coordinates}><span>50°37′N / 03°03′E</span><strong>LILLE ↗</strong><span>Always in motion.</span></span>
+  if (fragment.kind === "coordinates") return <span className={styles.coordinates}><span>50°37′N / 03°03′E</span><strong>LILLE ↗</strong><span>{coordinates}</span></span>
   return <svg className={styles.ball} viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="44" /><path d="M50 6c-6 16-6 30 0 44s6 30 0 44M12 28c17-3 28 3 38 22s21 25 38 22M12 72c11-16 24-23 38-22s27-6 38-22M33 10c-4 22 3 38 17 40M77 14c-20 8-29 20-27 36M89 67c-22-1-35-7-39-17M25 86c5-20 13-32 25-36" /></svg>
 }
 
-export function UniverseIntro({ phase, compact, skipButton, onSkip }: {
+export function UniverseIntro({ phase, compact, skipButton, onSkip, locale = "en" }: {
   phase: IntroPhase
   compact: boolean
   skipButton: RefObject<HTMLButtonElement | null>
   onSkip: () => void
+  locale?: Locale
 }) {
+  const t = COPY[locale].intro
   const visible = compact ? fragments.filter((fragment) => fragment.mobile) : fragments
   return (
     <div className={styles.intro} data-phase={phase} role="dialog" aria-modal="true" aria-labelledby="universe-intro-title" aria-describedby="universe-intro-description" data-lenis-prevent>
-      <h2 id="universe-intro-title" className="sr-only">Jules Moreau — Welcome to my world</h2>
-      <p id="universe-intro-description" className="sr-only">Sport, projects and games coming together. You can skip this short introduction.</p>
+      <h2 id="universe-intro-title" className="sr-only">{t.title}</h2>
+      <p id="universe-intro-description" className="sr-only">{t.description}</p>
       <div className={styles.backdrop} aria-hidden="true" />
       <div className={styles.grid} aria-hidden="true" />
       <div className={styles.topline} aria-hidden="true">
         <span><i /> JM / Portfolio 2026</span>
-        <span>Sport. Play. Create.</span>
+        <span>{t.topline}</span>
       </div>
       <div className={styles.viewport} aria-hidden="true">
         <div className={styles.camera}>
@@ -84,23 +88,23 @@ export function UniverseIntro({ phase, compact, skipButton, onSkip }: {
             return (
               <div key={fragment.id} className={styles.fragment} style={properties} data-kind={fragment.kind ?? fragment.image}>
                 <div className={styles.float}>
-                  <div className={styles.plate}><FragmentArt fragment={fragment} /><span className={styles.corner} /></div>
-                  <span className={styles.caption}><i />{fragment.label}</span>
+                  <div className={styles.plate}><FragmentArt fragment={fragment} coordinates={t.coordinates} /><span className={styles.corner} /></div>
+                  <span className={styles.caption}><i />{t.labels[fragment.id] ?? fragment.label}</span>
                 </div>
               </div>
             )
           })}
           <div className={styles.core}>
-            <span className={styles.coreKicker}>A player&apos;s perspective</span>
+            <span className={styles.coreKicker}>{t.kicker}</span>
             <span className={styles.monogram}>J<span>M</span><i /></span>
             <span className={styles.coreName}>Jules Moreau</span>
-            <span className={styles.coreNote}>A world of my own.</span>
+            <span className={styles.coreNote}>{t.note}</span>
           </div>
         </div>
       </div>
       <div className={styles.bottomline}>
-        <div className={styles.sequence} aria-hidden="true"><span className={styles.progress}><span /></span><span>{phase === "drift" ? "A few things that make me." : phase === "gather" ? "All coming together." : "Welcome in."}</span></div>
-        <button ref={skipButton} type="button" onClick={onSkip} className={styles.skip}>Skip intro <span aria-hidden="true">↗</span></button>
+        <div className={styles.sequence} aria-hidden="true"><span className={styles.progress}><span /></span><span>{t.phases[phase]}</span></div>
+        <button ref={skipButton} type="button" onClick={onSkip} className={styles.skip}>{t.skip} <span aria-hidden="true">↗</span></button>
       </div>
     </div>
   )

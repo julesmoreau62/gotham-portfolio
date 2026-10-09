@@ -1,12 +1,16 @@
 /** Recruiter-first reading order; project URLs stay stable. */
 export const HOME_SECTIONS = [
-  { id: "hero", n: "00", label: "Start" },
-  { id: "contracts", n: "01", label: "Selected work" },
-  { id: "origin", n: "02", label: "My story" },
-  { id: "operator", n: "03", label: "My approach" },
-  { id: "log", n: "04", label: "Experience" },
-  { id: "extraction", n: "05", label: "Contact" },
+  { id: "hero", n: "00" },
+  { id: "contracts", n: "01" },
+  { id: "origin", n: "02" },
+  { id: "operator", n: "03" },
+  { id: "log", n: "04" },
+  { id: "extraction", n: "05" },
 ] as const
+
+export type HomeSectionId = (typeof HOME_SECTIONS)[number]["id"]
+
+export type ProjectStory = { verb: string; chapter: string; text: string; takeaway: string; proof: string; proofLabel: string }
 
 export const PROJECT_STORIES = {
   "field-ops": {
@@ -30,3 +34,5 @@ export const PROJECT_STORIES = {
 } as const
 
 export const STORY_PROJECT_SLUGS = ["daring", "field-ops", "signal"] as const
+
+export type StorySlug = keyof typeof PROJECT_STORIES

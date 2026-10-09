@@ -7,6 +7,8 @@ import { PROFILE } from "@/lib/profile"
 import { Btn } from "@/components/ui/primitives"
 import { navigateWithWipe } from "@/components/fx/page-wipe"
 import { HOME_SECTIONS } from "@/lib/journey"
+import { COPY } from "@/lib/copy"
+import { BRIEFING_PATH, HOME_PATH, homeSection, type Locale } from "@/lib/i18n"
 import { Menu, X } from "lucide-react"
 
 const NAV = HOME_SECTIONS.slice(1)
@@ -34,7 +36,10 @@ export function Clock() {
   )
 }
 
-export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
+/** `alternate` is the same page in the other language, when it exists. */
+export function TopBar({ variant = "home", locale = "en", alternate }: { variant?: "home" | "page"; locale?: Locale; alternate?: string }) {
+  const t = COPY[locale].nav
+  const sections = COPY[locale].sections
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const menuTrigger = useRef<HTMLButtonElement>(null)
@@ -66,7 +71,7 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
       el?.scrollIntoView({ behavior: reduced ? "instant" : "smooth", block: "start" })
       history.replaceState(history.state, "", `#${id}`)
     } else {
-      navigateWithWipe(`/#${id}`)
+      navigateWithWipe(homeSection(locale, id))
     }
   }
 
@@ -78,40 +83,41 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
       )}
     >
       <div className="flex h-full items-center justify-between px-4 md:px-8">
-        <Link href="/" className="flex items-center gap-3" aria-label="Home">
+        <Link href={HOME_PATH[locale]} className="flex items-center gap-3" aria-label={t.home}>
           <span className="grid h-7 w-7 place-items-center bg-acid text-black mono text-[10px] font-bold">JM</span>
           <span className="display text-[15px] tracking-[0.02em]">Moreau</span>
-          <span className="label text-mute hidden 2xl:inline">{"// Event management"}</span>
+          <span className="label text-mute hidden 2xl:inline">{t.tagline}</span>
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-1" aria-label="Sections">
+        <nav className="hidden xl:flex items-center gap-1" aria-label={t.sections}>
           {NAV.map((n) => (
             <a
               key={n.id}
-              href={`/#${n.id}`}
+              href={homeSection(locale, n.id)}
               onClick={go(n.id)}
               className="group flex min-h-11 items-center gap-1.5 px-2 py-2 mono text-[11px] uppercase tracking-[0.06em] text-mute hover:text-ink transition-colors"
             >
               <span className="text-acid opacity-0 group-hover:opacity-100 transition-opacity">{n.n}</span>
-              {n.label}
+              {sections[n.id]}
             </a>
           ))}
         </nav>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <Link href="/briefing" className="hidden sm:inline-flex min-h-11 items-center gap-2 mono text-[11px] text-mute hover:text-acid">30-sec briefing <span aria-hidden="true">↗</span></Link>
+          {alternate && <a href={alternate} hrefLang={t.switchTo.lang} lang={t.switchTo.lang} aria-label={`${t.switchTo.short} · ${t.switchTo.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center mono text-[11px] text-mute hover:text-acid">{t.switchTo.short}</a>}
+          <Link href={BRIEFING_PATH[locale]} className="hidden sm:inline-flex min-h-11 items-center gap-2 mono text-[11px] text-mute hover:text-acid">{t.briefingShort} <span aria-hidden="true">↗</span></Link>
           <span className="hidden 2xl:inline-flex">
             <Clock />
           </span>
           <Btn href={PROFILE.cv} download tone="acid" size="sm">
             CV
           </Btn>
-          <button ref={menuTrigger} type="button" className="grid h-11 w-11 place-items-center border border-line xl:hidden" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-story-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
+          <button ref={menuTrigger} type="button" className="grid h-11 w-11 place-items-center border border-line xl:hidden" aria-label={menuOpen ? t.closeMenu : t.openMenu} aria-expanded={menuOpen} aria-controls="mobile-story-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
         </div>
       </div>
-      <nav id="mobile-story-nav" aria-label="Story navigation" hidden={!menuOpen} className="border-b border-line bg-bg px-5 py-5 xl:hidden">
-        {NAV.map(n => <a key={n.id} href={`/#${n.id}`} onClick={go(n.id)} className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px]"><span className="text-acid text-[10px]">{n.n}</span>{n.label}</a>)}
-        <a href="/briefing" className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px] text-mute">30-second briefing ↗</a>
+      <nav id="mobile-story-nav" aria-label={t.storyNav} hidden={!menuOpen} className="border-b border-line bg-bg px-5 py-5 xl:hidden">
+        {NAV.map(n => <a key={n.id} href={homeSection(locale, n.id)} onClick={go(n.id)} className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px]"><span className="text-acid text-[10px]">{n.n}</span>{sections[n.id]}</a>)}
+        <a href={BRIEFING_PATH[locale]} className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px] text-mute">{t.briefingLong} ↗</a>
       </nav>
     </header>
   )

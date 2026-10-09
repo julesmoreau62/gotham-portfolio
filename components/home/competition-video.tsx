@@ -5,9 +5,12 @@ import MuxVideo from "@mux/mux-video-react"
 import { useInView } from "framer-motion"
 import { Pause, Play } from "lucide-react"
 import { GAMES_BACKGROUND_POSTER, GAMES_MUX_PLAYBACK_ID } from "@/lib/games"
+import { COPY } from "@/lib/copy"
+import type { Locale } from "@/lib/i18n"
 import styles from "./journey.module.css"
 
-export function CompetitionVideo() {
+export function CompetitionVideo({ locale = "en" }: { locale?: Locale }) {
+  const t = COPY[locale].story.video
   const frameRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement | undefined>(undefined)
   const inView = useInView(frameRef, { amount: 0.15 })
@@ -55,7 +58,7 @@ export function CompetitionVideo() {
   return (
     <figure className={styles.originVisual}>
       <div className={styles.originVisualHeader}>
-        <span><span className={styles.statusDot} /> Competitive roots</span>
+        <span><span className={styles.statusDot} /> {t.header}</span>
         <span>01 / CS2</span>
       </div>
       <div ref={frameRef} className={styles.originFilmFrame}>
@@ -79,11 +82,11 @@ export function CompetitionVideo() {
           onPlaying={() => setReady(true)}
           onError={() => { setFailed(true); setReady(false) }}
         />
-        {!failed && <button type="button" className={styles.originFilmControl} onClick={() => setRequestedPlayback(!shouldPlay)} aria-label={shouldPlay ? "Pause CS2 highlights" : "Play CS2 highlights"}>
+        {!failed && <button type="button" className={styles.originFilmControl} onClick={() => setRequestedPlayback(!shouldPlay)} aria-label={shouldPlay ? t.pause : t.play}>
           {shouldPlay ? <Pause size={14} /> : <Play size={14} />}
         </button>}
       </div>
-      <figcaption className={styles.originFilmCaption}><span>My plays. My perspective.</span><span>CS2 / My highlights</span></figcaption>
+      <figcaption className={styles.originFilmCaption}><span>{t.caption[0]}</span><span>{t.caption[1]}</span></figcaption>
     </figure>
   )
 }

@@ -6,6 +6,8 @@ import { preload } from "react-dom"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useReducedMotion } from "@/hooks/use-media"
 import { PROFILE } from "@/lib/profile"
+import { COPY } from "@/lib/copy"
+import { BRIEFING_PATH, type Locale } from "@/lib/i18n"
 import { ArrowUpRight, Barcode } from "@/components/ui/primitives"
 import styles from "./journey.module.css"
 
@@ -17,7 +19,8 @@ const HERO_ART = [
   { media: "(min-width: 901px)", src: "/assets/portfolio/volleyball-6.webp", sizes: "65vw" },
 ].map(art => ({ ...art, props: getImageProps({ src: art.src, sizes: art.sizes, alt: "", fill: true }).props }))
 
-export function Hero() {
+export function Hero({ locale = "en" }: { locale?: Locale }) {
+  const t = COPY[locale].hero
   for (const art of HERO_ART) {
     preload(art.src, { as: "image", imageSrcSet: art.props.srcSet, imageSizes: art.sizes, media: art.media, fetchPriority: "high" })
   }
@@ -39,28 +42,28 @@ export function Hero() {
       </motion.div>
       <div className={styles.heroGrid} aria-hidden="true" />
       <div className={styles.heroTop}>
-        <span className="text-acid">A player&apos;s perspective</span>
-        <span>Jules Moreau / Portfolio 2026</span>
+        <span className="text-acid">{t.kicker}</span>
+        <span>{t.portfolio}</span>
       </div>
       <div className={styles.heroMain}>
         <div className={styles.heroCopy}>
-          <div className={styles.heroAvailability}><span className={styles.statusDot} /> Open to an internship <strong>FEB — JUN 2027</strong></div>
-          <p className={styles.heroName}>Jules Moreau <span> / Event management</span></p>
-          <h1 id="hero-title" className={styles.heroTitle}>Make sport<br /><span className="text-acid">happen.</span></h1>
-          <p className={styles.heroSpecialty}>Event operations. Communication. Partnerships.</p>
-          <p className={styles.heroIntro}>Hands-on experience on the ground, behind the content and alongside club partners. M2 International Sport Administration student, based in Lille and mobile across Europe.</p>
+          <div className={styles.heroAvailability}><span className={styles.statusDot} /> {t.availability} <strong>{t.window}</strong></div>
+          <p className={styles.heroName}>Jules Moreau <span> / {t.role}</span></p>
+          <h1 id="hero-title" className={styles.heroTitle}>{t.title[0]}<br /><span className="text-acid">{t.title[1]}</span></h1>
+          <p className={styles.heroSpecialty}>{t.specialty}</p>
+          <p className={styles.heroIntro}>{t.intro}</p>
           <div className={styles.heroActions}>
-            <a href="#contracts" className={styles.primaryLink}>Explore my work <span aria-hidden="true">↓</span></a>
-            <a href={`mailto:${PROFILE.email}`} className={styles.textLink}>Let&apos;s talk <ArrowUpRight /></a>
+            <a href="#contracts" className={styles.primaryLink}>{t.explore} <span aria-hidden="true">↓</span></a>
+            <a href={`mailto:${PROFILE.email}`} className={styles.textLink}>{t.talk} <ArrowUpRight /></a>
           </div>
-          <a href="/briefing" className={styles.heroBriefing}>Short on time? Read the 30-second briefing <ArrowUpRight /></a>
+          <a href={BRIEFING_PATH[locale]} className={styles.heroBriefing}>{t.briefing} <ArrowUpRight /></a>
         </div>
         <div className={styles.heroStamp} aria-hidden="true">
-          <span className={styles.stampCross}>+</span><span>FROM PLAYING<br />TO MAKING IT HAPPEN.</span>
+          <span className={styles.stampCross}>+</span><span>{t.stamp[0]}<br />{t.stamp[1]}</span>
           <Barcode seed="JM-EVENT-MANAGEMENT" height={23} className="w-28 text-acid" />
         </div>
       </div>
-      <span className={styles.heroEdge} aria-hidden="true">ON THE GROUND / BEHIND THE GAME</span>
+      <span className={styles.heroEdge} aria-hidden="true">{t.edge}</span>
     </section>
   )
 }

@@ -280,3 +280,32 @@
   .primaryLink, .textLink, .projectCard, .projectImage img, .archiveRow, .originFilm, .heroProof svg { transition: none; }
   .projectCard:hover .projectImage > img { transform: none; }
 }
+
+/* Where I grew up: one card per move, four per row on desktop. */
+.places { margin-top: 80px; }
+.placesTop { display: flex; justify-content: space-between; gap: 20px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--font-mono), monospace; font-size: 11px; line-height: 1.6; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.placesTop span:first-child { color: var(--acid); }
+.placesIntro { display: flex; justify-content: space-between; align-items: end; gap: 35px; margin: 32px 0 40px; }
+.placesTitle { font-size: clamp(30px, 3.6vw, 54px); font-weight: 850; line-height: .98; letter-spacing: -.04em; text-transform: uppercase; font-variation-settings: "wdth" 110; }
+.placesLead { max-width: 380px; font-size: 16px; line-height: 1.7; color: var(--mute); }
+.placesList { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px 24px; }
+.place { position: relative; padding-top: 18px; border-top: 1px solid var(--line); }
+.place::before { content: ""; position: absolute; left: 0; top: -4px; width: 7px; height: 7px; background: var(--acid); }
+.placeIndex, .placeLesson { display: block; font-family: var(--font-mono), monospace; font-size: 11px; line-height: 1.6; letter-spacing: .06em; text-transform: uppercase; }
+.placeIndex { color: var(--mute); }
+.place h4 { margin-top: 10px; font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+.placeLesson { margin-top: 6px; color: var(--acid); }
+.place p { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--mute); }
+@media (max-width: 1100px) {
+  .placesList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .places { margin-top: 56px; }
+  .placesTop { flex-wrap: wrap; gap: 8px; }
+  .placesIntro { flex-direction: column; align-items: start; gap: 18px; margin-bottom: 32px; }
+}
+@media (max-width: 480px) {
+  .placesList { gap: 28px 16px; }
+  .place h4 { font-size: 18px; }
+  .place p { font-size: 13px; }
+}

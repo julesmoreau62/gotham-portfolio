@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react"
 import { getLenis } from "@/components/fx/smooth-scroll"
+import type { Locale } from "@/lib/i18n"
 import { UniverseIntro, type IntroPhase } from "./universe-intro"
 import styles from "./universe-intro.module.css"
 
@@ -15,7 +16,7 @@ let playedInThisTab = false
 // server-rendered portfolio stays visible; a failed hydration also fails open.
 const primer = `(function(){var cover=document.getElementById('home-intro-primer');var content=document.getElementById('home-content');var seen=false;try{seen=sessionStorage.getItem('${SESSION_KEY}')==='1'}catch(e){}if(cover&&content&&!seen&&!location.hash&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cover.dataset.state='pending';content.inert=true;setTimeout(function(){if(cover.dataset.state==='pending'){cover.dataset.state='expired';content.inert=false}},3400)}})()`
 
-export function HomeEntrance({ children }: { children: ReactNode }) {
+export function HomeEntrance({ children, locale = "en" }: { children: ReactNode; locale?: Locale }) {
   const [phase, setPhase] = useState<IntroPhase | null>(null)
   const [compact, setCompact] = useState(false)
   const decision = useRef<boolean | null>(null)
@@ -108,7 +109,7 @@ export function HomeEntrance({ children }: { children: ReactNode }) {
         {children}
       </div>
       <script dangerouslySetInnerHTML={{ __html: primer }} />
-      {phase && <UniverseIntro phase={phase} compact={compact} skipButton={skipButton} onSkip={finish} />}
+      {phase && <UniverseIntro phase={phase} compact={compact} skipButton={skipButton} onSkip={finish} locale={locale} />}
     </>
   )
 }
