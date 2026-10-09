@@ -33,7 +33,20 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: `${c.title} · ${c.role}`,
     description: c.summary,
-    openGraph: { title: `${c.title} — Jules Moreau`, description: c.summary, images: [c.cover] },
+    alternates: { canonical: `/contracts/${c.slug}` },
+    openGraph: {
+      title: `${c.title} — Jules Moreau`,
+      description: c.summary,
+      url: `/contracts/${c.slug}`,
+      type: "article",
+      images: [{ url: c.cover, alt: `${c.title} case study by Jules Moreau` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${c.title} — Jules Moreau`,
+      description: c.summary,
+      images: [c.cover],
+    },
   }
 }
 

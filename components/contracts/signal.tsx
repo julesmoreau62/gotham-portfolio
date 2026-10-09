@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { Section, Stats, Card, Figure, Gallery, Quote, Bullets, Chips, Prose, Note, Bar } from "@/components/contracts/cs"
+import { Section, Stats, Card, Figure, Gallery, Quote, Bullets, Chips, Prose, Note } from "@/components/contracts/cs"
 import { Reveal, Stagger, Wipe } from "@/components/fx/reveal"
 import { Counter } from "@/components/fx/counter"
 
@@ -11,7 +11,7 @@ const KPI = [
   { v: 162, prefix: "+", suffix: "%", l: "Watch time" },
   { v: 44, suffix: "K", l: "Accounts reached · +24%" },
   { v: 28.2, prefix: "+", suffix: "%", l: "Follower growth", d: 1 },
-  { v: 467, prefix: "+", suffix: "%", l: "Sponsor CTR", d: 0 },
+  { v: 467, prefix: "+", suffix: "%", l: "Sponsor CTR growth", d: 0 },
 ]
 
 function Frame({ src, alt, ratio = "3/4", fit = "cover" }: { src: string; alt: string; ratio?: string; fit?: "cover" | "contain" }) {
@@ -39,44 +39,43 @@ export function SignalCase() {
             </div>
           ))}
         </Stagger>
-        <div className="label text-mute mt-4">Season Jan → Jun 2025 · Instagram & Facebook · sponsor activation measured in click-through</div>
+        <div className="label text-mute mt-4">January → June 2025 · Instagram & Facebook · sponsor activation measured through click-through rate</div>
+        <p className="mono mt-3 max-w-3xl text-[11px] leading-relaxed text-mute">The +467% figure is relative growth in sponsor click-through rate. Absolute before-and-after rates are not included in this case study.</p>
       </div>
 
       {/* 00 MISSION */}
       <Section
         n="00"
-        kicker="Mission brief"
-        title="A club with a community, but no voice"
-        intro="During my third year of Licence STAPS (Sport Management), I joined AS Nortkerque (ASN95) as Head of Communications for a full season. What started as an internship became a complete digital overhaul: sponsor activation, visual identity, match-day photography."
+        kicker="Context & responsibilities"
+        title="Communication for a local football club"
+        intro="During my third-year Sport Management internship, I led communication for AS Nortkerque (ASN95), January to June 2025. My responsibilities covered sponsor activation, recurring content, visual identity and matchday photography."
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Card kicker="Starting point" tone="surface">
-            When I arrived, ASN95 had no structured digital presence. No content calendar, no visual guidelines, no
-            recurring formats. Sponsors had zero visibility beyond pitch-side banners. Social media was sporadic: a
-            post here, a score there, no identity. The club had the community, but no voice. My job was to build one
-            from scratch.
+            The club had no content calendar, visual guidelines or recurring formats. Social posts were sporadic,
+            and sponsor visibility was limited to pitch-side banners. I built a consistent production routine
+            around club news, matchday content and partner activation.
           </Card>
-          <Card kicker="Frequency" tone="accent" title="143.7 MHz // encrypted">
-            Three roles across one season: sponsor activation, content and identity, field photography. Coordinated
-            communication schedules and matchday operations to increase club visibility.
+          <Card kicker="My contribution" tone="accent" title="Content, partners and matchdays">
+            I coordinated the communication schedule, created recurring visual formats, organised sponsor content
+            and photographed the club on the ground.
           </Card>
         </div>
       </Section>
 
       {/* ACT I */}
-      <Section n="I" kicker="Act I · Activation" title="Sponsor engagement through prediction games">
+      <Section n="01" kicker="Sponsor activation" title="A prediction game that brings people back">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Card kicker="V1 // Sponsor activation" title="“Les Pronos du Sultan”" tone="accent">
-              In 2024, ASN95 partnered with Sultan Kebab on a simple bet: a weekly prediction game to turn passive
-              followers into an active community. Low-tech by design: a Google Form, a manual leaderboard, a free meal
-              for the top 3. It drove <span className="text-[var(--accent)] font-semibold">+467% CTR</span>. Followers
-              came back. Every. Single. Week. The infrastructure couldn’t scale. The proof of concept was undeniable.
+            <Card kicker="Original activation" title="“Les Pronos du Sultan”" tone="accent">
+              A weekly score-prediction game with sponsor Sultan Kebab: a Google Form, a manually maintained leaderboard
+              and a free meal for the top three. The activation gave the sponsor a recurring place in club communication,
+              with <span className="text-[var(--accent)] font-semibold">+467% growth in click-through rate</span>.
               <div className="mt-6 flex items-baseline gap-3">
                 <span className="display tnum text-[clamp(44px,6vw,90px)] text-[var(--accent)]">
                   <Counter to={467} prefix="+" suffix="%" />
                 </span>
-                <span className="label text-mute">click-through rate</span>
+                <span className="label text-mute">relative growth in CTR</span>
               </div>
             </Card>
           </div>
@@ -85,22 +84,19 @@ export function SignalCase() {
           </div>
         </div>
 
-        <Quote className="mt-12">The +467% wasn’t a campaign. It was a blueprint.</Quote>
+        <Quote className="mt-12">Give partners a role in the weekly club experience.</Quote>
 
         <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Card kicker="V2 // Platform build" title="ASN95 Predict" n="BETA">
-              ASN95 Predict is the real thing. Live rankings, user profiles, sponsor-ready data capture, built to make
-              this activation replicable for any future partner. No more manual tracking. Just a model that scales.
-              <div className="mt-6">
-                <Bar label="Status — beta" value={80} />
-              </div>
+            <Card kicker="Platform prototype" title="ASN95 Predict" n="BETA">
+              A beta project exploring how to reduce manual tracking with rankings, user profiles and a sponsor data
+              layer. It extends the original activation; the results above belong to the original campaign.
               <Chips className="mt-5" items={["Live rankings", "User profiles", "Sponsor data layer"]} />
             </Card>
           </div>
           <div className="lg:col-span-5 flex items-center justify-center">
             <Reveal>
-              <div className="relative w-40 aspect-[9/18] border-2 border-[var(--accent)]/60 bg-black p-3">
+              <div className="relative w-40 aspect-[9/18] border-2 border-[var(--accent)]/60 bg-black p-3" aria-label="ASN95 Predict interface concept with illustrative data">
                 <div className="mx-auto h-1.5 w-12 rounded-b bg-[var(--accent)]/30" />
                 <div className="mt-3 flex items-center justify-between">
                   <span className="label text-[var(--accent)] text-[7px]">ASN95 Predict</span>
@@ -129,7 +125,7 @@ export function SignalCase() {
                     <span className="text-[var(--accent)] font-bold">{r[2]}</span>
                   </div>
                 ))}
-                <div className="absolute bottom-2 inset-x-2 label text-[5px] text-center text-mute">Powered by Sultan Kebab</div>
+                <div className="absolute bottom-2 inset-x-2 label text-[5px] text-center text-mute">Interface concept · illustrative data</div>
               </div>
             </Reveal>
           </div>
@@ -138,10 +134,10 @@ export function SignalCase() {
 
       {/* ACT II */}
       <Section
-        n="II"
-        kicker="Act II · Comms"
+        n="02"
+        kicker="Recurring communication"
         title="Building a visual identity week after week"
-        intro="The activation proved demand. Now the content had to match the ambition. From engagement to identity."
+        intro="Match announcements, results and interviews gave the club a consistent visual identity and a regular publishing rhythm."
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="flex flex-col gap-3">
@@ -199,10 +195,10 @@ export function SignalCase() {
 
       {/* ACT III */}
       <Section
-        n="III"
-        kicker="Act III · Field"
+        n="03"
+        kicker="Photography on site"
         title="Capturing the club from the sidelines"
-        intro="Every visual needed proof. So we shot it ourselves. From design to the pitch."
+        intro="I produced the photography used in the club’s communication, from match coverage to sponsor and youth academy portraits."
       >
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="flex flex-col gap-4">
@@ -221,13 +217,11 @@ export function SignalCase() {
               <span>1,650+ edited photos</span>
             </div>
             <p className="mono text-[11px] leading-relaxed text-mute">
-              Near-complete season coverage: 26 league matches, 4 youth training camps, 2 general assemblies and the
-              club’s 30th anniversary event. From the pitch to the feed.
+              26 league matches, 4 youth training camps, 2 general assemblies and the club’s 30th anniversary event.
             </p>
             <Note>
-              Every Sunday at 13:00, same routine: charge batteries, clean lenses, arrive early. Rain, wind, mud. 33
-              match days, no excuses, no missed games. The players knew me by name by week five. That’s when the shots
-              started getting real.
+              A repeatable matchday routine: prepare batteries and lenses, arrive early, shoot the event, select and edit
+              the images, then deliver a set ready for publication.
             </Note>
           </div>
           <div className="flex flex-col gap-4">
@@ -239,13 +233,12 @@ export function SignalCase() {
               ))}
             </div>
             <p className="mono text-[11px] leading-relaxed text-mute">
-              Youth academy photoshoot: sponsor visibility through authentic club moments. Not a logo on a banner. A
-              brand woven into the heartbeat of the club.
+              A youth academy photoshoot connected sponsor visibility with the club’s players and the branded kits
+              they use on the pitch.
             </p>
             <Note>
-              50+ kids in branded kits, one afternoon, no studio, just the pitch they train on every week. The sponsor
-              got content they actually used. The kids got portraits they were proud of. That’s the ROI nobody puts in
-              a deck.
+              More than 50 young players photographed in one afternoon on their training pitch. The session produced
+              group and individual portraits for club and sponsor communication.
             </Note>
           </div>
         </div>
@@ -253,19 +246,19 @@ export function SignalCase() {
       </Section>
 
       {/* DEBRIEF */}
-      <Section n="IV" kicker="Debrief" title="One season. Three roles. One mission." intro="Give a local club the digital presence it deserved. Signal ends, transmission complete.">
+      <Section n="04" kicker="What I learned" title="A routine the club can build on" intro="Consistent content, practical sponsor activations and reliable production matter across the whole season.">
         <Stagger className="grid grid-cols-1 gap-px bg-line md:grid-cols-3" stagger={0.08}>
           <Card kicker="01 — Consistency wins">
             Showing up every week matters more than any single viral post. The audience grew because they knew what to
             expect and when to expect it.
           </Card>
           <Card kicker="02 — Sponsors need stories">
-            A logo on a banner is invisible. A sponsor woven into weekly content, prediction games and photoshoots
-            becomes part of the club’s identity.
+            Prediction games, photoshoots and recurring content give partners more ways to participate in the club’s
+            community than logo placement alone.
           </Card>
           <Card kicker="03 — Build, then scale">
-            The prediction game started with a Google Form. It didn’t need to be perfect, it needed to prove the
-            concept. V2 exists because V1 worked.
+            The prediction game started with a Google Form. Running it manually showed what a future platform would
+            need to simplify before developing the beta.
           </Card>
         </Stagger>
         <Prose className="mt-8">
@@ -277,7 +270,7 @@ export function SignalCase() {
             items={[
               "Built complete digital presence from scratch (no prior content calendar, no visual guidelines)",
               "Created “Les Pronos du Sultan”: weekly sponsor prediction game, +467% CTR",
-              "Developed ASN95 Predict platform (beta): live rankings, user profiles, sponsor data layer",
+              "Explored ASN95 Predict (beta): rankings, user profiles and a sponsor data layer",
               "15+ visuals per season across 3 recurring formats, 5+ sponsors integrated per visual",
               "Match photography: 33 events, 500+ shots per match, 1,650+ edited photos",
               "Managed matchday operations, visual identity and sponsor activation",

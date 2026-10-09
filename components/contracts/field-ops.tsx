@@ -36,7 +36,7 @@ function Incident({
       </div>
       <p className="mono mt-3 text-[12px] leading-relaxed text-mute">{description}</p>
       <div className="mt-4 border border-acid/30 bg-surface p-4">
-        <div className="label text-acid">Resolution executed</div>
+        <div className="label text-acid">What changed</div>
         <p className="mono mt-2 text-[11px] leading-relaxed text-mute">{resolution}</p>
         <div className="mt-3 grid grid-cols-3 gap-px bg-line border-t border-line pt-3">
           {stats.map(([l, v]) => (
@@ -55,7 +55,7 @@ export function FieldOpsCase() {
   return (
     <>
       {/* 01 MISSION */}
-      <Section n="01" kicker="Mission brief" title="Field operation · ASI Tournament" intro="Comms Chief for the ASI Multisports Tournament at UFR3S Lille, December 2025: 500+ personnel, four disciplines, one day, and a live communication plan that had to survive two critical incidents.">
+      <Section n="01" kicker="Context & responsibilities" title="Communication and coordination on site" intro="I led communication and contributed to field operations for the ASI Multisports Tournament at UFR3S Lille, December 2025. The event brought together 500+ people across four disciplines, with venue and weather changes to handle before the start.">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <Wipe className="lg:col-span-7">
             <div className="border border-[var(--accent)]/50 bg-black">
@@ -92,20 +92,20 @@ export function FieldOpsCase() {
             </div>
           </Wipe>
           <div className="lg:col-span-5 flex flex-col gap-4">
-            <Card kicker="Mission brief" tone="accent">
-              <Kv k="Role" v="Comms Chief" />
+            <Card kicker="At a glance" tone="accent">
+              <Kv k="Role" v="Communication lead · field operations" />
               <Kv k="Date" v="December 2025" />
               <Kv k="Location" v="UFR3S · Lille" />
-              <Kv k="Personnel" v="500+" />
-              <Kv k="Coordinates" v="50.6292 N · 3.0573 E" />
+              <Kv k="Attendance" v="500+ people" />
+              <Kv k="Format" v="4 disciplines · 1 day" />
               <Kv k="Status" v="Completed" />
               <div className="mt-4 label text-mute">Sports disciplines</div>
               <Chips className="mt-2" items={["Disc golf", "Wheelchair BBL", "Laser tag", "Spikeball"]} />
             </Card>
-            <Card kicker="Equipment loadout">
+            <Card kicker="Photo & video production">
               <div className="grid grid-cols-2 gap-px bg-line">
                 <div className="bg-bg p-3">
-                  <div className="label text-mute">Primary unit</div>
+                  <div className="label text-mute">Camera</div>
                   <div className="display mt-1 text-[16px]">Sony α6400</div>
                   <div className="label text-[var(--accent)] mt-1">Mirrorless APS-C</div>
                 </div>
@@ -122,7 +122,7 @@ export function FieldOpsCase() {
                     <Counter to={50} />
                   </div>
                 </div>
-                <span className="label text-mute">All equipment operational</span>
+                <span className="label text-mute">Photos produced</span>
               </div>
             </Card>
           </div>
@@ -130,45 +130,45 @@ export function FieldOpsCase() {
       </Section>
 
       {/* 02 INCIDENTS */}
-      <Section n="02" kicker="Critical incidents log" title="Crisis management" intro="Two major incidents in the final hours before kick-off. Both resolved with zero participant impact and an on-time start.">
+      <Section n="02" kicker="Decisions on the day" title="Adapting when plans changed" intro="A venue conflict and heavy rainfall required changes in the hours before the event. Both were handled while maintaining the scheduled start and the competition.">
         <Stagger className="grid grid-cols-1 gap-4 lg:grid-cols-2" stagger={0.12}>
           <Incident
-            time="H-0200"
+            time="2 HOURS BEFORE"
             title="Facility conflict"
-            severity="CRITICAL"
+            severity="RELOCATED"
             color="#ff2a3c"
-            description="Administration scheduled a university match in the primary gymnasium. Venue unavailable 2 hours before event start. Immediate relocation required."
-            resolution="Emergency relocation protocol activated. Secured an alternate gymnasium within 45 minutes. Coordinated equipment transfer. Zero participant impact. On-time event start maintained."
+            description="A university match was scheduled in the main gymnasium, leaving the tournament without its planned venue two hours before the start."
+            resolution="An alternate gymnasium was secured within 45 minutes and equipment transfers were coordinated. The tournament started on time."
             stats={[
               ["Response", "45 min"],
-              ["Impact", "Zero"],
-              ["Status", "OK"],
+              ["Start", "On time"],
+              ["Venue", "Secured"],
             ]}
           />
           <Incident
-            time="H-0030"
+            time="30 MINUTES BEFORE"
             title="Weather hazard"
             severity="ADAPTED"
             color="#2ee6ff"
-            description="Heavy rainfall compromising the outdoor disc golf area. Equipment damage risk detected, participant safety concern raised. Forecast: continuous rain."
-            resolution="Indoor fallback protocol activated. Disc golf relocated to the secured gymnasium. Modified course layout implemented. Equipment protected. Full competition maintained with adapted rules."
+            description="Heavy rain made the outdoor disc golf area unsuitable, raising concerns about participant safety and equipment damage."
+            resolution="Disc golf moved into the gymnasium with an adapted course and rules. Equipment was protected and the competition continued indoors."
             stats={[
               ["Relocation", "30 min"],
-              ["Adaptability", "100%"],
-              ["Safety", "OK"],
+              ["Format", "Indoor"],
+              ["Competition", "Continued"],
             ]}
           />
         </Stagger>
         <Reveal className="mt-6 flex flex-col gap-4 border border-acid/40 bg-surface p-5 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="label text-acid">Crisis management: successful</div>
-            <div className="mono mt-1 text-[12px] text-mute">Two major incidents resolved. Zero event disruption. Perfect operational continuity.</div>
+            <div className="label text-acid">Result</div>
+            <div className="mono mt-1 text-[12px] text-mute">Two changes handled before the start. The event ran on schedule with all four disciplines maintained.</div>
           </div>
           <div className="flex gap-8">
             {[
-              ["2", "Incidents"],
-              ["0", "Impact"],
-              ["100%", "Success"],
+              ["2", "Changes handled"],
+              ["4", "Disciplines"],
+              ["0", "Event disruption"],
             ].map(([v, l]) => (
               <div key={l} className="text-center">
                 <div className="display text-[28px] text-acid">{v}</div>
@@ -197,8 +197,8 @@ export function FieldOpsCase() {
         <div className="mt-6">
           <Figure src="/assets/photo/asi-5.jpg" alt="ASI tournament photo 5" ratio="21/9" label="ASI_EVENT_05" sizes="100vw" />
         </div>
-        <Stats className="mt-10" items={[{ v: "500+", l: "Personnel" }, { v: "4", l: "Disciplines" }, { v: "2", l: "Incidents solved" }, { v: "0", l: "Event disruption" }]} />
-        <Note className="mt-8">Mission status: completed. Lille, France · 50.6292 N / 3.0573 E · December 2025.</Note>
+        <Stats className="mt-10" items={[{ v: "500+", l: "People at the event" }, { v: "4", l: "Disciplines" }, { v: "2", l: "Changes handled" }, { v: "0", l: "Event disruption" }]} />
+        <Note className="mt-8">Communication, field coordination and visual production · UFR3S Lille · December 2025.</Note>
       </Section>
     </>
   )

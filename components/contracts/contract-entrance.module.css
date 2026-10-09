@@ -52,7 +52,7 @@
 .topline { border-bottom: 1px solid #f2f1ec24; padding-bottom: 16px; }
 .bottomline { border-top: 1px solid #f2f1ec24; padding-top: 16px; padding-right: 128px; }
 
-.eyebrow { margin-bottom: clamp(12px, 2vh, 24px); color: var(--intro-accent); animation: appear 400ms ease-out 100ms both; }
+.eyebrow { margin-bottom: clamp(12px, 2vh, 24px); color: var(--intro-accent); animation: appear 220ms ease-out 50ms both; }
 .title {
   font-family: var(--font-archivo), sans-serif;
   font-weight: 900;
@@ -84,12 +84,12 @@
   -webkit-text-stroke: 1px #ff2e8855;
 }
 .signalIdentity { position: relative; margin-left: clamp(0px, 4vw, 64px); padding-block: 20px; }
-.signalTitle .mask > span { animation: from-left 700ms cubic-bezier(0.2, 1, 0.3, 1) 130ms both; }
-.signalTitle .mask:nth-child(2) > span { animation-name: from-right; animation-delay: 270ms; }
-.signalRule { height: 5px; width: min(560px, 75vw); margin-block: clamp(16px, 3vh, 32px); background: var(--intro-accent); transform-origin: left; animation: connect 650ms cubic-bezier(0.2, 1, 0.3, 1) 350ms both; }
+.signalTitle .mask > span { animation: from-left 340ms cubic-bezier(0.2, 1, 0.3, 1) 60ms both; }
+.signalTitle .mask:nth-child(2) > span { animation-name: from-right; animation-delay: 100ms; }
+.signalRule { height: 5px; width: min(560px, 75vw); margin-block: clamp(16px, 3vh, 32px); background: var(--intro-accent); transform-origin: left; animation: connect 260ms cubic-bezier(0.2, 1, 0.3, 1) 150ms both; }
 .scoreboard { display: flex; gap: clamp(32px, 5vw, 80px); }
-.scoreboard > div { display: flex; flex-direction: column; gap: 8px; animation: rise 500ms ease-out 550ms both; }
-.scoreboard > div:nth-child(2) { animation-delay: 700ms; }
+.scoreboard > div { display: flex; flex-direction: column; gap: 8px; animation: rise 220ms ease-out 200ms both; }
+.scoreboard > div:nth-child(2) { animation-delay: 230ms; }
 .scoreboard strong { font-family: var(--font-archivo), sans-serif; font-size: clamp(28px, 4vw, 56px); font-weight: 800; line-height: 1; }
 .scoreboard span { color: #f2f1ec99; }
 
@@ -101,16 +101,16 @@
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse at center, #000, transparent 75%);
 }
-.scan { position: absolute; inset: 0 0 auto; height: 1px; background: #9d6bff80; box-shadow: 0 0 28px 3px #9d6bff30; animation: scan 1200ms cubic-bezier(0.2, 1, 0.3, 1) 80ms both; }
+.scan { position: absolute; inset: 0 0 auto; height: 1px; background: #9d6bff80; box-shadow: 0 0 28px 3px #9d6bff30; animation: scan 600ms cubic-bezier(0.2, 1, 0.3, 1) 20ms both; }
 .intelIdentity { position: relative; width: min(100%, 820px); align-self: center; padding-block: 20px; text-align: center; }
-.intelTitle .mask > span { animation: decode 700ms cubic-bezier(0.2, 1, 0.3, 1) 150ms both; }
+.intelTitle .mask > span { animation: decode 340ms cubic-bezier(0.2, 1, 0.3, 1) 70ms both; }
 .intelTitle .mask:first-child > span { color: transparent; -webkit-text-stroke: 1px var(--intro-accent); }
-.intelTitle .mask:nth-child(2) > span { animation-delay: 300ms; }
+.intelTitle .mask:nth-child(2) > span { animation-delay: 110ms; }
 .pipeline { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 2vw, 24px); margin: clamp(20px, 4vh, 48px) auto 0; max-width: 680px; }
-.pipelineLine { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--intro-accent); transform-origin: left; animation: connect 650ms ease-out 500ms both; }
-.node { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 1px solid #9d6bff66; background: #110c1c; padding: 14px 8px; animation: rise 350ms ease-out 500ms both; }
-.node:nth-child(3) { animation-delay: 700ms; }
-.node:nth-child(4) { animation-delay: 900ms; border-color: var(--intro-accent); }
+.pipelineLine { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--intro-accent); transform-origin: left; animation: connect 240ms ease-out 200ms both; }
+.node { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 1px solid #9d6bff66; background: #110c1c; padding: 14px 8px; animation: rise 220ms ease-out 230ms both; }
+.node:nth-child(3) { animation-delay: 200ms; }
+.node:nth-child(4) { animation-delay: 230ms; border-color: var(--intro-accent); }
 .node span { font-size: 10px; color: #c4abdfff; }
 .node strong { font-size: 14px; font-weight: 500; letter-spacing: 0.03em; }
 

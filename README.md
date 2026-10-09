@@ -21,9 +21,11 @@ A personal journey from competitive gaming and volleyball coaching to sport even
 
 ## The experience
 
-Acid green on black. Wide grotesk type, registration marks, a real-time 3D artifact and scroll-driven photography. The homepage follows a personal story: gaming sparked an interest in esports events; coaching a U13 volleyball team at a smoothly organised tournament made that interest concrete; real projects show how it developed into event operations, communication and partnerships.
+Acid green on black. Wide grotesk type, registration marks and personal sport photography. The homepage opens with the internship role, availability and three practical proof points, followed immediately by selected projects. A compact personal story connects competitive gaming and volleyball coaching to event operations, communication and partnerships.
 
-The selected projects follow three ideas: **make it run** (ASI Tournament), **make it seen** (ASN95), and **make it last** (Royal Daring). A compact approach section, education, an expandable experience log and internship contact complete the journey. Volleyball photos are labelled as personal archive imagery rather than presented as photos of the U13 turning point.
+The selected projects show **event operations** (ASI Tournament), **communication and activation** (ASN95), and **branding and partnerships** (Royal Daring). Project cards include actual deliverables, including the Daring website and ASN95 campaign visuals. An approach section, visible field experience, education, a full expandable experience log and internship contact complete the page. Volleyball photos are labelled as personal archive imagery.
+
+On the first home visit, a 3.6-second introduction brings fragments of projects, sport and games together around JM before revealing the portfolio. It uses dedicated WebP thumbnails (186 kB total) and CSS perspective, with fewer fragments on mobile. Skip and Escape exit immediately; repeat visits in the same tab session, direct section links and reduced-motion preferences bypass it. The content remains available without JavaScript or if hydration fails. Project introductions are also brief and play once per session.
 
 ### Built for two reading speeds
 
@@ -43,16 +45,16 @@ The selected projects follow three ideas: **make it run** (ASI Tournament), **ma
 | `01` | **Royal Daring HC** | Communication & Sponsoring | Bilingual sponsor website, nine-page partner brochure, brand system and Notion handover. |
 | `02` | **ASN95 Signal** | Head of Communications | +467% sponsor CTR, 1M+ views and 1,650+ edited photos. |
 | `03` | **BLAST Strategy** | Strategic Analyst | 23-page dossier, PESTEL / VRIO / SWOT and India pivot roadmap. |
-| `04` | **ASI Tournament** | Comms Chief | 500+ personnel, two incidents solved and zero disruption. |
+| `04` | **ASI Tournament** | Communication lead / Field operations | 500+ people, venue and weather changes handled without disruption. |
 | `05` | **Intel Core** | Product Owner | Telegram → Gemini → Notion → Next.js intelligence pipeline at roughly $1/month. |
-| `06` | **Client Builds** | AI-assisted Web Delivery | Two client websites shipped or in development. |
+| `06` | **Client Builds** | AI-assisted Web Delivery | One live client website and one in development. |
 | `07` | **Imagery** | Photographer | 50 selected frames across sport, events and corporate work. |
 
 ## Under the hood
 
 ```text
 app/
-├── page.tsx                   home: play → discover → coach → projects → next chapter
+├── page.tsx                   home: internship → projects → story → experience → contact
 ├── briefing/page.tsx         recruiter-focused fast path
 └── contracts/[slug]/page.tsx seven statically generated case files
 

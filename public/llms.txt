@@ -21,7 +21,7 @@ Grandmaster-level Overwatch 2 player (former Top 500). No formal coding backgrou
 tools and client websites through AI-augmented workflows (Claude Code, Codex).
 
 ## SITE STRUCTURE
-/                         Home: profile, contracts index, deployment log, loadout, contact
+/                         Home: internship profile, selected projects, personal story, approach, field experience, education and contact
 /briefing                 30-second recruiter briefing
 /contracts/daring         Royal Daring HC — Communication & Sponsoring (featured case)
 /contracts/signal         ASN95 — Head of Communications
@@ -57,7 +57,7 @@ M1 thesis: LEC/GRP vs CS2 economic models (interviews including BLAST VP James W
 
 ### Head of Communications — AS Nortkerque 95 (ASN95) · Jan–Jun 2025
 - Built the club's digital presence from scratch (no content calendar, no visual guidelines)
-- "Les Pronos du Sultan" weekly sponsor prediction game: +467% CTR
+- "Les Pronos du Sultan" weekly sponsor prediction game: +467% relative growth in CTR
 - ASN95 Predict platform (beta): live rankings, user profiles, sponsor data layer
 - 15+ visuals per season, 3 recurring formats, 5+ sponsors per visual
 - Season photography: 33 events, 500+ shots per match, 1,650+ edited photos

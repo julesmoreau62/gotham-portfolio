@@ -1,12 +1,13 @@
 "use client"
 
-import { useCallback, useEffect, useState, type CSSProperties } from "react"
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
+import { usePathname } from "next/navigation"
 import { getLenis } from "@/components/fx/smooth-scroll"
 
 export type EntranceCallbacks = { onReveal: () => void; onComplete: () => void }
 
-const REVEAL_MS = 1400
-const EXIT_MS = 700
+const REVEAL_MS = 450
+const EXIT_MS = 400
 
 export const entranceTiming = {
   "--intro-hold": `${REVEAL_MS}ms`,
@@ -15,7 +16,9 @@ export const entranceTiming = {
 
 /** Shared timing, scroll lock and skip behavior for the three case intros. */
 export function useContractEntrance({ onReveal, onComplete }: EntranceCallbacks) {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(true)
+  const decision = useRef<{ key: string; play: boolean } | null>(null)
   const skip = useCallback(() => {
     onComplete()
     setVisible(false)
@@ -25,7 +28,22 @@ export function useContractEntrance({ onReveal, onComplete }: EntranceCallbacks)
     if (!visible) return
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (reduce.matches) {
+    const key = `jm-contract-entrance-v2:${pathname}`
+    if (decision.current?.key !== key) {
+      let seen = false
+      try {
+        seen = !!sessionStorage.getItem(key)
+      } catch {}
+      const play = !seen && !reduce.matches && !window.location.hash
+      decision.current = { key, play }
+      if (play) {
+        try {
+          sessionStorage.setItem(key, "1")
+        } catch {}
+      }
+    }
+    if (!decision.current.play || reduce.matches) {
+      onReveal()
       skip()
       return
     }
@@ -56,7 +74,7 @@ export function useContractEntrance({ onReveal, onComplete }: EntranceCallbacks)
       document.documentElement.style.overflow = overflow
       lenis?.start()
     }
-  }, [onReveal, skip, visible])
+  }, [onReveal, pathname, skip, visible])
 
   return { visible, skip }
 }

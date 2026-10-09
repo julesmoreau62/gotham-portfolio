@@ -1,4 +1,3 @@
-import { BootProvider } from "@/components/home/boot"
 import { TopBar } from "@/components/home/top-bar"
 import { SideHud } from "@/components/home/side-hud"
 import { Hero } from "@/components/home/hero"
@@ -8,21 +7,23 @@ import { ContractsIndex } from "@/components/home/contracts-index"
 import { DeploymentLog } from "@/components/home/deployment-log"
 import { Extraction } from "@/components/home/extraction"
 import { Footer } from "@/components/home/footer"
+import { HomeEntrance } from "@/components/home/home-entrance"
 
 export default function HomePage() {
   return (
-    <BootProvider>
+    <HomeEntrance>
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <TopBar />
       <SideHud />
-      <main className="lg:pr-12">
+      <main id="main-content" tabIndex={-1} className="lg:pr-12">
         <Hero />
-        <Journey />
         <ContractsIndex />
+        <Journey />
         <Operator />
         <DeploymentLog />
         <Extraction />
       </main>
       <Footer />
-    </BootProvider>
+    </HomeEntrance>
   )
 }

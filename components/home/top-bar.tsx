@@ -81,7 +81,7 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
         <Link href="/" className="flex items-center gap-3" aria-label="Home">
           <span className="grid h-7 w-7 place-items-center bg-acid text-black mono text-[10px] font-bold">JM</span>
           <span className="display text-[15px] tracking-[0.02em]">Moreau</span>
-          <span className="label text-mute hidden lg:inline">{"// A player's perspective"}</span>
+          <span className="label text-mute hidden 2xl:inline">{"// Event management"}</span>
         </Link>
 
         <nav className="hidden xl:flex items-center gap-1" aria-label="Sections">
@@ -90,7 +90,7 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
               key={n.id}
               href={`/#${n.id}`}
               onClick={go(n.id)}
-              className="group flex items-center gap-2 px-3 py-2 label text-mute hover:text-ink transition-colors"
+              className="group flex min-h-11 items-center gap-1.5 px-2 py-2 mono text-[11px] uppercase tracking-[0.06em] text-mute hover:text-ink transition-colors"
             >
               <span className="text-acid opacity-0 group-hover:opacity-100 transition-opacity">{n.n}</span>
               {n.label}
@@ -99,7 +99,8 @@ export function TopBar({ variant = "home" }: { variant?: "home" | "page" }) {
         </nav>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <span className="hidden md:inline-flex">
+          <Link href="/briefing" className="hidden sm:inline-flex min-h-11 items-center gap-2 mono text-[11px] text-mute hover:text-acid">30-sec briefing <span aria-hidden="true">↗</span></Link>
+          <span className="hidden 2xl:inline-flex">
             <Clock />
           </span>
           <Btn href={PROFILE.cv} download tone="acid" size="sm">

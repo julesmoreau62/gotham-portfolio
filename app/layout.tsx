@@ -32,11 +32,13 @@ export const metadata: Metadata = {
     siteName: "Jules Moreau",
     type: "profile",
     locale: "en_US",
+    images: [{ url: "/assets/photo/volleyball-6.jpg", alt: "Volleyball photography by Jules Moreau" }],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE.title,
     description: SITE.description,
+    images: ["/assets/photo/volleyball-6.jpg"],
   },
   robots: { index: true, follow: true },
 }

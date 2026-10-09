@@ -9,13 +9,16 @@
   --bg: #070707;
   --surface: #101010;
   --ink: #f2f1ec;
-  --mute: rgba(242, 241, 236, 0.55);
+  --mute: rgba(242, 241, 236, 0.68);
   --dim: rgba(242, 241, 236, 0.32);
   --line: rgba(242, 241, 236, 0.14);
   --acid: #c8ff00;
   --accent: #c8ff00;
   color-scheme: dark;
 }
+
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 250; padding: 12px 18px; background: var(--acid); color: #070707; font-weight: 600; transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
 
 /* ------------------------------------------------------------------
    BASE

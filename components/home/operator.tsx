@@ -12,7 +12,7 @@ const METHODS = [
 export function Operator() {
   return (
     <section id="operator" className={styles.approach} aria-labelledby="approach-title">
-      <div className={styles.chapterTop}><span>04 / The person behind the projects</span><span>Sport management · Field experience · Curiosity</span></div>
+      <div className={styles.chapterTop}><span>03 / How I work</span><span>Sport management · Field experience · Curiosity</span></div>
       <div className={styles.approachLayout}>
         <div className={styles.approachIntro}>
           <div id="approach-title"><Lines as="h2" className={styles.chapterTitle} lines={["One direction.", <span key="skills" className="text-acid">Different skills.</span>]} /></div>

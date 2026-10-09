@@ -1,11 +1,12 @@
 "use client"
 
 import Image from "next/image"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Section, Stats, Chips, Note } from "@/components/contracts/cs"
 import { Reveal } from "@/components/fx/reveal"
 import { cn, pad2 } from "@/lib/utils"
+import { getLenis } from "@/components/fx/smooth-scroll"
 
 type Photo = { src: string; title: string; cat: "corporate" | "events" | "sport"; set: string }
 
@@ -45,6 +46,10 @@ const SPANS = [
 export function ImageryCase() {
   const [sector, setSector] = useState<(typeof SECTORS)[number]["id"]>("all")
   const [open, setOpen] = useState<number | null>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const openerRef = useRef<HTMLButtonElement | null>(null)
+  const viewerOpen = open !== null
 
   const list = useMemo(() => (sector === "all" ? PHOTOS : PHOTOS.filter((p) => p.cat === sector)), [sector])
 
@@ -56,8 +61,52 @@ export function ImageryCase() {
   )
 
   useEffect(() => {
-    if (open === null) return
+    if (!viewerOpen) return
+    const dialog = dialogRef.current
+    if (!dialog) return
+    const previousFocus = openerRef.current ?? document.activeElement
+    const overflow = document.documentElement.style.overflow
+    const wasStopped = document.documentElement.classList.contains("lenis-stopped")
+    const lenis = getLenis()
+    document.documentElement.style.overflow = "hidden"
+    lenis?.stop()
+
+    // Isolate the viewer without making any of its ancestors inert.
+    const outside: { element: HTMLElement; inert: boolean }[] = []
+    let branch: HTMLElement = dialog
+    while (branch.parentElement) {
+      const parent = branch.parentElement
+      for (const sibling of parent.children) {
+        if (sibling === branch || !(sibling instanceof HTMLElement)) continue
+        outside.push({ element: sibling, inert: sibling.inert })
+        sibling.inert = true
+      }
+      if (parent === document.body) break
+      branch = parent
+    }
+
+    closeRef.current?.focus({ preventScroll: true })
+    const focusable = () => Array.from(dialog.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(element => !element.hidden && element.getClientRects().length > 0)
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        const elements = focusable()
+        const first = elements[0]
+        const last = elements[elements.length - 1]
+        if (!first) {
+          e.preventDefault()
+          dialog.focus()
+        } else if (e.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+          e.preventDefault()
+          first.focus()
+        }
+        e.stopPropagation()
+        return
+      }
       if (!["Escape", "ArrowRight", "ArrowLeft"].includes(e.key)) return
       e.preventDefault()
       e.stopPropagation()
@@ -67,9 +116,20 @@ export function ImageryCase() {
       if (e.key === "ArrowRight") go(1)
       if (e.key === "ArrowLeft") go(-1)
     }
+    const onFocus = (e: FocusEvent) => {
+      if (e.target instanceof Node && !dialog.contains(e.target)) closeRef.current?.focus({ preventScroll: true })
+    }
     window.addEventListener("keydown", onKey, true)
-    return () => window.removeEventListener("keydown", onKey, true)
-  }, [open, go])
+    document.addEventListener("focusin", onFocus)
+    return () => {
+      window.removeEventListener("keydown", onKey, true)
+      document.removeEventListener("focusin", onFocus)
+      outside.forEach(({ element, inert }) => { element.inert = inert })
+      document.documentElement.style.overflow = overflow
+      if (!wasStopped) lenis?.start()
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus({ preventScroll: true })
+    }
+  }, [viewerOpen, go])
 
   return (
     <>
@@ -86,7 +146,8 @@ export function ImageryCase() {
                   key={s.id}
                   type="button"
                   onClick={() => setSector(s.id)}
-                  className={cn("label h-9 px-4 border transition-colors", on ? "bg-ink text-black border-ink" : "border-line text-mute hover:text-ink hover:border-ink")}
+                  aria-pressed={on}
+                  className={cn("label min-h-11 px-4 border transition-colors", on ? "bg-ink text-black border-ink" : "border-line text-mute hover:text-ink hover:border-ink")}
                 >
                   {s.label} <span className={on ? "text-black/60" : "text-dim"}>{pad2(count)}</span>
                 </button>
@@ -107,7 +168,8 @@ export function ImageryCase() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.35, ease: [0.2, 1, 0.3, 1] }}
-                onClick={() => setOpen(i)}
+                onClick={(event) => { openerRef.current = event.currentTarget; setOpen(i) }}
+                aria-label={`View ${p.set}, photo ${i + 1}`}
                 className={cn("group relative aspect-square md:aspect-auto overflow-hidden border border-line bg-black", SPANS[i % SPANS.length])}
                 data-cursor="view"
               >
@@ -129,16 +191,16 @@ export function ImageryCase() {
         </Note>
       </Section>
 
-      <AnimatePresence>
-        {open !== null && list[open] && (
+      {open !== null && list[open] && (
           <motion.div
+            ref={dialogRef}
             className="fixed inset-0 z-[180] flex flex-col bg-bg/95 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
             aria-label="Photo viewer"
+            tabIndex={-1}
             data-lenis-prevent
           >
             <div className="flex h-12 items-center justify-between border-b border-line px-4 md:px-6">
@@ -149,7 +211,7 @@ export function ImageryCase() {
                 </span>
                 <span className="text-mute hidden sm:inline">· {list[open].set}</span>
               </div>
-              <button type="button" onClick={() => setOpen(null)} className="label border border-line px-3 py-1.5 hover:bg-ink hover:text-black transition-colors" data-cursor="close">
+              <button ref={closeRef} type="button" onClick={() => setOpen(null)} className="label min-h-11 border border-line px-3 py-1.5 hover:bg-ink hover:text-black transition-colors" data-cursor="close">
                 Close
               </button>
             </div>
@@ -180,8 +242,7 @@ export function ImageryCase() {
               <span>ESC to close // arrows to navigate</span>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+      )}
     </>
   )
 }

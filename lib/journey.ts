@@ -1,11 +1,11 @@
-/** The homepage follows a personal story; project URLs stay stable. */
+/** Recruiter-first reading order; project URLs stay stable. */
 export const HOME_SECTIONS = [
   { id: "hero", n: "00", label: "Start" },
-  { id: "origin", n: "01", label: "The game" },
-  { id: "turning-point", n: "02", label: "The turning point" },
-  { id: "contracts", n: "03", label: "In practice" },
-  { id: "operator", n: "04", label: "My approach" },
-  { id: "extraction", n: "05", label: "Next chapter" },
+  { id: "contracts", n: "01", label: "Selected work" },
+  { id: "origin", n: "02", label: "My story" },
+  { id: "operator", n: "03", label: "My approach" },
+  { id: "log", n: "04", label: "Experience" },
+  { id: "extraction", n: "05", label: "Contact" },
 ] as const
 
 export const PROJECT_STORIES = {
