@@ -3,13 +3,14 @@
 import Image from "next/image"
 import { type ContractSlug } from "@/lib/contracts"
 import { DaringEntrance } from "@/components/contracts/daring-entrance"
+import { ThesisEntrance } from "@/components/contracts/thesis-entrance"
 import { entranceTiming, useContractEntrance, type EntranceCallbacks } from "@/hooks/use-contract-entrance"
 import styles from "./contract-entrance.module.css"
 
 export function ContractEntrance({ slug, ...callbacks }: EntranceCallbacks & { slug: ContractSlug }) {
   if (slug === "daring") return <DaringEntrance {...callbacks} />
   if (slug === "signal") return <SignalEntrance {...callbacks} />
-  if (slug === "intel-core") return <IntelEntrance {...callbacks} />
+  if (slug === "thesis-engine") return <ThesisEntrance {...callbacks} />
   return null
 }
 
@@ -46,45 +47,6 @@ function SignalEntrance(callbacks: EntranceCallbacks) {
         <div className={styles.bottomline}>
           <span>Club. Community. Matchday.</span>
           <span className={styles.desktopMeta}>Season 2025</span>
-        </div>
-      </div>
-      <SkipIntro onClick={skip} />
-    </div>
-  )
-}
-
-function IntelEntrance(callbacks: EntranceCallbacks) {
-  const { visible, skip } = useContractEntrance(callbacks)
-  if (!visible) return null
-
-  return (
-    <div className={`${styles.entrance} ${styles.intel}`} style={entranceTiming}>
-      <div className={styles.intelGrid} aria-hidden="true" />
-      <div className={styles.scan} aria-hidden="true" />
-      <div className={styles.layout} aria-hidden="true">
-        <div className={styles.topline}>
-          <span>Contract 05 / INT</span>
-          <span>Standby · priority shift</span>
-        </div>
-
-        <div className={styles.intelIdentity}>
-          <p className={styles.eyebrow}>Business · Finance · Geopolitics</p>
-          <div className={`${styles.title} ${styles.intelTitle}`}>
-            <div className={styles.mask}><span>Intel</span></div>
-            <div className={styles.mask}><span>Core<span className={styles.period}>_</span></span></div>
-          </div>
-
-          <div className={styles.pipeline}>
-            <div className={styles.pipelineLine} />
-            <div className={styles.node}><span>01 / Collect</span><strong>Telegram</strong></div>
-            <div className={styles.node}><span>02 / Analyse</span><strong>AI ranking</strong></div>
-            <div className={styles.node}><span>03 / Publish</span><strong>Daily top 10</strong></div>
-          </div>
-        </div>
-
-        <div className={styles.bottomline}>
-          <span>09 sources → 10 insights</span>
-          <span className={styles.desktopMeta}>Automated intelligence</span>
         </div>
       </div>
       <SkipIntro onClick={skip} />

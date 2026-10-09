@@ -28,7 +28,7 @@ tools and client websites through AI-augmented workflows (Claude Code, Codex).
 /contracts/signal         ASN95 — Head of Communications
 /contracts/strategy       BLAST strategic case study "David vs Goliath 2.0"
 /contracts/field-ops      ASI Multisports Tournament — field operations
-/contracts/intel-core     Telegram Veille — AI intelligence dashboard (archived prototype)
+/contracts/thesis-engine  Thesis Engine — local AI research pipeline for the M2 thesis (live)
 /contracts/build          Client web builds: Ferrant P.H.E, AS Nortkerque 95
 /contracts/imagery        Photography archive (50 files, 3 sectors)
 
@@ -98,13 +98,14 @@ PDF: /assets/blast-case-study.pdf
 December 2025, UFR3S Lille, 500+ personnel. Equipment: Sony α6400, GoPro ×2. Body-cam footage on Vimeo.
 Visual assets: graphic charter, bilingual FR/EN participant briefing, event poster.
 
-### 05 Intel Core — Telegram Veille (Business · Finance · Geopolitics)
-Python 3.11 + Telethon crawler, GitHub Actions CRON (daily 18:00 Paris), OpenRouter → Gemini 2.0 Flash top-10 selection,
-Notion API auto-rotating DB (max 100), Next.js 14 dashboard on Netlify (intel-dashboard-telegram.netlify.app).
-9 channels (Bloomberg, Reuters, BBC Breaking, Al Jazeera, Politico Europe, SCMP, Clash Report, Our Wars Today,
-Intel Slava flagged pro-Russian), 8 categories, ~$1/month. Status: shipped prototype, public archive.
-Current R&D: Qwen3 27B fine-tuning for sport management (dataset curation, LoRA training, evaluation).
-Repos: github.com/julesmoreau62/sport-business-watch · github.com/julesmoreau62/veille-sport-biz
+### 05 Thesis Engine — Local AI research pipeline (M2 thesis)
+Research question: to what extent are generative AI and no-code tools levers of professionalisation and organisational
+efficiency for a sports association with limited human and financial resources?
+Three scans a day across Google Scholar, OpenAlex and Cairn (~90 candidate sources a day). Triage and summaries by a
+Qwen3 4B fine-tuned with LoRA, served locally by Ollama 24/7 and grounded with RAG on reference documents; about 5% kept.
+Complex analyses are escalated to Claude Sonnet 5.5 (deeper explanations, visuals). Everything is written into an Obsidian
+vault: notes, Canvas mind maps and bibliography. Cost ≈ €0/month (local) plus a few cents of Sonnet.
+Adapted from Jules's own AI-news watch pipeline. Running since October 2026; private repository while the thesis is in progress.
 
 ### 06 Client builds
 Ferrant P.H.E (ferrantphe.fr, LIVE): essential oils & concentrates manufacturer (Rodelinghem, est. 1989, 16 products,
@@ -118,8 +119,9 @@ first-ever website of a 250-member, 14-squad football club founded in 1995. Buil
 Event logistics, crisis management, matchday operations, sponsor activation, brand identity, content strategy,
 sport governance, esports business analysis, competitive intelligence, OSINT, data analysis, sport photography,
 Sony α6400, GoPro, Lightroom, Premiere, Canva, Adobe Suite, Notion, Next.js, Tailwind, Python, Telethon, ReportLab,
-GitHub Actions, Notion API, OpenRouter, Gemini, Claude Code, Codex, Netlify.
+GitHub Actions, Notion API, OpenRouter, Gemini, Claude Code, Codex, Netlify, Ollama, Qwen3, LoRA fine-tuning, RAG,
+Claude API, Obsidian.
 
 ## SIDE PROJECTS
-Overwatch 2 stats dashboard (OverFast API). Sport-management model fine-tuning (Qwen3 27B). This portfolio
+Overwatch 2 stats dashboard (OverFast API). Qwen3 4B LoRA fine-tune (the local model behind Thesis Engine). This portfolio
 (Next.js 15, React 19, three.js, framer-motion), designed and shipped through an AI-augmented workflow.

@@ -8,7 +8,7 @@ export type ContractSlug =
   | "signal"
   | "strategy"
   | "field-ops"
-  | "intel-core"
+  | "thesis-engine"
   | "build"
   | "imagery"
 
@@ -133,34 +133,25 @@ export const CONTRACTS: Contract[] = [
     stack: ["Sony α6400", "GoPro ×2"],
   },
   {
-    slug: "intel-core",
+    slug: "thesis-engine",
     index: 5,
-    code: "INT",
-    title: "Intel Core",
-    featured: {
-      summary: "From Telegram sources to an intelligence dashboard: AI ranking, automated publishing and a daily top 10.",
-    },
-    org: "Telegram Veille · AI intelligence dashboard",
-    role: "Product owner · AI-augmented build",
-    period: "2025 → 2026 · shipped, now on standby",
-    location: "Business · Finance · Geopolitics",
-    status: "STANDBY · PRIORITY SHIFT",
-    statusKind: "archive",
-    metric: "9→10",
-    metricLabel: "daily top 10",
+    code: "THS",
+    title: "Thesis Engine",
+    org: "M2 thesis · Local AI research pipeline",
+    role: "Builder & operator · AI-augmented build",
+    period: "Oct 2026 → · running 24/7",
+    location: "Local machine · Obsidian vault",
+    status: "LIVE · RUNNING 24/7",
+    statusKind: "live",
+    metric: "90",
+    metricLabel: "sources scanned / day · ~5% kept",
     summary:
-      "Automated daily intelligence: nine Telegram channels ranked by AI, stored in Notion and published on a Next.js dashboard.",
+      "A local research engine for my M2 thesis: three scans a day across Google Scholar, OpenAlex and Cairn, triaged by a fine-tuned Qwen3 4B, escalated to Claude Sonnet when the analysis gets deep, and written straight into my Obsidian vault.",
     accent: "#9d6bff",
-    // Christian Wiediger / Unsplash. Source and license: public/assets/intel-core/README.md.
-    cover: "/assets/intel-core/telegram-cover.jpg",
-    coverPosition: "center 30%",
-    tags: ["Python", "Telethon", "GitHub Actions", "Gemini 2.0 Flash", "Notion API", "Next.js"],
-    stack: ["Python 3.11", "Telethon", "GitHub Actions", "OpenRouter", "Gemini 2.0 Flash", "Notion API", "Next.js 14", "Netlify"],
-    links: [
-      { label: "Live demo", href: "https://intel-dashboard-telegram.netlify.app" },
-      { label: "Dashboard repo", href: "https://github.com/julesmoreau62/sport-business-watch" },
-      { label: "Intel engine repo", href: "https://github.com/julesmoreau62/veille-sport-biz" },
-    ],
+    // Generated illustration of a knowledge graph. Source: public/assets/thesis-engine/README.md.
+    cover: "/assets/thesis-engine/cover.jpg",
+    tags: ["Qwen3 4B", "LoRA", "RAG", "Ollama", "Claude Sonnet 5.5", "Obsidian"],
+    stack: ["Qwen3 4B + LoRA", "Ollama", "RAG", "Claude Sonnet 5.5", "Google Scholar", "OpenAlex", "Cairn", "Obsidian"],
   },
   {
     slug: "build",

@@ -13,12 +13,6 @@
   animation: signal-exit var(--intro-exit) cubic-bezier(0.76, 0, 0.24, 1) var(--intro-hold) both;
 }
 
-.intel {
-  --intro-accent: #9d6bff;
-  background: radial-gradient(ellipse at 50% 45%, #211436, #08070d 70%);
-  animation: intel-exit var(--intro-exit) cubic-bezier(0.76, 0, 0.24, 1) var(--intro-hold) both;
-}
-
 .layout {
   position: absolute;
   inset: 0;
@@ -32,7 +26,6 @@
 .bottomline,
 .eyebrow,
 .scoreboard span,
-.node,
 .skip {
   font-family: var(--font-mono), monospace;
   font-size: 12px;
@@ -93,27 +86,6 @@
 .scoreboard strong { font-family: var(--font-archivo), sans-serif; font-size: clamp(28px, 4vw, 56px); font-weight: 800; line-height: 1; }
 .scoreboard span { color: #f2f1ec99; }
 
-/* Intel Core: a scan followed by the three stages of the intelligence pipeline. */
-.intelGrid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(#9d6bff12 1px, transparent 1px), linear-gradient(90deg, #9d6bff12 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse at center, #000, transparent 75%);
-}
-.scan { position: absolute; inset: 0 0 auto; height: 1px; background: #9d6bff80; box-shadow: 0 0 28px 3px #9d6bff30; animation: scan 600ms cubic-bezier(0.2, 1, 0.3, 1) 20ms both; }
-.intelIdentity { position: relative; width: min(100%, 820px); align-self: center; padding-block: 20px; text-align: center; }
-.intelTitle .mask > span { animation: decode 340ms cubic-bezier(0.2, 1, 0.3, 1) 70ms both; }
-.intelTitle .mask:first-child > span { color: transparent; -webkit-text-stroke: 1px var(--intro-accent); }
-.intelTitle .mask:nth-child(2) > span { animation-delay: 110ms; }
-.pipeline { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 2vw, 24px); margin: clamp(20px, 4vh, 48px) auto 0; max-width: 680px; }
-.pipelineLine { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--intro-accent); transform-origin: left; animation: connect 240ms ease-out 200ms both; }
-.node { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 8px; border: 1px solid #9d6bff66; background: #110c1c; padding: 14px 8px; animation: rise 220ms ease-out 230ms both; }
-.node:nth-child(3) { animation-delay: 200ms; }
-.node:nth-child(4) { animation-delay: 230ms; border-color: var(--intro-accent); }
-.node span { font-size: 10px; color: #c4abdfff; }
-.node strong { font-size: 14px; font-weight: 500; letter-spacing: 0.03em; }
-
 .skip { position: absolute; right: clamp(20px, 3vw, 48px); bottom: calc(clamp(20px, 3vw, 48px) - 12px); min-height: 44px; padding: 10px 0 10px 16px; color: #f2f1ec99; cursor: pointer; }
 .skip:hover { color: #fff; }
 .skip:focus-visible { outline-color: var(--intro-accent); }
@@ -124,31 +96,24 @@
 @keyframes from-right { from { transform: translateX(110%); } to { transform: translateX(0); } }
 @keyframes photo-in { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes connect { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes decode { from { clip-path: inset(0 100% 0 0); transform: translateY(8px); } to { clip-path: inset(0); transform: translateY(0); } }
-@keyframes scan { 0% { transform: translateY(10vh); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(85vh); opacity: 0; } }
 @keyframes signal-exit { from { clip-path: inset(0); } to { clip-path: inset(0 100% 0 0); } }
-@keyframes intel-exit { from { clip-path: inset(0); } to { clip-path: inset(50% 0); } }
 
 @media (max-width: 480px) {
   .topline { font-size: 10px; letter-spacing: 0.04em; }
   .eyebrow, .bottomline { font-size: 11px; letter-spacing: 0.04em; }
   .desktopMeta { display: none; }
   .signalIdentity { margin-left: 0; }
-  .node strong { font-size: 12px; }
-  .node span { font-size: 9px; letter-spacing: 0.02em; }
 }
 
 @media (max-height: 600px) {
   .layout { padding-block: 16px; }
   .topline, .bottomline { padding-block: 6px; }
-  .signalIdentity, .intelIdentity { padding-block: 8px; }
+  .signalIdentity { padding-block: 8px; }
   .title { font-size: min(12vw, 16vh); }
   .eyebrow { margin-bottom: 8px; }
   .signalRule { margin-block: 12px; height: 3px; }
   .scoreboard strong { font-size: 26px; }
   .scoreboard > div { gap: 4px; }
-  .pipeline { margin-top: 12px; }
-  .node { gap: 4px; padding-block: 8px; }
   .skip { bottom: 4px; }
 }
 

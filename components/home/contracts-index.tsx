@@ -9,12 +9,14 @@ import { cn } from "@/lib/utils"
 import { WipeLink } from "@/components/fx/page-wipe"
 import { Reveal, Lines, Stagger } from "@/components/fx/reveal"
 import { ArrowUpRight } from "@/components/ui/primitives"
+import { ThesisSpotlight } from "@/components/home/thesis-spotlight"
 import shared from "./journey.module.css"
 import styles from "./selected-work.module.css"
 
 export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
   const t = COPY[locale].work
-  const otherProjects = CONTRACTS.filter(c => !(STORY_PROJECT_SLUGS as readonly string[]).includes(c.slug))
+  // Thesis Engine has its own lab card, so it leaves the archive list.
+  const otherProjects = CONTRACTS.filter(c => !(STORY_PROJECT_SLUGS as readonly string[]).includes(c.slug) && c.slug !== "thesis-engine")
   return (
     <section id="contracts" className={cn(shared.projects, styles.section)} aria-labelledby="projects-title">
       <div className={shared.chapterTop}><span>{t.chapter}</span><span>{t.chapterRight}</span></div>
@@ -59,6 +61,7 @@ export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
           )
         })}
       </div>
+      <ThesisSpotlight locale={locale} />
       <div className={shared.archive}>
         <div className={shared.archiveTop}><h3>{t.archiveTitle}</h3><span>{t.archiveCount}</span></div>
         <Stagger stagger={0.06} amount={0.1}>

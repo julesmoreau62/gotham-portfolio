@@ -46,7 +46,7 @@ On the first home visit, a 2.5-second introduction brings fragments of projects,
 | `02` | **ASN95 Signal** | Head of Communications | +467% sponsor CTR, 1M+ views and 1,650+ edited photos. |
 | `03` | **BLAST Strategy** | Strategic Analyst | 23-page dossier, PESTEL / VRIO / SWOT and India pivot roadmap. |
 | `04` | **ASI Tournament** | Communication lead / Field operations | 500+ people, venue and weather changes handled without disruption. |
-| `05` | **Intel Core** | Product Owner | Telegram → Gemini → Notion → Next.js intelligence pipeline at roughly $1/month. |
+| `05` | **Thesis Engine** | Builder & Operator | Local AI research pipeline for the M2 thesis: Scholar · OpenAlex · Cairn → fine-tuned Qwen3 4B (+ Claude Sonnet 5.5 when complex) → Obsidian vault, 90 sources a day for ≈ €0. |
 | `06` | **Client Builds** | AI-assisted Web Delivery | One live client website and one in development. |
 | `07` | **Imagery** | Photographer | 50 selected frames across sport, events and corporate work. |
 

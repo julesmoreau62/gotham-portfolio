@@ -6,7 +6,8 @@ import { DaringCase } from "@/components/contracts/daring"
 import { SignalCase } from "@/components/contracts/signal"
 import { StrategyCase } from "@/components/contracts/strategy"
 import { FieldOpsCase } from "@/components/contracts/field-ops"
-import { IntelCoreCase } from "@/components/contracts/intel-core"
+import { ThesisEngineCase } from "@/components/contracts/thesis-engine"
+import { ThesisBackdrop } from "@/components/contracts/thesis-backdrop"
 import { BuildCase } from "@/components/contracts/build"
 import { ImageryCase } from "@/components/contracts/imagery"
 
@@ -15,9 +16,14 @@ const CASES: Record<ContractSlug, React.ComponentType> = {
   signal: SignalCase,
   strategy: StrategyCase,
   "field-ops": FieldOpsCase,
-  "intel-core": IntelCoreCase,
+  "thesis-engine": ThesisEngineCase,
   build: BuildCase,
   imagery: ImageryCase,
+}
+
+/** Cases that replace the hero photo with a live backdrop. */
+const BACKDROPS: Partial<Record<ContractSlug, React.ComponentType>> = {
+  "thesis-engine": ThesisBackdrop,
 }
 
 type Params = Promise<{ slug: string }>
@@ -55,8 +61,9 @@ export default async function ContractPage({ params }: { params: Params }) {
   const c = getContract(slug)
   if (!c) notFound()
   const Body = CASES[c.slug]
+  const Backdrop = BACKDROPS[c.slug]
   return (
-    <ContractShell key={c.slug} contract={c}>
+    <ContractShell key={c.slug} contract={c} backdrop={Backdrop ? <Backdrop /> : undefined}>
       <Body />
     </ContractShell>
   )

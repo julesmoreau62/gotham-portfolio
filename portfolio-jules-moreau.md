@@ -207,18 +207,19 @@ Field operations and communication for a 500+ personnel campus tournament across
 - **Assets produced** — Graphic charter (palette + type system), bilingual FR/EN participant briefing, campus & social media poster, event photo and body-cam coverage.
 - **Gear** — Sony α6400, GoPro ×2.
 
-### 05 · INT — Intel Core *(R&D archive)*
-Telegram Veille · AI intelligence dashboard — Product owner · AI-augmented build — 2025 → 2026, shipped then archived — Business · Finance · Geopolitics
-**Headline metric:** 9 channels → daily top 10, ~$1/month
-**Accent:** `#9d6bff`
+### 05 · THS — Thesis Engine *(live)*
+M2 thesis · Local AI research pipeline — Builder & operator · AI-augmented build — Oct 2026 → running 24/7 — Local machine · Obsidian vault
+**Headline metric:** 90 sources scanned a day · ~5% kept · ≈ €0/month
+**Accent:** `#9d6bff` (own identity on the case page: night-lab palette, Instrument Serif + mono)
 
-An automated intelligence pipeline: nine Telegram channels crawled daily, ranked to a top 10 by Gemini through OpenRouter, stored in Notion and published on a Next.js dashboard.
+A local research engine for the M2 thesis question: *to what extent are generative AI and no-code tools levers of professionalisation and organisational efficiency for a sports association with limited human and financial resources?*
 
-- **Pipeline** — GitHub Actions CRON (18:00 Paris) → Telethon crawler → 9 curated channels → OpenRouter / Gemini 2.0 Flash top-10 selection → Notion DB (auto-rotation, max 100 entries) → Next.js 14 dashboard on Netlify.
-- **Sources** — Bloomberg, SCMP, BBC Breaking, Reuters World, Politico Europe, Al Jazeera EN, Clash Report, Our Wars Today, Intel Slava (flagged pro-Russian, cross-referenced). 8 categories.
-- **Method** — Need identification → AI-assisted feasibility & architecture → human-written specs (two parallel workstreams) → AI-assisted build → QA → deploy.
-- **Status** — Public archive, codebase intact, dashboard read-only. Current R&D: Qwen3 27B (open weights) fine-tuning for sport-management tasks — dataset curation, LoRA training, eval.
-- **Links** — https://intel-dashboard-telegram.netlify.app · github.com/julesmoreau62/sport-business-watch · github.com/julesmoreau62/veille-sport-biz
+- **Pipeline** — Three scans a day across Google Scholar, OpenAlex and Cairn (~90 candidates a day) → triage and summaries by a Qwen3 4B fine-tuned with LoRA, served by Ollama on Jules's machine 24/7 and grounded with RAG on reference documents (~5% kept) → complex analyses escalated to Claude Sonnet 5.5 (deeper explanations, visuals) → Obsidian vault: notes, Canvas mind maps, bibliography.
+- **Why** — The research field is young: few sources exist, so new ones have to be caught as soon as they appear. The engine also works under the constraints the thesis studies: one person, close to zero budget.
+- **Cost** — ≈ €0/month locally, plus a few cents of Sonnet.
+- **Origin** — Adapted from Jules's own AI-news watch pipeline.
+- **Status** — Running since October 2026. Private repository while the thesis is in progress.
+- **Case page** — Live graph-view hero, interactive system map with a particle simulation at the real rates, a 90 → 5 sieve, a local/escalation routing demo, an Obsidian Canvas illustration and the toolchain logo wall.
 
 ### 06 · BLD — Client Builds *(1 live · 1 in dev)*
 Ferrant P.H.E · AS Nortkerque 95 — AI-assisted web delivery — 2025 → 2026 — Hauts-de-France, FR
@@ -248,7 +249,7 @@ Fifty selected frames across three sectors.
 ## 10. Side projects · R&D
 
 - **Overwatch 2 Stats Dashboard** — Personal production tool on the OverFast API, built from a Grandmaster / former Top 500 player's perspective.
-- **Sport-management model fine-tuning** — Current R&D: dataset curation, LoRA training and evaluation on Qwen3 27B (open weights) for sport-management tasks.
+- **Qwen3 4B fine-tune** — LoRA fine-tuning of the open-weights Qwen3 4B that runs Thesis Engine's local triage.
 - **julesmoreau.eu** — This site. Next.js, three.js and framer-motion, art-directed and shipped through an AI-augmented workflow with zero coding background.
 
 ---
@@ -264,7 +265,7 @@ Fifty selected frames across three sectors.
 | 1M+ | Views · ASN95 season |
 | 2 / 0 | Incidents solved / event disruption |
 | 2 | Client sites shipped |
-| ~$1 | Monthly cost · Intel Core pipeline |
+| 90 / day | Sources scanned · Thesis Engine (~5% kept, ≈ €0/month) |
 
 ---
 

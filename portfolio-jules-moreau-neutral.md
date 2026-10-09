@@ -277,28 +277,27 @@ four disciplines: disc golf, wheelchair basketball, laser tag and spikeball.
 - **Assets produced** — Graphic charter, bilingual FR/EN participant briefing, campus and
   social media poster, plus event photography and action-camera coverage.
 
-### Telegram intelligence pipeline — product owner
-2025 → 2026 · shipped, now archived
-Outcome: nine sources ranked to a daily top ten for around one dollar a month
+### Local AI research pipeline for the master's thesis — builder and operator
+October 2026 → running 24/7 · local machine
+Outcome: about ninety sources scanned a day, roughly five percent kept, for close to zero cost
 
-An automated intelligence pipeline covering business, finance and geopolitics.
+A research engine built for the M2 thesis question: to what extent are generative AI and
+no-code tools levers of professionalisation and organisational efficiency for a sports
+association with limited human and financial resources?
 
-- **How it works** — A scheduled job runs a Telegram crawler each evening across nine
-  curated channels, an AI pass selects the ten most important items, results are stored
-  in a database with automatic rotation, and a web dashboard publishes the daily
-  briefing.
-- **Sources** — Bloomberg, SCMP, BBC Breaking, Reuters World, Politico Europe, Al Jazeera
-  English, Clash Report, Our Wars Today and Intel Slava, the last flagged as
-  pro-Russian and cross-referenced. Eight categories.
-- **Method** — Identified the need, used AI to validate the architecture, wrote the
-  specifications for both workstreams, built with AI assistance, then handled QA and
-  deployment.
-- **Stack** — Python with Telethon, GitHub Actions, OpenRouter with Gemini, Notion API,
-  Next.js, Netlify.
-- **Status** — Public archive with the codebase intact and the dashboard read-only.
-  Current R&D has moved to fine-tuning an open-weights model for sport-management tasks.
-- **Links** — https://intel-dashboard-telegram.netlify.app ·
-  github.com/julesmoreau62/sport-business-watch · github.com/julesmoreau62/veille-sport-biz
+- **How it works** — Three scans a day across Google Scholar, OpenAlex and Cairn. A small
+  open-weights model (Qwen3 4B, fine-tuned with LoRA, served locally with Ollama and
+  grounded with retrieval on reference documents) reads every candidate, keeps about five
+  percent and summarises the most important. Complex analyses are escalated to Claude
+  Sonnet 5.5 for deeper explanations and visuals. Results land in an Obsidian vault as
+  notes, Canvas mind maps and an updated bibliography.
+- **Why** — The research field is young, so the few relevant sources have to be caught as
+  they appear. The engine also runs under the constraints the thesis studies: one person,
+  close to zero budget.
+- **Cost** — Close to zero per month locally, plus a few cents of Claude usage.
+- **Origin** — Adapted from a personal AI-news watch pipeline.
+- **Status** — Running since October 2026; private repository while the thesis is in
+  progress.
 
 ### Client websites — AI-assisted delivery
 2025 → 2026 · Hauts-de-France
@@ -341,8 +340,8 @@ Outcome: fifty selected frames across three sectors
 
 - **Overwatch 2 stats dashboard** — Personal production tool built on the OverFast API,
   designed from a Grandmaster and former Top 500 player's perspective.
-- **Sport-management model fine-tuning** — Current R&D: dataset curation, LoRA training
-  and evaluation on an open-weights 27B model for sport-management tasks.
+- **Small-model fine-tuning** — LoRA fine-tuning of the open-weights Qwen3 4B that runs
+  the thesis research pipeline's local triage.
 - **Personal website** — Art-directed and shipped through an AI-assisted workflow with no
   coding background.
 
@@ -361,7 +360,7 @@ Outcome: fifty selected frames across three sectors
 | 2 / 0 | Critical incidents resolved / event disruption |
 | 2 | Client websites delivered |
 | 22 | Existing partner logos integrated for Royal Daring |
-| ~$1 | Monthly running cost of the intelligence pipeline |
+| 90 | Sources scanned per day by the thesis research pipeline |
 
 ---
 

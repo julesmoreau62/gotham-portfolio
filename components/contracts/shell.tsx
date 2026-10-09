@@ -15,7 +15,7 @@ import { PROJECT_STORIES } from "@/lib/journey"
 
 const EASE = [0.2, 1, 0.3, 1] as const
 
-export function ContractShell({ contract: c, children }: { contract: Contract; children: React.ReactNode }) {
+export function ContractShell({ contract: c, backdrop, children }: { contract: Contract; backdrop?: React.ReactNode; children: React.ReactNode }) {
   const hasEntrance = hasContractEntrance(c.slug)
   const [entryStage, setEntryStage] = useState<"intro" | "reveal" | "ready">(hasEntrance ? "intro" : "ready")
   const entered = entryStage !== "intro"
@@ -93,19 +93,23 @@ export function ContractShell({ contract: c, children }: { contract: Contract; c
           animate={entered ? { scale: 1, opacity: 1 } : { scale: 1.08, opacity: 0 }}
           transition={{ duration: 1.4, ease: EASE }}
         >
-          <Image
-            src={c.cover}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover grayscale contrast-125"
-            style={{ objectPosition: c.coverPosition ?? "center" }}
-          />
-          <div className="absolute inset-0 mix-blend-multiply" style={{ background: c.accent, opacity: light ? 0.12 : 0.45 }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/45 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-bg/70 via-transparent to-transparent" />
-          <div className="halftone absolute inset-0 opacity-25 mix-blend-overlay" />
+          {backdrop ?? (
+            <>
+              <Image
+                src={c.cover}
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover grayscale contrast-125"
+                style={{ objectPosition: c.coverPosition ?? "center" }}
+              />
+              <div className="absolute inset-0 mix-blend-multiply" style={{ background: c.accent, opacity: light ? 0.12 : 0.45 }} />
+            </>
+          )}
+          <div className={backdrop ? "pointer-events-none absolute inset-0 bg-gradient-to-t from-bg via-bg/25 to-transparent" : "absolute inset-0 bg-gradient-to-t from-bg via-bg/45 to-transparent"} />
+          <div className={backdrop ? "pointer-events-none absolute inset-0 bg-gradient-to-r from-bg/80 via-bg/10 to-transparent" : "absolute inset-0 bg-gradient-to-r from-bg/70 via-transparent to-transparent"} />
+          {!backdrop && <div className="halftone absolute inset-0 opacity-25 mix-blend-overlay" />}
         </motion.div>
 
         <div className="relative z-10 flex min-h-[calc(92svh-3.5rem)] flex-col justify-end px-5 pb-10 md:px-8 md:pb-14">
