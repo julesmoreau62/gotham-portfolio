@@ -1,14 +1,27 @@
 "use client"
 
-import Image from "next/image"
+import { getImageProps } from "next/image"
 import { useRef } from "react"
+import { preload } from "react-dom"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useReducedMotion } from "@/hooks/use-media"
 import { PROFILE } from "@/lib/profile"
 import { ArrowUpRight, Barcode } from "@/components/ui/primitives"
 import styles from "./journey.module.css"
 
+// Art-directed crops. Media queries never overlap, so the browser preloads
+// and downloads exactly one of them.
+const HERO_ART = [
+  { media: "(max-width: 480px)", src: "/assets/portfolio/volleyball-6-mobile.webp", sizes: "100vw" },
+  { media: "(min-width: 481px) and (max-width: 900px)", src: "/assets/portfolio/volleyball-6-tablet.webp", sizes: "100vw" },
+  { media: "(min-width: 901px)", src: "/assets/portfolio/volleyball-6.webp", sizes: "65vw" },
+].map(art => ({ ...art, props: getImageProps({ src: art.src, sizes: art.sizes, alt: "", fill: true }).props }))
+
 export function Hero() {
+  for (const art of HERO_ART) {
+    preload(art.src, { as: "image", imageSrcSet: art.props.srcSet, imageSizes: art.sizes, media: art.media, fetchPriority: "high" })
+  }
+  const [mobile, tablet, desktop] = HERO_ART
   const reduced = useReducedMotion()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
@@ -18,9 +31,10 @@ export function Hero() {
     <section ref={ref} id="hero" className={styles.hero} aria-labelledby="hero-title">
       <motion.div className={styles.heroImage} style={{ y: reduced ? 0 : photoY }} aria-hidden="true">
         <picture className="absolute inset-0">
-          <source media="(max-width: 480px)" srcSet="/assets/portfolio/volleyball-6-mobile.webp" />
-          <source media="(max-width: 900px)" srcSet="/assets/portfolio/volleyball-6-tablet.webp" />
-          <Image src="/assets/portfolio/volleyball-6.webp" alt="" fill priority fetchPriority="high" sizes="(min-width: 900px) 65vw, 100vw" className={styles.heroPhoto} />
+          <source media={mobile.media} srcSet={mobile.props.srcSet} sizes={mobile.sizes} />
+          <source media={tablet.media} srcSet={tablet.props.srcSet} sizes={tablet.sizes} />
+          {/* eslint-disable-next-line @next/next/no-img-element -- art direction needs a raw img inside picture */}
+          <img {...desktop.props} alt="" loading="eager" fetchPriority="high" className={styles.heroPhoto} />
         </picture>
       </motion.div>
       <div className={styles.heroGrid} aria-hidden="true" />

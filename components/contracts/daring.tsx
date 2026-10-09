@@ -372,9 +372,9 @@ export function DaringCase() {
 
         <div className="label text-mute mt-12 mb-4">Events & match day — playoff posters, real-time stories, merchandising</div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
-          <Figure className="md:col-span-5" src={`${B}/affiche_final.png`} alt="Playoff final poster" ratio="4/5" label="PLAYOFF POSTER" />
-          <Figure className="md:col-span-3" src={`${B}/story%20match/H1/score_final.png`} alt="Match day story — final score" ratio="9/16" label="STORY · MATCH DAY" />
-          <Figure className="md:col-span-4" src={`${B}/tshirt_playoffs.png`} alt="Playoffs T-shirt" ratio="4/5" label="MERCHANDISING" />
+          <Figure className="md:col-span-5" sizes="(min-width: 768px) 42vw, 100vw" src={`${B}/affiche_final.png`} alt="Playoff final poster" ratio="4/5" label="PLAYOFF POSTER" />
+          <Figure className="md:col-span-3" sizes="(min-width: 768px) 25vw, 100vw" src={`${B}/story%20match/H1/score_final.png`} alt="Match day story — final score" ratio="9/16" label="STORY · MATCH DAY" />
+          <Figure className="md:col-span-4" sizes="(min-width: 768px) 33vw, 100vw" src={`${B}/tshirt_playoffs.png`} alt="Playoffs T-shirt" ratio="4/5" label="MERCHANDISING" />
         </div>
 
         <div className="label text-mute mt-12 mb-4">Bilingual FR/NL & templates — each visual exists in French and Dutch</div>

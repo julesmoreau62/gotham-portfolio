@@ -1,6 +1,9 @@
 # dependencies
 node_modules/
 
+# generated image variants (scripts/build-images.mjs)
+public/_img/
+
 # next.js
 .next/
 out/
