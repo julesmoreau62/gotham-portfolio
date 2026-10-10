@@ -15,10 +15,9 @@
   overflow: hidden; border-bottom: 1px solid var(--line);
 }
 .heroImage { position: absolute; z-index: -3; inset: 0 0 -80px 35%; }
-.heroPhoto { object-fit: cover; object-position: 50% 35%; filter: grayscale(1) brightness(.65); }
 .heroImage::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, #070707, rgba(7,7,7,.4) 45%, rgba(7,7,7,.12)), linear-gradient(0deg, #070707, transparent 48%, rgba(7,7,7,.3));
+  background: linear-gradient(90deg, #070707, rgba(7,7,7,.35) 45%, rgba(7,7,7,.05)), linear-gradient(0deg, #070707, transparent 38%);
 }
 .heroGrid {
   position: absolute; z-index: -1; inset: 0; pointer-events: none;
@@ -44,7 +43,7 @@
 .textLink:hover { color: var(--acid); }
 .heroBriefing { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--mute); transition: color .2s; }
 .heroBriefing:hover { color: var(--acid); }
-.heroStamp { position: absolute; right: 3%; bottom: 70px; display: flex; flex-direction: column; gap: 15px; font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: .08em; line-height: 1.8; color: var(--acid); }
+.heroStamp { position: absolute; right: 3%; bottom: 70px; display: flex; flex-direction: column; gap: 15px; padding: 14px 16px; background: rgba(7,7,7,.78); font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: .08em; line-height: 1.8; color: var(--acid); }
 .stampCross { font-size: 46px; line-height: 1; font-weight: 300; }
 .statusDot { display: inline-block; width: 7px; height: 7px; background: var(--acid); flex-shrink: 0; box-shadow: 0 0 14px rgba(200,255,0,.4); }
 .heroProofs { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-top: 1px solid var(--line); }

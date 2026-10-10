@@ -22,7 +22,7 @@ Digital transformation & AI for sport organisations: a journey from competitive 
 
 ## The experience
 
-Acid green on black. Wide grotesk type, registration marks and personal sport photography. The homepage opens with the role (digital transformation & AI) and availability, then four selected projects led by the live **Thesis Engine**, the local AI pipeline behind an M2 thesis on generative AI in sports associations.
+Acid green on black. Wide grotesk type, registration marks and digital rain: on desktop, the hero shows Jules in Navy uniform standing in falling code, face blurred and glitching. The homepage opens with the role (digital transformation & AI) and availability, then four selected projects led by the live **Thesis Engine**, the local AI pipeline behind an M2 thesis on generative AI in sports associations.
 
 The story chapter, **From the field to the tools**, explains the shift: every field project in club communication, partnerships and events ended with a tool the team was missing. Four steps trace it (competition → the field → the tools → AI), followed by the method, **People first. Then the tool.**: map how the team really works, build the smallest useful tool, hand it over.
 
@@ -86,6 +86,7 @@ lib/
 
 scripts/
 ├── build-images.mjs          resized WebP variants in public/_img, before dev and build
+├── build-hero-portrait.mjs   face-blurred hero portrait from a cut-out photo, run by hand
 └── build-world-dots.mjs      dot grid of the world map (lib/world-dots.ts), run by hand
 ```
 
@@ -96,6 +97,7 @@ scripts/
 - **Framer Motion** for reveals, staggers and page wipes
 - **sharp** build step and a custom `next/image` loader: resized WebP variants, no runtime image service
 - **next/og** share images rendered at build time in the site's fonts
+- **Canvas digital rain** in the hero, drawn from a glyph atlas over the portrait at 24 fps
 - **Inline SVG world map**: Natural Earth land turned into one path of ~4,000 dots, no map library at runtime
 - **Vercel Web Analytics**, cookie-free, with download, email and LinkedIn events
 - **Lenis** for smooth scrolling, disabled on touch and reduced-motion devices
@@ -106,6 +108,7 @@ scripts/
 - Thumbnails and galleries load resized WebP variants, never the originals
 - Animated counters show their real value in the server HTML and for reduced motion
 - The world map plays once; reduced motion and no-JavaScript visits show the full route straight away
+- The hero rain pauses off-screen, stays still for reduced motion and is skipped on phones; the portrait's face is blurred in the image file itself
 - Motion automatically reduced when the operating system requests it
 - Smooth scrolling disabled for touch input and reduced motion
 - Static generation for every contract route
