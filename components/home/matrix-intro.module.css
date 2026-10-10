@@ -1,0 +1,64 @@
+/* The primer runs before hydration; it never hides a JavaScript-free page. */
+.primer { display: none; }
+.primer[data-state="pending"] ~ .content { opacity: 0; }
+.primer[data-state="pending"] { display: block; position: fixed; inset: 0; z-index: 300; background: #070707; }
+.content[data-intro-phase="wake"], .content[data-intro-phase="rain"] { opacity: 0; }
+/* No transform or stacking context remains on the content after the sequence. */
+.intro { position: fixed; inset: 0; z-index: 300; overflow: hidden; color: #f2f1ec; isolation: isolate; background: #070707; clip-path: inset(0 0 0 0); }
+/* Faint scanlines and a vignette, like an old monitor. */
+.intro::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 44%, transparent 50%, rgba(0,0,0,.62));
+}
+.rain { position: absolute; left: 0; top: 0; display: block; }
+.topline, .bottomline { position: absolute; z-index: 3; left: 5vw; right: 5vw; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.topline { top: max(30px, env(safe-area-inset-top)); pointer-events: none; }
+.topline, .bottomline, .role { font-family: var(--font-mono), monospace; font-size: 10px; line-height: 1.6; letter-spacing: .06em; }
+.topline { text-transform: uppercase; color: rgba(242,241,236,.48); animation: appear 600ms ease-out both; }
+.topline > span:first-child { display: flex; align-items: center; gap: 9px; color: #f2f1ec; }
+.topline i { width: 5px; height: 5px; background: #c8ff00; box-shadow: 0 0 14px rgba(200,255,0,.35); }
+.wake { position: absolute; z-index: 2; left: 5vw; right: 5vw; top: 22svh; font-family: var(--font-mono), monospace; font-size: clamp(15px, 1.6vw, 24px); line-height: 1.75; color: #c8ff00; text-shadow: 0 0 14px rgba(200,255,0,.4); }
+.wake p { min-height: 1.75em; white-space: pre-wrap; }
+.cursor { display: inline-block; width: .6em; height: 1.15em; margin-left: 3px; vertical-align: -.2em; background: #c8ff00; box-shadow: 0 0 12px rgba(200,255,0,.5); animation: blink 900ms step-end infinite; }
+.intro[data-phase="rain"] .wake, .intro[data-phase="exit"] .wake { animation: glitch-out 420ms linear forwards; }
+.role {
+  position: absolute; z-index: 2; left: 5vw; right: 5vw; top: calc(var(--name-bottom, 56svh) + clamp(18px, 3.4svh, 34px));
+  text-align: center; text-transform: uppercase; letter-spacing: .24em; font-size: clamp(10px, .95vw, 13px); color: rgba(242,241,236,.88);
+  opacity: 0;
+}
+.intro[data-phase="rain"] .role, .intro[data-phase="exit"] .role { animation: appear 300ms 700ms ease-out both; }
+.bottomline { bottom: max(24px, env(safe-area-inset-bottom)); }
+.sequence { display: flex; align-items: center; gap: 13px; color: rgba(242,241,236,.54); text-transform: uppercase; }
+.progress { width: 54px; height: 2px; background: rgba(242,241,236,.14); overflow: hidden; }
+.progress > span { display: block; width: 100%; height: 100%; background: #c8ff00; transform-origin: left; animation: progress var(--duration, 3500ms) linear both; }
+.skip { min-height: 44px; padding: 8px 0 8px 16px; display: inline-flex; align-items: center; gap: 19px; font-family: inherit; font-size: 10px; letter-spacing: .06em; color: rgba(242,241,236,.7); transition: color 150ms; }
+.skip span { color: #c8ff00; font-size: 18px; }.skip:hover { color: #c8ff00; }.skip:focus-visible { outline-offset: 5px; }
+/* The exit drains the screen from the top, behind a bright scan line. */
+.scan { position: absolute; z-index: 4; left: 0; right: 0; top: 0; height: 2px; background: #c8ff00; box-shadow: 0 0 18px 3px rgba(200,255,0,.5); opacity: 0; pointer-events: none; }
+.intro[data-phase="exit"] { animation: drain 620ms cubic-bezier(.5, 0, .75, 0) both; }
+.intro[data-phase="exit"] .scan { opacity: 1; animation: scan 620ms cubic-bezier(.5, 0, .75, 0) both; }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes glitch-out {
+  0% { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+  25% { opacity: .9; transform: translateX(-6px) skewX(-14deg); clip-path: inset(8% 0 42% 0); }
+  50% { opacity: .65; transform: translateX(5px); clip-path: inset(48% 0 4% 0); }
+  75% { opacity: .35; transform: translateX(-2px) scaleY(.5); clip-path: inset(20% 0 30% 0); }
+  100% { opacity: 0; transform: scaleY(.1); clip-path: inset(50% 0 50% 0); }
+}
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes drain { to { clip-path: inset(100% 0 0 0); } }
+@keyframes scan { to { top: 100%; } }
+@media (max-width: 640px) {
+  .topline { top: max(22px, env(safe-area-inset-top)); font-size: 8px; }
+  .topline > span:last-child { font-size: 7px; letter-spacing: .02em; }
+  .wake { left: 6vw; right: 6vw; top: 18svh; font-size: 14px; }
+  .role { font-size: 9px; letter-spacing: .14em; }
+  .bottomline { bottom: max(16px, env(safe-area-inset-bottom)); gap: 12px; }
+  .sequence { font-size: 8px; gap: 8px; }.progress { width: 30px; }.skip { font-size: 9px; gap: 8px; padding-left: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primer[data-state="pending"] ~ .content { opacity: 1; }
+  .primer[data-state="pending"], .intro { display: none; }
+  .content[data-intro-phase] { opacity: 1; animation: none; }
+}

@@ -17,7 +17,7 @@ const SRC_SET = [828, 1080, 1440].map(width => `${imageLoader({ src: PHOTO, widt
 const SIZES = "45vw"
 /** Face box as a share of the photo, for the runtime glitch. */
 const FACE = { x: 0.37, y: 0.175, w: 0.27, h: 0.175 }
-const GLYPHS = [..."ｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ0123456789JM:=+*<>"]
+export const GLYPHS = [..."ｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ0123456789JM:=+*<>"]
 const ACID = "#c8ff00"
 /** Share of the canvas height the figure fills, and where its centre sits across. */
 const FIGURE = { height: 0.86, center: 0.63 }

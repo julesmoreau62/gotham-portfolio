@@ -3,13 +3,10 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react"
 import { getLenis } from "@/components/fx/smooth-scroll"
 import type { Locale } from "@/lib/i18n"
-import { UniverseIntro, type IntroPhase } from "./universe-intro"
-import styles from "./universe-intro.module.css"
+import { INTRO_MS, MatrixIntro, type IntroPhase } from "./matrix-intro"
+import styles from "./matrix-intro.module.css"
 
-const SESSION_KEY = "jm-universe-intro-v1"
-const GATHER_MS = 1100
-const DIVE_MS = 1850
-const END_MS = 2500
+const SESSION_KEY = "jm-matrix-intro-v1"
 let playedInThisTab = false
 
 // Hide the first paint only when the intro will play. Without JavaScript the
@@ -18,7 +15,6 @@ const primer = `(function(){var cover=document.getElementById('home-intro-primer
 
 export function HomeEntrance({ children, locale = "en" }: { children: ReactNode; locale?: Locale }) {
   const [phase, setPhase] = useState<IntroPhase | null>(null)
-  const [compact, setCompact] = useState(false)
   const decision = useRef<boolean | null>(null)
   const primerElement = useRef<HTMLDivElement>(null)
   const content = useRef<HTMLDivElement>(null)
@@ -43,10 +39,7 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
         try { sessionStorage.setItem(SESSION_KEY, "1") } catch {}
       }
     }
-    if (decision.current) {
-      setCompact(window.matchMedia("(max-width: 640px)").matches)
-      setPhase("drift")
-    }
+    if (decision.current) setPhase("wake")
     if (content.current) content.current.inert = decision.current
     if (primerElement.current) delete primerElement.current.dataset.state
   }, [])
@@ -62,10 +55,10 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
     lenis?.stop()
     skipButton.current?.focus({ preventScroll: true })
 
-    const gather = window.setTimeout(() => setPhase("gather"), GATHER_MS)
-    const dive = window.setTimeout(() => setPhase("dive"), DIVE_MS)
-    // Completion never depends on an image request or an animation event.
-    const end = window.setTimeout(finish, END_MS)
+    const rain = window.setTimeout(() => setPhase("rain"), INTRO_MS.rain)
+    const exit = window.setTimeout(() => setPhase("exit"), INTRO_MS.exit)
+    // Completion never depends on a font request or an animation event.
+    const end = window.setTimeout(finish, INTRO_MS.end)
     const onPreference = () => { if (preference.matches) finish() }
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -82,8 +75,8 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
     window.addEventListener("keydown", onKey, true)
     window.addEventListener("hashchange", onHash)
     return () => {
-      window.clearTimeout(gather)
-      window.clearTimeout(dive)
+      window.clearTimeout(rain)
+      window.clearTimeout(exit)
       window.clearTimeout(end)
       preference.removeEventListener("change", onPreference)
       window.removeEventListener("keydown", onKey, true)
@@ -109,7 +102,7 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
         {children}
       </div>
       <script dangerouslySetInnerHTML={{ __html: primer }} />
-      {phase && <UniverseIntro phase={phase} compact={compact} skipButton={skipButton} onSkip={finish} locale={locale} />}
+      {phase && <MatrixIntro phase={phase} skipButton={skipButton} onSkip={finish} locale={locale} />}
     </>
   )
 }

@@ -210,15 +210,13 @@ const en = {
   },
 
   intro: {
-    title: "Jules Moreau — Welcome to my world",
-    description: "Sport, projects and games coming together. You can skip this short introduction.",
-    topline: "Sport. Play. Create.",
-    kicker: "A player's perspective",
-    note: "A world of my own.",
-    coordinates: "Always in motion.",
-    phases: { drift: "A few things that make me.", gather: "All coming together.", dive: "Welcome in." },
+    title: "Jules Moreau — Enter the matrix",
+    description: "A short coded introduction before the portfolio. You can skip it.",
+    topline: "Secure line / Lille, FR",
+    wake: ["Wake up, recruiter…", "Follow the white rabbit."],
+    role: "Digital transformation & AI / Sport",
+    phases: { wake: "Incoming signal", rain: "Decoding profile", exit: "Access granted" },
     skip: "Skip intro",
-    labels: {} as Record<string, string>,
   },
 
   briefing: {
@@ -559,29 +557,13 @@ const fr: Copy = {
   },
 
   intro: {
-    title: "Jules Moreau — Bienvenue dans mon univers",
-    description: "Le sport, les projets et le jeu se rassemblent. Vous pouvez passer cette courte introduction.",
-    topline: "Sport. Jeu. Création.",
-    kicker: "Le regard du joueur",
-    note: "Un univers à moi.",
-    coordinates: "Toujours en mouvement.",
-    phases: { drift: "Ce qui me construit.", gather: "Tout se rassemble.", dive: "Bienvenue." },
+    title: "Jules Moreau — Entrez dans la matrice",
+    description: "Une courte introduction codée avant le portfolio. Vous pouvez la passer.",
+    topline: "Ligne sécurisée / Lille, FR",
+    wake: ["Réveillez-vous…", "Suivez le lapin blanc."],
+    role: "Transformation digitale & IA / Sport",
+    phases: { wake: "Signal entrant", rain: "Décodage du profil", exit: "Accès autorisé" },
     skip: "Passer l’intro",
-    labels: {
-      daring: "Royal Daring / Identité",
-      minecraft: "Minecraft / Ma propre ville",
-      volley: "Sur le terrain / Volley",
-      asn95: "ASN95 / Jour de match",
-      overwatch: "Overwatch / Côté compétition",
-      cs: "Counter-Strike / Encore un round",
-      playoffs: "Royal Daring / Playoffs",
-      website: "Royal Daring / Partenariats",
-      skyline: "Minecraft / 250+ heures",
-      event: "ASI / Faire vivre le sport",
-      osu: "osu! / Rythme & précision",
-      places: "Lille / Partout en Europe",
-      ball: "Le regard du joueur",
-    },
   },
 
   briefing: {
