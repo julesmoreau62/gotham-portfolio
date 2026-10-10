@@ -281,7 +281,7 @@
   .projectCard:hover .projectImage > img { transform: none; }
 }
 
-/* Where I grew up: one card per move, four per row on desktop. */
+/* Where I grew up (map in places-map.module.css) and the turning point, which uses these cards. */
 .places { margin-top: 80px; }
 /* The turning point reuses the same cards; the current step is lit. */
 .path { margin-top: 72px; }

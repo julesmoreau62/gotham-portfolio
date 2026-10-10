@@ -8,6 +8,7 @@ import { COPY } from "@/lib/copy"
 import type { Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { CompetitionVideo } from "./competition-video"
+import { PlacesMap } from "./places-map"
 import styles from "./journey.module.css"
 
 export function Journey({ locale = "en" }: { locale?: Locale }) {
@@ -53,18 +54,7 @@ export function Journey({ locale = "en" }: { locale?: Locale }) {
           <h3 id="places-title" className={styles.placesTitle}>{t.places.title[0]}<br /><span className="text-acid">{t.places.title[1]}</span></h3>
           <Reveal className={styles.placesLead}>{t.places.intro}</Reveal>
         </div>
-        <Reveal amount={0.1}>
-          <ol className={styles.placesList}>
-            {t.places.stops.map((stop, i) => (
-              <li key={`${stop.place}-${i}`} className={styles.place}>
-                <span className={styles.placeIndex}>{String(i + 1).padStart(2, "0")}</span>
-                <h4>{stop.place}</h4>
-                <span className={styles.placeLesson}>{stop.lesson}</span>
-                <p>{stop.text}</p>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
+        <Reveal amount={0.1}><PlacesMap t={t.places} /></Reveal>
       </div>
     </section>
   )

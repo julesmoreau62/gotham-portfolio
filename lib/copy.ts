@@ -5,7 +5,7 @@
 
 import type { ContractSlug } from "@/lib/contracts"
 import type { Locale } from "@/lib/i18n"
-import { PROJECT_STORIES, type HomeSectionId, type ProjectStory, type StorySlug } from "@/lib/journey"
+import { PROJECT_STORIES, type HomeSectionId, type PlaceStop, type ProjectStory, type StorySlug } from "@/lib/journey"
 import { DEPLOYMENTS, type Deployment } from "@/lib/profile"
 
 type ContractOverride = { title?: string; role?: string; summary?: string; metricLabel?: string }
@@ -137,15 +137,18 @@ const en = {
       title: ["Four continents.", "One habit: adapt."],
       intro: "I grew up moving with my family. Each place left me something I still use.",
       stops: [
-        { place: "France", lesson: "The start", text: "Born here. Twenty-four days later, passport in hand, off to French Guiana." },
-        { place: "French Guiana", lesson: "Nature", text: "Growing up close to nature, and to the golden-handed tamarins on our balcony." },
-        { place: "Corsica", lesson: "Trail running", text: "Where trail running started for me." },
-        { place: "New Caledonia", lesson: "The ocean", text: "Surfing and va'a, the outrigger canoe." },
-        { place: "Congo · Brazzaville", lesson: "Perspective", text: "Realising how lucky I was." },
-        { place: "France", lesson: "Back home", text: "A first return." },
-        { place: "French Guiana", lesson: "Games", text: "Minecraft, then Counter-Strike, then Overwatch." },
-        { place: "France", lesson: "Sport", text: "Studies, volleyball, golf and competitive gaming. Then sport management." },
-      ],
+        { place: "France", at: "france", lesson: "The start", text: "Born here. Twenty-four days later, passport in hand, off to French Guiana." },
+        { place: "French Guiana", at: "guiana", lesson: "Nature", text: "Growing up close to nature, and to the golden-handed tamarins on our balcony." },
+        { place: "Corsica", at: "corsica", lesson: "Trail running", text: "Where trail running started for me." },
+        { place: "New Caledonia", at: "caledonia", lesson: "The ocean", text: "Surfing and va'a, the outrigger canoe." },
+        { place: "Congo · Brazzaville", at: "congo", lesson: "Perspective", text: "Realising how lucky I was." },
+        { place: "France", at: "france", lesson: "Back home", text: "A first return." },
+        { place: "French Guiana", at: "guiana", lesson: "Games", text: "Minecraft, then Counter-Strike, then Overwatch." },
+        { place: "France", at: "france", lesson: "Sport", text: "Studies, volleyball, golf and competitive gaming. Then sport management." },
+      ] as PlaceStop[],
+      mapLabel: "World map of the eight moves: France, French Guiana, Corsica, New Caledonia, Congo, then France, French Guiana and France again.",
+      compass: { n: "N", s: "S", e: "E", w: "W" },
+      controls: { prev: "Previous move", next: "Next move", replay: "Replay the journey" },
     },
   },
 
@@ -429,15 +432,18 @@ const fr: Copy = {
       title: ["Quatre continents.", "Une habitude : s’adapter."],
       intro: "J’ai grandi en déménageant avec ma famille. Chaque endroit m’a laissé quelque chose que j’utilise encore.",
       stops: [
-        { place: "France", lesson: "Le départ", text: "Né en France. Vingt-quatre jours plus tard, passeport en poche, direction la Guyane." },
-        { place: "Guyane", lesson: "La nature", text: "Grandir au contact de la nature, et des singes mains jaunes du balcon." },
-        { place: "Corse", lesson: "Le trail", text: "Là où j’ai découvert le trail." },
-        { place: "Nouvelle-Calédonie", lesson: "L’océan", text: "Le surf et le va’a, la pirogue à balancier." },
-        { place: "Congo · Brazzaville", lesson: "Le recul", text: "Prendre conscience de ma chance." },
-        { place: "France", lesson: "Retour", text: "Un premier retour." },
-        { place: "Guyane", lesson: "Le jeu", text: "Minecraft, puis Counter-Strike, puis Overwatch." },
-        { place: "France", lesson: "Le sport", text: "Les études, le volley, le golf et le jeu en compétition. Puis le management du sport." },
+        { place: "France", at: "france", lesson: "Le départ", text: "Né en France. Vingt-quatre jours plus tard, passeport en poche, direction la Guyane." },
+        { place: "Guyane", at: "guiana", lesson: "La nature", text: "Grandir au contact de la nature, et des singes mains jaunes du balcon." },
+        { place: "Corse", at: "corsica", lesson: "Le trail", text: "Là où j’ai découvert le trail." },
+        { place: "Nouvelle-Calédonie", at: "caledonia", lesson: "L’océan", text: "Le surf et le va’a, la pirogue à balancier." },
+        { place: "Congo · Brazzaville", at: "congo", lesson: "Le recul", text: "Prendre conscience de ma chance." },
+        { place: "France", at: "france", lesson: "Retour", text: "Un premier retour." },
+        { place: "Guyane", at: "guiana", lesson: "Le jeu", text: "Minecraft, puis Counter-Strike, puis Overwatch." },
+        { place: "France", at: "france", lesson: "Le sport", text: "Les études, le volley, le golf et le jeu en compétition. Puis le management du sport." },
       ],
+      mapLabel: "Carte du monde des huit étapes : France, Guyane, Corse, Nouvelle-Calédonie, Congo, puis France, Guyane et de nouveau France.",
+      compass: { n: "N", s: "S", e: "E", w: "O" },
+      controls: { prev: "Étape précédente", next: "Étape suivante", replay: "Rejouer le trajet" },
     },
   },
 

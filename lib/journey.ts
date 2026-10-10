@@ -36,3 +36,16 @@ export const PROJECT_STORIES = {
 export const STORY_PROJECT_SLUGS = ["daring", "field-ops", "signal"] as const
 
 export type StorySlug = keyof typeof PROJECT_STORIES
+
+/** Where each move happened, for the map. France is its geographic centre. */
+export const PLACES = {
+  france: { lat: 46.6, lon: 2.4 },
+  guiana: { lat: 4.94, lon: -52.33 },
+  corsica: { lat: 42.15, lon: 9.1 },
+  caledonia: { lat: -22.27, lon: 166.45 },
+  congo: { lat: -4.27, lon: 15.28 },
+} as const
+
+export type PlaceId = keyof typeof PLACES
+
+export type PlaceStop = { place: string; at: PlaceId; lesson: string; text: string }
