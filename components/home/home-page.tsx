@@ -21,8 +21,8 @@ export function HomePage({ locale }: { locale: Locale }) {
       <SideHud locale={locale} />
       <main id="main-content" tabIndex={-1} className="lg:pr-12">
         <Hero locale={locale} />
-        <ContractsIndex locale={locale} />
         <Journey locale={locale} />
+        <ContractsIndex locale={locale} />
         <Operator locale={locale} />
         <DeploymentLog locale={locale} />
         <Extraction locale={locale} />

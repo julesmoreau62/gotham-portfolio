@@ -1,8 +1,8 @@
 /** Recruiter-first reading order; project URLs stay stable. */
 export const HOME_SECTIONS = [
   { id: "hero", n: "00" },
-  { id: "contracts", n: "01" },
-  { id: "origin", n: "02" },
+  { id: "origin", n: "01" },
+  { id: "contracts", n: "02" },
   { id: "operator", n: "03" },
   { id: "log", n: "04" },
   { id: "extraction", n: "05" },

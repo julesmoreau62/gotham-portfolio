@@ -6,7 +6,6 @@ import { WipeLink } from "@/components/fx/page-wipe"
 import { ArrowUpRight } from "@/components/ui/primitives"
 import { COPY } from "@/lib/copy"
 import type { Locale } from "@/lib/i18n"
-import { cn } from "@/lib/utils"
 import { CompetitionVideo } from "./competition-video"
 import { PlacesMap } from "./places-map"
 import styles from "./journey.module.css"
@@ -27,25 +26,6 @@ export function Journey({ locale = "en" }: { locale?: Locale }) {
           <div className={styles.storyPhoto}><Image src="/assets/portfolio/volleyball-story.webp" alt={t.photoAlt} fill sizes="(min-width: 801px) 42vw, 100vw" className={styles.courtPhoto} /><span className={styles.imageTag}>{t.photoTag}</span></div>
           <p className={styles.storyCaption}>{t.caption}</p>
           <details className={styles.storyArchive}><summary>{t.highlights} <span aria-hidden="true">+</span></summary><CompetitionVideo locale={locale} /></details>
-        </Reveal>
-      </div>
-      <div id="turning-path" className={cn(styles.places, styles.path)}>
-        <div className={styles.placesTop}><span>{t.path.kicker}</span><span>{t.path.count}</span></div>
-        <div className={styles.placesIntro}>
-          <h3 className={styles.placesTitle}>{t.path.title[0]}<br /><span className="text-acid">{t.path.title[1]}</span></h3>
-          <Reveal className={styles.placesLead}>{t.path.intro}</Reveal>
-        </div>
-        <Reveal amount={0.1}>
-          <ol className={styles.placesList}>
-            {t.path.steps.map((step, i) => (
-              <li key={step.stage} className={cn(styles.place, i === t.path.steps.length - 1 && styles.placeNow)}>
-                <span className={styles.placeIndex}>{String(i + 1).padStart(2, "0")} / {step.when}</span>
-                <h4>{step.stage}</h4>
-                <span className={styles.placeLesson}>{step.lesson}</span>
-                <p>{step.text}</p>
-              </li>
-            ))}
-          </ol>
         </Reveal>
       </div>
       <div id="places" className={styles.places}>
