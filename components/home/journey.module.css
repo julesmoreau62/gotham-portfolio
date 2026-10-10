@@ -283,6 +283,10 @@
 
 /* Where I grew up: one card per move, four per row on desktop. */
 .places { margin-top: 80px; }
+/* The turning point reuses the same cards; the current step is lit. */
+.path { margin-top: 72px; }
+.placeNow { border-top-color: var(--acid); }
+.placeNow h4 { color: var(--acid); }
 .placesTop { display: flex; justify-content: space-between; gap: 20px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--font-mono), monospace; font-size: 11px; line-height: 1.6; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
 .placesTop span:first-child { color: var(--acid); }
 .placesIntro { display: flex; justify-content: space-between; align-items: end; gap: 35px; margin: 32px 0 40px; }

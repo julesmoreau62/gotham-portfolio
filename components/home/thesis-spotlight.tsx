@@ -13,7 +13,7 @@ import styles from "./thesis-spotlight.module.css"
 
 const CHAIN: (LogoId | "arrow")[] = ["scholar", "openalex", "cairn", "arrow", "qwen", "arrow", "obsidian"]
 
-/** The live R&D project, given its own lab card under the three field projects. */
+/** The live R&D project, leading the selected work as its own lab card. */
 export function ThesisSpotlight({ locale }: { locale: Locale }) {
   const t = COPY[locale].work.lab
   return (

@@ -3,7 +3,7 @@
   --te-violet: #9d6bff;
   --te-violet-hi: #b99bff;
   --te-violet-soft: #d6c6ff;
-  margin-top: 44px;
+  margin-bottom: 44px;
 }
 .labTop {
   display: flex;
@@ -127,7 +127,7 @@
 }
 
 @media (max-width: 800px) {
-  .lab { margin-top: 32px; }
+  .lab { margin-bottom: 32px; }
   .card { display: flex; flex-direction: column; }
   .scene { min-height: 0; aspect-ratio: 1.2; }
   .content { padding: 30px; border-left: 0; border-top: 1px solid rgba(157, 107, 255, 0.2); }

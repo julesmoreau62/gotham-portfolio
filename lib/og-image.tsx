@@ -14,8 +14,8 @@ import type { Locale } from "@/lib/i18n"
 export const OG_SIZE = { width: 1200, height: 630 }
 
 export const OG_ALT: Record<Locale, string> = {
-  en: "Jules Moreau — Event management internship, February to June 2027",
-  fr: "Jules Moreau — Stage en événementiel sportif, février à juin 2027",
+  en: "Jules Moreau — Digital transformation & AI internship, February to June 2027",
+  fr: "Jules Moreau — Stage transformation digitale & IA, février à juin 2027",
 }
 
 /** For pages whose own openGraph metadata would otherwise drop the card. */

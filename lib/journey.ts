@@ -15,21 +15,21 @@ export type ProjectStory = { verb: string; chapter: string; text: string; takeaw
 export const PROJECT_STORIES = {
   "field-ops": {
     verb: "Make it run.", chapter: "Event operations",
-    text: "Communication and field operations for a 500+ person university tournament. Keeping the event moving when plans changed.",
+    text: "Communication and field operations for a 500+ person university tournament: one bilingual briefing for every participant, and a new venue secured in 45 minutes when plans changed.",
     takeaway: "An event works when the people, information and timing work together.",
     proof: "500+", proofLabel: "people · one tournament",
   },
   signal: {
-    verb: "Make it seen.", chapter: "Communication & activation",
-    text: "A season of content, photography and sponsor activation. Building a club's presence around the people who make it live.",
+    verb: "Make it seen.", chapter: "Digital & sponsor activation",
+    text: "A club's digital presence built from scratch, with no content calendar or guidelines to start from: three recurring formats, a weekly sponsor prediction game and a first app concept.",
     takeaway: "The experience starts before matchday and continues after the final whistle.",
     proof: "1M+", proofLabel: "views · one season",
   },
   daring: {
-    verb: "Make it last.", chapter: "Branding & partnerships",
-    text: "A complete sponsor acquisition system: visual identity, a bilingual partner website, a nine-page brochure and a club handover. Giving the next team tools it can keep using.",
+    verb: "Make it last.", chapter: "Tools & handover",
+    text: "A sponsor system built to outlive my internship: brand guidelines, a bilingual partner website, Canva templates and a Notion workspace so volunteers can keep producing on their own, exported in Markdown for any AI assistant.",
     takeaway: "A project should leave the next team with something they can build on.",
-    proof: "FR / NL", proofLabel: "a complete partner system",
+    proof: "11", proofLabel: "ready-to-use post templates",
   },
 } as const
 

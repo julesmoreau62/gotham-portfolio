@@ -12,7 +12,7 @@ import { Reveal, Lines, Stagger } from "@/components/fx/reveal"
 import { pad2 } from "@/lib/utils"
 import { ogImages } from "@/lib/og-image"
 
-const FEATURED_CONTRACTS = ["field-ops", "daring", "signal"].map(slug => CONTRACTS.find(c => c.slug === slug)!)
+const FEATURED_CONTRACTS = ["thesis-engine", "daring", "signal"].map(slug => CONTRACTS.find(c => c.slug === slug)!)
 
 export function briefingMetadata(locale: Locale): Metadata {
   const { meta } = COPY[locale].briefing
@@ -112,13 +112,13 @@ export function BriefingPage({ locale }: { locale: Locale }) {
                   <div className="md:col-span-1 mono text-[11px] tracking-[0.2em]" style={{ color: c.accent }}>
                     {pad2(c.index)}
                   </div>
-                  <div className="md:col-span-5">
+                  <div className="md:col-span-4">
                     <div className="display text-[clamp(24px,3vw,40px)] group-hover:text-acid transition-colors">{local.title}</div>
                     <div className="label text-mute mt-1">{local.role}</div>
                   </div>
                   <p className="md:col-span-4 mono text-[12px] leading-relaxed text-mute">{local.summary}</p>
-                  <div className="md:col-span-2 flex items-center justify-between md:justify-end gap-3">
-                    <Chip tone="ghost" color={c.accent === "#f2f1ec" ? undefined : c.accent}>
+                  <div className="md:col-span-3 flex items-center justify-between md:justify-end gap-3">
+                    <Chip tone="ghost" color={c.accent === "#f2f1ec" ? undefined : c.accent} className="whitespace-normal">
                       {c.metric} · {local.metricLabel}
                     </Chip>
                     <ArrowUpRight className="h-5 w-5" />

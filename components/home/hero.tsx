@@ -60,7 +60,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
         </div>
         <div className={styles.heroStamp} aria-hidden="true">
           <span className={styles.stampCross}>+</span><span>{t.stamp[0]}<br />{t.stamp[1]}</span>
-          <Barcode seed="JM-EVENT-MANAGEMENT" height={23} className="w-28 text-acid" />
+          <Barcode seed="JM-DIGITAL-TRANSFORMATION" height={23} className="w-28 text-acid" />
         </div>
       </div>
       <span className={styles.heroEdge} aria-hidden="true">{t.edge}</span>

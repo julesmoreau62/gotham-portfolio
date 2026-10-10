@@ -5,9 +5,9 @@
 export const SITE = {
   url: "https://www.julesmoreau.eu",
   name: "Jules Moreau",
-  title: "Jules Moreau — Event Management",
+  title: "Jules Moreau — Digital Transformation & AI",
   description:
-    "M2 International Sport Administration student seeking an Event Management internship, February to June 2027. Event logistics, sponsor activation, digital communication and competitive intelligence.",
+    "M2 International Sport Administration student seeking a digital transformation & AI internship in a sport organisation, February to June 2027. Process mapping, workflow automation, AI tools and team adoption.",
   version: "v4.0",
   year: "2026",
 }
@@ -15,13 +15,13 @@ export const SITE = {
 export const PROFILE = {
   firstName: "Jules",
   lastName: "Moreau",
-  role: "Event Management // Communication & branding",
+  role: "Digital Transformation & AI // Sport organisations",
   degree: "M2 International Sport Administration",
   school: "Université de Lille — STAPS / ISA",
-  seeking: "Event Management internship",
+  seeking: "Digital transformation & AI internship",
   window: "February → June 2027",
   windowShort: "FEB → JUN 2027",
-  focus: "Event logistics, sponsor activation, digital communication & competitive intelligence.",
+  focus: "Process mapping, workflow automation, AI tools & team adoption for sport organisations.",
   location: "Lille, France",
   coords: "50.6292° N / 3.0573° E",
   email: "jules.moreau1@outlook.com",

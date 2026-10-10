@@ -1,12 +1,12 @@
-# Jules Moreau — Event Management Portfolio
+# Jules Moreau — Digital Transformation & AI Portfolio
 # julesmoreau.eu | jules.moreau1@outlook.com | /briefing (30-second recruiter version) | /fr (version française)
 
 ## IDENTITY
 Name: Jules Moreau
 Current role: M2 International Sport Administration student, Université de Lille (STAPS/ISA program), 2025–2027
 Location: Lille, France (50.6292° N / 3.0573° E)
-Status: Actively seeking an Event Management internship, February to June 2027 (final ISA Master internship)
-Target roles: Event management, event logistics, sponsor activation, competitive intelligence
+Status: Actively seeking a digital transformation & AI internship in a sport organisation, February to June 2027 (final ISA Master internship)
+Target roles: Digital transformation & AI in sport organisations: process mapping, workflow automation, AI tools and team adoption
 Areas: France, Belgium, Europe
 Languages: French (native), English (C1); Dutch production experience (FR/NL deliverables)
 Recruiter briefing: https://www.julesmoreau.eu/briefing
@@ -14,13 +14,16 @@ CV: https://www.julesmoreau.eu/assets/cv-julesmoreau.pdf
 LinkedIn: https://www.linkedin.com/in/jules-moreau-25405b363
 
 ## PROFILE SUMMARY
+Moving from club communication, partnerships and events to digital transformation and AI for sport organisations:
+on each field project he ended up building the tool the team was missing (Notion handover, templates, partner website),
+and his M2 thesis studies generative AI and no-code tools in sports associations with limited resources.
 Sport-management profile combining military precision, international mobility
 (French Guiana, New Caledonia, Congo) and hands-on production experience. Former French Navy Reserve NCO.
 Grandmaster-level Overwatch 2 player (former Top 500). No formal coding background: builds production-grade
 tools and client websites through AI-augmented workflows (Claude Code, Codex).
 
 ## SITE STRUCTURE
-/                         Home: internship profile, selected projects, personal story, approach, field experience, education and contact
+/                         Home: internship profile, selected projects (Thesis Engine first), story from the field to the tools, approach, field experience, education and contact
 /briefing                 30-second recruiter briefing
 /fr                       French version of the home page (version française)
 /fr/briefing              French version of the recruiter briefing
@@ -35,6 +38,7 @@ tools and client websites through AI-augmented workflows (Claude Code, Codex).
 ## ACADEMIC
 Master's in Sport Sciences — International Sport Administration (ISA), Université de Lille (STAPS), 2025–2027.
 Specialization: esports management, sport governance, sustainability.
+M2 thesis (in progress): generative AI and no-code tools as levers of professionalisation and organisational efficiency for sports associations with limited resources.
 Bachelor's in Sport Sciences — Sport Management, ULCO, 2022–2025.
 M1 thesis: LEC/GRP vs CS2 economic models (interviews including BLAST VP James Woollard).
 
@@ -116,7 +120,7 @@ first-ever website of a 250-member, 14-squad football club founded in 1995. Buil
 50 selected photographs: corporate/industrial (15), events/ASI (5), sport (football 10, golf 6, kitesurf 8, volleyball 6).
 
 ## SKILLS & TOOLS
-Event logistics, crisis management, matchday operations, sponsor activation, brand identity, content strategy,
+Process mapping, workflow automation, AI tool adoption and handover documentation, event logistics, crisis management, matchday operations, sponsor activation, brand identity, content strategy,
 sport governance, esports business analysis, competitive intelligence, OSINT, data analysis, sport photography,
 Sony α6400, GoPro, Lightroom, Premiere, Canva, Adobe Suite, Notion, Next.js, Tailwind, Python, Telethon, ReportLab,
 GitHub Actions, Notion API, OpenRouter, Gemini, Claude Code, Codex, Netlify, Ollama, Qwen3, LoRA fine-tuning, RAG,

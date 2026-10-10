@@ -15,7 +15,7 @@ import styles from "./selected-work.module.css"
 
 export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
   const t = COPY[locale].work
-  // Thesis Engine has its own lab card, so it leaves the archive list.
+  // Thesis Engine leads as its own lab card, so it leaves the archive list.
   const otherProjects = CONTRACTS.filter(c => !(STORY_PROJECT_SLUGS as readonly string[]).includes(c.slug) && c.slug !== "thesis-engine")
   return (
     <section id="contracts" className={cn(shared.projects, styles.section)} aria-labelledby="projects-title">
@@ -24,6 +24,7 @@ export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
         <div id="projects-title"><Lines as="h2" className={shared.chapterTitle} lines={[t.title[0], <span key="doing" className="text-acid">{t.title[1]}</span>]} /></div>
         <Reveal className={styles.introCopy}><span className={styles.introLabel}>{t.introLabel}</span><p>{t.intro}</p>{t.languageNote && <p className={styles.languageNote}>{t.languageNote}</p>}</Reveal>
       </div>
+      <ThesisSpotlight locale={locale} />
       <div className={styles.projectGrid}>
         {STORY_PROJECT_SLUGS.map((slug, index) => {
           const project = CONTRACTS.find(c => c.slug === slug)!
@@ -34,7 +35,7 @@ export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
               <WipeLink href={`/contracts/${slug}`} className={cn(styles.projectCard, styles[slug === "field-ops" ? "field" : slug], isFeatured && styles.featuredProject)} data-cursor="open" aria-labelledby={`identity-${slug} project-${slug}`} aria-describedby={`result-${slug} description-${slug}`}>
                 <div className={styles.projectScene}>
                   <div className={styles.sceneGrid} aria-hidden="true" />
-                  <div className={styles.sceneTop}><span>{String(index + 1).padStart(2, "0")} / {project.code}</span><span>{isFeatured ? t.scene.featured : slug === "signal" ? t.scene.signal : t.scene.field}</span></div>
+                  <div className={styles.sceneTop}><span>{String(index + 2).padStart(2, "0")} / {project.code}</span><span>{isFeatured ? t.scene.featured : slug === "signal" ? t.scene.signal : t.scene.field}</span></div>
                   {slug === "daring" ? <>
                     <span className={styles.sceneWord} aria-hidden="true">DARING</span>
                     <div className={styles.websitePreview}>
@@ -61,7 +62,6 @@ export function ContractsIndex({ locale = "en" }: { locale?: Locale }) {
           )
         })}
       </div>
-      <ThesisSpotlight locale={locale} />
       <div className={shared.archive}>
         <div className={shared.archiveTop}><h3>{t.archiveTitle}</h3><span>{t.archiveCount}</span></div>
         <Stagger stagger={0.06} amount={0.1}>
