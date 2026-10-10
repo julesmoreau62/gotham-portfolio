@@ -47,6 +47,7 @@ export function ThesisSpotlight({ locale }: { locale: Locale }) {
           </div>
           <div className={styles.content}>
             <p id="lab-identity" className={styles.identity}>{t.identity}<span>{t.chapter}</span></p>
+            <p className={styles.offer}><span className={styles.offerSoon}>{t.offer[0]}</span><span>{t.offer[1]}</span></p>
             <h3 id="lab-verb" className={styles.verb}>{t.verb[0]} <em>{t.verb[1]}</em></h3>
             <p id="lab-text" className={styles.text}>{t.text}</p>
             <div className={styles.cost}><strong>{t.cost}</strong><span>{t.costLabel}</span></div>

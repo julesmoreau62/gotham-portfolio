@@ -97,6 +97,9 @@
 .content { position: relative; display: flex; flex-direction: column; padding: 38px; border-left: 1px solid rgba(157, 107, 255, 0.2); background: linear-gradient(150deg, rgba(157, 107, 255, 0.08), transparent 60%); }
 .identity { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono), monospace; font-size: 11px; line-height: 1.6; letter-spacing: 0.06em; text-transform: uppercase; }
 .identity > span { font-size: 9px; color: var(--te-violet-hi); }
+.offer { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; font-family: var(--font-mono), monospace; font-size: 9px; line-height: 1; letter-spacing: 0.14em; text-transform: uppercase; }
+.offer > span { padding: 6px 8px; border: 1px solid rgba(214, 198, 255, 0.3); color: var(--te-violet-soft); }
+.offer > .offerSoon { border-color: #d4744f; background: #d4744f; color: #120a07; }
 .verb { margin-top: 22px; font-family: var(--font-serif), Georgia, serif; font-weight: 400; font-size: clamp(50px, 5.4vw, 88px); line-height: 0.92; letter-spacing: -0.02em; }
 .verb em { font-style: italic; color: var(--te-violet-soft); }
 .text { max-width: 520px; margin: 18px 0 24px; color: var(--mute); font-size: 15px; line-height: 1.75; }

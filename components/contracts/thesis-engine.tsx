@@ -10,6 +10,7 @@ import { Logo, LOGOS, type LogoId } from "@/components/contracts/thesis-logos"
 import { ThesisMap } from "@/components/contracts/thesis-map"
 import { ThesisCanvas } from "@/components/contracts/thesis-canvas"
 import { thesisSerif } from "@/components/contracts/thesis-font"
+import { PROFILE } from "@/lib/profile"
 import styles from "./thesis-engine.module.css"
 
 /* ------------------------------------------------------------------
@@ -24,6 +25,7 @@ export function ThesisEngineCase() {
     <div className={cn(styles.root, thesisSerif.variable)}>
       <ToolMarquee />
       <Readout />
+      <Offer />
       <Question />
       <LabSection
         n="02"
@@ -122,6 +124,39 @@ function Readout() {
         </div>
       </Stagger>
     </div>
+  )
+}
+
+/* ---------------------------------------------------------- offer */
+
+const SECTORS = ["Sport", "Esports", "Events", "Media", "Associations", "Your field"]
+
+/** Tells a recruiter the engine is not thesis-only: it can be rebuilt around their own field. */
+function Offer() {
+  const subject = encodeURIComponent("Thesis Engine for our team")
+  return (
+    <aside className={styles.offer} aria-labelledby="te-offer-title">
+      <Reveal className={styles.offerGrid}>
+        <div className={styles.offerTags}>
+          <span className={styles.offerSoon}><i aria-hidden="true" />Available soon</span>
+          <span className={styles.offerAny}>Adaptable to any sector</span>
+        </div>
+        <div className={styles.offerBody}>
+          <h2 id="te-offer-title" className={styles.offerTitle}>Built for a thesis. <em>Ready for your team.</em></h2>
+          <p className={styles.offerText}>
+            The same engine can watch any field: your market, competitors, regulation, sponsors or funding calls.
+            Sources, triage rules and the vault are rebuilt around your questions, and I can set it up inside your organisation.
+          </p>
+          <ul className={styles.offerSectors} aria-label="Example sectors">
+            {SECTORS.map((s) => <li key={s}>{s}</li>)}
+          </ul>
+        </div>
+        <a href={`mailto:${PROFILE.email}?subject=${subject}`} className={styles.offerCta} data-cursor="mail">
+          <span>Set it up with your team</span>
+          <span className={styles.offerArrow} aria-hidden="true">↗</span>
+        </a>
+      </Reveal>
+    </aside>
   )
 }
 
@@ -384,6 +419,7 @@ function Closing() {
           <div><dt>Origin</dt><dd>Adapted from my own AI-news watch pipeline</dd></div>
           <div><dt>Cost</dt><dd>≈ €0 a month locally, a few cents of Sonnet</dd></div>
           <div><dt>Code</dt><dd>Private repository while the thesis is in progress</dd></div>
+          <div><dt>Next</dt><dd>Available soon for other teams, adaptable to any sector</dd></div>
         </dl>
       </Reveal>
     </LabSection>
