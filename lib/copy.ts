@@ -225,8 +225,14 @@ const en = {
     topline: "Secure line / Lille, FR",
     wake: ["Wake up, recruiter…", "Follow the white rabbit."],
     role: "Digital transformation & AI / Sport",
-    phases: { wake: "Incoming signal", rain: "Decoding profile", exit: "Access granted" },
+    phases: { wake: "Incoming signal", rain: "Decoding profile", choose: "Awaiting your choice", exit: "Access granted" },
     skip: "Skip intro",
+    choose: {
+      label: "Choose your access",
+      briefing: { title: "30-second briefing", meta: "Read · no sound" },
+      dossier: { title: "The full dossier", meta: "Narrated · sound on · desktop" },
+      enter: "Enter the portfolio",
+    },
   },
 
   briefing: {
@@ -582,8 +588,14 @@ const fr: Copy = {
     topline: "Ligne sécurisée / Lille, FR",
     wake: ["Réveillez-vous…", "Suivez le lapin blanc."],
     role: "Transformation digitale & IA / Sport",
-    phases: { wake: "Signal entrant", rain: "Décodage du profil", exit: "Accès autorisé" },
+    phases: { wake: "Signal entrant", rain: "Décodage du profil", choose: "En attente de votre choix", exit: "Accès autorisé" },
     skip: "Passer l’intro",
+    choose: {
+      label: "Choisissez votre accès",
+      briefing: { title: "Briefing en 30 secondes", meta: "À lire · sans son" },
+      dossier: { title: "Le dossier complet", meta: "Narré en anglais · son activé · ordinateur" },
+      enter: "Entrer dans le portfolio",
+    },
   },
 
   briefing: {
