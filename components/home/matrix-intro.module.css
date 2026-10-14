@@ -2,7 +2,7 @@
 .primer { display: none; }
 .primer[data-state="pending"] ~ .content { opacity: 0; }
 .primer[data-state="pending"] { display: block; position: fixed; inset: 0; z-index: 300; background: #070707; }
-.content[data-intro-phase="wake"], .content[data-intro-phase="rain"] { opacity: 0; }
+.content[data-intro-phase="wake"], .content[data-intro-phase="rain"], .content[data-intro-phase="choose"] { opacity: 0; }
 /* No transform or stacking context remains on the content after the sequence. */
 .intro { position: fixed; inset: 0; z-index: 300; overflow: hidden; color: #f2f1ec; isolation: isolate; background: #070707; clip-path: inset(0 0 0 0); }
 /* Faint scanlines and a vignette, like an old monitor. */
@@ -20,13 +20,25 @@
 .wake { position: absolute; z-index: 2; left: 5vw; right: 5vw; top: 22svh; font-family: var(--font-mono), monospace; font-size: clamp(15px, 1.6vw, 24px); line-height: 1.75; color: #c8ff00; text-shadow: 0 0 14px rgba(200,255,0,.4); }
 .wake p { min-height: 1.75em; white-space: pre-wrap; }
 .cursor { display: inline-block; width: .6em; height: 1.15em; margin-left: 3px; vertical-align: -.2em; background: #c8ff00; box-shadow: 0 0 12px rgba(200,255,0,.5); animation: blink 900ms step-end infinite; }
-.intro[data-phase="rain"] .wake, .intro[data-phase="exit"] .wake { animation: glitch-out 420ms linear forwards; }
+.intro[data-phase="rain"] .wake, .intro[data-phase="choose"] .wake, .intro[data-phase="exit"] .wake { animation: glitch-out 420ms linear forwards; }
 .role {
   position: absolute; z-index: 2; left: 5vw; right: 5vw; top: calc(var(--name-bottom, 56svh) + clamp(18px, 3.4svh, 34px));
   text-align: center; text-transform: uppercase; letter-spacing: .24em; font-size: clamp(10px, .95vw, 13px); color: rgba(242,241,236,.88);
   opacity: 0;
 }
-.intro[data-phase="rain"] .role, .intro[data-phase="exit"] .role { animation: appear 300ms 700ms ease-out both; }
+.intro[data-phase="rain"] .role, .intro[data-phase="choose"] .role, .intro[data-phase="exit"] .role { animation: appear 300ms 700ms ease-out both; }
+/* The access choice, under the name once the code has written it. */
+.choice { position: absolute; z-index: 3; left: 5vw; right: 5vw; top: calc(var(--name-bottom, 56svh) + clamp(58px, 9svh, 96px)); display: grid; justify-items: center; gap: 14px; animation: appear 450ms ease-out both; }
+.choiceLabel { font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(242,241,236,.54); }
+.choiceRow { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.option { display: flex; align-items: center; gap: 14px; width: min(372px, 88vw); padding: 16px 20px; border: 1px solid rgba(242,241,236,.22); background: rgba(7,7,7,.84); color: #f2f1ec; text-align: left; transition: border-color 150ms, background 150ms, transform 150ms; }
+.option svg { flex: none; color: #c8ff00; }
+.option span { display: grid; flex: 1; gap: 5px; }
+.option b { font-size: 18px; font-weight: 700; line-height: 1.15; letter-spacing: -.01em; }
+.option small { font-family: var(--font-mono), monospace; font-size: 9.5px; line-height: 1.5; letter-spacing: .06em; text-transform: uppercase; color: rgba(242,241,236,.6); }
+.option i { font-style: normal; font-size: 18px; color: #c8ff00; }
+.option[data-choice="dossier"] { border-color: rgba(200,255,0,.55); box-shadow: 0 0 34px rgba(200,255,0,.12); }
+.option:hover, .option:focus-visible { border-color: #c8ff00; background: rgba(200,255,0,.08); transform: translateY(-2px); }
 .bottomline { bottom: max(24px, env(safe-area-inset-bottom)); }
 .sequence { display: flex; align-items: center; gap: 13px; color: rgba(242,241,236,.54); text-transform: uppercase; }
 .progress { width: 54px; height: 2px; background: rgba(242,241,236,.14); overflow: hidden; }

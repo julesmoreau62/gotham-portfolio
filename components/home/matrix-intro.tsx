@@ -1,9 +1,12 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react"
+import Link from "next/link"
+import { FileText, Headphones } from "lucide-react"
 import { Scramble } from "@/components/fx/scramble"
 import { COPY } from "@/lib/copy"
-import type { Locale } from "@/lib/i18n"
+import { DOSSIER_DURATION } from "@/lib/dossier"
+import { BRIEFING_PATH, type Locale } from "@/lib/i18n"
 import { GLYPHS } from "./matrix-portrait"
 import styles from "./matrix-intro.module.css"
 
@@ -11,13 +14,19 @@ import styles from "./matrix-intro.module.css"
    MATRIX INTRO — plays once per tab session before the home page.
    A terminal types the wake-up lines, then digital rain pours down:
    every drop that crosses the name leaves it lit, so the code writes
-   JULES MOREAU. The screen then drains from the top onto the hero.
+   JULES MOREAU. The visitor then picks an access: the 30-second
+   briefing, the narrated dossier, or the portfolio itself, onto which
+   the screen drains from the top.
    ------------------------------------------------------------------ */
 
-export type IntroPhase = "wake" | "rain" | "exit"
+export type IntroPhase = "wake" | "rain" | "choose" | "exit"
 
-/** When each phase starts, in ms from the first frame. */
-export const INTRO_MS = { rain: 1450, exit: 2950, end: 3570 }
+/** When each phase starts, in ms from the first frame; `exit` is the drain's length. */
+export const INTRO_MS = { rain: 1450, choose: 2950, exit: 620 }
+
+const DOSSIER_LENGTH = DOSSIER_DURATION >= 60
+  ? `${Math.floor(DOSSIER_DURATION / 60)} min ${String(Math.round(DOSSIER_DURATION % 60)).padStart(2, "0")}`
+  : `${Math.round(DOSSIER_DURATION)} s`
 const TYPING = { start: 160, char: 22, pause: 200 }
 const ACID = "#c8ff00"
 const FPS = 30
@@ -278,18 +287,20 @@ function CodeRain({ phase }: { phase: IntroPhase }) {
   return <canvas ref={ref} className={styles.rain} aria-hidden="true" />
 }
 
-export function MatrixIntro({ phase, skipButton, onSkip, locale = "en" }: {
+export function MatrixIntro({ phase, skipButton, onSkip, onEnter, locale = "en" }: {
   phase: IntroPhase
   skipButton: RefObject<HTMLButtonElement | null>
   onSkip: () => void
+  onEnter: () => void
   locale?: Locale
 }) {
+  const choosing = phase === "choose" || phase === "exit"
   const t = COPY[locale].intro
   const typed = useTyping(t.wake)
   let before = 0
 
   return (
-    <div className={styles.intro} data-phase={phase} style={{ "--duration": `${INTRO_MS.end}ms` } as CSSProperties} role="dialog" aria-modal="true" aria-labelledby="matrix-intro-title" aria-describedby="matrix-intro-description" data-lenis-prevent>
+    <div id="matrix-intro" className={styles.intro} data-phase={phase} style={{ "--duration": `${INTRO_MS.choose}ms` } as CSSProperties} role="dialog" aria-modal="true" aria-labelledby="matrix-intro-title" aria-describedby="matrix-intro-description" data-lenis-prevent>
       <h2 id="matrix-intro-title" className="sr-only">{t.title}</h2>
       <p id="matrix-intro-description" className="sr-only">{t.description}</p>
       <CodeRain phase={phase} />
@@ -309,9 +320,26 @@ export function MatrixIntro({ phase, skipButton, onSkip, locale = "en" }: {
       <p className={styles.role} aria-hidden="true">
         <Scramble text={t.role} play={phase !== "wake"} delay={650} duration={800} />
       </p>
+      {choosing && (
+        <nav className={styles.choice} aria-label={t.choose.label}>
+          <p className={styles.choiceLabel} aria-hidden="true">{t.choose.label}</p>
+          <div className={styles.choiceRow}>
+            <Link href={BRIEFING_PATH[locale]} className={styles.option} data-choice="briefing">
+              <FileText size={18} aria-hidden="true" />
+              <span><b>{t.choose.briefing.title}</b><small>{t.choose.briefing.meta}</small></span>
+              <i aria-hidden="true">↗</i>
+            </Link>
+            <Link href="/dossier" className={styles.option} data-choice="dossier">
+              <Headphones size={18} aria-hidden="true" />
+              <span><b>{t.choose.dossier.title}</b><small>{t.choose.dossier.meta} · ≈ {DOSSIER_LENGTH}</small></span>
+              <i aria-hidden="true">↗</i>
+            </Link>
+          </div>
+        </nav>
+      )}
       <div className={styles.bottomline}>
         <div className={styles.sequence} aria-hidden="true"><span className={styles.progress}><span /></span><span>{t.phases[phase]}</span></div>
-        <button ref={skipButton} type="button" onClick={onSkip} className={styles.skip}>{t.skip} <span aria-hidden="true">↗</span></button>
+        <button ref={skipButton} type="button" onClick={choosing ? onEnter : onSkip} className={styles.skip}>{choosing ? t.choose.enter : t.skip} <span aria-hidden="true">{choosing ? "↓" : "↗"}</span></button>
       </div>
       <span className={styles.scan} aria-hidden="true" />
     </div>
