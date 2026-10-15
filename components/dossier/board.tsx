@@ -17,7 +17,7 @@ export const STILLS = {
   volleyball: picture("/assets/photo/volleyball-3.jpg", 1080),
   pitch: picture("/assets/photo/football-8.jpg", 1080),
   stadium: picture("/assets/photo/football-9.jpg", 1920),
-  tournament: picture("/assets/photo/asi-4.jpg", 1080),
+  tournament: picture("/assets/photo/asi-3.jpg", 1080),
 }
 
 /** Every image the film shows, preloaded during the sound check. */

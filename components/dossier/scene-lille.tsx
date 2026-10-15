@@ -41,7 +41,7 @@ export function LilleScene({ t }: { t: number }) {
       <Record t={t} at={lille.master.at} out={lille.december.at - 0.1} box={{ x: 52, y: 0, w: 48 }} icon={<GraduationCap size={13} />} kicker="EDUCATION · 2025 → 2027"
         title="MASTER’S · INTERNATIONAL SPORT ADMINISTRATION" lines={[{ text: "UNIVERSITÉ DE LILLE · STAPS / ISA", at: lille.master.at + 1 }]} />
 
-      <Still t={t} at={lille.comms.at + 0.1} dimAt={lille.incidents.at} box={{ x: 0, y: 0, w: 60 }} tilt={-1.4} ratio="16 / 9" src={STILLS.tournament} position="50% 38%"
+      <Still t={t} at={lille.comms.at + 0.1} dimAt={lille.incidents.at} box={{ x: 0, y: 0, w: 60 }} tilt={-1.4} ratio="16 / 9" src={STILLS.tournament} position="50% 72%"
         cam="CAM 05 · ASI · UFR3S LILLE" tag="EXHIBIT G · ASI TOURNAMENT · SHOT BY THE TARGET" />
       <Record t={t} at={lille.comms.at} box={{ x: 64, y: 0, w: 36 }} icon={<Megaphone size={13} />} kicker="DECEMBER 2025 · UFR3S LILLE" title="HEAD OF COMMUNICATIONS"
         lines={[{ text: "ASI MULTISPORTS TOURNAMENT", at: lille.comms.at + 1.2 }, { text: "500+ PEOPLE · 4 DISCIPLINES", at: lille.comms.at + 2 }]} />
