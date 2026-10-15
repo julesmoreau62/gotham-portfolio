@@ -13,7 +13,7 @@ import { IdCard } from "./id-card"
 import { DaringScene } from "./scene-daring"
 import { FieldScene } from "./scene-field"
 import { GlobeScene } from "./scene-globe"
-import { InterestScene } from "./scene-interest"
+import { INTEREST_IMAGES, InterestScene } from "./scene-interest"
 import { KourouScene } from "./scene-kourou"
 import { LilleScene } from "./scene-lille"
 import { Moments, focusAt } from "./moments"
@@ -104,9 +104,10 @@ export function DossierExperience() {
   // The evidence is fetched during the sound check, so no exhibit pops in late.
   useEffect(() => {
     let done = 0
-    const images = BOARD_IMAGES.map(src => {
+    const sources = [...BOARD_IMAGES, ...INTEREST_IMAGES]
+    const images = sources.map(src => {
       const image = new Image()
-      image.onload = image.onerror = () => setPictures(++done / BOARD_IMAGES.length)
+      image.onload = image.onerror = () => setPictures(++done / sources.length)
       image.src = src
       return image
     })

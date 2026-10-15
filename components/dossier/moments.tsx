@@ -70,6 +70,8 @@ const HEROES: Hero[] = [
 /** Fades for the subject file and the board, merged when two moments sit close together. */
 export const FOCUS = (() => {
   const raw = [
+    // The gaming chapter: from the radar to the ecosystem around the match.
+    [CUE.interest.at - 0.3, CUE.around.end + 0.6],
     ...DATES.map(d => [d.at - 0.3, d.at + d.hold + 0.45]),
     ...TRAVELS.map(v => [v.at - 0.3, v.until + 0.2]),
     ...HEROES.map(h => [h.from - 0.15, h.to]),
