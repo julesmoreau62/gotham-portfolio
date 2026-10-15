@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { getLenis } from "@/components/fx/smooth-scroll"
@@ -16,6 +16,7 @@ import { GlobeScene } from "./scene-globe"
 import { InterestScene } from "./scene-interest"
 import { KourouScene } from "./scene-kourou"
 import { LilleScene } from "./scene-lille"
+import { Moments, focusAt } from "./moments"
 import { ContactActions, MissionScene } from "./scene-mission"
 import { BootScene, MatchFlash, SearchScene } from "./scene-search"
 import { ShiftScene } from "./scene-shift"
@@ -220,9 +221,11 @@ export function DossierExperience() {
   // …and switches off the same way once the transmission ends.
   const off = easeIn(ramp(t, POWER_OFF, POWER_OFF + 0.4))
   const shake = FLASHES.some(f => t >= f.at && t < f.at + 0.25) ? `translate(${(hash(Math.floor(t * 60)) - 0.5) * 8}px, ${(hash(Math.floor(t * 60) + 7) - 0.5) * 8}px)` : undefined
+  // A full-screen moment: the subject file slides away and the board steps back.
+  const focus = phase === "gate" ? 0 : focusAt(t)
 
   return (
-    <main className={styles.root} data-phase={phase} style={{ transform: power }}>
+    <main className={styles.root} data-phase={phase} style={{ transform: power, "--focus": focus } as CSSProperties}>
       <h1 className="sr-only">Jules Moreau, narrated dossier</h1>
       <Backdrop running={!paused} />
       <div ref={stage} className={styles.stage} style={{ transform: [shake, off > 0 ? `scaleY(${Math.max(0.004, 1 - off)})` : ""].join(" ").trim() || undefined, opacity: off >= 1 ? 0 : 1 }}>
@@ -233,14 +236,19 @@ export function DossierExperience() {
             <SearchScene t={t} />
             <InterestScene t={t} />
             <MissionScene t={t} />
-            <Timeline t={t} />
-            <FieldScene t={t} />
-            <KourouScene t={t} />
-            <LilleScene t={t} />
-            <DaringScene t={t} />
-            <ShiftScene t={t} />
-            <IdCard t={t} />
-            <Locator t={t} />
+            <div className={styles.desk} style={focus ? { opacity: 1 - focus * 0.9, transform: `scale(${1 - focus * 0.04})` } : undefined}>
+              <Timeline t={t} />
+              <FieldScene t={t} />
+              <KourouScene t={t} />
+              <LilleScene t={t} />
+              <DaringScene t={t} />
+              <ShiftScene t={t} />
+            </div>
+            <Moments t={t} size={size} />
+            <div className={styles.side} style={focus ? { transform: `translateX(${-focus * 40}vw)`, opacity: 1 - focus } : undefined}>
+              <IdCard t={t} />
+              <Locator t={t} />
+            </div>
             <MatchFlash t={t} />
           </>
         )}

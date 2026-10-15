@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react"
 import imageLoader from "@/lib/image-loader"
-import { decode, easeOut, hash, ramp, typed } from "./timing"
+import { decode, easeOut, hash, pad, ramp, typed } from "./timing"
 import styles from "./dossier.module.css"
 
 /* BOARD — the pieces of the investigation board the career chapters
@@ -11,10 +11,20 @@ import styles from "./dossier.module.css"
 export const capture = (name: string, width = 1080) => imageLoader({ src: `/assets/dossier/${name}.webp`, width })
 export const picture = (src: string, width = 828) => imageLoader({ src, width })
 
-/** Every image the career chapters show, preloaded during the sound check. */
+/** Field photos shown as surveillance stills, at the width they are drawn. */
+export const STILLS = {
+  crowd: picture("/assets/photo/volleyball-2.jpg", 1080),
+  volleyball: picture("/assets/photo/volleyball-3.jpg", 1080),
+  pitch: picture("/assets/photo/football-8.jpg", 1080),
+  stadium: picture("/assets/photo/football-9.jpg", 1920),
+  tournament: picture("/assets/photo/asi-4.jpg", 1080),
+}
+
+/** Every image the film shows, preloaded during the sound check. */
 export const BOARD_IMAGES = [
-  ...["asn95-case", "asn95-posters", "asi-case", "asi-incidents", "daring-case", "daring-package", "daring-visuals", "thesis-case", "thesis-sieve"].map(name => capture(name)),
-  ...["/assets/portfolio/volleyball-story.webp", "/assets/portfolio/daring-sponsor-site.webp", "/assets/Royal daring/notion/playbook.png", "/assets/Royal daring/logo-DARING.png",
+  ...Object.values(STILLS),
+  ...["asn95-posters", "daring-package", "daring-visuals", "thesis-case"].map(name => capture(name)),
+  ...["/assets/portfolio/daring-sponsor-site.webp", "/assets/Royal daring/notion/playbook.png", "/assets/Royal daring/logo-DARING.png", "/assets/Royal daring/recap du weekend/1.png",
     ...[1, 2, 3, 4, 5].map(n => `/assets/photo/asi-${n}.jpg`)].map(src => picture(src)),
 ]
 
@@ -47,6 +57,38 @@ export function Exhibit({ t, at, out, dimAt, src, tag, caption, box, tilt = 0, r
       </div>
       <span className={styles.tape} />
       <figcaption><b>{tag}</b>{caption && <span>{caption}</span>}</figcaption>
+    </figure>
+  )
+}
+
+/** A camera clock for a still: a fixed time of day per camera, running from the moment it lands. */
+function cameraClock(t: number, at: number) {
+  const base = 9 * 3600 + Math.floor(hash(Math.round(at * 10)) * 9 * 3600)
+  const now = base + Math.max(0, t - at)
+  return `${pad(now / 3600)}:${pad((now / 60) % 60)}:${pad(now % 60)}:${pad((now % 1) * 25)}`
+}
+
+/** A field photo as a surveillance still: graded to the dossier's ink, framed, timestamped, slowly pushed in. */
+export function Still({ t, at, out, dimAt, src, cam, tag, box, tilt = 0, ratio = "3 / 2", position }: {
+  t: number; at: number; out?: number; dimAt?: number
+  src: string; cam: string; tag: string; box: Box; tilt?: number; ratio?: string; position?: string
+}) {
+  const { p, gone, visible } = life(t, at, out)
+  if (!visible) return null
+  const dim = dimAt === undefined ? 0 : ramp(t, dimAt, dimAt + 0.4)
+  const scan = ramp(t, at + 0.15, at + 1.05)
+  const focus = easeOut(ramp(t, at + 0.2, at + 0.7))
+  return (
+    <figure className={styles.still} style={{ ...place(box), opacity: p * (1 - gone) * (1 - dim * 0.6), transform: `rotate(${tilt}deg) scale(${(1.3 - 0.3 * p) * (1 - 0.08 * gone)})` }}>
+      <div className={styles.stillImage} style={{ aspectRatio: ratio }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="" style={{ objectPosition: position, transform: `scale(${1.05 + ramp(t, at, at + 10) * 0.12})`, filter: `grayscale(1) contrast(1.25) brightness(0.9) blur(${(1 - focus) * 6}px)` }} />
+        <span className={styles.stillHud}><b><i />REC · {cam}</b><span>{cameraClock(t, at)}</span></span>
+        <span className={styles.stillFocus} style={{ opacity: 1 - focus * 0.6, transform: `translate(-50%, -50%) scale(${1.6 - focus * 0.6})` }} />
+        {scan > 0 && scan < 1 && <span className={styles.pinScan} style={{ top: `${scan * 100}%` }} />}
+        {(["tl", "tr", "bl", "br"] as const).map(corner => <i key={corner} className={styles.crop} data-at={corner} />)}
+      </div>
+      <figcaption><b>{tag}</b></figcaption>
     </figure>
   )
 }

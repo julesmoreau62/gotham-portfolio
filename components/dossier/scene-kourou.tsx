@@ -1,5 +1,5 @@
 import { CUE } from "@/lib/dossier"
-import { BigDate, Record, Stamp } from "./board"
+import { Record, Stamp } from "./board"
 import { decode, easeInOut, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
 
@@ -76,7 +76,6 @@ export function KourouScene({ t }: { t: number }) {
   const clock = 1 - ramp(t, kourou.deadline.at, kourou.done.at)
   return (
     <div className={styles.board} style={{ opacity: visible }} aria-hidden="true">
-      <BigDate t={t} at={kourou.summer.at} text="SUMMER 2025" />
       <Record t={t} at={kourou.signal.at} box={{ x: 0, y: 0, w: 46 }} kicker="NEW SIGNAL · FRENCH GUIANA" titleAt={kourou.place} title="KOUROU"
         lines={[{ text: "5.16°N 52.65°W · AUGUST 2025", at: kourou.place + 0.4 }]} />
       <Record t={t} at={kourou.build.at} box={{ x: 52, y: 0, w: 48 }} kicker="FIELD OPERATIONS" title="FESTIVAL INFRASTRUCTURE"

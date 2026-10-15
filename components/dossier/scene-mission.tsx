@@ -50,7 +50,8 @@ function drawWorld(canvas: HTMLCanvasElement, t: number) {
 
 function WorldGlobe({ t }: { t: number }) {
   const canvas = useRef<HTMLCanvasElement>(null)
-  const visible = ramp(t, mission.world.at - 0.3, mission.world.at + 0.3)
+  const visible = ramp(t, mission.sought.at - 0.3, mission.sought.at + 0.6)
+  const grow = easeOut(ramp(t, mission.world.at - 0.3, mission.world.at + 0.5))
   useEffect(() => {
     const el = canvas.current
     if (!el || !visible) return
@@ -60,7 +61,7 @@ function WorldGlobe({ t }: { t: number }) {
     drawWorld(el, t)
   }, [t, visible])
   if (!visible) return null
-  return <canvas ref={canvas} className={styles.worldCanvas} style={{ opacity: visible }} aria-hidden="true" />
+  return <canvas ref={canvas} className={styles.worldCanvas} style={{ opacity: visible * (0.45 + 0.55 * grow) }} aria-hidden="true" />
 }
 
 const BRIEF = [
