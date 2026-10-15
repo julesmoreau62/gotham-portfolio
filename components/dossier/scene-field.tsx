@@ -1,6 +1,6 @@
 import { Anchor, GraduationCap, Volleyball } from "lucide-react"
 import { CUE } from "@/lib/dossier"
-import { BigDate, Exhibit, Metric, Record, capture, picture } from "./board"
+import { Exhibit, Metric, Record, STILLS, Still, capture } from "./board"
 import { easeOut, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
 
@@ -30,8 +30,6 @@ export function FieldScene({ t }: { t: number }) {
 
   return (
     <div className={styles.board} style={{ opacity: visible }} aria-hidden="true">
-      <BigDate t={t} at={field.year.at} text="2022" />
-
       <Record t={t} at={field.base.at} out={early} box={{ x: 0, y: 0, w: 46 }} kicker="BASE OF OPERATIONS" title="OPAL COAST" titleAt={field.opal}
         lines={[{ text: "NORTHERN FRANCE · 50.95°N 1.86°E", at: field.opal + 0.5 }]} />
       <Record t={t} at={field.bachelor.at} out={early} box={{ x: 52, y: 0, w: 48 }} icon={<GraduationCap size={13} />} kicker="EDUCATION · 2022 → 2025"
@@ -40,12 +38,10 @@ export function FieldScene({ t }: { t: number }) {
         title="FRENCH NAVY RESERVE" lines={[{ text: "RANK · PETTY OFFICER (SECOND MAÎTRE)", at: field.rank }]} />
       <Record t={t} at={field.coach.at} out={early} box={{ x: 52, y: 62, w: 48 }} icon={<Volleyball size={13} />} kicker="MEANWHILE"
         title="YOUTH VOLLEYBALL COACH" titleAt={field.coach.at + 0.5} lines={[{ text: "LISSP CALAIS", at: field.calais }]} />
-      <Exhibit t={t} at={field.coach.at + 0.25} out={early} box={{ x: 2, y: 32, w: 42 }} tilt={-2.5} src={picture("/assets/portfolio/volleyball-story.webp")}
-        tag="EXHIBIT D · LISSP CALAIS" caption="MATCH PHOTOGRAPHED BY THE TARGET" />
+      <Still t={t} at={field.coach.at + 0.25} out={early} box={{ x: 2, y: 30, w: 44 }} tilt={-2.5} src={STILLS.volleyball}
+        cam="CAM 02 · LISSP CALAIS" tag="EXHIBIT D · SHOT BY THE TARGET" />
 
-      <BigDate t={t} at={field.year2025.at} text="2025" />
-
-      <Exhibit t={t} at={field.club.at + 0.2} box={{ x: 0, y: 0, w: 60 }} tilt={-1.2} src={capture("asn95-case")} tag="EXHIBIT E · ASN95 SIGNAL" caption="CASE FILE · JULESMOREAU.EU" />
+      <Still t={t} at={field.club.at + 0.2} box={{ x: 0, y: 0, w: 60 }} tilt={-1.2} src={STILLS.pitch} position="50% 40%" cam="CAM 03 · PITCH-SIDE" tag="EXHIBIT E · MATCHDAY · SHOT BY THE TARGET" />
       <Exhibit t={t} at={field.club.at + 1.5} box={{ x: 18, y: 47, w: 40 }} tilt={2.4} src={capture("asn95-posters")} tag="EXHIBIT F · MATCHDAY CONTENT" caption="POSTERS · RESULTS · INTERVIEWS" />
       <Record t={t} at={field.club.at} box={{ x: 65, y: 0, w: 35 }} kicker="COMMUNICATIONS · JAN → JUN 2025" title="AS NORTKERQUE 95" titleAt={field.club.at + 1.6}
         lines={[{ text: "AMATEUR FOOTBALL CLUB", at: field.club.at + 2.8 }, { text: "ROLE · HEAD OF COMMUNICATIONS", at: field.club.at + 3.3 }]} />

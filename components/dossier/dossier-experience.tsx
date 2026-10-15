@@ -1,11 +1,11 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
 import { useRouter } from "next/navigation"
 import { getLenis } from "@/components/fx/smooth-scroll"
 import { CAREER_START, CUE, DOSSIER_DURATION } from "@/lib/dossier"
 import { DossierEngine } from "./audio-engine"
+import { EndScreen } from "./end-screen"
 import { Backdrop } from "./backdrop"
 import { BOARD_IMAGES } from "./board"
 import { Controls, Hud, Subtitles } from "./hud"
@@ -13,15 +13,16 @@ import { IdCard } from "./id-card"
 import { DaringScene } from "./scene-daring"
 import { FieldScene } from "./scene-field"
 import { GlobeScene } from "./scene-globe"
-import { InterestScene } from "./scene-interest"
+import { INTEREST_IMAGES, InterestScene } from "./scene-interest"
 import { KourouScene } from "./scene-kourou"
 import { LilleScene } from "./scene-lille"
-import { ContactActions, MissionScene } from "./scene-mission"
+import { Moments, focusAt } from "./moments"
+import { MissionScene } from "./scene-mission"
 import { BootScene, MatchFlash, SearchScene } from "./scene-search"
 import { ShiftScene } from "./scene-shift"
 import { SoundCheck } from "./sound-check"
 import { Locator, Timeline } from "./timeline"
-import { easeIn, easeOut, hash, ramp } from "./timing"
+import { easeInOut, easeOut, hash, ramp } from "./timing"
 import styles from "./dossier.module.css"
 
 /* ------------------------------------------------------------------
@@ -48,8 +49,6 @@ const FLASHES = [
   { at: CUE.shift.shift.at, color: "#ff2a3c" },
   { at: CUE.mission.contact.at, color: "#c8ff00" },
 ]
-/** When the picture switches off, after "End of transmission". */
-const POWER_OFF = CUE.mission.out.end + 0.15
 
 function Glitch({ t }: { t: number }) {
   const at = GLITCHES.find(g => t >= g && t < g + 0.22)
@@ -103,9 +102,10 @@ export function DossierExperience() {
   // The evidence is fetched during the sound check, so no exhibit pops in late.
   useEffect(() => {
     let done = 0
-    const images = BOARD_IMAGES.map(src => {
+    const sources = [...BOARD_IMAGES, ...INTEREST_IMAGES]
+    const images = sources.map(src => {
       const image = new Image()
-      image.onload = image.onerror = () => setPictures(++done / BOARD_IMAGES.length)
+      image.onload = image.onerror = () => setPictures(++done / sources.length)
       image.src = src
       return image
     })
@@ -217,55 +217,52 @@ export function DossierExperience() {
   // The film switches on like a cathode tube: a line that opens to the full screen.
   const on = phase === "gate" ? 1 : ramp(t, 0, 0.32)
   const power = on < 1 ? `scaleY(${0.004 + 0.996 * easeOut(on)})` : undefined
-  // …and switches off the same way once the transmission ends.
-  const off = easeIn(ramp(t, POWER_OFF, POWER_OFF + 0.4))
+  // Once the transmission ends, the frame clears away while the camera dives into the closing screen.
+  const outro = phase === "live" ? easeInOut(ramp(t, CUE.mission.out.end, CUE.mission.out.end + 0.7)) : 0
   const shake = FLASHES.some(f => t >= f.at && t < f.at + 0.25) ? `translate(${(hash(Math.floor(t * 60)) - 0.5) * 8}px, ${(hash(Math.floor(t * 60) + 7) - 0.5) * 8}px)` : undefined
+  // A full-screen moment: the subject file slides away and the board steps back.
+  const focus = phase === "gate" ? 0 : focusAt(t)
 
   return (
-    <main className={styles.root} data-phase={phase} style={{ transform: power }}>
+    <main className={styles.root} data-phase={phase} style={{ transform: power, "--focus": focus, "--outro": outro } as CSSProperties}>
       <h1 className="sr-only">Jules Moreau, narrated dossier</h1>
       <Backdrop running={!paused} />
-      <div ref={stage} className={styles.stage} style={{ transform: [shake, off > 0 ? `scaleY(${Math.max(0.004, 1 - off)})` : ""].join(" ").trim() || undefined, opacity: off >= 1 ? 0 : 1 }}>
-        {phase !== "gate" && (
+      <div ref={stage} className={styles.stage} style={{ transform: shake }}>
+        {phase === "live" && (
           <>
             <BootScene t={t} />
             <GlobeScene t={t} size={size} />
             <SearchScene t={t} />
             <InterestScene t={t} />
             <MissionScene t={t} />
-            <Timeline t={t} />
-            <FieldScene t={t} />
-            <KourouScene t={t} />
-            <LilleScene t={t} />
-            <DaringScene t={t} />
-            <ShiftScene t={t} />
-            <IdCard t={t} />
-            <Locator t={t} />
+            <div className={styles.desk} style={focus ? { opacity: 1 - focus * 0.9, transform: `scale(${1 - focus * 0.04})` } : undefined}>
+              <Timeline t={t} />
+              <FieldScene t={t} />
+              <KourouScene t={t} />
+              <LilleScene t={t} />
+              <DaringScene t={t} />
+              <ShiftScene t={t} />
+            </div>
+            <Moments t={t} size={size} />
+            <div className={styles.side} style={focus || outro ? { transform: `translateX(${-focus * 40}vw)`, opacity: (1 - focus) * (1 - outro) } : undefined}>
+              <IdCard t={t} />
+              <Locator t={t} />
+            </div>
             <MatchFlash t={t} />
           </>
         )}
       </div>
-      {phase !== "gate" && (
+      {phase === "live" && (
         <>
           <Flash t={t} />
           <Glitch t={t} />
           <Hud t={t} analyser={ready?.scope ?? null} />
           {captions && <Subtitles t={t} />}
-          {phase === "end" && (
-            <div className={styles.endCard}>
-              <p className={styles.gateKicker}><i /> END OF TRANSMISSION</p>
-              <h2>Next mission: your organisation?</h2>
-              <p>Digital transformation & AI internship in a sport organisation · February → June 2027.</p>
-              <ContactActions className={styles.endContact} />
-              <div className={styles.endActions}>
-                <button type="button" onClick={replay} className={styles.begin}>Replay <span aria-hidden="true">↺</span></button>
-                <Link href="/" className={styles.silent}>Back to the portfolio</Link>
-              </div>
-            </div>
-          )}
           <Controls t={t} paused={paused} captions={captions} muted={muted} onToggle={toggle} onSeek={seek} onCaptions={() => setCaptions(c => !c)} onMute={toggleMute} onExit={exit} />
         </>
       )}
+      {/* The closing screen takes over from the very frame the film's dive ends on. */}
+      {phase === "end" && <EndScreen onReplay={replay} sound={kind => engine.current?.play(kind)} />}
       {phase === "gate" && <SoundCheck engine={ready} loaded={loaded * 0.75 + pictures * 0.25} volume={volume} onVolume={changeVolume} onBegin={begin} />}
       <div className={styles.crt} aria-hidden="true" />
     </main>

@@ -17,7 +17,7 @@ const CROP = { x: 0.1875, y: 0.045, size: 0.625 }
 const PLACE_NAMES = ["FRANCE", "FRENCH GUIANA", "CORSICA", "NEW CALEDONIA", "CONGO · BRAZZAVILLE", "FRANCE"]
 const GRID = { cols: 46, rows: 61 }
 
-type Field = { label: string; value: string; at: number; flag?: boolean }
+type Field = { label: string; value: string; at: number; flag?: boolean; minor?: boolean }
 
 /** Where the file says the target was last seen, from the childhood moves to the career ones. */
 const SIGHTINGS = [
@@ -50,9 +50,9 @@ function fields(t: number, open: number): Field[] {
   const alias = t >= gaming.at + 0.2
   return [
     { label: "NAME", value: "JULES MOREAU", at: open },
-    { label: "ALIAS", value: alias ? "SANSBLAZE" : "UNKNOWN", at: alias ? gaming.at + 0.2 : open + 0.1 },
-    { label: "STATUS", value: "M2 · INTL SPORT ADMINISTRATION", at: open + 0.2 },
-    { label: "BASE", value: "LILLE · FR", at: open + 0.3 },
+    { label: "ALIAS", value: alias ? "SANSBLAZE" : "UNKNOWN", at: alias ? gaming.at + 0.2 : open + 0.1, minor: true },
+    { label: "STATUS", value: "M2 · INTL SPORT ADMINISTRATION", at: open + 0.2, minor: true },
+    { label: "BASE", value: "LILLE · FR", at: open + 0.3, minor: true },
     { label: "LAST SEEN", value: seen?.value ?? "TRACING…", at: seen?.at ?? open + 0.4 },
     { label: "FLAG", value: flag?.value ?? "NONE", at: flag?.at ?? open + 0.5, flag: flag?.flag },
     { label: "INTEREST", value: interest?.value ?? "PENDING", at: interest?.at ?? open + 0.6 },
@@ -131,7 +131,7 @@ export function IdCard({ t }: { t: number }) {
 
   return (
     <div className={styles.cardDock} style={{ "--dock": dock } as CSSProperties} aria-hidden="true">
-      <article className={styles.card} style={{ transform: `scale(${0.12 + 0.88 * burst})`, opacity: Math.min(1, grow * 4) }}>
+      <article className={styles.card} data-docked={dock > 0.5 || undefined} style={{ transform: `scale(${0.12 + 0.88 * burst})`, opacity: Math.min(1, grow * 4) }}>
         <header className={styles.cardHead}>
           <span>SUBJECT FILE · JM-0624</span>
           <span className={styles.classified}>CLASSIFIED</span>
@@ -146,7 +146,7 @@ export function IdCard({ t }: { t: number }) {
           </figure>
           <dl className={styles.fields}>
             {fields(t, open).map(field => (
-              <div key={field.label} className={field.flag ? styles.flagged : undefined}>
+              <div key={field.label} className={field.flag ? styles.flagged : undefined} data-minor={field.minor || undefined} style={field.minor && dock > 0 ? { opacity: 1 - dock * 2 } : undefined}>
                 <dt>{field.label}</dt>
                 <dd>{decode(field.value, ramp(t, field.at, field.at + 0.45), t) || " "}</dd>
               </div>

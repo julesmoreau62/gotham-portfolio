@@ -90,7 +90,7 @@ export function Hud({ t, analyser }: { t: number; analyser: AnalyserNode | null 
   const index = chapterAt(t)
   const segment = SEGMENTS[index]
   const label = `${pad(index + 1)} / ${segment.chapter.toUpperCase()}`
-  const entries = LOG.filter(entry => t >= entry.at).slice(-6)
+  const entries = LOG.filter(entry => t >= entry.at).slice(-3)
   return (
     <div className={styles.hud} aria-hidden="true">
       <div className={styles.hudTop}>

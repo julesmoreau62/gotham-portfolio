@@ -4,53 +4,76 @@
 .primer[data-state="pending"] { display: block; position: fixed; inset: 0; z-index: 300; background: #070707; }
 .content[data-intro-phase="wake"], .content[data-intro-phase="rain"], .content[data-intro-phase="choose"] { opacity: 0; }
 /* No transform or stacking context remains on the content after the sequence. */
-.intro { position: fixed; inset: 0; z-index: 300; overflow: hidden; color: #f2f1ec; isolation: isolate; background: #070707; clip-path: inset(0 0 0 0); }
+.intro { position: fixed; inset: 0; z-index: 300; overflow: hidden; color: #f2f1ec; isolation: isolate; background: #070707; }
 /* Faint scanlines and a vignette, like an old monitor. */
 .intro::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 44%, transparent 50%, rgba(0,0,0,.62));
 }
 .rain { position: absolute; left: 0; top: 0; display: block; }
+/* The screen powers on: a dot, a line, then the whole tube, fading to black. */
+.power { position: absolute; z-index: 5; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, #f6ffe0 0 22%, rgba(200,255,0,.55) 52%, transparent 74%); opacity: 0; animation: power 480ms cubic-bezier(.2, .8, .2, 1) both; }
+/* The name shudders once, as its last letter locks. */
+.intro[data-written] .rain { animation: jolt 260ms ease-out; }
 .topline, .bottomline { position: absolute; z-index: 3; left: 5vw; right: 5vw; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .topline { top: max(30px, env(safe-area-inset-top)); pointer-events: none; }
 .topline, .bottomline, .role { font-family: var(--font-mono), monospace; font-size: 10px; line-height: 1.6; letter-spacing: .06em; }
 .topline { text-transform: uppercase; color: rgba(242,241,236,.48); animation: appear 600ms ease-out both; }
 .topline > span:first-child { display: flex; align-items: center; gap: 9px; color: #f2f1ec; }
 .topline i { width: 5px; height: 5px; background: #c8ff00; box-shadow: 0 0 14px rgba(200,255,0,.35); }
-.wake { position: absolute; z-index: 2; left: 5vw; right: 5vw; top: 22svh; font-family: var(--font-mono), monospace; font-size: clamp(15px, 1.6vw, 24px); line-height: 1.75; color: #c8ff00; text-shadow: 0 0 14px rgba(200,255,0,.4); }
+/* Phosphor text, at the height where the name will be written. */
+.wake {
+  position: absolute; z-index: 2; left: 5vw; right: 5vw; top: calc(44svh - 1.75em); font-family: var(--font-mono), monospace; font-size: clamp(15px, 1.6vw, 24px); line-height: 1.75; color: #c8ff00;
+  text-shadow: -1.5px 0 rgba(255,40,100,.32), 1.5px 0 rgba(0,210,255,.28), 0 0 14px rgba(200,255,0,.5); animation: flicker 2.2s steps(1) infinite;
+}
 .wake p { min-height: 1.75em; white-space: pre-wrap; }
 .cursor { display: inline-block; width: .6em; height: 1.15em; margin-left: 3px; vertical-align: -.2em; background: #c8ff00; box-shadow: 0 0 12px rgba(200,255,0,.5); animation: blink 900ms step-end infinite; }
 .intro[data-phase="rain"] .wake, .intro[data-phase="choose"] .wake, .intro[data-phase="exit"] .wake { animation: glitch-out 420ms linear forwards; }
 .role {
   position: absolute; z-index: 2; left: 5vw; right: 5vw; top: calc(var(--name-bottom, 56svh) + clamp(18px, 3.4svh, 34px));
-  text-align: center; text-transform: uppercase; letter-spacing: .24em; font-size: clamp(10px, .95vw, 13px); color: rgba(242,241,236,.88);
+  text-align: center; text-transform: uppercase; letter-spacing: .24em; font-size: clamp(10px, .95vw, 13px); color: rgba(242,241,236,.88); text-shadow: 0 0 6px #070707, 0 0 14px #070707;
   opacity: 0;
 }
-.intro[data-phase="rain"] .role, .intro[data-phase="choose"] .role, .intro[data-phase="exit"] .role { animation: appear 300ms 700ms ease-out both; }
-/* The access choice, under the name once the code has written it. */
+.intro[data-phase="rain"] .role, .intro[data-phase="choose"] .role, .intro[data-phase="exit"] .role { animation: appear 300ms 1550ms ease-out both; }
+/* The access choice, under the name once the code has written it. The rain dims behind it. */
 .choice { position: absolute; z-index: 3; left: 5vw; right: 5vw; top: calc(var(--name-bottom, 56svh) + clamp(58px, 9svh, 96px)); display: grid; justify-items: center; gap: 14px; animation: appear 450ms ease-out both; }
-.choiceLabel { font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(242,241,236,.54); }
+.choice::before { content: ""; position: absolute; z-index: -1; left: 50%; top: -84px; width: min(1000px, 100vw); height: calc(100% + 160px); transform: translateX(-50%); background: radial-gradient(closest-side, rgba(7,7,7,.94), rgba(7,7,7,.78) 50%, transparent); pointer-events: none; }
+.choiceLabel { font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: rgba(242,241,236,.54); text-shadow: 0 0 6px #070707, 0 0 14px #070707; }
 .choiceRow { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-.option { display: flex; align-items: center; gap: 14px; width: min(372px, 88vw); padding: 16px 20px; border: 1px solid rgba(242,241,236,.22); background: rgba(7,7,7,.84); color: #f2f1ec; text-align: left; transition: border-color 150ms, background 150ms, transform 150ms; }
+/* Each access boots like a terminal window: a bright edge sweeps it into view. */
+.option { position: relative; display: flex; align-items: center; gap: 14px; width: min(372px, 88vw); padding: 16px 20px; border: 1px solid rgba(242,241,236,.22); background: rgba(7,7,7,.92); color: #f2f1ec; text-align: left; transition: border-color 150ms, background 150ms, transform 150ms; animation: boot 460ms cubic-bezier(.2, .7, .2, 1) backwards; }
+.option::after { content: ""; position: absolute; top: -1px; bottom: -1px; left: 0; width: 2px; background: #c8ff00; box-shadow: 0 0 14px 2px rgba(200,255,0,.6); opacity: 0; pointer-events: none; animation: boot-edge 460ms cubic-bezier(.2, .7, .2, 1) both; animation-delay: inherit; }
+.option[data-choice="dossier"] { animation-delay: 120ms; }
 .option svg { flex: none; color: #c8ff00; }
-.option span { display: grid; flex: 1; gap: 5px; }
+.option > span { display: grid; flex: 1; gap: 5px; }
 .option b { font-size: 18px; font-weight: 700; line-height: 1.15; letter-spacing: -.01em; }
 .option small { font-family: var(--font-mono), monospace; font-size: 9.5px; line-height: 1.5; letter-spacing: .06em; text-transform: uppercase; color: rgba(242,241,236,.6); }
 .option i { font-style: normal; font-size: 18px; color: #c8ff00; }
 .option[data-choice="dossier"] { border-color: rgba(200,255,0,.55); box-shadow: 0 0 34px rgba(200,255,0,.12); }
-.option:hover, .option:focus-visible { border-color: #c8ff00; background: rgba(200,255,0,.08); transform: translateY(-2px); }
+.option:hover, .option:focus-visible { border-color: #c8ff00; background: rgba(20,24,6,.95); transform: translateY(-2px); }
 .bottomline { bottom: max(24px, env(safe-area-inset-bottom)); }
 .sequence { display: flex; align-items: center; gap: 13px; color: rgba(242,241,236,.54); text-transform: uppercase; }
 .progress { width: 54px; height: 2px; background: rgba(242,241,236,.14); overflow: hidden; }
 .progress > span { display: block; width: 100%; height: 100%; background: #c8ff00; transform-origin: left; animation: progress var(--duration, 3500ms) linear both; }
 .skip { min-height: 44px; padding: 8px 0 8px 16px; display: inline-flex; align-items: center; gap: 19px; font-family: inherit; font-size: 10px; letter-spacing: .06em; color: rgba(242,241,236,.7); transition: color 150ms; }
 .skip span { color: #c8ff00; font-size: 18px; }.skip:hover { color: #c8ff00; }.skip:focus-visible { outline-offset: 5px; }
-/* The exit drains the screen from the top, behind a bright scan line. */
-.scan { position: absolute; z-index: 4; left: 0; right: 0; top: 0; height: 2px; background: #c8ff00; box-shadow: 0 0 18px 3px rgba(200,255,0,.5); opacity: 0; pointer-events: none; }
-.intro[data-phase="exit"] { animation: drain 620ms cubic-bezier(.5, 0, .75, 0) both; }
-.intro[data-phase="exit"] .scan { opacity: 1; animation: scan 620ms cubic-bezier(.5, 0, .75, 0) both; }
+/* The exit dives through the O of MOREAU: the code flies past and the portfolio lands behind it. */
+.intro[data-phase="exit"] { animation: clear 760ms ease-in both; }
+.intro[data-phase="exit"] .rain { transform-origin: var(--intro-dive-x, 50%) var(--intro-dive-y, 44%); animation: dive 760ms cubic-bezier(.6, 0, .9, .35) both; }
+.intro[data-phase="exit"]::after, .intro[data-phase="exit"] .topline, .intro[data-phase="exit"] .role, .intro[data-phase="exit"] .choice, .intro[data-phase="exit"] .bottomline { animation: leave 200ms ease-in forwards; }
+.content[data-intro-phase="exit"] { transform-origin: var(--intro-dive-x, 50vw) var(--intro-dive-y, 44vh); animation: land 760ms cubic-bezier(.3, 0, .2, 1) both; }
 @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
 @keyframes blink { 50% { opacity: 0; } }
+@keyframes power {
+  0% { opacity: 1; transform: scale(0, .004); }
+  40% { opacity: 1; transform: scale(1, .004); }
+  70% { opacity: .3; transform: scale(1, 1); }
+  100% { opacity: 0; transform: scale(1, 1); }
+}
+@keyframes flicker { 0%, 100% { opacity: 1; } 7% { opacity: .82; } 8% { opacity: 1; } 46% { opacity: .9; } 47% { opacity: 1; } }
+@keyframes jolt { 25% { transform: translate(-3px, 2px); } 50% { transform: translate(2px, -2px); } 75% { transform: translate(-1px, 1px); } }
+@keyframes boot { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes boot-edge { 0% { left: 0; opacity: 1; } 80% { opacity: 1; } 100% { left: calc(100% - 2px); opacity: 0; } }
 @keyframes glitch-out {
   0% { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
   25% { opacity: .9; transform: translateX(-6px) skewX(-14deg); clip-path: inset(8% 0 42% 0); }
@@ -59,12 +82,14 @@
   100% { opacity: 0; transform: scaleY(.1); clip-path: inset(50% 0 50% 0); }
 }
 @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes drain { to { clip-path: inset(100% 0 0 0); } }
-@keyframes scan { to { top: 100%; } }
+@keyframes clear { 0%, 20% { background-color: #070707; } 75%, 100% { background-color: rgba(7,7,7,0); } }
+@keyframes dive { 0% { transform: none; opacity: 1; } 40% { opacity: 1; } 90% { opacity: 0; } 100% { transform: scale(22); opacity: 0; } }
+@keyframes leave { from { opacity: 1; } to { opacity: 0; } }
+@keyframes land { 0%, 30% { opacity: 0; transform: scale(1.08); } 100% { opacity: 1; transform: none; } }
 @media (max-width: 640px) {
   .topline { top: max(22px, env(safe-area-inset-top)); font-size: 8px; }
   .topline > span:last-child { font-size: 7px; letter-spacing: .02em; }
-  .wake { left: 6vw; right: 6vw; top: 18svh; font-size: 14px; }
+  .wake { left: 6vw; right: 6vw; top: calc(40svh - 1.75em); font-size: 14px; }
   .role { font-size: 9px; letter-spacing: .14em; }
   .bottomline { bottom: max(16px, env(safe-area-inset-bottom)); gap: 12px; }
   .sequence { font-size: 8px; gap: 8px; }.progress { width: 30px; }.skip { font-size: 9px; gap: 8px; padding-left: 4px; }

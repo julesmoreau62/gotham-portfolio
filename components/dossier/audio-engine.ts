@@ -179,6 +179,12 @@ export class DossierEngine {
     try { await this.ctx.resume() } catch {}
   }
 
+  /** A one-off effect outside the film's timeline, such as the closing screen powering on. */
+  play(kind: SfxKind) {
+    if (!this.ctx || this.paused) return
+    this.synth(kind, this.ctx.currentTime + 0.02)
+  }
+
   /** Called every frame: schedules the effects about to happen. */
   update() {
     if (!this.ctx || !this.started || this.paused) return
@@ -186,7 +192,7 @@ export class DossierEngine {
     const until = t + LOOKAHEAD
     for (const event of SFX) {
       if (event.at < this.fxFrom || event.at >= until) continue
-      this.synth(event.kind, this.origin + event.at)
+      this.synth(event.kind, this.origin + event.at, event.dur)
     }
     this.fxFrom = Math.max(this.fxFrom, until)
     // The ambient bed fades out with the closing card.
@@ -320,7 +326,44 @@ export class DossierEngine {
     noise.stop(at + duration + 0.05)
   }
 
-  private synth(kind: SfxKind, at: number) {
+  /** A jet across the stereo field, for a flight on the globe: rises, peaks mid-way, settles as it lands. */
+  private flight(at: number, duration: number) {
+    const ctx = this.ctx!
+    const gain = ctx.createGain()
+    gain.gain.setValueAtTime(0.0001, at)
+    gain.gain.exponentialRampToValueAtTime(0.34, at + duration * 0.55)
+    gain.gain.exponentialRampToValueAtTime(0.0001, at + duration + 0.25)
+    const pan = ctx.createStereoPanner?.()
+    if (pan) {
+      pan.pan.setValueAtTime(-0.8, at)
+      pan.pan.linearRampToValueAtTime(0.8, at + duration)
+      gain.connect(pan).connect(this.fx!)
+    } else gain.connect(this.fx!)
+    const noise = ctx.createBufferSource()
+    noise.buffer = this.noise
+    noise.loop = true
+    const band = ctx.createBiquadFilter()
+    band.type = "bandpass"
+    band.Q.value = 1.4
+    band.frequency.setValueAtTime(300, at)
+    band.frequency.exponentialRampToValueAtTime(2600, at + duration * 0.55)
+    band.frequency.exponentialRampToValueAtTime(700, at + duration + 0.25)
+    noise.connect(band).connect(gain)
+    const engine = ctx.createOscillator()
+    engine.type = "triangle"
+    engine.frequency.setValueAtTime(90, at)
+    engine.frequency.exponentialRampToValueAtTime(180, at + duration * 0.55)
+    engine.frequency.exponentialRampToValueAtTime(110, at + duration + 0.25)
+    const hum = ctx.createGain()
+    hum.gain.value = 0.35
+    engine.connect(hum).connect(gain)
+    noise.start(at, Math.random() * 0.5)
+    engine.start(at)
+    noise.stop(at + duration + 0.3)
+    engine.stop(at + duration + 0.3)
+  }
+
+  private synth(kind: SfxKind, at: number, dur?: number) {
     if (!this.ctx || !this.fx) return
     const when = Math.max(at, this.ctx.currentTime)
     switch (kind) {
@@ -348,9 +391,25 @@ export class DossierEngine {
       case "alarm":
         for (let i = 0; i < 4; i++) this.tone(when + i * 0.16, "square", i % 2 ? 660 : 880, i % 2 ? 660 : 880, 0.06, 0.13)
         return
-      case "off":
-        this.tone(when, "sine", 240, 30, 0.35, 0.9)
-        return this.hiss(when, 0.5, 0.08, "lowpass", 3000, 200)
+      case "flight": return this.flight(when, dur ?? 1.4)
+      case "reticle":
+        // Three quick steps up as the reticle closes, then a soft confirmation.
+        for (let i = 0; i < 3; i++) this.tone(when + i * 0.06, "square", 1800 + i * 600, 1800 + i * 600, 0.03, 0.03)
+        return this.tone(when + 0.2, "sine", 1320, 1320, 0.12, 0.35)
+      case "impact":
+        this.tone(when, "sine", 70, 30, 0.7, 0.8)
+        this.hiss(when, 0.4, 0.22, "lowpass", 2600, 180)
+        this.tone(when, "triangle", 1760, 1760, 0.04, 0.6)
+        return this.tone(when, "triangle", 2637, 2637, 0.025, 0.45)
+      case "cut":
+        this.hiss(when, 0.045, 0.16, "highpass", 3000, 7000)
+        return this.tone(when, "sine", 95, 45, 0.22, 0.12)
+      case "shrink":
+        this.hiss(when, 0.65, 0.15, "bandpass", 3800, 240)
+        return this.tone(when, "sine", 320, 80, 0.07, 0.55)
+      case "deny":
+        this.tone(when, "square", 440, 440, 0.05, 0.08)
+        return this.tone(when + 0.11, "square", 330, 330, 0.05, 0.16)
       case "boot":
         this.tone(when, "sine", 60, 220, 0.25, 0.9)
         return this.hiss(when, 0.9, 0.06, "bandpass", 200, 2600)

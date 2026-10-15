@@ -33,7 +33,7 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
   const skipToChoice = useCallback(() => setPhase(advance("choose")), [])
   /** When the choice appeared: "Skip intro" turns into "Enter the portfolio" in place. */
   const choiceShownAt = useRef(0)
-  /** "Enter the portfolio": the screen drains onto the hero, then hands over. */
+  /** "Enter the portfolio": the camera dives through the name onto the hero, then hands over. */
   const enter = useCallback(() => {
     // A double click on "Skip intro" must not skip the choice as well.
     if (performance.now() - choiceShownAt.current < 450) return
@@ -100,7 +100,7 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
     }
   }, [active, finish])
 
-  // The choice takes focus as it appears; the drain hands over once it has played.
+  // The choice takes focus as it appears; the dive hands over once it has played.
   useEffect(() => {
     if (phase === "choose") {
       choiceShownAt.current = performance.now()

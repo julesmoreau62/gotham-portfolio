@@ -79,13 +79,6 @@ export function ShiftScene({ t }: { t: number }) {
   const jitter = t < shift.shift.at + 0.4 ? (hash(Math.floor(t * 40)) - 0.5) * 14 : 0
   return (
     <div className={styles.board} style={{ opacity: visible }} aria-hidden="true">
-      {t < shift.shift.at + 0.1 && (
-        <div className={styles.lastSeen} style={{ opacity: 1 - ramp(t, shift.shift.at - 0.2, shift.shift.at + 0.1) }}>
-          <span>{decode("LAST KNOWN POSITION", ramp(t, shift.last.at, shift.last.at + 0.4), t)}</span>
-          <b>{decode("LILLE", ramp(t, shift.last.at + 0.5, shift.last.at + 0.9), t)}</b>
-          {t >= shift.again.at && <b className={styles.echo} style={{ transform: `translate(${easeOut(ramp(t, shift.again.at, shift.again.at + 0.3)) * 18}px, ${easeOut(ramp(t, shift.again.at, shift.again.at + 0.3)) * 14}px)` }}>LILLE <i>×2</i></b>}
-        </div>
-      )}
       {alarm > 0 && away < 1 && (
         <h3 className={styles.shiftTitle} style={{
           opacity: alarm * (1 - away),

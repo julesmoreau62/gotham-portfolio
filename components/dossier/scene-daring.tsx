@@ -1,6 +1,6 @@
 import { Check } from "lucide-react"
 import { CUE } from "@/lib/dossier"
-import { BigDate, Exhibit, Heading, Record, capture, picture } from "./board"
+import { Exhibit, Heading, Record, capture, picture } from "./board"
 import { decode, easeOut, hash, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
 
@@ -46,12 +46,12 @@ export function DaringScene({ t }: { t: number }) {
   if (!visible) return null
   return (
     <div className={styles.board} style={{ opacity: visible }} aria-hidden="true">
-      <BigDate t={t} at={daring.may.at} text="MAY 2026" />
       <Passport t={t} />
       <Record t={t} at={daring.position.at} out={daring.join.at - 0.1} box={{ x: 52, y: 4, w: 48 }} kicker="POSITION" title="BRUSSELS · BELGIUM" titleAt={daring.brussels}
         lines={[{ text: "MOLENBEEK · 50.85°N 4.33°E", at: daring.brussels + 0.4 }]} />
 
-      <Exhibit t={t} at={daring.join.at + 0.1} dimAt={daring.identity} box={{ x: 0, y: 0, w: 58 }} tilt={-1.2} src={capture("daring-case")} tag="EXHIBIT I · ROYAL DARING HC" caption="CASE FILE · JULESMOREAU.EU" />
+      <Exhibit t={t} at={daring.join.at + 0.1} dimAt={daring.identity} box={{ x: 10, y: 0, w: 30 }} tilt={-1.6} ratio="4 / 5" src={picture("/assets/Royal daring/recap du weekend/1.png")}
+        tag="EXHIBIT I · MATCHDAY CONTENT" caption="WEEKEND RECAP · PLAYOFFS" />
       <Record t={t} at={daring.join.at} box={{ x: 62, y: 0, w: 38 }}
         icon={/* eslint-disable-next-line @next/next/no-img-element */ <img src={picture("/assets/Royal daring/logo-DARING.png", 256)} alt="" className={styles.recordLogo} />}
         kicker="MAY 2026 · BRUSSELS" title="ROYAL DARING HOCKEY CLUB" titleAt={daring.join.at + 0.6}
