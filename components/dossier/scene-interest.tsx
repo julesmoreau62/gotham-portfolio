@@ -1,5 +1,5 @@
 import { ChartColumn, Handshake, MessagesSquare, Radio, Trophy, Truck, Users, type LucideIcon } from "lucide-react"
-import { CAREER_START, CUE } from "@/lib/dossier"
+import { CAREER_START, CUE, MONTAGE_CUT as CUT } from "@/lib/dossier"
 import { capture, picture } from "./board"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, timecode, typed, window01 } from "./timing"
 import styles from "./dossier.module.css"
@@ -13,8 +13,6 @@ import styles from "./dossier.module.css"
 const MONTAGE = [1, 2, 3, 4, 5, 6].map(n => capture(`cs2-${n}`, 1440))
 /** "Manche gagnée": the round won, kept on the monitor once the camera pulls back. */
 const ROUND = capture("cs2-round", 1080)
-/** How long each frame of the montage holds, in seconds. */
-const CUT = 0.3
 
 const EVIDENCE = [
   { stat: "TOP 20–200", game: "OVERWATCH", line: "RANKED · 2 YEARS · 1,289 H", src: picture("/assets/games/OW/Capture d'écran 2026-09-16 115505.png"), tilt: -2.4, position: "0% 0%" },

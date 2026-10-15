@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, type CSSProperties } from "react"
-import { CUE } from "@/lib/dossier"
+import { COUNTS, CUE, FLIGHTS } from "@/lib/dossier"
 import { BigDate, STILLS } from "./board"
 import { DOTS, arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, rotate, toVec, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing"
@@ -42,13 +42,13 @@ type Travel = {
 
 /** Each new base, reached by a flight on the large globe as the voice names it. */
 const TRAVELS: Travel[] = [
-  { at: field.base.at, flight: 1.5, until: field.bachelor.at - 0.2, from: FRANCE, to: OPAL, zoom: [1.1, 2.1],
+  { ...FLIGHTS.opal, until: field.bachelor.at - 0.2, from: FRANCE, to: OPAL, zoom: [1.1, 2.1],
     kicker: "BASE OF OPERATIONS", place: "OPAL COAST", placeAt: field.opal, sub: "NORTHERN FRANCE", subAt: field.opal + 0.9 },
-  { at: kourou.signal.at, flight: 1.7, until: kourou.build.at - 0.25, from: NORTKERQUE, to: KOUROU, zoom: [1, 1.9],
+  { ...FLIGHTS.kourou, until: kourou.build.at - 0.25, from: NORTKERQUE, to: KOUROU, zoom: [1, 1.9],
     kicker: "NEW SIGNAL", place: "KOUROU", placeAt: kourou.place, sub: "FRENCH GUIANA", subAt: kourou.guiana },
-  { at: lille.september.end - 0.5, flight: 1.4, until: lille.master.at - 0.2, from: KOUROU, to: LILLE, zoom: [1, 2.1],
+  { ...FLIGHTS.lille, until: lille.master.at - 0.2, from: KOUROU, to: LILLE, zoom: [1, 2.1],
     kicker: "RELOCATION", place: "LILLE", placeAt: lille.move.at + 0.5, sub: "FRANCE · NEW BASE", subAt: lille.move.at + 0.9 },
-  { at: shift.last.at - 0.05, flight: 1.1, until: shift.shift.at - 0.15, from: BRUSSELS, to: LILLE, zoom: [1.6, 2.3],
+  { ...FLIGHTS.back, until: shift.shift.at - 0.15, from: BRUSSELS, to: LILLE, zoom: [1.6, 2.3],
     kicker: "LAST KNOWN POSITION", place: "LILLE", placeAt: shift.last.at + 0.5, sub: "FRANCE", subAt: shift.last.at + 0.8, again: shift.again.at },
 ]
 
@@ -60,11 +60,11 @@ type Hero = {
 
 const HEROES: Hero[] = [
   { from: field.views.at - 0.1, to: field.ctr.at - 0.1, kicker: "REACH VERIFIED · AS NORTKERQUE 95 · ONE SEASON", label: "VIEWS",
-    value: 1_000_000, countAt: field.views.at, count: 1.4, format: n => (n >= 999_500 ? "1,000,000+" : Math.round(n).toLocaleString("en-US")), backdrop: "photo" },
+    value: 1_000_000, countAt: COUNTS.views.at, count: COUNTS.views.count, format: n => (n >= 999_500 ? "1,000,000+" : Math.round(n).toLocaleString("en-US")), backdrop: "photo" },
   { from: field.ctr.at - 0.1, to: field.ctr.end + 0.45, kicker: "AS NORTKERQUE 95 · JAN → JUN 2025", label: "SPONSOR CLICK-THROUGH RATE",
-    value: 467, countAt: field.ctr.at, count: field.ctrUp - field.ctr.at + 0.5, format: n => `+${Math.round(n)}%`, backdrop: "curve" },
+    value: 467, countAt: COUNTS.ctr.at, count: COUNTS.ctr.count, format: n => `+${Math.round(n)}%`, backdrop: "curve" },
   { from: shift.scans - 0.1, to: shift.engine.end + 0.2, kicker: "RESEARCH ENGINE · AROUND THE CLOCK", label: "SOURCES SCANNED A DAY",
-    value: 90, countAt: shift.scans, count: 3.4, format: n => String(Math.round(n)), backdrop: "dial" },
+    value: 90, countAt: COUNTS.sources.at, count: COUNTS.sources.count, format: n => String(Math.round(n)), backdrop: "dial" },
 ]
 
 /** Fades for the subject file and the board, merged when two moments sit close together. */

@@ -187,8 +187,28 @@ export const CUE = {
 /** When the career chapters (SEG04 → SEG09) take over the screen. */
 export const CAREER_START = SEGMENTS[3].start
 
+/** The flights to each new base on the large globe: when each leaves, and how long it flies. */
+export const FLIGHTS = {
+  opal: { at: CUE.field.base.at, flight: 1.5 },
+  kourou: { at: CUE.kourou.signal.at, flight: 1.7 },
+  lille: { at: CUE.lille.september.end - 0.5, flight: 1.4 },
+  back: { at: CUE.shift.last.at - 0.05, flight: 1.1 },
+}
+
+/** The numbers given a whole screen: when each starts counting, and for how long. */
+export const COUNTS = {
+  views: { at: CUE.field.views.at, count: 1.4 },
+  ctr: { at: CUE.field.ctr.at, count: CUE.field.ctrUp - CUE.field.ctr.at + 0.5 },
+  sources: { at: CUE.shift.scans, count: 3.4 },
+}
+
+/** The gaming montage cuts to a new frame this often, from "competitive gaming" to "the match". */
+export const MONTAGE_CUT = 0.3
+
 export type SfxKind = "tick" | "beep" | "lock" | "thump" | "whoosh" | "glitch" | "shutter" | "ping" | "boot" | "riser" | "alarm" | "off"
-export type SfxEvent = { at: number; kind: SfxKind }
+  | "flight" | "reticle" | "impact" | "cut" | "shrink" | "deny"
+/** `dur` sets how long a sound lasts, for the ones that follow a movement on screen. */
+export type SfxEvent = { at: number; kind: SfxKind; dur?: number }
 
 /** Sound design, scheduled on the same clock as the voice. */
 export const SFX: SfxEvent[] = (() => {
@@ -208,10 +228,14 @@ export const SFX: SfxEvent[] = (() => {
     { at: CUE.interest.at - 0.15, kind: "glitch" },
     { at: CUE.interest.at, kind: "whoosh" },
     { at: CUE.gaming.at, kind: "thump" },
+    // Every cut of the CS2 montage hits, under the three cards slamming in.
+    ...Array.from({ length: 12 }, (_, k) => ({ at: CUE.gaming.at + (k + 1) * MONTAGE_CUT, kind: "cut" as const })).filter(cut => cut.at < CUE.game.at - 0.2),
     ...[0.1, 0.42, 0.74].map(d => ({ at: CUE.gaming.at + d, kind: "shutter" as const })),
-    { at: CUE.game.at, kind: "beep" },
+    { at: CUE.game.at - 0.15, kind: "shrink" },
+    { at: CUE.game.at + 0.9, kind: "deny" },
     { at: CUE.around.at, kind: "whoosh" },
     ...Array.from({ length: 7 }, (_, i) => ({ at: CUE.around.at + 0.25 + i * 0.2, kind: "tick" as const })),
+    { at: CUE.around.at + 1.2, kind: "ping" },
     ...careerSfx(),
   ]
   return events.sort((a, b) => a.at - b.at)
@@ -221,22 +245,28 @@ function careerSfx(): SfxEvent[] {
   const { field, kourou, lille, daring, shift, mission } = CUE
   const e = (time: number, kind: SfxKind): SfxEvent => ({ at: time, kind })
   const burst = (from: number, count: number, step: number) => Array.from({ length: count }, (_, i) => e(from + i * step, "tick"))
+  // A flight on the large globe: the jet across, then the reticle locking on the new base.
+  const fly = ({ at, flight }: { at: number; flight: number }) => [{ at, kind: "flight" as const, dur: flight }, e(at + flight, "reticle")]
+  // A full-screen number lands with a hit once it has counted up.
+  const land = ({ at, count }: { at: number; count: number }) => e(at + count, "impact")
+  const ctrLands = COUNTS.ctr.at + COUNTS.ctr.count
   return [
-    e(CAREER_START - 0.2, "glitch"), e(field.year.at, "thump"), e(field.base.at, "whoosh"), e(field.opal, "ping"),
+    e(CAREER_START - 0.2, "glitch"), e(field.year.at, "thump"), ...fly(FLIGHTS.opal),
     e(field.bachelor.at, "shutter"), e(field.navy.at, "shutter"), e(field.rank, "beep"), e(field.coach.at, "shutter"),
     e(field.year2025.at, "thump"), e(field.club.at, "whoosh"), e(field.club.at + 0.3, "shutter"), e(field.club.at + 1.5, "shutter"),
-    e(field.season.at, "beep"), ...burst(field.views.at, 12, 0.12), e(field.ctr.at, "riser"), e(field.ctrUp, "lock"),
-    e(kourou.summer.at, "thump"), e(kourou.signal.at, "ping"), e(kourou.place, "lock"), e(kourou.build.at, "whoosh"),
+    e(field.season.at, "beep"), ...burst(field.views.at, 12, 0.12), land(COUNTS.views),
+    ...burst(field.ctr.at, 7, 0.16), e(ctrLands - 0.95, "riser"), e(ctrLands, "impact"),
+    e(kourou.summer.at, "thump"), e(kourou.signal.at, "ping"), ...fly(FLIGHTS.kourou), e(kourou.place, "beep"), e(kourou.build.at, "whoosh"),
     ...burst(kourou.build.at + 0.4, 16, 0.38), e(kourou.deadline.at, "alarm"), e(kourou.done.at, "thump"),
-    e(lille.september.at, "thump"), e(lille.move.at, "whoosh"), e(lille.move.at + 0.6, "ping"), e(lille.master.at, "shutter"),
+    e(lille.september.at, "thump"), ...fly(FLIGHTS.lille), e(lille.master.at, "shutter"),
     e(lille.december.at, "thump"), e(lille.comms.at, "shutter"), ...burst(lille.files.at, 14, 0.15), e(lille.incidents.at, "alarm"),
     e(lille.zero.at, "lock"),
     e(daring.may.at, "thump"), e(daring.border.at, "thump"), e(daring.border.at + 0.08, "shutter"), e(daring.brussels, "ping"),
     e(daring.join.at, "whoosh"), e(daring.join.at + 0.2, "shutter"), e(daring.results.at, "beep"),
     e(daring.identity, "tick"), e(daring.tiers, "tick"), e(daring.website, "tick"), e(daring.handover.at, "tick"), e(daring.handover.end - 0.3, "lock"),
-    e(shift.last.at, "ping"), e(shift.again.at, "tick"), e(shift.shift.at - 0.9, "riser"), e(shift.shift.at, "glitch"), e(shift.shift.at + 0.05, "thump"),
+    ...fly(FLIGHTS.back), e(shift.again.at, "ping"), e(shift.shift.at - 0.9, "riser"), e(shift.shift.at, "glitch"), e(shift.shift.at + 0.05, "thump"),
     e(shift.communicates.end - 0.4, "glitch"), ...burst(shift.builds.at, 10, 0.08), ...burst(shift.automations, 10, 0.08), ...burst(shift.models, 10, 0.08),
-    e(shift.engine.at, "whoosh"), ...burst(shift.scans, 18, 0.2), e(shift.topic.at, "beep"), e(shift.thesis.at, "lock"),
+    e(shift.engine.at, "whoosh"), ...burst(shift.scans, 17, 0.2), land(COUNTS.sources), e(shift.topic.at, "beep"), e(shift.thesis.at, "lock"),
     e(mission.sought.at, "whoosh"), e(mission.objective.at, "beep"), e(mission.window.at, "thump"), e(mission.world.at, "whoosh"),
     e(mission.recommend.at, "tick"), e(mission.contact.at, "lock"), e(mission.out.end, "off"),
   ]
