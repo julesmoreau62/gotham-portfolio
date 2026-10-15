@@ -238,46 +238,23 @@
 .gateBack:hover { color: var(--acid); }
 
 /* ---------------------------- end screen ---------------------------- */
-/* The debrief: the route on a turning globe, the file's summary, the brief and every way back in. */
-.endScreen { position: fixed; inset: 0; z-index: 35; overflow: hidden; background: radial-gradient(ellipse at 70% 50%, #0d1107 0%, #050505 62%); animation: end-power 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.endScreen::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(5, 5, 5, 0.94) 0%, rgba(5, 5, 5, 0.78) 40%, transparent 64%); }
+/* One line and the ways to answer it, above the planet rising at the bottom of the screen. */
+.endScreen { position: fixed; inset: 0; z-index: 35; overflow: hidden; background: radial-gradient(ellipse at 50% 110%, #111806 0%, #050505 58%); animation: end-power 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.endScreen::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 60% 45% at 50% 38%, rgba(5, 5, 5, 0.75), transparent 70%); }
 .endGlobe { position: absolute; inset: 0; width: 100%; height: 100%; }
-.endBody { position: relative; z-index: 2; display: grid; align-content: safe center; gap: clamp(12px, 2.3vh, 22px); width: min(760px, 56vw); height: 100%; padding: clamp(28px, 6vh, 64px) 0 clamp(24px, 5vh, 56px) 6vw; overflow-y: auto; scrollbar-width: none; }
-.endBody > * { animation: end-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
-.endKicker { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.16em; color: var(--acid); }
+.endBody { position: relative; z-index: 2; display: grid; justify-items: center; align-content: safe center; gap: clamp(18px, 3.4vh, 34px); height: 68%; padding: 24px 6vw 0; text-align: center; }
+.endBody > * { animation: end-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.endKicker { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.24em; color: var(--acid); }
 .endKicker i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); animation: blink 1.4s step-end infinite; }
-.endTitle { margin: 0; font-size: max(36px, min(4.6vw, 8.4vh, 80px)); font-weight: 900; line-height: 0.92; letter-spacing: -0.035em; color: #fff; outline: none; }
-.endTitle span { white-space: nowrap; color: var(--acid); text-shadow: 0 0 40px rgba(200, 255, 0, 0.35); }
-.endSummary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 0; border: 1px solid var(--line); background: var(--line); }
-.endSummary div { display: grid; align-content: start; gap: 7px; padding: clamp(10px, 1.6vh, 14px) 14px; background: rgba(6, 6, 6, 0.94); }
-.endSummary dd { order: -1; margin: 0; font-size: clamp(22px, min(2.2vw, 4vh), 36px); font-weight: 900; line-height: 1; letter-spacing: -0.02em; color: var(--acid); }
-.endSummary dt { font-family: var(--font-mono), monospace; font-size: 10.5px; line-height: 1.4; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
-.endBrief { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 26px; margin: 0; }
-.endBrief div { display: grid; gap: 4px; padding-left: 12px; border-left: 2px solid rgba(200, 255, 0, 0.5); }
-.endBrief dt { font-family: var(--font-mono), monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
-.endBrief dd { margin: 0; font-size: clamp(15px, 1.9vh, 17px); font-weight: 700; color: #fff; }
-.endReveal .endContact { margin-top: 0; }
-.endLinks { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
-.endReplay { display: inline-flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 18px; border: 1px solid var(--acid); font-size: 15px; font-weight: 700; color: var(--acid); transition: background 0.15s, color 0.15s; }
-.endReplay:hover { background: var(--acid); color: #050505; }
-.endLinks a { font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--mute); text-decoration: underline; text-underline-offset: 4px; }
-.endLinks a:hover { color: var(--acid); }
-.endChapters { display: grid; gap: 10px; }
-.endChapters > span { font-family: var(--font-mono), monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
-.endChapters ol { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.endChapters button { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 10px; border: 1px solid var(--line); background: rgba(6, 6, 6, 0.85); font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
-.endChapters button:hover { border-color: var(--acid); color: var(--acid); }
-.endChapters b { font-weight: 600; color: var(--acid); }
-.endStamp {
-  position: absolute; right: 7vw; bottom: 13vh; z-index: 2; margin: 0; padding: 0.12em 0.4em; pointer-events: none;
-  border: 0.08em solid currentColor; outline: 2px solid currentColor; outline-offset: 5px;
-  font-size: clamp(22px, 2.6vw, 44px); font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
-  color: var(--acid); text-shadow: 0 0 30px rgba(200, 255, 0, 0.45); mix-blend-mode: screen;
-  transform: rotate(-7deg); animation: end-stamp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) 1.6s both;
-}
+.endTitle { margin: 0; font-size: max(40px, min(7vw, 12.5vh, 124px)); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; font-stretch: 112%; color: #fff; text-shadow: 0 0 50px rgba(5, 5, 5, 0.9); outline: none; }
+.endTitle span { white-space: nowrap; color: var(--acid); text-shadow: 5px 0 rgba(255, 42, 60, 0.4), -5px 0 rgba(46, 230, 255, 0.32), 0 0 60px rgba(200, 255, 0, 0.4); }
+.endReveal .endContact { justify-content: center; gap: 12px; margin-top: 0; }
+.endReveal .endContact a { min-height: 52px; padding: 0 22px; font-size: 13px; backdrop-filter: blur(6px); }
+.endLinks { display: flex; align-items: center; gap: 26px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.08em; }
+.endLinks button, .endLinks a { color: var(--mute); text-decoration: underline; text-underline-offset: 4px; transition: color 0.15s; }
+.endLinks button:hover, .endLinks a:hover { color: var(--acid); }
 @keyframes end-power { 0% { transform: scaleY(0.004); filter: brightness(3); } 55% { transform: scaleY(1); filter: brightness(1.5); } 100% { transform: none; filter: none; } }
-@keyframes end-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes end-stamp { from { opacity: 0; transform: rotate(-7deg) scale(1.8); } to { opacity: 1; transform: rotate(-7deg) scale(1); } }
+@keyframes end-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* ---------------------------- career chapters ---------------------------- */
 /* The investigation board: right of the subject file, under the timeline. */
@@ -492,5 +469,5 @@
   .glitch, .flash { display: none; }
   .stage { transform: none !important; }
   .portraitScan { animation: none; top: 50%; }
-  .endScreen, .endBody > *, .endStamp { animation: none; }
+  .endScreen, .endBody > * { animation: none; }
 }

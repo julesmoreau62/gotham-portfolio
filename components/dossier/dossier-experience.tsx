@@ -260,7 +260,7 @@ export function DossierExperience() {
           <Glitch t={t} />
           <Hud t={t} analyser={ready?.scope ?? null} />
           {captions && <Subtitles t={t} />}
-          {phase === "end" && <EndScreen onReplay={replay} onChapter={seek} sound={kind => engine.current?.play(kind)} />}
+          {phase === "end" && <EndScreen onReplay={replay} sound={kind => engine.current?.play(kind)} />}
           <Controls t={t} paused={paused} captions={captions} muted={muted} onToggle={toggle} onSeek={seek} onCaptions={() => setCaptions(c => !c)} onMute={toggleMute} onExit={exit} />
         </>
       )}
