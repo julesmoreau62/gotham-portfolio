@@ -249,6 +249,9 @@
 .endKicker i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); animation: blink 1.4s step-end infinite; }
 .endTitle { margin: 0; font-size: max(40px, min(7vw, 12.5vh, 124px)); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; font-stretch: 112%; color: #fff; text-shadow: 0 0 50px rgba(5, 5, 5, 0.9); outline: none; }
 .endTitle span { white-space: nowrap; color: var(--acid); text-shadow: 5px 0 rgba(255, 42, 60, 0.4), -5px 0 rgba(46, 230, 255, 0.32), 0 0 60px rgba(200, 255, 0, 0.4); }
+/* Written in code by the canvas above it: the heading itself stays in place, transparent. */
+.endTitle[data-coded], .endTitle[data-coded] span { color: transparent; text-shadow: none; animation: none; }
+.endCode { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; }
 .endReveal .endContact { justify-content: center; gap: 12px; margin-top: 0; }
 .endReveal .endContact a { min-height: 52px; padding: 0 22px; font-size: 13px; backdrop-filter: blur(6px); }
 .endLinks { display: flex; align-items: center; gap: 26px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.08em; }
@@ -471,4 +474,7 @@
   .stage { transform: none !important; }
   .portraitScan { animation: none; top: 50%; }
   .endScreen::before, .endBody > * { animation: none; }
+  .endCode { display: none; }
+  .endTitle[data-coded] { color: #fff; }
+  .endTitle[data-coded] span { color: var(--acid); }
 }

@@ -10,8 +10,8 @@ import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing
 import styles from "./dossier.module.css"
 
 /* NEXT MISSION (SEG09) — the brief for the next posting, the whole
-   planet lit up for "anywhere around the world", and a way to make
-   contact that works while the film is still running. After "End of
+   planet lit up for "anywhere around the world", and the call to make
+   contact; the links themselves wait for the closing screen. After "End of
    transmission" the camera dives into the planet until it becomes the
    horizon under the closing slogan. */
 
@@ -83,7 +83,7 @@ const BRIEF = [
   { at: mission.recommend.at, label: "RECOMMENDATION", value: "MAKE CONTACT" },
 ]
 
-/** The three ways to reach Jules, usable during the film and on the closing card. */
+/** The three ways to reach Jules, on the closing screen. */
 export function ContactActions({ className }: { className?: string }) {
   return (
     <div className={className ?? styles.contactActions}>
@@ -116,7 +116,6 @@ export function MissionScene({ t }: { t: number }) {
         {contact > 0 && (
           <div className={styles.contact} style={{ opacity: contact, transform: `translateY(${(1 - easeOut(contact)) * 20}px)` }}>
             <h3 aria-hidden="true">{decode("MAKE CONTACT", ramp(t, mission.contact.at, mission.contact.at + 0.5), t)}</h3>
-            <ContactActions />
           </div>
         )}
         {t >= mission.out.at && (
