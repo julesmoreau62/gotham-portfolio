@@ -22,7 +22,7 @@ import { BootScene, MatchFlash, SearchScene } from "./scene-search"
 import { ShiftScene } from "./scene-shift"
 import { SoundCheck } from "./sound-check"
 import { Locator, Timeline } from "./timeline"
-import { easeIn, easeOut, hash, ramp } from "./timing"
+import { easeInOut, easeOut, hash, ramp } from "./timing"
 import styles from "./dossier.module.css"
 
 /* ------------------------------------------------------------------
@@ -49,8 +49,6 @@ const FLASHES = [
   { at: CUE.shift.shift.at, color: "#ff2a3c" },
   { at: CUE.mission.contact.at, color: "#c8ff00" },
 ]
-/** When the picture switches off, after "End of transmission". */
-const POWER_OFF = CUE.mission.out.end + 0.15
 
 function Glitch({ t }: { t: number }) {
   const at = GLITCHES.find(g => t >= g && t < g + 0.22)
@@ -219,18 +217,18 @@ export function DossierExperience() {
   // The film switches on like a cathode tube: a line that opens to the full screen.
   const on = phase === "gate" ? 1 : ramp(t, 0, 0.32)
   const power = on < 1 ? `scaleY(${0.004 + 0.996 * easeOut(on)})` : undefined
-  // …and switches off the same way once the transmission ends.
-  const off = easeIn(ramp(t, POWER_OFF, POWER_OFF + 0.4))
+  // Once the transmission ends, the frame clears away while the camera dives into the closing screen.
+  const outro = phase === "live" ? easeInOut(ramp(t, CUE.mission.out.end, CUE.mission.out.end + 0.7)) : 0
   const shake = FLASHES.some(f => t >= f.at && t < f.at + 0.25) ? `translate(${(hash(Math.floor(t * 60)) - 0.5) * 8}px, ${(hash(Math.floor(t * 60) + 7) - 0.5) * 8}px)` : undefined
   // A full-screen moment: the subject file slides away and the board steps back.
   const focus = phase === "gate" ? 0 : focusAt(t)
 
   return (
-    <main className={styles.root} data-phase={phase} style={{ transform: power, "--focus": focus } as CSSProperties}>
+    <main className={styles.root} data-phase={phase} style={{ transform: power, "--focus": focus, "--outro": outro } as CSSProperties}>
       <h1 className="sr-only">Jules Moreau, narrated dossier</h1>
       <Backdrop running={!paused} />
-      <div ref={stage} className={styles.stage} style={{ transform: [shake, off > 0 ? `scaleY(${Math.max(0.004, 1 - off)})` : ""].join(" ").trim() || undefined, opacity: off >= 1 ? 0 : 1 }}>
-        {phase !== "gate" && (
+      <div ref={stage} className={styles.stage} style={{ transform: shake }}>
+        {phase === "live" && (
           <>
             <BootScene t={t} />
             <GlobeScene t={t} size={size} />
@@ -246,7 +244,7 @@ export function DossierExperience() {
               <ShiftScene t={t} />
             </div>
             <Moments t={t} size={size} />
-            <div className={styles.side} style={focus ? { transform: `translateX(${-focus * 40}vw)`, opacity: 1 - focus } : undefined}>
+            <div className={styles.side} style={focus || outro ? { transform: `translateX(${-focus * 40}vw)`, opacity: (1 - focus) * (1 - outro) } : undefined}>
               <IdCard t={t} />
               <Locator t={t} />
             </div>
@@ -254,16 +252,17 @@ export function DossierExperience() {
           </>
         )}
       </div>
-      {phase !== "gate" && (
+      {phase === "live" && (
         <>
           <Flash t={t} />
           <Glitch t={t} />
           <Hud t={t} analyser={ready?.scope ?? null} />
           {captions && <Subtitles t={t} />}
-          {phase === "end" && <EndScreen onReplay={replay} sound={kind => engine.current?.play(kind)} />}
           <Controls t={t} paused={paused} captions={captions} muted={muted} onToggle={toggle} onSeek={seek} onCaptions={() => setCaptions(c => !c)} onMute={toggleMute} onExit={exit} />
         </>
       )}
+      {/* The closing screen takes over from the very frame the film's dive ends on. */}
+      {phase === "end" && <EndScreen onReplay={replay} sound={kind => engine.current?.play(kind)} />}
       {phase === "gate" && <SoundCheck engine={ready} loaded={loaded * 0.75 + pictures * 0.25} volume={volume} onVolume={changeVolume} onBegin={begin} />}
       <div className={styles.crt} aria-hidden="true" />
     </main>

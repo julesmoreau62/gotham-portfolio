@@ -128,8 +128,8 @@ const RAW: RawSegment[] = [
   },
 ]
 
-/** Silence kept after the last recording, for the closing card. */
-const TAIL = 1.3
+/** Time kept after the last recording, for the dive into the closing screen. */
+const TAIL = 1.8
 
 export const SEGMENTS: DossierSegment[] = (() => {
   let clock = 0
@@ -205,7 +205,7 @@ export const COUNTS = {
 /** The gaming montage cuts to a new frame this often, from "competitive gaming" to "the match". */
 export const MONTAGE_CUT = 0.3
 
-export type SfxKind = "tick" | "beep" | "lock" | "thump" | "whoosh" | "glitch" | "shutter" | "ping" | "boot" | "riser" | "alarm" | "off"
+export type SfxKind = "tick" | "beep" | "lock" | "thump" | "whoosh" | "glitch" | "shutter" | "ping" | "boot" | "riser" | "alarm"
   | "flight" | "reticle" | "impact" | "cut" | "shrink" | "deny"
 /** `dur` sets how long a sound lasts, for the ones that follow a movement on screen. */
 export type SfxEvent = { at: number; kind: SfxKind; dur?: number }
@@ -268,7 +268,9 @@ function careerSfx(): SfxEvent[] {
     e(shift.communicates.end - 0.4, "glitch"), ...burst(shift.builds.at, 10, 0.08), ...burst(shift.automations, 10, 0.08), ...burst(shift.models, 10, 0.08),
     e(shift.engine.at, "whoosh"), ...burst(shift.scans, 17, 0.2), land(COUNTS.sources), e(shift.topic.at, "beep"), e(shift.thesis.at, "lock"),
     e(mission.sought.at, "whoosh"), e(mission.objective.at, "beep"), e(mission.window.at, "thump"), e(mission.world.at, "whoosh"),
-    e(mission.recommend.at, "tick"), e(mission.contact.at, "lock"), e(mission.out.end, "off"),
+    e(mission.recommend.at, "tick"), e(mission.contact.at, "lock"),
+    // The dive into the closing screen.
+    { at: mission.out.end, kind: "flight" as const, dur: DOSSIER_DURATION - mission.out.end },
   ]
 }
 

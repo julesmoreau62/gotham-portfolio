@@ -186,7 +186,7 @@
 .glitch { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
 .glitch span { position: absolute; left: -5%; right: -5%; mix-blend-mode: screen; backdrop-filter: hue-rotate(80deg) saturate(2); }
 .flash { position: fixed; inset: 0; z-index: 39; pointer-events: none; background: var(--acid); mix-blend-mode: screen; }
-.hud { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
+.hud { position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: calc(1 - var(--outro, 0)); }
 .hudTop { position: absolute; top: 24px; left: 4vw; right: 4vw; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 11px; text-transform: uppercase; color: var(--dim); }
 .rec { display: flex; align-items: center; gap: 9px; color: var(--ink); }
 .rec i { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); animation: blink 1.4s step-end infinite; }
@@ -201,9 +201,9 @@
 .corner[data-at="tr"] { top: 12px; right: 12px; border-top-width: 1px; border-right-width: 1px; }
 .corner[data-at="bl"] { bottom: 12px; left: 12px; border-bottom-width: 1px; border-left-width: 1px; }
 .corner[data-at="br"] { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
-.subtitle { position: fixed; left: 50%; bottom: 84px; z-index: 31; width: min(900px, 90vw); transform: translateX(-50%); text-align: center; pointer-events: none; }
+.subtitle { position: fixed; left: 50%; bottom: 84px; z-index: 31; opacity: calc(1 - var(--outro, 0) * 0.6); width: min(900px, 90vw); transform: translateX(-50%); text-align: center; pointer-events: none; }
 .subtitle span { padding: 3px 10px; background: rgba(5, 5, 5, 0.78); font-size: clamp(15px, 1.5vw, 21px); line-height: 1.6; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.controls { position: fixed; left: 4vw; right: 4vw; bottom: 24px; z-index: 32; display: flex; align-items: center; gap: 10px; }
+.controls { position: fixed; left: 4vw; right: 4vw; bottom: 24px; z-index: 32; opacity: calc(1 - var(--outro, 0)); display: flex; align-items: center; gap: 10px; }
 .controls button { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border: 1px solid var(--line); background: rgba(5, 5, 5, 0.7); color: var(--ink); transition: color 0.15s, border-color 0.15s; }
 .controls button:hover, .controls button[aria-pressed="true"] { color: var(--acid); border-color: rgba(200, 255, 0, 0.5); }
 .track { position: relative; flex: 1; height: 20px; cursor: pointer; touch-action: none; }
@@ -239,8 +239,9 @@
 
 /* ---------------------------- end screen ---------------------------- */
 /* One line and the ways to answer it, above the planet rising at the bottom of the screen. */
-.endScreen { position: fixed; inset: 0; z-index: 35; overflow: hidden; background: radial-gradient(ellipse at 50% 110%, #111806 0%, #050505 58%); animation: end-power 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.endScreen::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 60% 45% at 50% 38%, rgba(5, 5, 5, 0.75), transparent 70%); }
+/* No background of its own: the film's backdrop carries on behind it. */
+.endScreen { position: fixed; inset: 0; z-index: 35; overflow: hidden; }
+.endScreen::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 60% 45% at 50% 38%, rgba(5, 5, 5, 0.75), transparent 70%); animation: end-fade 0.8s ease-out both; }
 .endGlobe { position: absolute; inset: 0; width: 100%; height: 100%; }
 .endBody { position: relative; z-index: 2; display: grid; justify-items: center; align-content: safe center; gap: clamp(18px, 3.4vh, 34px); height: 68%; padding: 24px 6vw 0; text-align: center; }
 .endBody > * { animation: end-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
@@ -253,7 +254,7 @@
 .endLinks { display: flex; align-items: center; gap: 26px; font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.08em; }
 .endLinks button, .endLinks a { color: var(--mute); text-decoration: underline; text-underline-offset: 4px; transition: color 0.15s; }
 .endLinks button:hover, .endLinks a:hover { color: var(--acid); }
-@keyframes end-power { 0% { transform: scaleY(0.004); filter: brightness(3); } 55% { transform: scaleY(1); filter: brightness(1.5); } 100% { transform: none; filter: none; } }
+@keyframes end-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes end-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* ---------------------------- career chapters ---------------------------- */
@@ -469,5 +470,5 @@
   .glitch, .flash { display: none; }
   .stage { transform: none !important; }
   .portraitScan { animation: none; top: 50%; }
-  .endScreen, .endBody > * { animation: none; }
+  .endScreen::before, .endBody > * { animation: none; }
 }

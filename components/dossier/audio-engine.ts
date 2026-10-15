@@ -391,9 +391,6 @@ export class DossierEngine {
       case "alarm":
         for (let i = 0; i < 4; i++) this.tone(when + i * 0.16, "square", i % 2 ? 660 : 880, i % 2 ? 660 : 880, 0.06, 0.13)
         return
-      case "off":
-        this.tone(when, "sine", 240, 30, 0.35, 0.9)
-        return this.hiss(when, 0.5, 0.08, "lowpass", 3000, 200)
       case "flight": return this.flight(when, dur ?? 1.4)
       case "reticle":
         // Three quick steps up as the reticle closes, then a soft confirmation.
