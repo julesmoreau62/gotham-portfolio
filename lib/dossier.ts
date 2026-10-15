@@ -129,7 +129,7 @@ const RAW: RawSegment[] = [
 ]
 
 /** Silence kept after the last recording, for the closing card. */
-const TAIL = 2.2
+const TAIL = 1.3
 
 export const SEGMENTS: DossierSegment[] = (() => {
   let clock = 0

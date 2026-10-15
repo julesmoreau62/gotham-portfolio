@@ -179,6 +179,12 @@ export class DossierEngine {
     try { await this.ctx.resume() } catch {}
   }
 
+  /** A one-off effect outside the film's timeline, such as the closing screen powering on. */
+  play(kind: SfxKind) {
+    if (!this.ctx || this.paused) return
+    this.synth(kind, this.ctx.currentTime + 0.02)
+  }
+
   /** Called every frame: schedules the effects about to happen. */
   update() {
     if (!this.ctx || !this.started || this.paused) return

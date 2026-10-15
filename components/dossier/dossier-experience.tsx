@@ -1,11 +1,11 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { getLenis } from "@/components/fx/smooth-scroll"
 import { CAREER_START, CUE, DOSSIER_DURATION } from "@/lib/dossier"
 import { DossierEngine } from "./audio-engine"
+import { EndScreen } from "./end-screen"
 import { Backdrop } from "./backdrop"
 import { BOARD_IMAGES } from "./board"
 import { Controls, Hud, Subtitles } from "./hud"
@@ -17,7 +17,7 @@ import { INTEREST_IMAGES, InterestScene } from "./scene-interest"
 import { KourouScene } from "./scene-kourou"
 import { LilleScene } from "./scene-lille"
 import { Moments, focusAt } from "./moments"
-import { ContactActions, MissionScene } from "./scene-mission"
+import { MissionScene } from "./scene-mission"
 import { BootScene, MatchFlash, SearchScene } from "./scene-search"
 import { ShiftScene } from "./scene-shift"
 import { SoundCheck } from "./sound-check"
@@ -260,18 +260,7 @@ export function DossierExperience() {
           <Glitch t={t} />
           <Hud t={t} analyser={ready?.scope ?? null} />
           {captions && <Subtitles t={t} />}
-          {phase === "end" && (
-            <div className={styles.endCard}>
-              <p className={styles.gateKicker}><i /> END OF TRANSMISSION</p>
-              <h2>Next mission: your organisation?</h2>
-              <p>Digital transformation & AI internship in a sport organisation · February → June 2027.</p>
-              <ContactActions className={styles.endContact} />
-              <div className={styles.endActions}>
-                <button type="button" onClick={replay} className={styles.begin}>Replay <span aria-hidden="true">↺</span></button>
-                <Link href="/" className={styles.silent}>Back to the portfolio</Link>
-              </div>
-            </div>
-          )}
+          {phase === "end" && <EndScreen onReplay={replay} onChapter={seek} sound={kind => engine.current?.play(kind)} />}
           <Controls t={t} paused={paused} captions={captions} muted={muted} onToggle={toggle} onSeek={seek} onCaptions={() => setCaptions(c => !c)} onMute={toggleMute} onExit={exit} />
         </>
       )}
