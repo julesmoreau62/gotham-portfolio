@@ -10,8 +10,8 @@ import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing
 import styles from "./dossier.module.css"
 
 /* NEXT MISSION (SEG09) — the brief for the next posting, the whole
-   planet lit up for "anywhere around the world", and the call to make
-   contact; the links themselves wait for the closing screen. After "End of
+   planet lit up for "anywhere around the world", the recommendation to
+   make contact; the links themselves wait for the closing screen. After "End of
    transmission" the camera dives into the planet until it becomes the
    horizon under the closing slogan. */
 
@@ -97,7 +97,6 @@ export function ContactActions({ className }: { className?: string }) {
 export function MissionScene({ t }: { t: number }) {
   const visible = window01(t, mission.sought.at - 0.3, CUE.end + 30, 0.3)
   if (!visible) return null
-  const contact = ramp(t, mission.contact.at, mission.contact.at + 0.3)
   // The brief clears away as the camera starts its dive.
   const leave = ramp(t, mission.out.end, mission.out.end + 0.6)
   return (
@@ -113,11 +112,6 @@ export function MissionScene({ t }: { t: number }) {
             </div>
           ))}
         </div>
-        {contact > 0 && (
-          <div className={styles.contact} style={{ opacity: contact, transform: `translateY(${(1 - easeOut(contact)) * 20}px)` }}>
-            <h3 aria-hidden="true">{decode("MAKE CONTACT", ramp(t, mission.contact.at, mission.contact.at + 0.5), t)}</h3>
-          </div>
-        )}
         {t >= mission.out.at && (
           <p className={styles.transmission} aria-hidden="true">{decode("END OF TRANSMISSION", ramp(t, mission.out.at, mission.out.end), t)}<i className={styles.caret} /></p>
         )}

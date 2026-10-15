@@ -4,7 +4,6 @@ import { useEffect, useRef, type CSSProperties } from "react"
 import Link from "next/link"
 import type { SfxKind } from "@/lib/dossier"
 import { drawHorizon } from "./horizon"
-import { MatrixTitle } from "./matrix-title"
 import { ContactActions } from "./scene-mission"
 import styles from "./dossier.module.css"
 
@@ -12,12 +11,6 @@ import styles from "./dossier.module.css"
    answer it, over the planet the film's last globe has just zoomed into:
    the career route on it, Lille pulsing. It runs on its own clock, from
    the frame the film stopped on. */
-
-/** The slogan, written by the rain like the name in the home intro. */
-const SLOGAN = [
-  { text: "Next mission:", color: "#f2f1ec" },
-  { text: "your organisation?", color: "#c8ff00" },
-]
 
 function Horizon() {
   const canvas = useRef<HTMLCanvasElement>(null)
@@ -47,22 +40,20 @@ export function EndScreen({ onReplay, sound }: { onReplay: () => void; sound: (k
     heading.current?.focus({ preventScroll: true })
     play.current("reticle")
   }, [])
-  // The kicker first, then the slogan is written, then the ways to answer it.
-  const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as CSSProperties
+  const step = (k: number) => ({ "--d": `${0.3 + k * 0.18}s` }) as CSSProperties
 
   return (
     <section className={styles.endScreen} aria-labelledby="dossier-end-title">
       <Horizon />
-      <MatrixTitle heading={heading} lines={SLOGAN} onWritten={() => play.current("lock")} />
       <div className={styles.endBody}>
-        <p className={styles.endKicker} style={delay(0.2)}><i /> END OF TRANSMISSION</p>
-        <h2 id="dossier-end-title" ref={heading} tabIndex={-1} className={styles.endTitle} data-coded>
+        <p className={styles.endKicker} style={step(0)}><i /> END OF TRANSMISSION</p>
+        <h2 id="dossier-end-title" ref={heading} tabIndex={-1} className={styles.endTitle} style={step(1)}>
           Next mission:<br /><span>your organisation?</span>
         </h2>
-        <div className={styles.endReveal} style={delay(1.8)}>
+        <div className={styles.endReveal} style={step(2)}>
           <ContactActions className={styles.endContact} />
         </div>
-        <div className={styles.endLinks} style={delay(2)}>
+        <div className={styles.endLinks} style={step(3)}>
           <button type="button" onClick={onReplay}>Replay <span aria-hidden="true">↺</span></button>
           <Link href="/">Back to the portfolio</Link>
         </div>
