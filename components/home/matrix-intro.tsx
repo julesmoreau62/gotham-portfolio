@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react"
 import Link from "next/link"
-import { FileText, Headphones } from "lucide-react"
+import { Headphones } from "lucide-react"
 import { Scramble } from "@/components/fx/scramble"
 import { COPY } from "@/lib/copy"
 import { DOSSIER_DURATION } from "@/lib/dossier"
-import { BRIEFING_PATH, type Locale } from "@/lib/i18n"
+import { type Locale } from "@/lib/i18n"
 import { GLYPHS } from "./matrix-portrait"
 import styles from "./matrix-intro.module.css"
 
@@ -16,8 +16,8 @@ import styles from "./matrix-intro.module.css"
    wake-up lines. Then digital rain sweeps from left to right, in three
    layers of depth: every drop that crosses the name leaves it lit, so
    the code writes JULES MOREAU letter by letter. The visitor then picks
-   an access: the 30-second briefing, the narrated dossier, or the
-   portfolio itself, which the camera reaches by diving through the O.
+   an access: the narrated dossier, or the portfolio itself, which
+   the camera reaches by diving through the O.
    ------------------------------------------------------------------ */
 
 export type IntroPhase = "wake" | "rain" | "choose" | "exit"
@@ -546,14 +546,6 @@ export function MatrixIntro({ phase, skipButton, onSkip, onEnter, locale = "en" 
         <nav className={styles.choice} aria-label={t.choose.label}>
           <p className={styles.choiceLabel} aria-hidden="true">{t.choose.label}</p>
           <div className={styles.choiceRow}>
-            <Link href={BRIEFING_PATH[locale]} className={styles.option} data-choice="briefing">
-              <FileText size={18} aria-hidden="true" />
-              <span>
-                <b><span className="sr-only">{t.choose.briefing.title}</span><span aria-hidden="true"><Scramble text={t.choose.briefing.title} duration={450} /></span></b>
-                <small>{t.choose.briefing.meta}</small>
-              </span>
-              <i aria-hidden="true">↗</i>
-            </Link>
             <Link href="/dossier" className={styles.option} data-choice="dossier">
               <Headphones size={18} aria-hidden="true" />
               <span>

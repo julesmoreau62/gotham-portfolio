@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------
-   COPY — every visible string of the home page and the briefing, in
-   English and French. The French object must mirror the English one.
+   COPY — every visible string of the home page, in English and French.
+   The French object must mirror the English one.
    ------------------------------------------------------------------ */
 
 import type { ContractSlug } from "@/lib/contracts"
@@ -8,7 +8,6 @@ import type { Locale } from "@/lib/i18n"
 import { PROJECT_STORIES, type HomeSectionId, type PlaceStop, type ProjectStory, type StorySlug } from "@/lib/journey"
 import { DEPLOYMENTS, type Deployment } from "@/lib/profile"
 
-type ContractOverride = { title?: string; role?: string; summary?: string; metricLabel?: string }
 
 const en = {
   sections: {
@@ -24,8 +23,6 @@ const en = {
     skip: "Skip to content",
     home: "Home",
     tagline: "// Digital transformation & AI",
-    briefingShort: "30-sec briefing",
-    briefingLong: "30-second briefing",
     sections: "Sections",
     sectionIndex: "Section index",
     storyNav: "Story navigation",
@@ -45,7 +42,6 @@ const en = {
     intro: "Club communication, partnerships and events showed me where small sport organisations lose time. Now I build the AI tools and automations that give it back, and help teams actually use them. M2 International Sport Administration student in Lille, writing my thesis on generative AI in sports associations.",
     explore: "Explore my work",
     talk: "Let's talk",
-    briefing: "Short on time? Read the 30-second briefing",
     stamp: ["FROM THE FIELD", "TO THE TOOLS."],
     edge: "WITH THE TEAM / INSIDE THE TOOLS",
   },
@@ -90,7 +86,6 @@ const en = {
       sudo: "[sudo] password for recruiter:",
       granted: "Access granted. Taking you to the contact section…",
       story: "My story",
-      briefing: "30-second briefing",
       cv: "Download my CV (PDF)",
     },
     open: "Explore the case study",
@@ -205,7 +200,6 @@ const en = {
     copy: "Repetitive tasks, scattered information, tools nobody really uses? I am looking for a digital transformation & AI internship in a sport organisation, to map your processes, automate what can be automated and help your team adopt the tools.",
     copyStrong: "February to June 2027, in France, Belgium or elsewhere in Europe.",
     cv: "Download CV",
-    briefing: "30-second briefing",
     meta: ["Lille / France", "FR native · EN C1"],
   },
 
@@ -214,7 +208,6 @@ const en = {
     label: "Footer",
     story: "My story",
     projects: "Projects",
-    briefing: "Briefing",
     top: "Back to top ↑",
     marquee: ["PLAY", "UNDERSTAND", "BUILD"],
   },
@@ -229,68 +222,11 @@ const en = {
     skip: "Skip intro",
     choose: {
       label: "Choose your access",
-      briefing: { title: "30-second briefing", meta: "Read · no sound" },
       dossier: { title: "The full dossier", meta: "Narrated · sound on · desktop" },
       enter: "Enter the portfolio",
     },
   },
 
-  briefing: {
-    meta: {
-      title: "Digital transformation & AI internship · February–June 2027",
-      description: "Jules Moreau is seeking a digital transformation & AI internship in a sport organisation, February to June 2027: process mapping, automation, AI tools and team adoption, backed by field experience in clubs and events.",
-      ogTitle: "Jules Moreau · Digital transformation & AI internship",
-      ogDescription: "February–June 2027 · AI tools, automation and team adoption for sport organisations · France, Belgium and Europe.",
-    },
-    chip: "Recruiter overview",
-    essentials: "The essentials · 00:30",
-    seeking: ["Seeking a ", "digital transformation & AI internship", ", February → June 2027."],
-    intro: "I help sport organisations see how they really work, automate what comes back every week and adopt AI tools their teams keep using. Behind it: club communication, partnerships and events, and an M2 thesis on generative AI in sports associations.",
-    cta: { cv: "Download CV", email: "Email", story: "Follow my story" },
-    facts: [
-      { k: "Status", v: "Seeking internship" },
-      { k: "Window", v: "February → June 2027" },
-      { k: "Location", v: "Lille, France" },
-      { k: "Languages", v: "FR native · EN C1" },
-      { k: "Mobility", v: "France · Belgium · Europe" },
-      { k: "Degree", v: "M2 ISA · Lille" },
-    ],
-    focusKicker: "Contribution",
-    focusTitle: "Where I can help",
-    focus: [
-      { title: "Map the processes", body: "See how the team really works, where information gets stuck and which tasks come back every week." },
-      { title: "Automate & equip", body: "Build the simplest useful tool: Notion workspaces, templates, automations, AI assistants." },
-      { title: "Drive adoption", body: "Document, hand over and help staff and volunteers keep using the tools after launch." },
-    ],
-    projectsKicker: "Experience in practice",
-    projectsTitle: "Three projects",
-    projectsRight: "AI · Tools & handover · Digital",
-    contracts: {
-      "thesis-engine": { metricLabel: "sources a day" },
-      daring: {
-        summary: "A sponsor system built to outlive the internship: brand guidelines, a bilingual partner website, Canva templates and a Notion handover workspace for volunteers, exported in Markdown for any AI assistant.",
-      },
-      signal: {
-        summary: "A club's digital presence built from scratch, with no content calendar or guidelines: three recurring formats, a weekly sponsor prediction game (+467% sponsor click-through rate) and a first app concept. 1M+ views in one season.",
-      },
-    } as Partial<Record<ContractSlug, ContractOverride>>,
-    groundKicker: "Toolkit",
-    groundTitle: "Beyond the case studies",
-    capabilities: [
-      "Process mapping",
-      "Workflow automation",
-      "AI assistants & local LLMs",
-      "Notion workspaces & handovers",
-      "AI-assisted builds (Claude Code, Codex)",
-      "Bilingual documentation FR/EN",
-      "Club & event field experience",
-    ],
-    degree: "M2 International Sport Administration, Université de Lille. Thesis: how generative AI and no-code tools can make sports associations with limited resources more efficient. Coaching, event operations and the Navy Reserve shape how I prepare, coordinate and take responsibility.",
-    cards: [
-      { label: "Royal Daring · May–July 2026", title: "A handover built to last", body: "A Notion workspace for volunteers and the next intern: starting diagnostic, editorial charter, 11 post templates and a live task tracker, exported in Markdown for any AI assistant." },
-      { label: "ASI Tournament · December 2025", title: "500+ people, one briefing", body: "A bilingual FR/EN participant briefing, and a new venue secured in 45 minutes when the main gym was taken two hours before the start." },
-    ],
-  },
 }
 
 export type Copy = typeof en
@@ -309,8 +245,6 @@ const fr: Copy = {
     skip: "Aller au contenu",
     home: "Accueil",
     tagline: "// Transformation digitale & IA",
-    briefingShort: "Briefing 30 s",
-    briefingLong: "Briefing en 30 secondes",
     sections: "Sections",
     sectionIndex: "Index des sections",
     storyNav: "Navigation",
@@ -330,7 +264,6 @@ const fr: Copy = {
     intro: "La communication de club, les partenariats et l’événementiel m’ont montré où les petites structures sportives perdent du temps. Aujourd’hui, je construis les outils IA et les automatisations qui leur en font gagner, et j’aide les équipes à s’en servir. En M2 International Sport Administration à Lille, mémoire sur l’IA générative dans les associations sportives.",
     explore: "Voir mes projets",
     talk: "Discutons",
-    briefing: "Pressé ? Lisez le briefing en 30 secondes",
     stamp: ["DU TERRAIN", "AUX OUTILS."],
     edge: "AVEC L’ÉQUIPE / DANS LES OUTILS",
   },
@@ -375,7 +308,6 @@ const fr: Copy = {
       sudo: "[sudo] mot de passe pour recruteur :",
       granted: "Accès autorisé. Direction la section contact…",
       story: "Mon parcours",
-      briefing: "Briefing de 30 secondes",
       cv: "Télécharger mon CV (PDF)",
     },
     open: "Voir l’étude de cas",
@@ -568,7 +500,6 @@ const fr: Copy = {
     copy: "Des tâches répétitives, une information éparpillée, des outils que personne n’utilise vraiment ? Je cherche un stage en transformation digitale & IA dans une structure sportive, pour cartographier vos process, automatiser ce qui peut l’être et accompagner votre équipe dans l’adoption des outils.",
     copyStrong: "De février à juin 2027, en France, en Belgique ou ailleurs en Europe.",
     cv: "Télécharger le CV",
-    briefing: "Briefing en 30 secondes",
     meta: ["Lille / France", "FR natif · EN C1"],
   },
 
@@ -577,7 +508,6 @@ const fr: Copy = {
     label: "Pied de page",
     story: "Mon parcours",
     projects: "Projets",
-    briefing: "Briefing",
     top: "Haut de page ↑",
     marquee: ["JOUER", "COMPRENDRE", "CONSTRUIRE"],
   },
@@ -592,76 +522,11 @@ const fr: Copy = {
     skip: "Passer l’intro",
     choose: {
       label: "Choisissez votre accès",
-      briefing: { title: "Briefing en 30 secondes", meta: "À lire · sans son" },
       dossier: { title: "Le dossier complet", meta: "Narré en anglais · son activé · ordinateur" },
       enter: "Entrer dans le portfolio",
     },
   },
 
-  briefing: {
-    meta: {
-      title: "Stage transformation digitale & IA · février–juin 2027",
-      description: "Jules Moreau cherche un stage en transformation digitale & IA dans une structure sportive, de février à juin 2027 : cartographie des process, automatisation, outils IA et adoption par les équipes, appuyés sur une expérience terrain en clubs et en événementiel.",
-      ogTitle: "Jules Moreau · Stage transformation digitale & IA",
-      ogDescription: "Février–juin 2027 · Outils IA, automatisation et adoption par les équipes pour les structures sportives · France, Belgique et Europe.",
-    },
-    chip: "Vue recruteur",
-    essentials: "L’essentiel · 00:30",
-    seeking: ["Je cherche un ", "stage en transformation digitale & IA", ", de février à juin 2027."],
-    intro: "J’aide les structures sportives à voir comment elles fonctionnent vraiment, à automatiser ce qui revient chaque semaine et à adopter des outils IA que leurs équipes continuent d’utiliser. Derrière : la communication de club, les partenariats, l’événementiel, et un mémoire de M2 sur l’IA générative dans les associations sportives.",
-    cta: { cv: "Télécharger le CV", email: "E-mail", story: "Découvrir mon parcours" },
-    facts: [
-      { k: "Statut", v: "En recherche de stage" },
-      { k: "Période", v: "Février → juin 2027" },
-      { k: "Lieu", v: "Lille, France" },
-      { k: "Langues", v: "FR natif · EN C1" },
-      { k: "Mobilité", v: "France · Belgique · Europe" },
-      { k: "Diplôme", v: "M2 ISA · Lille" },
-    ],
-    focusKicker: "Contribution",
-    focusTitle: "Là où je peux aider",
-    focus: [
-      { title: "Cartographier les process", body: "Voir comment l’équipe travaille vraiment, où l’information se perd et quelles tâches reviennent chaque semaine." },
-      { title: "Automatiser & outiller", body: "Construire l’outil utile le plus simple : espaces Notion, templates, automatisations, assistants IA." },
-      { title: "Faire adopter", body: "Documenter, transmettre et aider salariés et bénévoles à continuer d’utiliser les outils après le lancement." },
-    ],
-    projectsKicker: "L’expérience en pratique",
-    projectsTitle: "Trois projets",
-    projectsRight: "IA · Outils & passation · Digital",
-    contracts: {
-      "thesis-engine": {
-        role: "Conception & exploitation · build assisté par l’IA",
-        summary: "Un moteur de recherche local pour mon mémoire de M2 : trois scans par jour sur Google Scholar, OpenAlex et Cairn, un tri par un Qwen3 4B fine-tuné, Claude Sonnet quand l’analyse devient complexe, et tout arrive directement dans mon vault Obsidian.",
-        metricLabel: "sources par jour",
-      },
-      daring: {
-        role: "Communication & sponsoring",
-        summary: "Un système sponsors conçu pour survivre au stage : charte graphique, site partenaires bilingue, modèles Canva et un espace Notion de passation pour les bénévoles, exporté en Markdown pour n’importe quel assistant IA.",
-        metricLabel: "site + 30 visuels",
-      },
-      signal: {
-        role: "Responsable communication",
-        summary: "La présence digitale d’un club construite de zéro, sans calendrier ni charte : trois formats récurrents, un jeu de pronostics sponsorisé chaque semaine (+467 % de taux de clic sponsors) et un premier concept d’appli. Plus d’1M de vues en une saison.",
-        metricLabel: "taux de clic · 1M de vues",
-      },
-    },
-    groundKicker: "Boîte à outils",
-    groundTitle: "Au-delà des études de cas",
-    capabilities: [
-      "Cartographie des process",
-      "Automatisation des workflows",
-      "Assistants IA & LLM locaux",
-      "Espaces Notion & passations",
-      "Builds assistés par l’IA (Claude Code, Codex)",
-      "Documentation bilingue FR/EN",
-      "Expérience terrain clubs & événements",
-    ],
-    degree: "M2 International Sport Administration, Université de Lille. Mémoire : comment l’IA générative et le no-code peuvent rendre plus efficaces les associations sportives aux moyens limités. Le coaching, l’événementiel et la réserve de la Marine façonnent ma façon de préparer, de coordonner et de prendre mes responsabilités.",
-    cards: [
-      { label: "Royal Daring · Mai–juillet 2026", title: "Une passation pensée pour durer", body: "Un espace Notion pour les bénévoles et le prochain stagiaire : diagnostic de départ, charte éditoriale, 11 modèles de posts et un suivi des tâches, exporté en Markdown pour n’importe quel assistant IA." },
-      { label: "Tournoi ASI · Décembre 2025", title: "500+ personnes, un seul briefing", body: "Un briefing participants bilingue FR/EN, et une nouvelle salle trouvée en 45 minutes quand le gymnase principal a été pris deux heures avant le début." },
-    ],
-  },
 }
 
 export const COPY: Record<Locale, Copy> = { en, fr }

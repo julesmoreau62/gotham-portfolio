@@ -43,7 +43,6 @@
 /* Each access boots like a terminal window: a bright edge sweeps it into view. */
 .option { position: relative; display: flex; align-items: center; gap: 14px; width: min(372px, 88vw); padding: 16px 20px; border: 1px solid rgba(242,241,236,.22); background: rgba(7,7,7,.92); color: #f2f1ec; text-align: left; transition: border-color 150ms, background 150ms, transform 150ms; animation: boot 460ms cubic-bezier(.2, .7, .2, 1) backwards; }
 .option::after { content: ""; position: absolute; top: -1px; bottom: -1px; left: 0; width: 2px; background: #c8ff00; box-shadow: 0 0 14px 2px rgba(200,255,0,.6); opacity: 0; pointer-events: none; animation: boot-edge 460ms cubic-bezier(.2, .7, .2, 1) both; animation-delay: inherit; }
-.option[data-choice="dossier"] { animation-delay: 120ms; }
 .option svg { flex: none; color: #c8ff00; }
 .option > span { display: grid; flex: 1; gap: 5px; }
 .option b { font-size: 18px; font-weight: 700; line-height: 1.15; letter-spacing: -.01em; }

@@ -5,7 +5,7 @@ import { CONTRACTS, type ContractSlug } from "@/lib/contracts"
 import { STORY_PROJECT_SLUGS } from "@/lib/journey"
 import { COPY } from "@/lib/copy"
 import { PROFILE } from "@/lib/profile"
-import { BRIEFING_PATH, type Locale } from "@/lib/i18n"
+import { type Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { WipeLink, navigateWithWipe } from "@/components/fx/page-wipe"
 import { getLenis } from "@/components/fx/smooth-scroll"
@@ -395,7 +395,6 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
         <span key="when" className={styles.acid}>● {copy.hero.availability} · {copy.hero.window}</span>,
         <span key="links" className={styles.links}>
           <a href="#origin" onClick={e => { e.preventDefault(); scrollToId("origin") }}>→ {tt.story}</a>
-          <a href={BRIEFING_PATH[locale]}>→ {tt.briefing}</a>
         </span>,
       ]
       case "contact": return [

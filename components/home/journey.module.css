@@ -39,10 +39,8 @@
 .primaryLink:hover { background: var(--ink); }
 .primaryLink span { font-size: 22px; }
 .textLink { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: var(--font-mono), monospace; font-size: 12px; line-height: 1.5; letter-spacing: .03em; text-transform: uppercase; transition: color .2s; }
-.textLink svg, .heroBriefing svg { flex-shrink: 0; }
+.textLink svg { flex-shrink: 0; }
 .textLink:hover { color: var(--acid); }
-.heroBriefing { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--mute); transition: color .2s; }
-.heroBriefing:hover { color: var(--acid); }
 .heroStamp { position: absolute; right: 3%; bottom: 70px; display: flex; flex-direction: column; gap: 15px; padding: 14px 16px; background: rgba(7,7,7,.78); font-family: var(--font-mono), monospace; font-size: 11px; letter-spacing: .08em; line-height: 1.8; color: var(--acid); }
 .stampCross { font-size: 46px; line-height: 1; font-weight: 300; }
 .statusDot { display: inline-block; width: 7px; height: 7px; background: var(--acid); flex-shrink: 0; box-shadow: 0 0 14px rgba(200,255,0,.4); }
@@ -253,8 +251,6 @@
   .heroActions { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; }
   .primaryLink { padding: 0 14px; font-size: 11px; gap: 12px; }
   .heroActions .textLink { font-size: 11px; gap: 6px; }
-  .heroBriefing { align-items: flex-start; padding: 10px 0; font-size: 12px; }
-  .heroBriefing svg { margin-top: 2px; }
   .heroProof strong { font-size: 24px; }
   .heroProof span { font-size: 11px; }
   .heroProof + .heroProof { padding-left: 10px; }

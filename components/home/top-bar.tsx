@@ -8,7 +8,7 @@ import { Btn } from "@/components/ui/primitives"
 import { navigateWithWipe } from "@/components/fx/page-wipe"
 import { HOME_SECTIONS } from "@/lib/journey"
 import { COPY } from "@/lib/copy"
-import { BRIEFING_PATH, HOME_PATH, homeSection, type Locale } from "@/lib/i18n"
+import { HOME_PATH, homeSection, type Locale } from "@/lib/i18n"
 import { Menu, X } from "lucide-react"
 
 const NAV = HOME_SECTIONS.slice(1)
@@ -105,7 +105,6 @@ export function TopBar({ variant = "home", locale = "en", alternate }: { variant
 
         <div className="flex items-center gap-3 md:gap-4">
           {alternate && <a href={alternate} hrefLang={t.switchTo.lang} lang={t.switchTo.lang} aria-label={`${t.switchTo.short} · ${t.switchTo.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center mono text-[11px] text-mute hover:text-acid">{t.switchTo.short}</a>}
-          <Link href={BRIEFING_PATH[locale]} className="hidden sm:inline-flex min-h-11 items-center gap-2 mono text-[11px] text-mute hover:text-acid">{t.briefingShort} <span aria-hidden="true">↗</span></Link>
           <span className="hidden 2xl:inline-flex">
             <Clock />
           </span>
@@ -117,7 +116,6 @@ export function TopBar({ variant = "home", locale = "en", alternate }: { variant
       </div>
       <nav id="mobile-story-nav" aria-label={t.storyNav} hidden={!menuOpen} className="border-b border-line bg-bg px-5 py-5 xl:hidden">
         {NAV.map(n => <a key={n.id} href={homeSection(locale, n.id)} onClick={go(n.id)} className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px]"><span className="text-acid text-[10px]">{n.n}</span>{sections[n.id]}</a>)}
-        <a href={BRIEFING_PATH[locale]} className="flex min-h-12 items-center gap-5 border-t border-line py-3 mono text-[13px] text-mute">{t.briefingLong} ↗</a>
       </nav>
     </header>
   )
