@@ -141,6 +141,14 @@
 .approachIntro { min-width: 0; container-type: inline-size; }
 .approachIntro .chapterTitle { font-size: clamp(30px,10cqw,66px); }
 .profileMeta { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 20px; color: var(--mute); }
+/* Asimov's three laws, rewritten for the tools I hand over. */
+.laws { max-width: 560px; margin-top: 40px; border: 1px solid var(--line); border-left: 2px solid var(--acid); padding: 22px 24px; }
+.laws h3 { font-family: var(--font-mono), monospace; font-size: 11px; line-height: 1.6; letter-spacing: .08em; text-transform: uppercase; color: var(--acid); }
+.laws ol { display: grid; gap: 14px; margin-top: 16px; }
+.laws li { display: grid; grid-template-columns: 52px 1fr; gap: 12px; }
+.laws li span { font-family: var(--font-mono), monospace; font-size: 10px; line-height: 2.2; text-transform: uppercase; color: var(--mute); }
+.laws li p { font-size: 15px; line-height: 1.6; color: var(--ink); }
+.lawsCredit { margin-top: 18px; font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: .04em; color: var(--mute); }
 .methodList { margin-top: 24px; }
 .method { display: grid; grid-template-columns: 36px 1fr; gap: 17px; border-top: 1px solid var(--line); padding: 24px 0; }
 .method > span { font-family: var(--font-mono), monospace; font-size: 11px; color: var(--acid); margin-top: 5px; }

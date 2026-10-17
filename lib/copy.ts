@@ -72,6 +72,7 @@ const en = {
         ["open <project>", "open the full case study"],
         ["whoami", "who I am"],
         ["contact", "how to reach me"],
+        ["library", "the books behind this site"],
         ["clear", "clear the screen"],
       ],
       tip: "Tab autocompletes · ↑ ↓ browse your history",
@@ -87,6 +88,14 @@ const en = {
       granted: "Access granted. Taking you to the contact section…",
       story: "My story",
       cv: "Download my CV (PDF)",
+      library: {
+        title: "~/library · favourite books",
+        books: [
+          { title: "Neuromancer", by: "William Gibson, 1984", note: "Where this site's look comes from.", command: "jack in" },
+          { title: "The Robot series", by: "Isaac Asimov, 1950–1985", note: "Where my three laws come from.", command: "asimov" },
+        ],
+      },
+      jack: { opening: "Jacking in", connected: "Connected. In this matrix, the data is clubs, volunteers and spreadsheets.", next: ["Type ", "ls", " to see what I built in here."] },
     },
     open: "Explore the case study",
     lab: {
@@ -169,6 +178,15 @@ const en = {
       { title: "Hand it over.", text: "A tool only counts if the team keeps using it after I leave. Clear documentation, a reading guide for whoever comes next, exports any AI assistant can read: that is how the Royal Daring handover was built." },
     ],
     tools: ["Tools, when they help", "Notion · Obsidian · Canva", "Claude Code · Codex · Ollama · local LLMs"],
+    laws: {
+      title: "The three laws of my tools",
+      items: [
+        "A tool may not harm the team or, through inaction, allow it to lose time.",
+        "A tool must obey the volunteers who use it, except where that would conflict with the First Law.",
+        "A tool must outlive my internship, as long as that does not conflict with the First or Second Law.",
+      ],
+      credit: "After Isaac Asimov, I, Robot (1950)",
+    },
   },
 
   experience: {
@@ -216,7 +234,7 @@ const en = {
     title: "Jules Moreau — Enter the matrix",
     description: "A short coded introduction before the portfolio. You can skip it.",
     topline: "Secure line / Lille, FR",
-    wake: ["Wake up, recruiter…", "Follow the white rabbit."],
+    wake: ["The sky above Lille was the colour of a dead channel.", "Follow the white rabbit."],
     role: "Digital transformation & AI / Sport",
     phases: { wake: "Incoming signal", rain: "Decoding profile", choose: "Awaiting your choice", exit: "Access granted" },
     skip: "Skip intro",
@@ -294,6 +312,7 @@ const fr: Copy = {
         ["open <projet>", "ouvrir l’étude de cas complète"],
         ["whoami", "qui je suis"],
         ["contact", "me contacter"],
+        ["library", "les livres derrière ce site"],
         ["clear", "effacer l’écran"],
       ],
       tip: "Tab complète automatiquement · ↑ ↓ parcourent l’historique",
@@ -309,6 +328,14 @@ const fr: Copy = {
       granted: "Accès autorisé. Direction la section contact…",
       story: "Mon parcours",
       cv: "Télécharger mon CV (PDF)",
+      library: {
+        title: "~/library · livres favoris",
+        books: [
+          { title: "Neuromancien", by: "William Gibson, 1984", note: "D’où vient l’esthétique de ce site.", command: "jack in" },
+          { title: "Le cycle des Robots", by: "Isaac Asimov, 1950–1985", note: "D’où viennent mes trois lois.", command: "asimov" },
+        ],
+      },
+      jack: { opening: "Connexion à la matrice", connected: "Connecté. Dans cette matrice, les données sont des clubs, des bénévoles et des tableurs.", next: ["Tapez ", "ls", " pour voir ce que j’y ai construit."] },
     },
     open: "Voir l’étude de cas",
     lab: {
@@ -415,6 +442,15 @@ const fr: Copy = {
       { title: "Transmettre.", text: "Un outil ne compte que si l’équipe continue de s’en servir après mon départ. Une documentation claire, un guide de lecture pour la personne suivante, des exports lisibles par n’importe quel assistant IA : c’est comme ça qu’a été pensée la passation au Royal Daring." },
     ],
     tools: ["Des outils, quand ils servent", "Notion · Obsidian · Canva", "Claude Code · Codex · Ollama · LLM locaux"],
+    laws: {
+      title: "Les trois lois de mes outils",
+      items: [
+        "Un outil ne doit pas nuire à l’équipe ni, en restant inactif, lui faire perdre du temps.",
+        "Un outil doit obéir aux bénévoles qui l’utilisent, sauf si cela contredit la Première Loi.",
+        "Un outil doit survivre à mon stage, tant que cela ne contredit ni la Première ni la Deuxième Loi.",
+      ],
+      credit: "D’après Isaac Asimov, Les Robots (1950)",
+    },
   },
 
   experience: {
@@ -516,7 +552,7 @@ const fr: Copy = {
     title: "Jules Moreau — Entrez dans la matrice",
     description: "Une courte introduction codée avant le portfolio. Vous pouvez la passer.",
     topline: "Ligne sécurisée / Lille, FR",
-    wake: ["Réveillez-vous…", "Suivez le lapin blanc."],
+    wake: ["Le ciel de Lille avait la couleur d’un écran sans signal.", "Suivez le lapin blanc."],
     role: "Transformation digitale & IA / Sport",
     phases: { wake: "Signal entrant", rain: "Décodage du profil", choose: "En attente de votre choix", exit: "Accès autorisé" },
     skip: "Passer l’intro",

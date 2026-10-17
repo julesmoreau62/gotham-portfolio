@@ -18,12 +18,13 @@ import styles from "./selected-work.module.css"
    `ls` on its own once it scrolls into view, so every project is one
    click away; anyone curious can type `open daring`, `cat signal`,
    `help`... The monitor beside it decodes the project in focus, and
-   suggested commands cover phones, where typing is a chore.
+   suggested commands cover phones, where typing is a chore. A few
+   book references hide in it too: `library`, `jack in`, `asimov`.
    ------------------------------------------------------------------ */
 
 const FEATURED = ["thesis-engine", ...STORY_PROJECT_SLUGS] as const
 const ARCHIVE = ["strategy", "build", "imagery"] as const
-const COMMANDS = ["help", "ls", "cat", "open", "whoami", "contact", "clear"]
+const COMMANDS = ["help", "ls", "cat", "open", "whoami", "contact", "library", "asimov", "jack", "clear"]
 const PROJECT_COMMANDS = ["open", "cat", "cd", "info"]
 const SUGGESTIONS = ["help", "ls -a", "cat thesis-engine", "open daring", "whoami", "contact"]
 /** Boot timeline in seconds: the login screen, then `ls` typed, then its output. */
@@ -80,7 +81,7 @@ export type Entry = {
 }
 
 type Out =
-  | { type: "fetch" | "hint" | "help" | "whoami" | "contact" | "hire" | "exit" }
+  | { type: "fetch" | "hint" | "help" | "whoami" | "contact" | "hire" | "exit" | "library" | "laws" | "jack" }
   | { type: "ls"; all: boolean }
   | { type: "cat" | "open"; slug: ContractSlug }
   | { type: "notFound" | "sudo"; word: string }
@@ -209,6 +210,7 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
         return entry ? show(entry, "cat") : missing(target)
       }
       case "cat": case "info": case "less": case "more": {
+        if (/^(~\/)?(library|books)\/?$/i.test(args[0] ?? "")) return print({ cmd: line, out: [{ type: "library" }] })
         const entry = resolve(entries, args[0])
         return entry ? show(entry, "cat") : missing(args[0])
       }
@@ -223,6 +225,12 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
       }
       case "whoami": return print({ cmd: line, out: [{ type: "whoami" }] })
       case "contact": case "mail": case "email": return print({ cmd: line, out: [{ type: "contact" }] })
+      case "library": case "books": return print({ cmd: line, out: [{ type: "library" }] })
+      case "asimov": case "laws": return print({ cmd: line, out: [{ type: "laws" }] })
+      case "three":
+        if (args[0]?.toLowerCase() !== "laws") return print({ cmd: line, out: [{ type: "notFound", word }] })
+        return print({ cmd: line, out: [{ type: "laws" }] })
+      case "jack": case "jackin": case "neuromancer": return print({ cmd: line, out: [{ type: "jack" }] })
       case "clear": case "cls": return setBlocks([])
       case "pwd": return print({ cmd: line, out: [{ type: "text", text: "/home/jules/projects" }] })
       case "sudo": case "hire":
@@ -407,6 +415,21 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
         <span key="granted" className={cn(styles.acid, styles.late)}>{tt.granted}</span>,
       ]
       case "sudo": return [<span key="sudo">{tt.sudoDenied}{token(out.word)}</span>]
+      case "library": return [
+        <span key="title" className={styles.dim}>{tt.library.title}</span>,
+        ...tt.library.books.map(book => <span key={book.title}><b className={styles.ink}>{book.title}</b> <span className={styles.dim}>— {book.by}</span> · {book.note} {token(book.command)}</span>),
+      ]
+      case "laws": return [
+        <span key="title" className={styles.ink}>{copy.approach.laws.title}</span>,
+        ...copy.approach.laws.items.map((law, i) => <span key={law}><span className={styles.acid}>0{i + 1}</span> {law}</span>),
+        <span key="credit" className={styles.dim}>— {copy.approach.laws.credit}</span>,
+      ]
+      case "jack": return [
+        <span key="opening">{tt.jack.opening}…</span>,
+        <span key="bar" className={styles.progress} style={{ "--accent": "#c8ff00" } as React.CSSProperties}>[<span className={styles.bar}><i /></span>] <span className={styles.pct}>100%</span></span>,
+        <span key="connected" className={cn(styles.acid, styles.late)}>{tt.jack.connected}</span>,
+        <span key="next" className={styles.late}>{phrase(tt.jack.next)}</span>,
+      ]
       case "exit": return [<span key="exit">{tt.exit}</span>, <span key="ls">{phrase(tt.tryLs)}</span>]
       case "notFound": return [<span key="err" className={styles.err}>zsh: {tt.notFound} {out.word}</span>, <span key="help">{phrase(tt.tryHelp)}</span>]
       case "noProject":

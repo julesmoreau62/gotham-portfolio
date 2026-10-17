@@ -13,8 +13,9 @@ import styles from "./matrix-intro.module.css"
 /* ------------------------------------------------------------------
    MATRIX INTRO — plays once per tab session before the home page.
    The screen powers on like an old monitor and a terminal types the
-   wake-up lines. Then digital rain sweeps from left to right, in three
-   layers of depth: every drop that crosses the name leaves it lit, so
+   wake-up lines, the first after Neuromancer's opening. Then digital
+   rain sweeps from left to right, in three layers of depth: every
+   drop that crosses the name leaves it lit, so
    the code writes JULES MOREAU letter by letter. The visitor then picks
    an access: the narrated dossier, or the portfolio itself, which
    the camera reaches by diving through the O.
@@ -22,8 +23,9 @@ import styles from "./matrix-intro.module.css"
 
 export type IntroPhase = "wake" | "rain" | "choose" | "exit"
 
-/** When each phase starts, in ms from the first frame; `exit` is the dive's length. */
-export const INTRO_MS = { rain: 1450, choose: 3550, exit: 760 }
+/** When each phase starts, in ms from the first frame; `exit` is the dive's length.
+ *  The rain waits long enough for the Neuromancer line to be typed and read. */
+export const INTRO_MS = { rain: 2500, choose: 4600, exit: 760 }
 
 const DOSSIER_LENGTH = DOSSIER_DURATION >= 60
   ? `${Math.floor(DOSSIER_DURATION / 60)} min ${String(Math.round(DOSSIER_DURATION % 60)).padStart(2, "0")}`
