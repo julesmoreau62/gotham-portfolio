@@ -15,6 +15,11 @@ export function Operator({ locale = "en" }: { locale?: Locale }) {
           <div id="approach-title"><Lines as="h2" className={styles.chapterTitle} lines={[t.title[0], <span key="skills" className="text-acid">{t.title[1]}</span>]} /></div>
           <Reveal className={styles.bodyCopy}>{t.body}</Reveal>
           <div className={styles.profileMeta}>{t.languages.map(item => <span key={item}>{item}</span>)}</div>
+          <Reveal className={styles.laws}>
+            <h3>{t.laws.title}</h3>
+            <ol>{t.laws.items.map((law, i) => <li key={law}><span>{locale === "fr" ? "Loi" : "Law"} 0{i + 1}</span><p>{law}</p></li>)}</ol>
+            <p className={styles.lawsCredit}>{t.laws.credit}</p>
+          </Reveal>
         </div>
         <div>
           <Stagger className={styles.methodList} stagger={0.1} amount={0.1}>{t.methods.map((method, i) => <article className={styles.method} key={method.title}><span>0{i + 1}</span><div><h3>{method.title}</h3><p>{method.text}</p></div></article>)}</Stagger>

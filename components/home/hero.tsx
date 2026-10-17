@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { useReducedMotion } from "@/hooks/use-media"
 import { PROFILE } from "@/lib/profile"
 import { COPY } from "@/lib/copy"
-import { BRIEFING_PATH, type Locale } from "@/lib/i18n"
+import { type Locale } from "@/lib/i18n"
 import { ArrowUpRight, Barcode } from "@/components/ui/primitives"
 import { MatrixPortrait } from "./matrix-portrait"
 import styles from "./journey.module.css"
@@ -38,7 +38,6 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             <a href="#contracts" className={styles.primaryLink}>{t.explore} <span aria-hidden="true">↓</span></a>
             <a href={`mailto:${PROFILE.email}`} className={styles.textLink}>{t.talk} <ArrowUpRight /></a>
           </div>
-          <a href={BRIEFING_PATH[locale]} className={styles.heroBriefing}>{t.briefing} <ArrowUpRight /></a>
         </div>
         <div className={styles.heroStamp} aria-hidden="true">
           <span className={styles.stampCross}>+</span><span>{t.stamp[0]}<br />{t.stamp[1]}</span>

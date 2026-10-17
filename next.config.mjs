@@ -13,6 +13,13 @@ const nextConfig = {
     imageSizes: [256, 384],
   },
   reactStrictMode: true,
+  // The 30-second briefing was removed; old shared links land on the home page.
+  async redirects() {
+    return [
+      { source: "/briefing", destination: "/", permanent: true },
+      { source: "/fr/briefing", destination: "/fr", permanent: true },
+    ]
+  },
   outputFileTracingRoot: root,
 }
 

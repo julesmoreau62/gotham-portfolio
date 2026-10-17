@@ -14,7 +14,7 @@ Digital transformation & AI for sport organisations: a journey from competitive 
 
 **Open to a digital transformation & AI internship · February → June 2027 · France, Belgium, Europe**
 
-[**Enter the live experience ↗**](https://www.julesmoreau.eu) · [30-second briefing](https://www.julesmoreau.eu/briefing) · [Version française](https://www.julesmoreau.eu/fr) · [Jump to the case files](#case-files)
+[**Enter the live experience ↗**](https://www.julesmoreau.eu) · [Version française](https://www.julesmoreau.eu/fr) · [Jump to the case files](#case-files)
 
 </div>
 
@@ -37,8 +37,7 @@ On the first home visit, a 3.5-second Matrix introduction plays before the portf
 | Surface | Purpose |
 | --- | --- |
 | **Full experience** | Immersive, scroll-driven portfolio with motion, narrative and project evidence. |
-| **30-second briefing** | Recruiter-first scan of role, availability, where I can help, three proof projects and contact links. |
-| **Version française** | `/fr` and `/fr/briefing` mirror the home page and the briefing, with an FR/EN switch in the top bar. |
+| **Version française** | `/fr` mirrors the home page, with an FR/EN switch in the top bar. |
 | **Contract files** | Seven long-form case studies (English) with context, actions, outputs and measurable results. |
 | **Machine-readable layer** | Semantic HTML, JSON-LD, hreflang, bilingual sitemap, robots, generated share images and `/llms.txt`. |
 
@@ -63,19 +62,17 @@ The first four lead the home page; the other three sit in its archive list.
 ```text
 app/
 ├── page.tsx                   home: role → projects → story & map → approach → experience → contact
-├── briefing/page.tsx         recruiter-focused fast path
-├── fr/                       French home page and briefing
+├── fr/                       French home page
 ├── opengraph-image.tsx       share card (EN; FR in fr/)
 └── contracts/[slug]/page.tsx seven statically generated case files
 
 components/
 ├── fx/                       cursor, grain, reveals, wipe, marquee, analytics
 ├── home/                     the complete home-page narrative, including the world map
-├── briefing/                 the briefing page, shared by both languages
 └── contracts/                shared case-study shell + individual dossiers
 
 lib/
-├── copy.ts                   every home and briefing string, English and French
+├── copy.ts                   every home page string, English and French
 ├── journey.ts                section order, project stories and map coordinates
 ├── world-dots.ts             generated dot grid of the world map (2 kB)
 ├── i18n.ts                   locales, localized paths and hreflang helpers
