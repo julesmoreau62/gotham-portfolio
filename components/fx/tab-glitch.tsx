@@ -16,38 +16,45 @@ function scramble(title: string, amount: number) {
   return chars.join("")
 }
 
+// Same broken J/M monogram as app/icon.svg, redrawn with fresh damage each frame.
 // Drawn at 64px but shown at 16px, so every defect has to be chunky to read.
+const MONOGRAM = "M24 12V42Q24 52 14 52H8M24 12L38 34L52 12V52"
+let monogram: Path2D | null = null
+
 function drawFavicon(ctx: CanvasRenderingContext2D, amount: number) {
   const s = 64
-  const inverted = Math.random() < 0.3
-  const tile = inverted ? "#070707" : "#c8ff00"
-  const ink = inverted ? "#00ff46" : "#070707"
-  ctx.fillStyle = "#070707"
-  ctx.fillRect(0, 0, s, s)
-  ctx.font = "800 30px Arial, Helvetica, sans-serif"
-  ctx.textAlign = "center"
+  monogram ??= new Path2D(MONOGRAM)
+  const inverted = Math.random() < 0.2
+  const bg = inverted ? "#c8ff00" : "#070707"
+  const ink = inverted ? "#070707" : "#c8ff00"
+  const split = 2 + Math.random() * 6 * amount
 
-  // Torn "JM" tile: thick horizontal bands shoved sideways, with an RGB split.
-  for (let y = 0; y < s; y += 16) {
-    const shift = Math.random() < amount ? (Math.random() - 0.5) * 40 : 0
+  const stroke = (color: string, dx: number) => {
+    ctx.save()
+    ctx.translate(dx, 0)
+    ctx.strokeStyle = color
+    ctx.stroke(monogram!)
+    ctx.restore()
+  }
+
+  // Thick bands shoved sideways, each with its own RGB split.
+  ctx.lineWidth = 8
+  for (let y = 0; y < s; y += 13) {
+    const shift = Math.random() < amount ? (Math.random() - 0.5) * 36 : 0
     ctx.save()
     ctx.beginPath()
-    ctx.rect(0, y, s, 16)
+    ctx.rect(0, y, s, 13)
     ctx.clip()
-    ctx.translate(shift, 0)
-    ctx.fillStyle = tile
-    ctx.fillRect(0, 0, s, s)
-    ctx.fillStyle = "#ff0055"
-    ctx.fillText("JM", 27, 43)
-    ctx.fillStyle = "#00e5ff"
-    ctx.fillText("JM", 37, 43)
-    ctx.fillStyle = ink
-    ctx.fillText("JM", 32, 43)
+    ctx.fillStyle = bg
+    ctx.fillRect(0, y, s, 13)
+    stroke("#ff0055", shift - split)
+    stroke("#00e5ff", shift + split)
+    stroke(ink, shift)
     ctx.restore()
   }
 
   // Dead pixel blocks.
-  const blocks = 1 + Math.floor(amount * 5)
+  const blocks = Math.floor(amount * 5)
   for (let i = 0; i < blocks; i++) {
     ctx.fillStyle = ["#070707", "#00ff46", "#eaffea", "#c8ff00"][Math.floor(Math.random() * 4)]
     ctx.fillRect(Math.random() * s, Math.random() * s, 8 + Math.random() * 18, 4 + Math.random() * 10)
@@ -57,7 +64,7 @@ function drawFavicon(ctx: CanvasRenderingContext2D, amount: number) {
   ctx.font = "bold 22px monospace"
   ctx.textAlign = "left"
   for (let x = 0; x < s; x += 16) {
-    if (Math.random() > amount) continue
+    if (Math.random() > amount * 0.7) continue
     const head = Math.random() * s
     for (let i = 0; i < 3; i++) {
       ctx.fillStyle = i === 0 ? "#eaffea" : `rgba(0, 255, 70, ${0.9 - i * 0.25})`
