@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#c8ff00"/>
-  <text x="32" y="40" text-anchor="middle" fill="#070707" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="800">JM</text>
+  <defs>
+    <path id="jm" d="M24 12V42Q24 52 14 52H8M24 12L38 34L52 12V52" fill="none" stroke-width="8"/>
+    <clipPath id="band"><rect y="26" width="64" height="10"/></clipPath>
+  </defs>
+  <rect width="64" height="64" fill="#070707"/>
+  <use href="#jm" stroke="#ff0055" x="-3"/>
+  <use href="#jm" stroke="#00e5ff" x="3"/>
+  <use href="#jm" stroke="#c8ff00"/>
+  <g clip-path="url(#band)">
+    <rect y="26" width="64" height="10" fill="#070707"/>
+    <use href="#jm" stroke="#c8ff00" x="7"/>
+  </g>
 </svg>
