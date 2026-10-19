@@ -30,7 +30,7 @@ The story chapter, **From the field to the tools**, explains the shift: every fi
 
 Before the work, a dotted world map replays eight moves across four continents (France, French Guiana, Corsica, New Caledonia, Congo). The route draws itself once in view, stop by stop, with what each place brought; visitors can jump to any stop or replay the journey. Experience, education, a full expandable experience log and internship contact complete the page. Volleyball photos are labelled as personal archive imagery.
 
-On the first home visit, a 3.5-second Matrix introduction plays before the portfolio: a terminal types two wake-up lines, then canvas digital rain pours down and writes JULES MOREAU in glyphs wherever its drops cross the name, and the screen drains from the top onto the hero. It loads no images, and the name is always complete before the exit, even on a slow device. Skip and Escape exit immediately; repeat visits in the same tab session, direct section links and reduced-motion preferences bypass it. The content remains available without JavaScript or if hydration fails. Project introductions are also brief and play once per session.
+On the first home visit, a Matrix introduction plays before the portfolio: a terminal types two wake-up lines, then canvas digital rain pours down and writes JULES MOREAU in glyphs wherever its drops cross the name. It ends on a choice: **The full dossier** (a narrated film, sound on, desktop) or **Enter the portfolio**, which drains the screen onto the hero. It loads no images, and the name is always complete before the choice, even on a slow device. Skip and Escape exit immediately; repeat visits in the same tab session, direct section links and reduced-motion preferences bypass it. The content remains available without JavaScript or if hydration fails. Project introductions are also brief and play once per session.
 
 ### Built for two reading speeds
 
@@ -43,7 +43,7 @@ On the first home visit, a 3.5-second Matrix introduction plays before the portf
 
 ## Case files
 
-![Selected work: the Thesis Engine leads](.github/readme/home-contracts.png)
+![Selected work: an interactive terminal lists the projects, the Thesis Engine first](.github/readme/home-contracts.png)
 
 | Code | Contract | Role | Selected proof |
 | :-- | --- | --- | --- |
@@ -55,7 +55,7 @@ On the first home visit, a 3.5-second Matrix introduction plays before the portf
 | `BLD` | **Client Builds** | AI-assisted Web Delivery | One live client website and one in development, built with Claude Code and Codex. |
 | `IMG` | **Imagery** | Photographer | 50 selected frames across sport, events and corporate work. |
 
-The first four lead the home page; the other three sit in its archive list.
+On the home page, the case files open from an interactive terminal: the first four are listed under `featured/`, the other three under `archive/`, and `help` lists every command.
 
 ## Under the hood
 
