@@ -1,11 +1,14 @@
 "use client"
 
 import { useEffect } from "react"
+import { isLite } from "@/lib/quality"
 
 // The browser tab is permanently broken: the title keeps scrambling into Matrix
 // glyphs and the favicon tears into green rain, worse when you look away.
 const GLYPHS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ01<>/#*+=_"
 const FRAME_MS = 70
+/** In lite mode the favicon is redrawn only every few title frames. */
+const LITE_ICON_EVERY = 4
 
 const pick = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
 
@@ -87,6 +90,7 @@ export function TabGlitch() {
     let iconHref = ""
     let spike = 0
     let timer = 0
+    let frames = 0
 
     // Next.js rewrites the title and icon on navigation: adopt whatever it set.
     const sync = () => {
@@ -113,7 +117,7 @@ export function TabGlitch() {
       if (spike > 0) spike--
       written = scramble(baseTitle, amount)
       document.title = written
-      if (ctx && iconLink) {
+      if (ctx && iconLink && (!isLite() || ++frames % LITE_ICON_EVERY === 0)) {
         drawFavicon(ctx, Math.max(amount, 0.45))
         iconLink.href = canvas.toDataURL("image/png")
       }

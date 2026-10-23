@@ -3,13 +3,15 @@
 import { useEffect, useRef } from "react"
 import { preload } from "react-dom"
 import imageLoader from "@/lib/image-loader"
+import { isLite } from "@/lib/quality"
 import styles from "./matrix-portrait.module.css"
 
 /* ------------------------------------------------------------------
    MATRIX PORTRAIT — the hero background on desktop: Jules's cut-out
    photo standing in digital rain. The face is blurred in the image
    file itself (scripts/build-hero-portrait.mjs) and glitches again
-   every few seconds. Phones keep a plain background.
+   every few seconds. Phones keep a plain background, and the rain
+   waits while the home intro covers it.
    ------------------------------------------------------------------ */
 
 const PHOTO = "/assets/portfolio/jules-portrait.webp"
@@ -23,6 +25,9 @@ const ACID = "#c8ff00"
 const FIGURE = { height: 0.86, center: 0.63 }
 const DESKTOP = "(min-width: 801px)"
 const SLICES = 7
+/** The rain steps 24 times a second, or about 15 in lite mode. */
+const FULL_MS = 1000 / 24
+const LITE_MS = 1000 / 16
 
 type Drop = { head: number; speed: number; trail: number }
 
@@ -36,25 +41,41 @@ export function MatrixPortrait() {
     if (!canvas || !ctx) return
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches
     const desktop = matchMedia(DESKTOP)
-    const frameMs = 1000 / 24
     const font = getComputedStyle(document.documentElement).getPropertyValue("--font-mono").trim() || "monospace"
     const photo = new Image()
     photo.decoding = "async"
     photo.sizes = SIZES
     photo.srcset = SRC_SET
     photo.src = imageLoader({ src: PHOTO, width: 1080 })
+    // The home intro covers the hero: the rain waits for it to finish.
+    const entrance = canvas.closest<HTMLElement>("[data-intro-phase]")
+    const covered = () => !!entrance && entrance.dataset.introPhase !== "ready"
 
     let cols = 0, rows = 0, cell = 0
     let fig = { x: 0, y: 0, w: 0, h: 0 }
     let inside = new Uint8Array(0), edges = new Uint8Array(0), face = new Uint8Array(0), glyphs = new Uint8Array(0)
+    let faceCells = new Uint32Array(0)
     let drops: Drop[] = []
     let offsets: number[] = []
+    /** White glyphs for the drop heads, and the same glyphs already tinted acid. */
     const atlas = document.createElement("canvas")
-    const layer = document.createElement("canvas")
+    const tinted = document.createElement("canvas")
+    /** The silhouette's resting glyphs; only the cells whose glyph changes are repainted. */
+    const base = document.createElement("canvas")
     const figure = document.createElement("canvas")
     let frame = 0, last = 0, glitchUntil = 0, nextGlitch = 0, visible = true
 
     const newDrop = (start: number): Drop => ({ head: start, speed: 0.25 + Math.random() * 0.6, trail: 10 + Math.random() * 24 })
+    /** How bright a silhouette cell is with no rain on it. */
+    const rest = (i: number) => (edges[i] ? 0.7 : inside[i] ? 0.14 : 0)
+
+    function paintBase(i: number) {
+      const g = base.getContext("2d")!
+      const x = (i % cols) * cell, y = Math.floor(i / cols) * cell
+      g.clearRect(x, y, cell, cell)
+      g.globalAlpha = rest(i)
+      g.drawImage(tinted, glyphs[i] * cell, 0, cell, cell, x, y, cell, cell)
+    }
 
     function setup() {
       if (!canvas) return
@@ -64,8 +85,8 @@ export function MatrixPortrait() {
       cell = Math.round(10 * dpr)
       cols = Math.ceil((canvas.clientWidth * dpr) / cell)
       rows = Math.ceil((canvas.clientHeight * dpr) / cell)
-      canvas.width = layer.width = cols * cell
-      canvas.height = layer.height = rows * cell
+      canvas.width = base.width = cols * cell
+      canvas.height = base.height = rows * cell
 
       // The figure sits on the glyph grid, feet below the fold.
       const figRows = Math.round(rows * FIGURE.height)
@@ -111,18 +132,41 @@ export function MatrixPortrait() {
           if (inside[i] && (!inside[i - 1] || !inside[i + 1] || !inside[i - cols] || !inside[i + cols])) edges[i] = 1
         }
       }
+      faceCells = Uint32Array.from(face.keys()).filter(i => face[i])
       glyphs = Uint8Array.from({ length: cols * rows }, () => Math.floor(Math.random() * GLYPHS.length))
       drops = Array.from({ length: cols }, () => newDrop(Math.random() * rows * 1.4 - rows * 0.4))
       offsets = Array.from({ length: SLICES }, () => 0)
 
-      atlas.width = GLYPHS.length * cell
-      atlas.height = cell
+      atlas.width = tinted.width = GLYPHS.length * cell
+      atlas.height = tinted.height = cell
       const a = atlas.getContext("2d")!
       a.font = `600 ${Math.round(cell * 0.92)}px ${font}`
       a.textAlign = "center"
       a.textBaseline = "middle"
       a.fillStyle = "#fff"
       GLYPHS.forEach((g, i) => a.fillText(g, i * cell + cell / 2, cell / 2))
+      const t = tinted.getContext("2d")!
+      t.drawImage(atlas, 0, 0)
+      t.globalCompositeOperation = "source-in"
+      t.fillStyle = ACID
+      t.fillRect(0, 0, tinted.width, tinted.height)
+
+      base.getContext("2d")!.clearRect(0, 0, base.width, base.height)
+      for (let i = 0; i < inside.length; i++) if (inside[i]) paintBase(i)
+    }
+
+    /** Draws a glyph over its resting one so the two add up to `alpha`, as if drawn once. */
+    function over(i: number, alpha: number) {
+      const b = rest(i)
+      if (alpha - b < 0.01) return
+      ctx!.globalAlpha = Math.min(1, (alpha - b) / (1 - b))
+      ctx!.drawImage(tinted, glyphs[i] * cell, 0, cell, cell, (i % cols) * cell, Math.floor(i / cols) * cell, cell, cell)
+    }
+
+    const rainAt = (i: number) => {
+      const drop = drops[i % cols]
+      const dist = drop.head - Math.floor(i / cols)
+      return dist >= 0 && dist < drop.trail ? 1 - dist / drop.trail : 0
     }
 
     function draw(now: number) {
@@ -140,42 +184,38 @@ export function MatrixPortrait() {
         })
       }
 
-      // Glyphs go on their own layer so they can be tinted without tinting the photo.
-      const g = layer.getContext("2d")!
-      g.globalCompositeOperation = "source-over"
-      g.globalAlpha = 1
-      g.clearRect(0, 0, layer.width, layer.height)
+      // The resting silhouette, then only the cells a drop is running through.
+      ctx.drawImage(base, 0, 0)
       for (let c = 0; c < cols; c++) {
         const drop = drops[c]
-        for (let r = 0; r < rows; r++) {
+        const bottom = Math.min(rows - 1, Math.floor(drop.head))
+        for (let r = Math.max(0, Math.floor(drop.head - drop.trail) + 1); r <= bottom; r++) {
           const i = r * cols + c
-          const dist = drop.head - r
-          const rain = dist >= 0 && dist < drop.trail ? 1 - dist / drop.trail : 0
-          const alpha = edges[i] ? 0.7 + rain * 0.3
-            : inside[i] ? 0.14 + rain * 0.6 + (glitching && face[i] ? 0.35 : 0)
-            : rain * 0.3
-          if (alpha < 0.03) continue
-          g.globalAlpha = Math.min(1, alpha)
-          g.drawImage(atlas, glyphs[i] * cell, 0, cell, cell, c * cell, r * cell, cell, cell)
+          const rain = 1 - (drop.head - r) / drop.trail
+          if (edges[i]) over(i, 0.7 + rain * 0.3)
+          else if (inside[i]) { if (!(glitching && face[i])) over(i, 0.14 + rain * 0.6) }
+          else if (rain * 0.3 >= 0.03) {
+            ctx.globalAlpha = rain * 0.3
+            ctx.drawImage(tinted, glyphs[i] * cell, 0, cell, cell, c * cell, r * cell, cell, cell)
+          }
         }
       }
-      g.globalAlpha = 1
-      g.globalCompositeOperation = "source-in"
-      g.fillStyle = ACID
-      g.fillRect(0, 0, layer.width, layer.height)
-      g.globalCompositeOperation = "source-over"
+      // A glitch lights the whole face, rain or not.
+      if (glitching) for (const i of faceCells) if (!edges[i]) over(i, 0.14 + rainAt(i) * 0.6 + 0.35)
+
       for (let c = 0; c < cols; c++) {
         const r = Math.floor(drops[c].head)
         if (r < 0 || r >= rows) continue
-        g.globalAlpha = inside[r * cols + c] ? 0.9 : 0.45
-        g.drawImage(atlas, glyphs[r * cols + c] * cell, 0, cell, cell, c * cell, r * cell, cell, cell)
+        ctx.globalAlpha = inside[r * cols + c] ? 0.9 : 0.45
+        ctx.drawImage(atlas, glyphs[r * cols + c] * cell, 0, cell, cell, c * cell, r * cell, cell, cell)
       }
-      ctx.drawImage(layer, 0, 0)
+      ctx.globalAlpha = 1
     }
 
-    function step(now: number) {
+    /** Advances the rain by `k` steps' worth (one step at full quality). */
+    function step(now: number, k: number) {
       for (const [c, drop] of drops.entries()) {
-        drop.head += drop.speed
+        drop.head += drop.speed * k
         if (drop.head - drop.trail > rows) drops[c] = newDrop(-Math.random() * rows * 0.5)
       }
       if (now >= nextGlitch) {
@@ -184,23 +224,36 @@ export function MatrixPortrait() {
         offsets = offsets.map(() => Math.round((Math.random() * 2 - 1) * 3))
       }
       const glitching = now < glitchUntil
-      for (let i = 0; i < glyphs.length; i++) {
-        if (Math.random() < (face[i] ? (glitching ? 0.6 : 0.08) : 0.02)) glyphs[i] = Math.floor(Math.random() * GLYPHS.length)
+      const chance = (p: number) => 1 - (1 - p) ** k
+      const change = (i: number) => {
+        glyphs[i] = Math.floor(Math.random() * GLYPHS.length)
+        if (inside[i]) paintBase(i)
       }
+      // 2% of the cells change glyph each step: pick that many at random rather than rolling every cell.
+      const picks = Math.floor(glyphs.length * chance(0.02) + Math.random())
+      for (let n = 0; n < picks; n++) {
+        const i = Math.floor(Math.random() * glyphs.length)
+        if (!face[i]) change(i)
+      }
+      const flicker = chance(glitching ? 0.6 : 0.08)
+      for (const i of faceCells) if (Math.random() < flicker) change(i)
     }
 
     function loop(now: number) {
       frame = requestAnimationFrame(loop)
-      if (now - last < frameMs) return
+      const lite = isLite()
+      if (now - last < (lite ? LITE_MS : FULL_MS)) return
+      // Lite mode draws less often and moves the rain further each time, so it falls as fast.
+      const k = lite && last ? Math.min(3, (now - last) / FULL_MS) : 1
       last = now
-      step(now)
+      step(now, k)
       draw(now)
     }
 
     function start() {
       cancelAnimationFrame(frame)
       if (!desktop.matches) return
-      if (still || !visible) draw(0)
+      if (still || !visible || covered()) draw(0)
       else frame = requestAnimationFrame(loop)
     }
 
@@ -214,6 +267,7 @@ export function MatrixPortrait() {
       if (visible) start()
       else cancelAnimationFrame(frame)
     })
+    const intro = new MutationObserver(start)
 
     let cancelled = false
     Promise.all([document.fonts.ready, photo.decode()]).then(() => {
@@ -223,6 +277,7 @@ export function MatrixPortrait() {
       canvas.dataset.ready = "true"
       resize.observe(canvas)
       watch.observe(canvas)
+      if (entrance) intro.observe(entrance, { attributes: true, attributeFilter: ["data-intro-phase"] })
     }, () => {})
     return () => {
       cancelled = true
@@ -230,6 +285,7 @@ export function MatrixPortrait() {
       cancelAnimationFrame(resizeFrame)
       resize.disconnect()
       watch.disconnect()
+      intro.disconnect()
     }
   }, [])
 

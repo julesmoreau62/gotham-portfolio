@@ -6,6 +6,7 @@ import { BigDate, STILLS } from "./board"
 import { DOTS, arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, rotate, toVec, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
+import { glow } from "@/lib/quality"
 
 /* MOMENTS — the full-screen beats of the career chapters. While one
    plays, the subject file and the locator slide off screen and the
@@ -133,7 +134,7 @@ function drawTravel(canvas: HTMLCanvasElement, travel: Travel, t: number) {
     ctx.strokeStyle = `rgba(${ACID},1)`
     ctx.lineWidth = 2.6 * dpr
     ctx.shadowColor = `rgb(${ACID})`
-    ctx.shadowBlur = 16 * dpr
+    ctx.shadowBlur = glow(16 * dpr)
     ctx.beginPath()
     let pen = false
     for (const q of points) {
@@ -170,7 +171,7 @@ function drawTravel(canvas: HTMLCanvasElement, travel: Travel, t: number) {
   ctx.stroke()
   ctx.fillStyle = "#fff"
   ctx.shadowColor = `rgb(${ACID})`
-  ctx.shadowBlur = 14 * dpr
+  ctx.shadowBlur = glow(14 * dpr)
   ctx.fillRect(q.x - 4 * dpr, q.y - 4 * dpr, 8 * dpr, 8 * dpr)
   ctx.shadowBlur = 0
 }

@@ -7,6 +7,7 @@ import { Scramble } from "@/components/fx/scramble"
 import { COPY } from "@/lib/copy"
 import { DOSSIER_DURATION } from "@/lib/dossier"
 import { type Locale } from "@/lib/i18n"
+import { isLite } from "@/lib/quality"
 import { GLYPHS } from "./matrix-portrait"
 import styles from "./matrix-intro.module.css"
 
@@ -36,6 +37,8 @@ const TYPING = { start: 380, char: 18, pause: 180 }
 const ROLE_DELAY = 1600
 const ACID = "#c8ff00"
 const FPS = 30
+/** Lite mode (slow devices) draws fewer frames and skips the bloom. */
+const LITE_FPS = 20
 /** The first wave sweeps left to right, in seconds: when each column starts, and how long a drop takes to cross. */
 const SWEEP = { start: 0.1, span: 1.15, jitter: 0.12, cross: 0.55 }
 /** However slow the device, the name is fully written this long after the rain starts. */
@@ -104,7 +107,7 @@ function CodeRain({ phase }: { phase: IntroPhase }) {
     let letters: Letter[] = [], letterLocked: number[] = [], letterTotal: number[] = [], letterDoneAt: number[] = []
     let nameTop = 0, nameBottom = 0, namePx = 0, dpr = 1
     let pace = 1, nextGlitch = 0, glitchUntil = 0, glitchY = 0, glitchH = 0
-    let frame = 0, last = 0
+    let frame = 0, last = 0, frozen = false
 
     const randomGlyphs = (count: number) => Uint8Array.from({ length: count }, () => Math.floor(Math.random() * GLYPHS.length))
 
@@ -448,7 +451,7 @@ function CodeRain({ phase }: { phase: IntroPhase }) {
       }
 
       // Bloom: the frame, shrunk twice and stretched back, glows over itself.
-      if (diving) return
+      if (diving || isLite()) return
       const [b0, b1] = bloom
       const s0 = b0.getContext("2d")!
       const s1 = b1.getContext("2d")!
@@ -469,7 +472,8 @@ function CodeRain({ phase }: { phase: IntroPhase }) {
 
     function loop(now: number) {
       frame = requestAnimationFrame(loop)
-      if (now - last < 1000 / FPS) return
+      const lite = isLite()
+      if (now - last < 1000 / (lite ? LITE_FPS : FPS)) return
       const dt = last ? Math.min((now - last) / 1000, 0.25) : 0
       last = now
       if (!rainSince.current || !measured) return
@@ -477,6 +481,11 @@ function CodeRain({ phase }: { phase: IntroPhase }) {
         mid.drops = Array.from({ length: mid.cols }, (_, c) => pour(c))
         far.drops = Array.from({ length: far.cols }, (_, c) => distant(c))
         near.drops = Array.from({ length: Math.max(3, Math.round(near.cols * 0.12)) }, close)
+      }
+      // In lite mode the dive keeps its first frame and the CSS zoom does the rest.
+      if (lite && phaseNow.current === "exit") {
+        if (frozen) return
+        frozen = true
       }
       step(dt, now)
       draw(now)
