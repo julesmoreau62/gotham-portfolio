@@ -5,6 +5,7 @@ import { CUE } from "@/lib/dossier"
 import { arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, rotate, toVec, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, lerp, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
+import { glow } from "@/lib/quality"
 
 /* TIMELINE + LOCATOR — the two instruments of the career chapters:
    a ruler from 2022 to 2027 whose cursor follows every date the voice
@@ -114,7 +115,7 @@ function drawLocator(canvas: HTMLCanvasElement, t: number) {
       ctx.strokeStyle = "rgba(200,255,0,.9)"
       ctx.lineWidth = 1.6 * dpr
       ctx.shadowColor = "#c8ff00"
-      ctx.shadowBlur = 8 * dpr
+      ctx.shadowBlur = glow(8 * dpr)
       ctx.beginPath()
       let pen = false
       for (const q of arcPoints(a, b, p, 48).map(project)) {

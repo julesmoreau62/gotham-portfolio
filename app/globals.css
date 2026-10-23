@@ -316,6 +316,38 @@
   .cursor-glow { display: none; }
 }
 
+/* Shown once a slow device has switched the site to lite mode (lib/quality.ts). */
+.quality-badge {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 320;
+  width: min(340px, calc(100vw - 32px));
+  padding: 14px 16px 12px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--acid);
+  background: rgba(7, 7, 7, 0.96);
+  color: var(--ink);
+  font-family: var(--font-mono), monospace;
+  animation: quality-in 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.quality-badge[data-place="raised"] { bottom: 76px; }
+/* Clear of the section index on wide screens. */
+@media (min-width: 1024px) { .quality-badge { right: 60px; } }
+/* The home intro has its buttons bottom right (and across the bottom on phones). */
+:root[data-intro] .quality-badge { left: 16px; right: auto; }
+@media (max-width: 720px) { :root[data-intro] .quality-badge { top: 16px; bottom: auto; } }
+.quality-badge-tag { display: flex; align-items: center; gap: 8px; width: auto; padding: 9px 12px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acid); }
+.quality-badge-tag i, .quality-badge-title i { width: 6px; height: 6px; background: var(--acid); }
+.quality-badge-tag:hover, .quality-badge-tag:focus-visible { border-color: rgba(200, 255, 0, 0.5); }
+.quality-badge-title { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acid); }
+.quality-badge-text { margin-top: 8px; font-size: 12px; line-height: 1.55; color: var(--mute); }
+.quality-badge-actions { display: flex; gap: 8px; margin-top: 12px; }
+.quality-badge-actions button { min-height: 32px; padding: 0 12px; border: 1px solid var(--line); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); transition: color 0.15s, border-color 0.15s; }
+.quality-badge-actions button:first-child { border-color: rgba(200, 255, 0, 0.5); color: var(--acid); }
+.quality-badge-actions button:hover, .quality-badge-actions button:focus-visible { border-color: var(--acid); color: var(--acid); }
+@keyframes quality-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
 @media (prefers-reduced-motion: reduce) {
   .cursor-glow { display: none; }
   .grain-layer {

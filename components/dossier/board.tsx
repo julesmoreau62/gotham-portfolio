@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react"
 import imageLoader from "@/lib/image-loader"
 import { decode, easeOut, hash, pad, ramp, typed } from "./timing"
 import styles from "./dossier.module.css"
+import { isLite } from "@/lib/quality"
 
 /* BOARD — the pieces of the investigation board the career chapters
    are built from: pinned exhibits, record cards, stamps, giant dates.
@@ -82,7 +83,7 @@ export function Still({ t, at, out, dimAt, src, cam, tag, box, tilt = 0, ratio =
     <figure className={styles.still} style={{ ...place(box), opacity: p * (1 - gone) * (1 - dim * 0.6), transform: `rotate(${tilt}deg) scale(${(1.3 - 0.3 * p) * (1 - 0.08 * gone)})` }}>
       <div className={styles.stillImage} style={{ aspectRatio: ratio }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt="" style={{ objectPosition: position, transform: `scale(${1.05 + ramp(t, at, at + 10) * 0.12})`, filter: `grayscale(1) contrast(1.25) brightness(0.9) blur(${(1 - focus) * 6}px)` }} />
+        <img src={src} alt="" style={{ objectPosition: position, transform: `scale(${1.05 + ramp(t, at, at + 10) * 0.12})`, filter: `grayscale(1) contrast(1.25) brightness(0.9)${isLite() ? "" : ` blur(${(1 - focus) * 6}px)`}` }} />
         <span className={styles.stillHud}><b><i />REC · {cam}</b><span>{cameraClock(t, at)}</span></span>
         <span className={styles.stillFocus} style={{ opacity: 1 - focus * 0.6, transform: `translate(-50%, -50%) scale(${1.6 - focus * 0.6})` }} />
         {scan > 0 && scan < 1 && <span className={styles.pinScan} style={{ top: `${scan * 100}%` }} />}

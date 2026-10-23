@@ -23,6 +23,7 @@ import { ShiftScene } from "./scene-shift"
 import { SoundCheck } from "./sound-check"
 import { Locator, Timeline } from "./timeline"
 import { easeInOut, easeOut, hash, ramp } from "./timing"
+import { isLite } from "@/lib/quality"
 import styles from "./dossier.module.css"
 
 /* ------------------------------------------------------------------
@@ -38,6 +39,8 @@ const GLITCHES = [
   CUE.search.at - 0.12, CUE.match.at, CUE.rebuild.at, CUE.childhood.at, CUE.interest.at - 0.15, CUE.gaming.at, CUE.around.at,
   CAREER_START - 0.2, CUE.kourou.signal.at, CUE.lille.incidents.at, CUE.daring.border.at, CUE.shift.shift.at, CUE.mission.world.at, CUE.mission.out.end,
 ]
+/** Lite mode renders the film at about 30 fps; the audio clock keeps it in sync. */
+const LITE_FRAME_MS = 1000 / 36
 const FLASHES = [
   { at: 0, color: "#f2f1ec" },
   { at: CUE.match.at, color: "#c8ff00" },
@@ -135,15 +138,18 @@ export function DossierExperience() {
 
   useEffect(() => {
     if (phase !== "live") return
-    let frame = 0
-    const loop = () => {
+    let frame = 0, drawn = 0
+    const loop = (now: number) => {
       frame = requestAnimationFrame(loop)
       const e = engine.current
       if (!e) return
       e.update()
-      const now = e.time
-      setT(now)
-      if (now >= DOSSIER_DURATION - 0.01) setPhase("end")
+      const time = e.time
+      const ending = time >= DOSSIER_DURATION - 0.01
+      if (!ending && isLite() && now - drawn < LITE_FRAME_MS) return
+      drawn = now
+      setT(time)
+      if (ending) setPhase("end")
     }
     frame = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(frame)

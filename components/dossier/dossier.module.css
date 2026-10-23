@@ -185,6 +185,8 @@
 /* ---------------------------- frame ---------------------------- */
 .glitch { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
 .glitch span { position: absolute; left: -5%; right: -5%; mix-blend-mode: screen; backdrop-filter: hue-rotate(80deg) saturate(2); }
+/* Lite mode (slow devices): the tears keep their colour, not the live re-tint of what is behind them. */
+:global(:root[data-quality="lite"]) .glitch span { backdrop-filter: none; }
 .flash { position: fixed; inset: 0; z-index: 39; pointer-events: none; background: var(--acid); mix-blend-mode: screen; }
 .hud { position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: calc(1 - var(--outro, 0)); }
 .hudTop { position: absolute; top: 24px; left: 4vw; right: 4vw; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 11px; text-transform: uppercase; color: var(--dim); }

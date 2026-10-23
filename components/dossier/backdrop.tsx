@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { GLYPHS } from "@/components/home/matrix-portrait"
+import { isLite } from "@/lib/quality"
 import styles from "./dossier.module.css"
 
 /** Faint digital rain behind the whole dossier. It runs on its own clock: pure ambience. */
@@ -30,7 +31,8 @@ export function Backdrop({ running }: { running: boolean }) {
     }
     const draw = (now: number) => {
       frame = requestAnimationFrame(draw)
-      if (now - last < 1000 / 20) return
+      // Pure ambience: 20 fps, or 10 in lite mode.
+      if (now - last < 1000 / (isLite() ? 10 : 20)) return
       const dt = last ? Math.min((now - last) / 1000, 0.2) : 0
       last = now
       if (!live.current && !still) return

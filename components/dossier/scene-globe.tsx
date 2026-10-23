@@ -7,6 +7,7 @@ import { PLACES, type PlaceId } from "@/lib/journey"
 import { DOTS, arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, placeVec, rotate, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
+import { glow } from "@/lib/quality"
 
 /* MOVEMENT HISTORY — a dotted globe is scanned into existence, then
    spins to each place as the voice names it, a flight arc lifting off
@@ -98,7 +99,7 @@ function draw(canvas: HTMLCanvasElement, t: number, width: number, height: numbe
     const half = Math.sqrt(Math.max(0, R * R - (scanY - cy) ** 2))
     ctx.strokeStyle = `rgba(${ACID},0.9)`
     ctx.shadowColor = `rgb(${ACID})`
-    ctx.shadowBlur = 16 * dpr
+    ctx.shadowBlur = glow(16 * dpr)
     ctx.lineWidth = 1.5 * dpr
     ctx.beginPath(); ctx.moveTo(cx - half - 30 * dpr, scanY); ctx.lineTo(cx + half + 30 * dpr, scanY); ctx.stroke()
     ctx.shadowBlur = 0
@@ -114,7 +115,7 @@ function draw(canvas: HTMLCanvasElement, t: number, width: number, height: numbe
     ctx.strokeStyle = active ? `rgba(${ACID},1)` : `rgba(${ACID},0.5)`
     ctx.lineWidth = (active ? 2.4 : 1.4) * dpr
     ctx.shadowColor = `rgb(${ACID})`
-    ctx.shadowBlur = active ? 14 * dpr : 0
+    ctx.shadowBlur = glow(active ? 14 * dpr : 0)
     ctx.beginPath()
     let pen = false
     for (const q of points) {
@@ -140,7 +141,7 @@ function draw(canvas: HTMLCanvasElement, t: number, width: number, height: numbe
     const current = ROUTE[stop] === id
     ctx.fillStyle = current ? "#fff" : `rgb(${ACID})`
     ctx.shadowColor = `rgb(${ACID})`
-    ctx.shadowBlur = current ? 12 * dpr : 0
+    ctx.shadowBlur = glow(current ? 12 * dpr : 0)
     ctx.fillRect(p.x - 3 * dpr, p.y - 3 * dpr, 6 * dpr, 6 * dpr)
     ctx.shadowBlur = 0
     if (!current) return
@@ -189,7 +190,7 @@ function draw(canvas: HTMLCanvasElement, t: number, width: number, height: numbe
     const fade = 1 - ramp(t, interest.at - 0.04, interest.at + 0.4)
     ctx.fillStyle = `rgba(${INK},${fade})`
     ctx.shadowColor = `rgb(${ACID})`
-    ctx.shadowBlur = 24 * dpr
+    ctx.shadowBlur = glow(24 * dpr)
     ctx.fillRect(cx - R * 1.3 * fade, cy - 1 * dpr, R * 2.6 * fade, 2 * dpr)
     ctx.shadowBlur = 0
   }

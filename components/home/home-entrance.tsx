@@ -65,6 +65,8 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
     const wasStopped = lenis?.isStopped ?? false
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)")
     root.style.overflow = "hidden"
+    // Lets fixed UI outside the intro (the quality badge) keep clear of its buttons.
+    root.dataset.intro = ""
     lenis?.stop()
     skipButton.current?.focus({ preventScroll: true })
 
@@ -96,6 +98,7 @@ export function HomeEntrance({ children, locale = "en" }: { children: ReactNode;
       window.removeEventListener("keydown", onKey, true)
       window.removeEventListener("hashchange", onHash)
       root.style.overflow = overflow
+      delete root.dataset.intro
       if (!wasStopped) lenis?.start()
     }
   }, [active, finish])

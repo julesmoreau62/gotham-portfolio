@@ -5,6 +5,7 @@ import { Captions, Pause, Play, Volume2, VolumeX, X } from "lucide-react"
 import { CUE, DOSSIER_DURATION, SEGMENTS } from "@/lib/dossier"
 import { decode, pad, ramp, timecode, typed } from "./timing"
 import styles from "./dossier.module.css"
+import { glow } from "@/lib/quality"
 
 /* HUD — the surveillance frame around the film: chapter, timecode,
    the voice on an oscilloscope, the operations log, subtitles and the
@@ -73,7 +74,7 @@ function VoiceScope({ analyser, t }: { analyser: AnalyserNode | null; t: number 
     const samples = data.current
     ctx.strokeStyle = "#c8ff00"
     ctx.shadowColor = "#c8ff00"
-    ctx.shadowBlur = 6 * dpr
+    ctx.shadowBlur = glow(6 * dpr)
     ctx.lineWidth = 1.3 * dpr
     ctx.beginPath()
     for (let x = 0; x < el.width; x++) {
