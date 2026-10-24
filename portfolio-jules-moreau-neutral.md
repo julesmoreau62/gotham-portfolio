@@ -31,7 +31,7 @@ workflows, with no formal coding background.
 ## Contact
 
 - Email — jules.moreau1@outlook.com (replies within 24h, FR or EN)
-- LinkedIn — https://www.linkedin.com/in/jules-moreau-25405b363
+- LinkedIn — https://www.linkedin.com/in/jules-moreau-lille
 - Website — https://www.julesmoreau.eu
 - CV — PDF available
 - Portrait photo available

@@ -31,7 +31,7 @@ M2 International Sport Administration student seeking an Esports Operations / Ev
 ## 2. Contact & links
 
 - Email — jules.moreau1@outlook.com (response within 24h · FR / EN)
-- LinkedIn — https://www.linkedin.com/in/jules-moreau-25405b363
+- LinkedIn — https://www.linkedin.com/in/jules-moreau-lille
 - Website — https://www.julesmoreau.eu
 - CV — /assets/cv-julesmoreau.pdf
 
