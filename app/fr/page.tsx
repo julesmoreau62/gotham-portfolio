@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { HomePage } from "@/components/home/home-page"
 import { HOME_PATH, languageAlternates } from "@/lib/i18n"
 
-const title = "Jules Moreau — Transformation digitale & IA"
+const title = "Jules Moreau — Transformation digitale & IA · Lille"
 const description =
   "Étudiant en M2 International Sport Administration, je cherche un stage en transformation digitale & IA dans une structure sportive, de février à juin 2027. Cartographie des process, automatisation, outils IA et adoption par les équipes."
 

@@ -5,7 +5,7 @@
 export const SITE = {
   url: "https://www.julesmoreau.eu",
   name: "Jules Moreau",
-  title: "Jules Moreau — Digital Transformation & AI",
+  title: "Jules Moreau — Digital Transformation & AI · Lille",
   description:
     "M2 International Sport Administration student seeking a digital transformation & AI internship in a sport organisation, February to June 2027. Process mapping, workflow automation, AI tools and team adoption.",
   version: "v4.0",

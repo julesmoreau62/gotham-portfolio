@@ -30,8 +30,10 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
       <div className={styles.heroMain}>
         <div className={styles.heroCopy}>
           <div className={styles.heroAvailability}><span className={styles.statusDot} /> {t.availability} <strong>{t.window}</strong></div>
-          <p className={styles.heroName}>Jules Moreau <span> / {t.role}</span></p>
-          <h1 id="hero-title" className={styles.heroTitle}>{t.title[0]}<br /><span className="text-acid">{t.title[1]}</span></h1>
+          <h1 id="hero-title">
+            <span className={`${styles.heroName} block`}>Jules Moreau <span> / {t.role}</span></span>
+            <span className={`${styles.heroTitle} block`}>{t.title[0]}<br /><span className="text-acid">{t.title[1]}</span></span>
+          </h1>
           <p className={styles.heroSpecialty}>{t.specialty}</p>
           <p className={styles.heroIntro}>{t.intro}</p>
           <div className={styles.heroActions}>
