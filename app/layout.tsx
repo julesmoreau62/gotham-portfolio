@@ -80,7 +80,7 @@ const jsonLd = {
   ],
   nationality: "French",
   address: { "@type": "PostalAddress", addressLocality: "Lille", addressCountry: "FR" },
-  sameAs: [PROFILE.linkedin],
+  sameAs: [PROFILE.linkedin, PROFILE.github],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

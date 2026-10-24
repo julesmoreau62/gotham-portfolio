@@ -26,6 +26,7 @@ export const PROFILE = {
   coords: "50.6292° N / 3.0573° E",
   email: "jules.moreau1@outlook.com",
   linkedin: "https://www.linkedin.com/in/jules-moreau-lille",
+  github: "https://github.com/julesmoreau62",
   cv: "/assets/cv-julesmoreau.pdf",
   languages: [
     { label: "French", level: "Native" },
