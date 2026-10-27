@@ -207,19 +207,21 @@ Field operations and communication for a 500+ personnel campus tournament across
 - **Assets produced** — Graphic charter (palette + type system), bilingual FR/EN participant briefing, campus & social media poster, event photo and body-cam coverage.
 - **Gear** — Sony α6400, GoPro ×2.
 
-### 05 · THS — Thesis Engine *(live)*
-M2 thesis · Local AI research pipeline — Builder & operator · AI-augmented build — Oct 2026 → running 24/7 — Local machine · Obsidian vault
-**Headline metric:** 90 sources scanned a day · ~5% kept · ≈ €0/month
+### 05 · ONO — Ono-Sendai *(in daily use)*
+M2 thesis · Personal AI workspace — Designer & builder · AI-augmented build — 2026 → in daily use — macOS app · runs on Jules's machine
+**Headline metric:** 4 spaces in one app · 31 books searchable to the page · ≈ €0 local transcription & search
 **Accent:** `#9d6bff` (own identity on the case page: night-lab palette, Instrument Serif + mono)
 
-A local research engine for the M2 thesis question: *to what extent are generative AI and no-code tools levers of professionalisation and organisational efficiency for a sports association with limited human and financial resources?*
+A desktop app built to run the whole master's year in one place, and a working answer to the M2 thesis question: *to what extent are generative AI and no-code tools levers of professionalisation and organisational efficiency for a sports association with limited human and financial resources?*
 
-- **Pipeline** — Three scans a day across Google Scholar, OpenAlex and Cairn (~90 candidates a day) → triage and summaries by a Qwen3 4B fine-tuned with LoRA, served by Ollama on Jules's machine 24/7 and grounded with RAG on reference documents (~5% kept) → complex analyses escalated to Claude Sonnet 5.5 (deeper explanations, visuals) → Obsidian vault: notes, Canvas mind maps, bibliography.
-- **Why** — The research field is young: few sources exist, so new ones have to be caught as soon as they appear. The engine also works under the constraints the thesis studies: one person, close to zero budget.
-- **Cost** — ≈ €0/month locally, plus a few cents of Sonnet.
-- **Origin** — Adapted from Jules's own AI-news watch pipeline.
-- **Status** — Running since October 2026. Private repository while the thesis is in progress.
-- **Case page** — Live graph-view hero, interactive system map with a particle simulation at the real rates, a 90 → 5 sieve, a local/escalation routing demo, an Obsidian Canvas illustration and the toolchain logo wall.
+- **Thesis** — Markdown chapters in a plain folder (Obsidian-compatible), APA 7 citations in French or English, a read-only copilot that checks, sources, proofreads or rephrases a selected passage and answers with the exact page, mind map with presentation mode, Word and PDF export with cover page, table of contents and references.
+- **Library** — 31 books and reports read once and searchable passage by passage, by keyword and by meaning. The meaning model (bge-m3, local) was chosen after testing three embedding models on real sport-management books: only bge-m3 linked short French questions to the English passages that answer them.
+- **Lectures** — Recording with slide timing and flagged moments, local whisper.cpp transcription pinned to each slide, a written course with links back to the slides, revision sheets and spaced-repetition flashcards (1 → 120 days).
+- **Ask** — Cmd+K: one question across books, thesis and lecture notes; every answer cites its page or section.
+- **Design choices** — Grounded (read-only copilot, sources cited), plain files (Markdown, CSL-JSON, Zotero), local first (audio never leaves the Mac), hourly versioned backups.
+- **Fed by the Thesis Engine** — Three scans a day across Google Scholar, OpenAlex and Cairn (~90 candidates a day) → triage and summaries by a Qwen3 4B fine-tuned with LoRA, served by Ollama 24/7 and grounded with RAG (~5% kept) → complex analyses escalated to DeepSeek V4-Pro → Ono-Sendai. Running since October 2026, ≈ €0/month plus a few cents of DeepSeek.
+- **Build** — Electron app on top of OpenCode for the AI agents; about 11,000 lines, with tests. Private repositories while the thesis is in progress.
+- **Case page** — Graph-view hero, an interactive recreation of the app's four spaces, a clickable lecture timeline, the embedding-model comparison, design choices, the Thesis Engine system map and the toolchain wall.
 
 ### 06 · BLD — Client Builds *(1 live · 1 in dev)*
 Ferrant P.H.E · AS Nortkerque 95 — AI-assisted web delivery — 2025 → 2026 — Hauts-de-France, FR
@@ -249,7 +251,7 @@ Fifty selected frames across three sectors.
 ## 10. Side projects · R&D
 
 - **Overwatch 2 Stats Dashboard** — Personal production tool on the OverFast API, built from a Grandmaster / former Top 500 player's perspective.
-- **Qwen3 4B fine-tune** — LoRA fine-tuning of the open-weights Qwen3 4B that runs Thesis Engine's local triage.
+- **Qwen3 4B fine-tune** — LoRA fine-tuning of the open-weights Qwen3 4B that runs the local triage of the Thesis Engine (feeding Ono-Sendai).
 - **julesmoreau.eu** — This site. Next.js, three.js and framer-motion, art-directed and shipped through an AI-augmented workflow with zero coding background.
 
 ---
@@ -265,6 +267,7 @@ Fifty selected frames across three sectors.
 | 1M+ | Views · ASN95 season |
 | 2 / 0 | Incidents solved / event disruption |
 | 2 | Client sites shipped |
+| 4 | Spaces in Ono-Sendai · thesis, library, lectures, ask |
 | 90 / day | Sources scanned · Thesis Engine (~5% kept, ≈ €0/month) |
 
 ---

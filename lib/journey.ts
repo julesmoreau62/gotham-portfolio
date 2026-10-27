@@ -1,11 +1,7 @@
 /** Recruiter-first reading order; project URLs stay stable. */
 export const HOME_SECTIONS = [
   { id: "hero", n: "00" },
-  { id: "origin", n: "01" },
-  { id: "contracts", n: "02" },
-  { id: "operator", n: "03" },
-  { id: "log", n: "04" },
-  { id: "extraction", n: "05" },
+  { id: "contracts", n: "01" },
 ] as const
 
 export type HomeSectionId = (typeof HOME_SECTIONS)[number]["id"]
@@ -49,3 +45,15 @@ export const PLACES = {
 export type PlaceId = keyof typeof PLACES
 
 export type PlaceStop = { place: string; at: PlaceId; lesson: string; text: string }
+
+/** The eight moves, in order, as the dossier globe names them. */
+export const PLACE_STOPS: PlaceStop[] = [
+  { place: "France", at: "france", lesson: "The start", text: "Born here. Twenty-four days later, passport in hand, off to French Guiana." },
+  { place: "French Guiana", at: "guiana", lesson: "Nature", text: "Growing up close to nature, and to the golden-handed tamarins on our balcony." },
+  { place: "Corsica", at: "corsica", lesson: "Trail running", text: "Where trail running started for me." },
+  { place: "New Caledonia", at: "caledonia", lesson: "The ocean", text: "Surfing and va'a, the outrigger canoe." },
+  { place: "Congo · Brazzaville", at: "congo", lesson: "Perspective", text: "Realising how lucky I was." },
+  { place: "France", at: "france", lesson: "Back home", text: "A first return." },
+  { place: "French Guiana", at: "guiana", lesson: "Games", text: "Minecraft, then Counter-Strike, then Overwatch." },
+  { place: "France", at: "france", lesson: "Sport", text: "Studies, volleyball, golf and competitive gaming. Then sport management." },
+]

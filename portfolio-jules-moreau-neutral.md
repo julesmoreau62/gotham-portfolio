@@ -277,27 +277,30 @@ four disciplines: disc golf, wheelchair basketball, laser tag and spikeball.
 - **Assets produced** — Graphic charter, bilingual FR/EN participant briefing, campus and
   social media poster, plus event photography and action-camera coverage.
 
-### Local AI research pipeline for the master's thesis — builder and operator
-October 2026 → running 24/7 · local machine
-Outcome: about ninety sources scanned a day, roughly five percent kept, for close to zero cost
+### Ono-Sendai — personal AI workspace for the master's thesis
+2026 → in daily use · macOS app
+Outcome: one app for the whole master's year, with 31 books searchable to the page
 
-A research engine built for the M2 thesis question: to what extent are generative AI and
-no-code tools levers of professionalisation and organisational efficiency for a sports
-association with limited human and financial resources?
+A desktop app built to run the master's year in one place, and a working answer to the
+M2 thesis question: to what extent are generative AI and no-code tools levers of
+professionalisation and organisational efficiency for a sports association with limited
+human and financial resources?
 
-- **How it works** — Three scans a day across Google Scholar, OpenAlex and Cairn. A small
-  open-weights model (Qwen3 4B, fine-tuned with LoRA, served locally with Ollama and
-  grounded with retrieval on reference documents) reads every candidate, keeps about five
-  percent and summarises the most important. Complex analyses are escalated to Claude
-  Sonnet 5.5 for deeper explanations and visuals. Results land in an Obsidian vault as
-  notes, Canvas mind maps and an updated bibliography.
-- **Why** — The research field is young, so the few relevant sources have to be caught as
-  they appear. The engine also runs under the constraints the thesis studies: one person,
-  close to zero budget.
-- **Cost** — Close to zero per month locally, plus a few cents of Claude usage.
-- **Origin** — Adapted from a personal AI-news watch pipeline.
-- **Status** — Running since October 2026; private repository while the thesis is in
-  progress.
+- **Thesis** — Chapters in plain Markdown, APA 7 citations, a read-only copilot that
+  checks, sources or rephrases a selected passage with the exact page, Word and PDF export.
+- **Library** — 31 books and reports searchable by keyword and by meaning. The local
+  meaning model was chosen after comparing three on real sport-management books: only one
+  linked short French questions to the English passages that answer them.
+- **Lectures** — Recording with slide timing, local transcription pinned to each slide, a
+  written course, revision sheets and spaced-repetition flashcards.
+- **Ask** — One question across books, thesis and notes, with every answer citing its
+  page or section.
+- **Fed by a research engine** — Three scans a day across Google Scholar, OpenAlex and
+  Cairn. A small open-weights model (Qwen3 4B, fine-tuned with LoRA, served locally with
+  Ollama) reads about ninety candidates a day and keeps about five percent; complex
+  analyses go to DeepSeek V4-Pro. Running since October 2026 for close to zero cost.
+- **Build** — Built on top of OpenCode, about 11,000 lines with tests. Private repository
+  while the thesis is in progress.
 
 ### Client websites — AI-assisted delivery
 2025 → 2026 · Hauts-de-France
@@ -360,6 +363,7 @@ Outcome: fifty selected frames across three sectors
 | 2 / 0 | Critical incidents resolved / event disruption |
 | 2 | Client websites delivered |
 | 22 | Existing partner logos integrated for Royal Daring |
+| 4 | Spaces in Ono-Sendai, the thesis workspace |
 | 90 | Sources scanned per day by the thesis research pipeline |
 
 ---

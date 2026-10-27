@@ -150,11 +150,13 @@ export class DossierEngine {
     this.origin = now - t
     SEGMENTS.forEach((segment, i) => {
       const buffer = this.buffers[i]
-      if (!buffer || !this.ctx || !this.voice || segment.start + buffer.duration <= t) return
+      if (!buffer || !this.ctx || !this.voice || segment.start + segment.duration <= t) return
       const source = this.ctx.createBufferSource()
       source.buffer = buffer
       source.connect(this.voice)
-      source.start(now + Math.max(0, segment.start - t), Math.max(0, t - segment.start))
+      const offset = Math.max(0, t - segment.start)
+      // Only the segment's own length plays: a recording can run on past what the film keeps.
+      source.start(now + Math.max(0, segment.start - t), offset, segment.duration - offset)
       this.sources.push(source)
     })
   }

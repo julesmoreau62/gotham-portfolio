@@ -160,7 +160,7 @@ export function GamesPage() {
         <main>
           <section className={styles.hero}>
             <div className={styles.heroTop}>
-              <WipeLink href="/#more-about-me" className={styles.back}>← More about ME</WipeLink>
+              <WipeLink href="/" className={styles.back}>← Home</WipeLink>
               <span className={styles.fileLabel}>Personal archive / 02</span>
             </div>
             <div className={styles.heroContent}>
@@ -340,7 +340,7 @@ export function GamesPage() {
 
             <footer className={styles.footer}>
               <p>Same person.<br /><span>Different playgrounds.</span></p>
-              <WipeLink href="/#more-about-me">Back to More about ME <ArrowUpRight size={18} /></WipeLink>
+              <WipeLink href="/">Back home <ArrowUpRight size={18} /></WipeLink>
             </footer>
           </section>
         </main>

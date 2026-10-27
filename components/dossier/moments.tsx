@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react"
 import { COUNTS, CUE, FLIGHTS } from "@/lib/dossier"
+import { ENGINE_WINDOW, EngineMap } from "./engine-map"
 import { BigDate, STILLS } from "./board"
 import { DOTS, arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, rotate, toVec, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing"
@@ -20,7 +21,6 @@ const DATES = [
   { at: field.year2025.at, text: "2025", hold: 0.7 },
   { at: kourou.summer.at, text: "SUMMER 2025", hold: 0.7 },
   { at: lille.september.at, text: "SEPTEMBER 2025", hold: 0.7 },
-  { at: lille.december.at, text: "DECEMBER 2025", hold: 0.45 },
   { at: daring.may.at, text: "MAY 2026", hold: 0.7 },
 ]
 
@@ -56,7 +56,7 @@ const TRAVELS: Travel[] = [
 type Hero = {
   from: number; to: number; kicker: string; label: string
   value: number; countAt: number; count: number; format: (n: number) => string
-  backdrop?: "photo" | "curve" | "dial"
+  backdrop?: "photo" | "curve"
 }
 
 const HEROES: Hero[] = [
@@ -64,8 +64,6 @@ const HEROES: Hero[] = [
     value: 1_000_000, countAt: COUNTS.views.at, count: COUNTS.views.count, format: n => (n >= 999_500 ? "1,000,000+" : Math.round(n).toLocaleString("en-US")), backdrop: "photo" },
   { from: field.ctr.at - 0.1, to: field.ctr.end + 0.45, kicker: "AS NORTKERQUE 95 · JAN → JUN 2025", label: "SPONSOR CLICK-THROUGH RATE",
     value: 467, countAt: COUNTS.ctr.at, count: COUNTS.ctr.count, format: n => `+${Math.round(n)}%`, backdrop: "curve" },
-  { from: shift.scans - 0.1, to: shift.engine.end + 0.2, kicker: "RESEARCH ENGINE · AROUND THE CLOCK", label: "SOURCES SCANNED A DAY",
-    value: 90, countAt: COUNTS.sources.at, count: COUNTS.sources.count, format: n => String(Math.round(n)), backdrop: "dial" },
 ]
 
 /** Fades for the subject file and the board, merged when two moments sit close together. */
@@ -76,6 +74,7 @@ export const FOCUS = (() => {
     ...DATES.map(d => [d.at - 0.3, d.at + d.hold + 0.45]),
     ...TRAVELS.map(v => [v.at - 0.3, v.until + 0.2]),
     ...HEROES.map(h => [h.from - 0.15, h.to]),
+    [ENGINE_WINDOW[0] - 0.15, ENGINE_WINDOW[1]],
   ].sort((a, b) => a[0] - b[0])
   const merged: number[][] = []
   for (const [from, to] of raw) {
@@ -237,16 +236,6 @@ function HeroNumber({ t, hero }: { t: number; hero: Hero }) {
           <polyline points={CURVE_POINTS} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - curve} />
         </svg>
       )}
-      {hero.backdrop === "dial" && (
-        <svg className={styles.heroDial} viewBox="0 0 200 200" aria-hidden="true" style={{ transform: `translate(-50%, -50%) rotate(${(t - hero.from) * 12}deg)` }}>
-          <circle cx={100} cy={100} r={96} /><circle cx={100} cy={100} r={70} />
-          {Array.from({ length: 24 }, (_, h) => {
-            const a = (h / 24) * Math.PI * 2
-            return <line key={h} x1={100 + Math.sin(a) * 96} y1={100 - Math.cos(a) * 96} x2={100 + Math.sin(a) * (h % 6 ? 90 : 84)} y2={100 - Math.cos(a) * (h % 6 ? 90 : 84)} />
-          })}
-          <line className={styles.heroHand} x1={100} y1={100} x2={100 + Math.sin((t - hero.from) * 4.2) * 94} y2={100 - Math.cos((t - hero.from) * 4.2) * 94} />
-        </svg>
-      )}
       <div className={styles.heroBody} style={{ transform: `translateX(${jitter}px) scale(${push})` }}>
         <p className={styles.heroKicker}><i />{decode(hero.kicker, ramp(t, hero.from, hero.from + 0.5), t)}</p>
         <b style={{ "--chars": text.length, textShadow: landed ? `0 0 ${40 + 60 * (1 - landed)}px rgba(200,255,0,${0.35 + 0.4 * (1 - landed)})` : undefined } as CSSProperties}>{text}</b>
@@ -262,6 +251,7 @@ export function Moments({ t, size }: { t: number; size: { w: number; h: number }
     <div className={styles.moments} aria-hidden="true">
       <TravelShot t={t} size={size} />
       {HEROES.map(hero => <HeroNumber key={hero.label} t={t} hero={hero} />)}
+      <EngineMap t={t} />
       {DATES.map(date => <BigDate key={date.text} t={t} at={date.at} text={date.text} hold={date.hold} />)}
     </div>
   )

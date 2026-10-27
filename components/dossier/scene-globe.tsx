@@ -1,9 +1,8 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { COPY } from "@/lib/copy"
 import { CUE } from "@/lib/dossier"
-import { PLACES, type PlaceId } from "@/lib/journey"
+import { PLACES, PLACE_STOPS, type PlaceId } from "@/lib/journey"
 import { DOTS, arcPoints, cameraAt, paintGraticule, paintLand, paintPlanet, placeVec, rotate, type Shot, type Vec } from "./globe"
 import { decode, easeInOut, easeOut, hash, lerp, ramp, window01 } from "./timing"
 import styles from "./dossier.module.css"
@@ -14,7 +13,7 @@ import { glow } from "@/lib/quality"
    between stops. */
 
 const ROUTE: PlaceId[] = ["france", "guiana", "corsica", "caledonia", "congo", "france"]
-const STOPS = COPY.en.story.places.stops
+const STOPS = PLACE_STOPS
 const ACID = "200,255,0"
 const INK = "242,241,236"
 

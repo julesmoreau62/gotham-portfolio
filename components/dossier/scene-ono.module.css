@@ -1,0 +1,175 @@
+/* ------------------------------------------------------------------
+   ONO-SENDAI — the one chapter in the app's own colours, taken from its
+   landing page: a black hole on pure black, ice-blue light, Martian
+   Mono for the machine, Instrument Sans to explain, Newsreader to
+   quote, square corners and hairline horizons. No acid here.
+   ------------------------------------------------------------------ */
+
+.root {
+  --ice: #9cc8e6;
+  --ice-soft: #c9e1f2;
+  --paper: #d4d8de;
+  --bright: #f1f4f7;
+  --mute: #7e8590;
+  --faint: #5f6670;
+  --line: #2a2a2a;
+  --line-2: #3a3d42;
+  position: absolute;
+  inset: 0;
+  /* over the board and its moments, under the HUD and the subtitles */
+  z-index: 29;
+  overflow: hidden;
+  /* drawn before the video loads, and kept if it never does */
+  background:
+    radial-gradient(ellipse 34% 7% at 50% 46%, rgba(210, 232, 248, 0.4), transparent 70%),
+    radial-gradient(circle at 50% 46%, #000 0 9%, rgba(156, 200, 230, 0.2) 10.5%, transparent 30%),
+    #000;
+  color: var(--paper);
+  font-family: var(--font-ono-sans), system-ui, sans-serif;
+}
+
+.hole { position: absolute; inset: 0; }
+.video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dark { position: absolute; inset: 0; background: #000; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 46%, transparent 40%, rgba(0, 0, 0, 0.75) 100%); }
+.grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg, rgba(156, 200, 230, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(156, 200, 230, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to top, #000, transparent 55%);
+}
+.rim {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  z-index: 30;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 1px rgba(201, 225, 242, 0.9), 0 0 30px 6px rgba(156, 200, 230, 0.45), 0 0 90px 20px rgba(255, 150, 80, 0.18);
+  pointer-events: none;
+}
+
+
+.infall { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.streak { stroke: var(--ice-soft); stroke-width: 1.4; stroke-linecap: round; }
+.streakWarm { stroke: #ffc79a; stroke-width: 1.8; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(255, 150, 80, 0.8)); }
+
+.kicker { font: 9.5px/1.4 var(--font-ono-mono), monospace; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ice); }
+.meta { font: 9.5px/1.5 var(--font-ono-mono), monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+
+/* the name, as on the landing hero */
+.titleWrap { position: absolute; z-index: 12; display: grid; gap: 14px; white-space: nowrap; }
+.title {
+  margin: 0;
+  font-family: var(--font-ono-mono), monospace;
+  font-weight: 300;
+  font-variation-settings: "wdth" 75;
+  font-size: clamp(56px, 10vw, 180px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #fbf7f2;
+  text-shadow:
+    0 0 0.06em rgba(255, 236, 214, 0.55),
+    0 0 0.3em rgba(255, 150, 80, 0.35),
+    0 0 0.9em rgba(255, 100, 40, 0.25),
+    0 0.04em 0.12em rgba(0, 0, 0, 0.6);
+}
+.role { position: absolute; left: 5%; top: 19%; z-index: 12; display: grid; gap: 10px; width: min(560px, 42vw); }
+.role p { font: 500 clamp(15px, 1.5vw, 22px)/1.3 var(--font-ono-mono), monospace; letter-spacing: -0.02em; color: var(--bright); }
+.horizon { display: block; height: 1px; background: linear-gradient(90deg, var(--ice), transparent); box-shadow: 0 0 18px 2px rgba(156, 200, 230, 0.35); transform-origin: 0 50%; }
+
+/* the problem: eight tools adrift, struck out, swallowed */
+.scattered { position: absolute; left: 22%; right: 22%; top: 28%; bottom: 10%; z-index: 11; }
+.problemHead { position: absolute; left: 50%; top: -12%; display: grid; justify-items: center; gap: 8px; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+.problemHead b { font: 500 clamp(18px, 1.9vw, 30px)/1.1 var(--font-ono-mono), monospace; letter-spacing: -0.03em; color: var(--bright); }
+.problemHead em { font: 10.5px/1.4 var(--font-ono-mono), monospace; font-style: normal; letter-spacing: 0.2em; color: #ff8a7a; }
+.tool {
+  --strike: 0;
+  position: absolute;
+  padding: 10px 16px;
+  border: 1px solid var(--line-2);
+  background: rgba(13, 13, 13, 0.9);
+  font: clamp(11px, 0.9vw, 13px)/1 var(--font-ono-mono), monospace;
+  color: var(--paper);
+  white-space: nowrap;
+}
+.tool::after { content: ""; position: absolute; left: 10px; right: 10px; top: 50%; height: 1px; background: #ff6b5a; transform: scaleX(var(--strike)); transform-origin: 0 50%; }
+
+/* the space being named, in plain words */
+.explainer { position: absolute; left: 5%; top: 36%; z-index: 12; display: grid; gap: 12px; width: min(400px, 27vw); padding: 16px 18px; border-left: 1px solid var(--ice); background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.45)); backdrop-filter: blur(6px); }
+.explainerN { font: 300 clamp(40px, 4vw, 72px)/0.9 var(--font-ono-mono), monospace; font-variation-settings: "wdth" 75; color: var(--ice); }
+.explainerN small { margin-left: 8px; font-size: 0.25em; letter-spacing: 0.1em; color: var(--faint); }
+.explainer > b { font: 500 11px/1 var(--font-ono-mono), monospace; letter-spacing: 0.24em; color: var(--ice-soft); }
+.explainer > p { font: 500 clamp(18px, 1.7vw, 26px)/1.25 var(--font-ono-sans), sans-serif; letter-spacing: -0.01em; color: var(--bright); min-height: 2.5em; }
+.explainer ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.explainer li { font: 10.5px/1.4 var(--font-ono-mono), monospace; letter-spacing: 0.12em; color: var(--mute); }
+.explainer li::before { content: "→ "; color: var(--ice); }
+
+/* the four spaces, orbiting the hole */
+.orbit { position: absolute; left: 30%; right: 0; top: 24%; bottom: 22%; z-index: 10; transform-origin: 50% 40%; }
+.orbitRing { position: absolute; left: 16%; right: 16%; top: 20%; bottom: 20%; width: 68%; height: 60%; overflow: visible; }
+.orbitRing ellipse { fill: none; stroke: rgba(156, 200, 230, 0.22); stroke-width: 1; stroke-dasharray: 2 6; vector-effect: non-scaling-stroke; }
+.card {
+  position: absolute;
+  display: grid;
+  gap: 12px;
+  width: min(460px, 34vw);
+  padding: 16px 18px 18px;
+  border: 1px solid var(--line-2);
+  background: rgba(5, 6, 7, 0.9);
+  backdrop-filter: blur(6px);
+}
+.card[data-front] { border-color: var(--ice); box-shadow: 0 0 40px rgba(156, 200, 230, 0.18); }
+.card header { display: flex; align-items: center; gap: 12px; font: 10px/1 var(--font-ono-mono), monospace; letter-spacing: 0.2em; color: var(--ice); }
+.card header b { font-weight: 500; }
+.card header i { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-2), transparent); }
+.serif { font: 17px/1.5 var(--font-serif), Georgia, serif; color: rgba(212, 216, 222, 0.9); }
+.serif[data-quote] { font-style: italic; color: var(--bright); }
+.cite { padding: 1px 5px; background: rgba(156, 200, 230, 0.16); color: var(--ice-soft); font: 12px/1.4 var(--font-ono-mono), monospace; }
+.search { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line-2); font: 12.5px/1.3 var(--font-ono-mono), monospace; color: var(--bright); }
+.search > span { color: var(--ice); }
+.search em { margin-left: auto; padding: 4px 7px; background: rgba(156, 200, 230, 0.16); font-style: normal; font-size: 9px; letter-spacing: 0.14em; color: var(--ice-soft); white-space: nowrap; }
+.result { display: grid; grid-template-columns: 1fr 24% 34px; align-items: center; gap: 10px; font: 11px/1.3 var(--font-ono-mono), monospace; color: var(--paper); }
+.result span b { margin-left: 8px; font-weight: 400; color: var(--faint); }
+.result i { height: 3px; background: rgba(212, 216, 222, 0.1); }
+.result i b { display: block; height: 100%; background: var(--ice); transform-origin: 0 50%; }
+.result em { font-style: normal; text-align: right; color: var(--ice-soft); }
+.rec { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #ff6b5a; box-shadow: 0 0 8px #ff6b5a; }
+.wave { display: flex; align-items: center; gap: 2px; height: 54px; }
+.wave i { flex: 1; height: 100%; background: rgba(156, 200, 230, 0.75); transform-origin: 50% 50%; }
+.wave i[data-slide] { background: #ffc79a; box-shadow: 0 0 6px rgba(255, 150, 80, 0.6); }
+.question { font: 13px/1.5 var(--font-ono-mono), monospace; color: var(--bright); }
+.question span { color: var(--ice); }
+
+.check { display: grid; gap: 5px; }
+.check span { font: 10px/1.4 var(--font-ono-mono), monospace; letter-spacing: 0.12em; color: #8fd6a8; }
+.tag { justify-self: start; padding: 5px 9px; border: 1px dashed var(--ice); font: 9.5px/1.3 var(--font-ono-mono), monospace; letter-spacing: 0.12em; color: var(--ice-soft); }
+
+/* why it matters: the thesis question, in serif */
+.why { position: absolute; left: 50%; top: 66%; z-index: 13; display: grid; justify-items: center; gap: 14px; width: min(920px, 80vw); padding: 24px 32px; transform: translateX(-50%); text-align: center; background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.8), transparent 72%); }
+.why p { font: italic clamp(24px, 2.6vw, 42px)/1.2 var(--font-serif), Georgia, serif; color: var(--bright); text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9); min-height: 2.4em; }
+.why b { font: 500 12px/1.4 var(--font-ono-mono), monospace; letter-spacing: 0.22em; color: var(--ice); }
+
+/* the closing shot: the app's logo full frame, warm-lit like the landing's title */
+.hero { position: absolute; left: 50%; top: 46%; z-index: 20; display: grid; justify-items: center; gap: 28px; width: min(1100px, 78vw); }
+.hero img, .heroSplit { display: block; width: 100%; aspect-ratio: 12291 / 2960; }
+.hero img { position: relative; filter: drop-shadow(0 0 10px rgba(255, 236, 214, 0.45)) drop-shadow(0 0 40px rgba(255, 150, 80, 0.35)) drop-shadow(0 0 90px rgba(255, 100, 40, 0.2)); }
+.heroSplit { position: absolute; left: 0; top: 0; mix-blend-mode: screen; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.heroSplit[data-tone="red"] { background: #ff2a3c; }
+.heroSplit[data-tone="acid"] { background: #c8ff00; }
+.hero .horizon { width: 70%; background: linear-gradient(90deg, transparent, var(--ice), transparent); }
+
+/* the copilot reviewing a sentence, as in the app's Thesis space */
+.toolbar { display: flex; flex-wrap: wrap; gap: 2px; justify-self: start; padding: 3px; border: 1px solid var(--line-2); font: 9.5px/1 var(--font-ono-mono), monospace; letter-spacing: 0.08em; color: var(--mute); }
+.toolbar span { padding: 5px 7px; }
+.toolbar span[data-on] { background: var(--ice); color: #000; }
+.nuance { background: linear-gradient(rgba(217, 180, 106, calc(var(--flag) * 0.22)), rgba(217, 180, 106, calc(var(--flag) * 0.22))); box-shadow: inset 0 calc(var(--flag) * -2px) 0 #d9b46a; }
+.copilot { display: grid; gap: 8px; padding: 12px 14px; border-left: 2px solid var(--ice); background: linear-gradient(180deg, rgba(156, 200, 230, 0.08), transparent); }
+.copilot p { font: 11.5px/1.55 var(--font-ono-mono), monospace; color: var(--mute); }
+.copilot .suggest { padding-left: 10px; border-left: 2px solid var(--ice); font: italic 14px/1.45 var(--font-serif), Georgia, serif; color: var(--paper); }
+.verdict { justify-self: start; padding: 5px 9px; background: rgba(217, 180, 106, 0.18); font: 600 10px/1 var(--font-ono-mono), monospace; letter-spacing: 0.14em; color: #d9b46a; }
+.srcChip { justify-self: start; padding: 5px 9px; border: 1px dashed var(--ice); font: 10.5px/1.2 var(--font-ono-mono), monospace; color: var(--ice-soft); }

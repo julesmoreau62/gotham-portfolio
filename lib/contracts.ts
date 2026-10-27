@@ -8,7 +8,7 @@ export type ContractSlug =
   | "signal"
   | "strategy"
   | "field-ops"
-  | "thesis-engine"
+  | "ono-sendai"
   | "build"
   | "imagery"
 
@@ -133,25 +133,25 @@ export const CONTRACTS: Contract[] = [
     stack: ["Sony α6400", "GoPro ×2"],
   },
   {
-    slug: "thesis-engine",
+    slug: "ono-sendai",
     index: 5,
-    code: "THS",
-    title: "Thesis Engine",
-    org: "M2 thesis · Local AI research pipeline",
-    role: "Builder & operator · AI-augmented build",
-    period: "Oct 2026 → · running 24/7",
-    location: "Local machine · Obsidian vault",
-    status: "LIVE · RUNNING 24/7",
+    code: "ONO",
+    title: "Ono-Sendai",
+    org: "M2 thesis · Personal AI workspace",
+    role: "Designer & builder · AI-augmented build",
+    period: "2026 → · in daily use",
+    location: "macOS app · runs on my machine",
+    status: "IN DAILY USE",
     statusKind: "live",
-    metric: "90",
-    metricLabel: "sources scanned / day · ~5% kept",
+    metric: "4",
+    metricLabel: "spaces in one app · thesis, library, lectures, ask",
     summary:
-      "A local research engine for my M2 thesis: three scans a day across Google Scholar, OpenAlex and Cairn, triaged by a fine-tuned Qwen3 4B, escalated to Claude Sonnet when the analysis gets deep, and written straight into my Obsidian vault.",
-    accent: "#9d6bff",
+      "The desktop app I built to run my master's year in one place: write the thesis with APA citations to the exact page, search my whole library by meaning, record and transcribe lectures, revise with flashcards. Fed every day by the Thesis Engine, a local research pipeline.",
+    accent: "#9cc8e6",
     // Generated illustration of a knowledge graph. Source: public/assets/thesis-engine/README.md.
     cover: "/assets/thesis-engine/cover.jpg",
-    tags: ["Qwen3 4B", "LoRA", "RAG", "Ollama", "Claude Sonnet 5.5", "Obsidian"],
-    stack: ["Qwen3 4B + LoRA", "Ollama", "RAG", "Claude Sonnet 5.5", "Google Scholar", "OpenAlex", "Cairn", "Obsidian"],
+    tags: ["Desktop app", "AI copilot", "Semantic search", "Lecture capture", "APA 7", "Thesis Engine"],
+    stack: ["Electron", "OpenCode", "whisper.cpp", "bge-m3", "pdf.js", "Qwen3 4B + LoRA", "Ollama", "DeepSeek V4-Pro"],
   },
   {
     slug: "build",

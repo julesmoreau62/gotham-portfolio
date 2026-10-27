@@ -9,18 +9,18 @@ import styles from "./thesis-engine.module.css"
 /* ------------------------------------------------------------------
    THESIS ENGINE — the system map. Every dot is one candidate source:
    it is scanned, read by the local model, then dropped, kept in the
-   vault or escalated to Claude first. Rates follow the real pipeline
+   vault or escalated to DeepSeek first. Rates follow the real pipeline
    (90 a day, three passes, about 5% kept); the rest is a simulation.
    ------------------------------------------------------------------ */
 
-type NodeId = "scholar" | "openalex" | "cairn" | "scan" | "rag" | "core" | "drop" | "claude" | "vault"
-type PathId = "s0" | "s1" | "s2" | "scanCore" | "ragCore" | "coreDrop" | "coreVault" | "coreClaude" | "claudeVault"
-type OutId = "notes" | "canvas" | "biblio"
+type NodeId = "scholar" | "openalex" | "cairn" | "scan" | "rag" | "core" | "drop" | "deepseek" | "vault"
+export type PathId = "s0" | "s1" | "s2" | "scanCore" | "ragCore" | "coreDrop" | "coreVault" | "coreDeepseek" | "deepseekVault"
+export type OutId = "notes" | "canvas" | "biblio"
 type Fate = "drop" | "keep" | "escalate"
 type Box = { x: number; y: number; w: number; h: number }
 type Circle = { x: number; y: number; r: number }
 
-type Layout = {
+export type Layout = {
   view: [number, number]
   stacked: boolean
   sources: Record<"scholar" | "openalex" | "cairn", Box>
@@ -30,14 +30,14 @@ type Layout = {
   vault: Circle
   rag: Box
   drop: Box
-  claude: Box
+  deepseek: Box
   outputs: Record<OutId, Box>
   paths: Record<PathId, string>
   outPaths: Record<OutId, string>
   speed: number
 }
 
-const DESKTOP: Layout = {
+export const DESKTOP: Layout = {
   view: [1260, 620],
   stacked: false,
   sources: {
@@ -51,7 +51,7 @@ const DESKTOP: Layout = {
   vault: { x: 1070, y: 330, r: 70 },
   rag: { x: 680, y: 80, w: 224, h: 56 },
   drop: { x: 680, y: 560, w: 244, h: 52 },
-  claude: { x: 960, y: 140, w: 230, h: 72 },
+  deepseek: { x: 960, y: 140, w: 230, h: 72 },
   outputs: {
     notes: { x: 945, y: 492, w: 118, h: 38 },
     canvas: { x: 1065, y: 540, w: 118, h: 38 },
@@ -65,8 +65,8 @@ const DESKTOP: Layout = {
     ragCore: "M680 108 L680 214",
     coreDrop: "M680 406 L680 534",
     coreVault: "M776 310 C 880 310, 900 330, 1000 330",
-    coreClaude: "M748 242 C 790 196, 800 140, 845 140",
-    claudeVault: "M1010 176 C 1015 215, 1045 228, 1052 262",
+    coreDeepseek: "M748 242 C 790 196, 800 140, 845 140",
+    deepseekVault: "M1010 176 C 1015 215, 1045 228, 1052 262",
   },
   outPaths: {
     notes: "M1048 397 C 1020 440, 950 440, 945 473",
@@ -90,7 +90,7 @@ const MOBILE: Layout = {
   vault: { x: 210, y: 800, r: 66 },
   rag: { x: 345, y: 330, w: 140, h: 52 },
   drop: { x: 84, y: 600, w: 152, h: 52 },
-  claude: { x: 334, y: 630, w: 164, h: 70 },
+  deepseek: { x: 334, y: 630, w: 164, h: 70 },
   outputs: {
     notes: { x: 76, y: 935, w: 124, h: 40 },
     canvas: { x: 210, y: 958, w: 124, h: 40 },
@@ -103,9 +103,9 @@ const MOBILE: Layout = {
     scanCore: "M210 264 L210 350",
     ragCore: "M345 356 C 345 380, 300 375, 267 374",
     coreDrop: "M153 487 C 115 520, 84 535, 84 574",
-    coreClaude: "M267 487 C 305 520, 334 545, 334 595",
+    coreDeepseek: "M267 487 C 305 520, 334 545, 334 595",
     coreVault: "M210 510 L210 734",
-    claudeVault: "M334 665 C 334 710, 290 735, 257 753",
+    deepseekVault: "M334 665 C 334 710, 290 735, 257 753",
   },
   outPaths: {
     notes: "M192 864 C 170 895, 90 890, 76 915",
@@ -124,8 +124,8 @@ const PATH_ENDS: Record<PathId, [NodeId, NodeId]> = {
   ragCore: ["rag", "core"],
   coreDrop: ["core", "drop"],
   coreVault: ["core", "vault"],
-  coreClaude: ["core", "claude"],
-  claudeVault: ["claude", "vault"],
+  coreDeepseek: ["core", "deepseek"],
+  deepseekVault: ["deepseek", "vault"],
 }
 
 const INFO: Record<NodeId, { kicker: string; title: string; body: string; logos?: LogoId[] }> = {
@@ -136,8 +136,8 @@ const INFO: Record<NodeId, { kicker: string; title: string; body: string; logos?
   rag: { kicker: "Grounding", title: "RAG corpus", body: "Reference documents retrieved at analysis time, so every judgement leans on real material rather than on the model’s memory." },
   core: { kicker: "Local triage", title: "Qwen3 4B · LoRA", body: "A 4-billion-parameter open model, fine-tuned with LoRA and served by Ollama on my own machine, around the clock. It reads every candidate, keeps roughly 5% and summarises the ones that matter most.", logos: ["qwen", "ollama"] },
   drop: { kicker: "Filtered out", title: "~95% dropped", body: "Candidates that do not serve the research question never reach the vault." },
-  claude: { kicker: "Escalation", title: "Claude Sonnet 5.5", body: "Called only when an analysis is complex: deeper explanations and visuals. A few cents a month.", logos: ["claude"] },
-  vault: { kicker: "Single source of truth", title: "Obsidian vault", body: "Everything lands here: summarised source notes, Canvas mind maps and an up-to-date bibliography.", logos: ["obsidian"] },
+  deepseek: { kicker: "Escalation", title: "DeepSeek V4-Pro", body: "Called only when an analysis is complex: deeper explanations and visuals. A few cents a month.", logos: ["deepseek"] },
+  vault: { kicker: "Single source of truth", title: "Ono-Sendai", body: "Everything lands here: summarised source notes, Canvas mind maps and an up-to-date bibliography.", logos: ["onosendai"] },
 }
 
 const SOURCE_SUB = { scholar: "Academic index", openalex: "Open catalogue", cairn: "FR journals" } as const
@@ -245,7 +245,7 @@ export function ThesisMap() {
     }
     const paint = (p: Particle) => {
       const tone = p.fate === "drop" ? "drop" : p.fate === "keep" ? "keep" : "escalate"
-      p.dot.setAttribute("fill", tone === "drop" ? "#8d8999" : tone === "keep" ? "#9d6bff" : "#d4744f")
+      p.dot.setAttribute("fill", tone === "drop" ? "#4a4f56" : tone === "keep" ? "#9cc8e6" : "#d9b46a")
       p.halo.setAttribute("fill", `url(#${uid}-halo-${tone})`)
       if (tone === "drop") p.halo.setAttribute("opacity", "0.4")
     }
@@ -262,7 +262,7 @@ export function ThesisMap() {
       halo.setAttribute("r", opts.rag ? "6" : opts.manual ? "15" : "9")
       halo.setAttribute("fill", `url(#${uid}-halo-${opts.rag ? "keep" : "paper"})`)
       dot.setAttribute("r", opts.rag ? "1.8" : opts.manual ? "4.2" : "2.7")
-      dot.setAttribute("fill", opts.rag ? "#d6c6ff" : "#f2f1ec")
+      dot.setAttribute("fill", opts.rag ? "#c9e1f2" : "#d4d8de")
       g.append(halo, dot)
       if (opts.label) {
         const t = document.createElementNS(NS, "text")
@@ -279,7 +279,7 @@ export function ThesisMap() {
     }
     const routeFor = (fate: Fate): PathId[] => {
       const src = (["s0", "s1", "s2"] as const)[Math.floor(Math.random() * 3)]
-      return [src, "scanCore", ...(fate === "drop" ? (["coreDrop"] as const) : fate === "keep" ? (["coreVault"] as const) : (["coreClaude", "claudeVault"] as const))]
+      return [src, "scanCore", ...(fate === "drop" ? (["coreDrop"] as const) : fate === "keep" ? (["coreVault"] as const) : (["coreDeepseek", "deepseekVault"] as const))]
     }
     const hide = (p: Particle, ms: number) => {
       p.wait = ms
@@ -315,15 +315,15 @@ export function ThesisMap() {
       } else if (done === "coreDrop") {
         flash("drop")
         p.fade = 0
-      } else if (done === "coreClaude") {
-        flash("claude")
+      } else if (done === "coreDeepseek") {
+        flash("deepseek")
         hide(p, 700)
         advance(p)
       } else {
         flash("vault")
         bump("notes")
         bump("biblio")
-        if (done === "claudeVault") bump("canvas")
+        if (done === "deepseekVault") bump("canvas")
         remove(p)
       }
     }
@@ -478,14 +478,14 @@ export function ThesisMap() {
           className={styles.mapSvg}
           data-stacked={L.stacked}
           role="group"
-          aria-label="Thesis Engine system map: three sources feed a scheduled scan, a local Qwen3 4B model triages every candidate, complex ones go to Claude Sonnet 5.5, and the results are written into an Obsidian vault."
+          aria-label="Thesis Engine system map: three sources feed a scheduled scan, a local Qwen3 4B model triages every candidate, complex ones go to DeepSeek V4-Pro, and the results are written into Ono-Sendai."
         >
           <defs>
             {[
-              ["paper", "242,241,236"],
-              ["keep", "157,107,255"],
-              ["escalate", "212,116,79"],
-              ["drop", "141,137,153"],
+              ["paper", "212,216,222"],
+              ["keep", "156,200,230"],
+              ["escalate", "217,180,106"],
+              ["drop", "74,79,86"],
             ].map(([k, rgb]) => (
               <radialGradient key={k} id={`${uid}-halo-${k}`}>
                 <stop offset="0%" stopColor={`rgb(${rgb})`} stopOpacity="0.75" />
@@ -493,15 +493,15 @@ export function ThesisMap() {
               </radialGradient>
             ))}
             <radialGradient id={`${uid}-core`} cx="50%" cy="40%" r="65%">
-              <stop offset="0%" stopColor="#2a1c4a" />
-              <stop offset="100%" stopColor="#110c1c" />
+              <stop offset="0%" stopColor="#0f1a22" />
+              <stop offset="100%" stopColor="#05080a" />
             </radialGradient>
           </defs>
 
           {/* Wires */}
           {PATH_IDS.map((id) => (
             <g key={id}>
-              <path d={L.paths[id]} className={cn(styles.wire, id === "ragCore" && styles.wireRag, id.startsWith("coreClaude") || id === "claudeVault" ? styles.wireCoral : undefined, id === "coreDrop" && styles.wireDrop, wiresOn.has(id) && styles.wireOn, focus && !wiresOn.has(id) && styles.wireDim)} />
+              <path d={L.paths[id]} className={cn(styles.wire, id === "ragCore" && styles.wireRag, id.startsWith("coreDeepseek") || id === "deepseekVault" ? styles.wireCoral : undefined, id === "coreDrop" && styles.wireDrop, wiresOn.has(id) && styles.wireOn, focus && !wiresOn.has(id) && styles.wireDim)} />
               <path d={L.paths[id]} data-path={id} className={cn(styles.wireFlow, id === "ragCore" && styles.wireFlowRag, focus && !wiresOn.has(id) && styles.wireDim)} />
             </g>
           ))}
@@ -518,8 +518,8 @@ export function ThesisMap() {
             const left = b.x - b.w / 2
             return (
               <g key={id} {...nodeProps(id)}>
-                <rect {...rectOf(b)} rx={12} className={styles.tile} />
-                <rect {...rectOf(b, 4)} rx={15} className={styles.flash} data-flash={id} />
+                <rect {...rectOf(b)} rx={0} className={styles.tile} />
+                <rect {...rectOf(b, 4)} rx={0} className={styles.flash} data-flash={id} />
                 {L.stacked ? (
                   <>
                     <LogoGlyph id={id} cx={b.x} cy={b.y - 14} size={26} tone="brand" />
@@ -556,8 +556,8 @@ export function ThesisMap() {
 
           {/* RAG */}
           <g {...nodeProps("rag")}>
-            <rect {...rectOf(L.rag)} rx={12} className={cn(styles.tile, styles.tileRag)} />
-            <rect {...rectOf(L.rag, 4)} rx={15} className={styles.flash} data-flash="rag" />
+            <rect {...rectOf(L.rag)} rx={0} className={cn(styles.tile, styles.tileRag)} />
+            <rect {...rectOf(L.rag, 4)} rx={0} className={styles.flash} data-flash="rag" />
             <g transform={`translate(${L.rag.x - L.rag.w / 2 + 22} ${L.rag.y - 11})`} className={styles.docIcon}>
               <rect x="0" y="4" width="14" height="18" rx="2" />
               <rect x="5" y="0" width="14" height="18" rx="2" />
@@ -583,20 +583,20 @@ export function ThesisMap() {
 
           {/* Drop */}
           <g {...nodeProps("drop")}>
-            <rect {...rectOf(L.drop)} rx={12} className={cn(styles.tile, styles.tileDrop)} />
-            <rect {...rectOf(L.drop, 4)} rx={15} className={cn(styles.flash, styles.flashDim)} data-flash="drop" />
+            <rect {...rectOf(L.drop)} rx={0} className={cn(styles.tile, styles.tileDrop)} />
+            <rect {...rectOf(L.drop, 4)} rx={0} className={cn(styles.flash, styles.flashDim)} data-flash="drop" />
             <text x={L.drop.x - L.drop.w / 2 + 22} y={L.drop.y + 6} className={cn(styles.t, styles.tCross)}>×</text>
             <text x={L.drop.x - L.drop.w / 2 + 44} y={L.drop.y - 1} className={cn(styles.t, styles.tName, styles.tMuted)}>{L.stacked ? "Dropped ~95%" : "Dropped · ~95%"}</text>
             <text x={L.drop.x - L.drop.w / 2 + 44} y={L.drop.y + 15} className={cn(styles.t, styles.tSub)}>{L.stacked ? "off-topic" : "not relevant enough"}</text>
           </g>
 
-          {/* Claude */}
-          <g {...nodeProps("claude")}>
-            <rect {...rectOf(L.claude)} rx={12} className={cn(styles.tile, styles.tileCoral)} />
-            <rect {...rectOf(L.claude, 4)} rx={15} className={cn(styles.flash, styles.flashCoral)} data-flash="claude" />
-            <LogoGlyph id="claude" cx={L.claude.x - L.claude.w / 2 + 32} cy={L.claude.y} size={L.stacked ? 26 : 30} tone="brand" />
-            <text x={L.claude.x - L.claude.w / 2 + 58} y={L.claude.y - 4} className={cn(styles.t, styles.tName)}>{L.stacked ? "Sonnet 5.5" : "Claude Sonnet 5.5"}</text>
-            <text x={L.claude.x - L.claude.w / 2 + 58} y={L.claude.y + 14} className={cn(styles.t, styles.tSub, styles.tCoral)}>{L.stacked ? "if complex" : "complex analyses only"}</text>
+          {/* DeepSeek */}
+          <g {...nodeProps("deepseek")}>
+            <rect {...rectOf(L.deepseek)} rx={0} className={cn(styles.tile, styles.tileCoral)} />
+            <rect {...rectOf(L.deepseek, 4)} rx={0} className={cn(styles.flash, styles.flashCoral)} data-flash="deepseek" />
+            <LogoGlyph id="deepseek" cx={L.deepseek.x - L.deepseek.w / 2 + 32} cy={L.deepseek.y} size={L.stacked ? 26 : 30} tone="brand" />
+            <text x={L.deepseek.x - L.deepseek.w / 2 + 58} y={L.deepseek.y - 4} className={cn(styles.t, styles.tName)}>{L.stacked ? "V4-Pro" : "DeepSeek V4-Pro"}</text>
+            <text x={L.deepseek.x - L.deepseek.w / 2 + 58} y={L.deepseek.y + 14} className={cn(styles.t, styles.tSub, styles.tCoral)}>{L.stacked ? "if complex" : "complex analyses only"}</text>
           </g>
 
           {/* Vault */}
@@ -604,8 +604,8 @@ export function ThesisMap() {
             <circle cx={L.vault.x} cy={L.vault.y} r={L.vault.r + 14} className={styles.vaultAura} />
             <circle cx={L.vault.x} cy={L.vault.y} r={L.vault.r} className={cn(styles.tile, styles.tileVault)} />
             <circle cx={L.vault.x} cy={L.vault.y} r={L.vault.r + 4} className={styles.flash} data-flash="vault" />
-            <LogoGlyph id="obsidian" cx={L.vault.x} cy={L.vault.y - 14} size={L.stacked ? 36 : 42} tone="brand" />
-            <text x={L.vault.x} y={L.vault.y + 24} textAnchor="middle" className={cn(styles.t, styles.tName)}>Obsidian</text>
+            <LogoGlyph id="onosendai" cx={L.vault.x} cy={L.vault.y - 14} size={L.stacked ? 36 : 42} tone="brand" />
+            <text x={L.vault.x} y={L.vault.y + 24} textAnchor="middle" className={cn(styles.t, styles.tName)}>Ono-Sendai</text>
             <text x={L.vault.x} y={L.vault.y + 40} textAnchor="middle" className={cn(styles.t, styles.tMicro)}>VAULT</text>
           </g>
 
@@ -641,7 +641,7 @@ export function ThesisMap() {
           <ul className={styles.legend} aria-label="Legend">
             <li><span className={styles.lgPaper} aria-hidden="true" />Candidate</li>
             <li><span className={styles.lgKeep} aria-hidden="true" />Kept → vault</li>
-            <li><span className={styles.lgEsc} aria-hidden="true" />Escalated → Sonnet</li>
+            <li><span className={styles.lgEsc} aria-hidden="true" />Escalated → DeepSeek</li>
             <li><span className={styles.lgDrop} aria-hidden="true" />Dropped</li>
           </ul>
           <p className={styles.simNote}>Simulation at the pipeline’s real rates: about 90 candidates a day over three passes, roughly 5% kept. The escalation frequency is illustrative.</p>
@@ -654,7 +654,7 @@ export function ThesisMap() {
                 <span className={styles.detailKicker}>{info.kicker}</span>
                 {info.logos && (
                   <span className={styles.detailLogos}>
-                    {info.logos.map((l) => <Logo key={l} id={l} tone={l === "ollama" || l === "openalex" ? "mono" : "brand"} className={styles.detailLogo} />)}
+                    {info.logos.map((l) => <Logo key={l} id={l} tone={l === "ollama" || l === "openalex" || l === "onosendai" ? "mono" : "brand"} className={styles.detailLogo} />)}
                   </span>
                 )}
               </div>
@@ -669,7 +669,7 @@ export function ThesisMap() {
               <ol className={styles.steps}>
                 <li><b>01</b> Scan three databases, three times a day</li>
                 <li><b>02</b> Triage locally with a fine-tuned Qwen3 4B</li>
-                <li><b>03</b> Escalate complex analyses to Claude Sonnet 5.5</li>
+                <li><b>03</b> Escalate complex analyses to DeepSeek V4-Pro</li>
                 <li><b>04</b> Write notes, canvases and bibliography to the vault</li>
               </ol>
             </>

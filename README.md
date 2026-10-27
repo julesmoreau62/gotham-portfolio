@@ -22,7 +22,7 @@ Digital transformation & AI for sport organisations: a journey from competitive 
 
 ## The experience
 
-Acid green on black. Wide grotesk type, registration marks and digital rain: on desktop, the hero shows Jules in Navy uniform standing in falling code, face blurred and glitching. The homepage opens with the role (digital transformation & AI) and availability, then four selected projects led by the live **Thesis Engine**, the local AI pipeline behind an M2 thesis on generative AI in sports associations.
+Acid green on black. Wide grotesk type, registration marks and digital rain: on desktop, the hero shows Jules in Navy uniform standing in falling code, face blurred and glitching. The homepage opens with the role (digital transformation & AI) and availability, then four selected projects led by **Ono-Sendai**, the AI workspace built for an M2 thesis on generative AI in sports associations.
 
 The story chapter, **From the field to the tools**, explains the shift: every field project in club communication, partnerships and events ended with a tool the team was missing. Four steps trace it (competition → the field → the tools → AI), followed by the method, **People first. Then the tool.**: map how the team really works, build the smallest useful tool, hand it over.
 
@@ -43,11 +43,11 @@ On the first home visit, a Matrix introduction plays before the portfolio: a ter
 
 ## Case files
 
-![Selected work: an interactive terminal lists the projects, the Thesis Engine first](.github/readme/home-contracts.png)
+![Selected work: an interactive terminal lists the projects, Ono-Sendai first](.github/readme/home-contracts.png)
 
 | Code | Contract | Role | Selected proof |
 | :-- | --- | --- | --- |
-| `THS` | **Thesis Engine** | Builder & Operator | Local AI research pipeline for the M2 thesis: Scholar · OpenAlex · Cairn → fine-tuned Qwen3 4B (+ Claude Sonnet 5.5 when complex) → Obsidian vault, 90 sources a day for ≈ €0. Running 24/7. |
+| `ONO` | **Ono-Sendai** | Designer & Builder | Self-built macOS app for the M2 year: thesis with APA citations to the exact page, 31 books searchable by meaning (FR question → EN passages), lecture capture with local transcription, revision. Fed daily by the **Thesis Engine** (Scholar · OpenAlex · Cairn → local Qwen3 4B, 90 sources a day for ≈ €0). |
 | `DRG` | **Royal Daring HC** | Communication & Sponsoring | A sponsor system built to outlive the internship: bilingual partner website, brand system, Canva templates and a Notion handover exported for any AI assistant. |
 | `FLD` | **ASI Tournament** | Communication lead / Field operations | 500+ people, one bilingual participant briefing, a new venue secured in 45 minutes. |
 | `SGN` | **ASN95 Signal** | Head of Communications | A digital presence built from scratch: +467% sponsor CTR, 1M+ views and a first app concept. |

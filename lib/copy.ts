@@ -5,18 +5,13 @@
 
 import type { ContractSlug } from "@/lib/contracts"
 import type { Locale } from "@/lib/i18n"
-import { PROJECT_STORIES, type HomeSectionId, type PlaceStop, type ProjectStory, type StorySlug } from "@/lib/journey"
-import { DEPLOYMENTS, type Deployment } from "@/lib/profile"
+import { PROJECT_STORIES, type HomeSectionId, type ProjectStory, type StorySlug } from "@/lib/journey"
 
 
 const en = {
   sections: {
     hero: "Start",
     contracts: "Selected work",
-    origin: "My story",
-    operator: "My approach",
-    log: "Experience",
-    extraction: "Contact",
   } as Record<HomeSectionId, string>,
 
   nav: {
@@ -51,9 +46,9 @@ const en = {
     chapterRight: "Four projects / AI, tools & the field",
     title: ["Find the friction.", "Build the tool."],
     introLabel: "Real teams. Real tools.",
-    intro: "An AI research engine running 24/7. A sponsor system built so a club can run it without me. Then the tournament and the season where I learned how sport organisations really work.",
+    intro: "An AI workspace I built for my thesis, fed by a research engine running 24/7. A sponsor system built so a club can run it without me. Then the tournament and the season where I learned how sport organisations really work.",
     languageNote: "",
-    status: { "thesis-engine": "Live · running 24/7", daring: "Built to last", "field-ops": "On the ground", signal: "Built from scratch" },
+    status: { "ono-sendai": "In daily use", daring: "Built to last", "field-ops": "On the ground", signal: "Built from scratch" },
     terminal: {
       title: "jules@portfolio: ~/projects — zsh",
       region: "Interactive terminal: type a command to explore the projects",
@@ -85,8 +80,7 @@ const en = {
       exit: "There is no exit. Only the next project.",
       sudoDenied: "Nice try. Only one command runs as root here: ",
       sudo: "[sudo] password for recruiter:",
-      granted: "Access granted. Taking you to the contact section…",
-      story: "My story",
+      granted: "Access granted. Here is how to reach me:",
       cv: "Download my CV (PDF)",
       library: {
         title: "~/library · favourite books",
@@ -99,16 +93,16 @@ const en = {
     },
     open: "Explore the case study",
     lab: {
-      identity: "Thesis Engine",
-      chapter: "AI research pipeline · M2 thesis",
-      offer: ["Available soon", "Adaptable to any sector"],
+      identity: "Ono-Sendai",
+      chapter: "Personal AI workspace · M2 thesis",
+      offer: ["Built for a thesis", "Adaptable to any team"],
       verb: ["Make it", "think."],
-      text: "My thesis asks what generative AI can do for sports associations with limited resources. My research runs on exactly that: a local, fine-tuned model that scans three research databases three times a day, keeps what matters and files it into my Obsidian vault.",
-      proof: "90",
-      proofLabel: "sources a day · ~5% kept",
+      text: "My thesis asks what generative AI can do for a team with little time and money. So I built my own answer: one desktop app for my whole master's year. I write the thesis there with APA citations to the exact page, search my library by meaning, record and transcribe lectures, and revise. A local research engine feeds it new sources every day.",
+      proof: "4",
+      proofLabel: "spaces · thesis, library, lectures, ask",
       cost: "≈ €0",
-      costLabel: "a month · runs locally, 24/7",
-      open: "Explore the engine",
+      costLabel: "transcription & search run on my Mac",
+      open: "Explore the app",
     },
     more: {
       strategy: { chapter: "Esports business · case study", proof: "23p", proofLabel: "strategy dossier" },
@@ -124,59 +118,8 @@ const en = {
     stories: PROJECT_STORIES as Record<StorySlug, ProjectStory>,
   },
 
-  story: {
-    chapter: "01 / The person behind the work",
-    chapterRight: "Competition → Field → Tools → AI",
-    title: ["From the field", "to the tools."],
-    body: [
-      "Competitive gaming made me curious about everything around the match. Coaching volleyball showed me why it matters: at a well-organised U13 tournament, I could focus on my team because the details had already been taken care of.",
-      "Then came the field: club communication, partnerships, a 500-person tournament. Each time, the same pattern. Small sport organisations run on volunteers, and much of their time goes into tasks a good tool could take over. So I started building those tools.",
-    ],
-    takeawayLabel: "What stayed with me",
-    takeaway: ["The best tool", "is the one the team keeps using."],
-    gamesLink: "Beyond the work / My gaming story",
-    photoAlt: "Volleyball match photographed by Jules Moreau",
-    photoTag: "My photography / LISSP Calais",
-    caption: "Personal photography archive · Volleyball",
-    highlights: "Watch my competitive gaming highlights",
-    video: {
-      header: "Competitive roots",
-      play: "Play CS2 highlights",
-      pause: "Pause CS2 highlights",
-      caption: ["My plays. My perspective.", "CS2 / My highlights"],
-    },
-    places: {
-      kicker: "Before the work / Where I grew up",
-      count: "8 moves / 4 continents",
-      title: ["Four continents.", "One habit: adapt."],
-      intro: "I grew up moving with my family. Each place left me something I still use.",
-      stops: [
-        { place: "France", at: "france", lesson: "The start", text: "Born here. Twenty-four days later, passport in hand, off to French Guiana." },
-        { place: "French Guiana", at: "guiana", lesson: "Nature", text: "Growing up close to nature, and to the golden-handed tamarins on our balcony." },
-        { place: "Corsica", at: "corsica", lesson: "Trail running", text: "Where trail running started for me." },
-        { place: "New Caledonia", at: "caledonia", lesson: "The ocean", text: "Surfing and va'a, the outrigger canoe." },
-        { place: "Congo · Brazzaville", at: "congo", lesson: "Perspective", text: "Realising how lucky I was." },
-        { place: "France", at: "france", lesson: "Back home", text: "A first return." },
-        { place: "French Guiana", at: "guiana", lesson: "Games", text: "Minecraft, then Counter-Strike, then Overwatch." },
-        { place: "France", at: "france", lesson: "Sport", text: "Studies, volleyball, golf and competitive gaming. Then sport management." },
-      ] as PlaceStop[],
-      mapLabel: "World map of the eight moves: France, French Guiana, Corsica, New Caledonia, Congo, then France, French Guiana and France again.",
-      compass: { n: "N", s: "S", e: "E", w: "W" },
-      controls: { prev: "Previous move", next: "Next move", replay: "Replay the journey" },
-    },
-  },
 
   approach: {
-    chapter: "03 / How I work",
-    chapterRight: "Observe · Build · Hand over",
-    title: ["People first.", "Then the tool."],
-    body: "In a small sport organisation, digital transformation is not about the newest tool. It is about the volunteer on a Sunday evening, the coach with ten minutes to spare, the intern who arrives next season. I build for them.",
-    languages: ["French / Native", "English / C1", "FR · BE · Europe"],
-    methods: [
-      { title: "Map how it really works.", text: "Before automating anything, I look at how the team actually works: who does what, where information gets stuck, which tasks come back every week. Coaching, event operations and the Navy Reserve taught me to prepare before acting." },
-      { title: "Build the smallest useful tool.", text: "A Notion workspace, templates, an automation, a local AI model: I pick the simplest thing that removes the friction, and build it with AI-assisted tools like Claude Code." },
-      { title: "Hand it over.", text: "A tool only counts if the team keeps using it after I leave. Clear documentation, a reading guide for whoever comes next, exports any AI assistant can read: that is how the Royal Daring handover was built." },
-    ],
     tools: ["Tools, when they help", "Notion · Obsidian · Canva", "Claude Code · Codex · Ollama · local LLMs"],
     laws: {
       title: "The three laws of my tools",
@@ -189,42 +132,11 @@ const en = {
     },
   },
 
-  experience: {
-    chapter: "04 / Experience & education",
-    chapterRight: "Lille · Brussels · French Guiana",
-    title: "Field-tested.",
-    cv: "Full CV / PDF",
-    intro: "Before building tools for sport organisations, I worked inside them: on site, with volunteers, against the clock.",
-    field: [
-      { label: "Festival infrastructure / AUG 2025", title: ["Kourou Beach Festival", "& Tour de Guyane"], text: "Built the VIP hospitality complex and deployed sponsor arches with Bolt Echafaudage, under strict timing constraints." },
-      { label: "Team logistics / 2024 — 2025", title: ["From training", "to tournament day"], text: "Organised transport and accommodation for the Ensisheim volleyball tournament alongside my coaching responsibilities at LISSP Calais." },
-      { label: "Teamwork / SINCE 2022", title: ["Preparation.", "Responsibility."], text: "French Navy Reserve service taught me discipline, organisation and team leadership under pressure." },
-    ],
-    education: [
-      { label: "2025 — 2027 / Université de Lille", title: "Master’s · International Sport Administration", text: "Sport management and governance. Thesis on generative AI and no-code tools in sports associations." },
-      { label: "2022 — 2025 / ULCO", title: "Bachelor’s · Sport Management", text: "The academic foundation behind my field experience." },
-    ],
-    allRoles: "Explore all experience",
-    roles: "roles",
-    deployments: DEPLOYMENTS as Deployment[],
-    personal: "Competition and creativity are still part of my everyday life.",
-    gamesLink: "Beyond the projects / My gaming story",
-  },
 
-  contact: {
-    chapter: "05 / Let's work together",
-    chapterRight: "Digital transformation & AI internship / FEB — JUN 2027",
-    title: ["Let's make", "it happen."],
-    copy: "Repetitive tasks, scattered information, tools nobody really uses? I am looking for a digital transformation & AI internship in a sport organisation, to map your processes, automate what can be automated and help your team adopt the tools.",
-    copyStrong: "February to June 2027, in France, Belgium or elsewhere in Europe.",
-    cv: "Download CV",
-    meta: ["Lille / France", "FR native · EN C1"],
-  },
 
   footer: {
     line: ["Jules Moreau / From the field to the tools.", "Built with curiosity, field experience and AI-assisted tools."],
     label: "Footer",
-    story: "My story",
     projects: "Projects",
     top: "Back to top ↑",
     marquee: ["PLAY", "UNDERSTAND", "BUILD"],
@@ -253,10 +165,6 @@ const fr: Copy = {
   sections: {
     hero: "Accueil",
     contracts: "Projets",
-    origin: "Mon parcours",
-    operator: "Ma méthode",
-    log: "Expérience",
-    extraction: "Contact",
   },
 
   nav: {
@@ -291,9 +199,9 @@ const fr: Copy = {
     chapterRight: "Quatre projets / IA, outils & terrain",
     title: ["Trouver le frein.", "Bâtir l’outil."],
     introLabel: "De vraies équipes. De vrais outils.",
-    intro: "Un moteur de recherche IA qui tourne 24h/24. Un système sponsors pensé pour qu’un club le fasse vivre sans moi. Puis le tournoi et la saison où j’ai appris comment fonctionnent vraiment les structures sportives.",
+    intro: "Un espace de travail IA construit pour mon mémoire, nourri par un moteur de recherche qui tourne 24h/24. Un système sponsors pensé pour qu’un club le fasse vivre sans moi. Puis le tournoi et la saison où j’ai appris comment fonctionnent vraiment les structures sportives.",
     languageNote: "Les études de cas détaillées sont en anglais.",
-    status: { "thesis-engine": "En direct · 24h/24", daring: "Conçu pour durer", "field-ops": "Sur le terrain", signal: "Parti de zéro" },
+    status: { "ono-sendai": "Utilisé chaque jour", daring: "Conçu pour durer", "field-ops": "Sur le terrain", signal: "Parti de zéro" },
     terminal: {
       title: "jules@portfolio: ~/projects — zsh",
       region: "Terminal interactif : tapez une commande pour explorer les projets",
@@ -325,8 +233,7 @@ const fr: Copy = {
       exit: "Pas de sortie. Seulement le prochain projet.",
       sudoDenied: "Bien essayé. Une seule commande tourne en root ici : ",
       sudo: "[sudo] mot de passe pour recruteur :",
-      granted: "Accès autorisé. Direction la section contact…",
-      story: "Mon parcours",
+      granted: "Accès autorisé. Voici comment me joindre :",
       cv: "Télécharger mon CV (PDF)",
       library: {
         title: "~/library · livres favoris",
@@ -339,16 +246,16 @@ const fr: Copy = {
     },
     open: "Voir l’étude de cas",
     lab: {
-      identity: "Thesis Engine",
-      chapter: "Pipeline de recherche IA · mémoire M2",
-      offer: ["Bientôt disponible", "Adaptable à tout secteur"],
+      identity: "Ono-Sendai",
+      chapter: "Espace de travail IA · mémoire M2",
+      offer: ["Conçu pour un mémoire", "Adaptable à toute équipe"],
       verb: ["Faire", "réfléchir."],
-      text: "Mon mémoire étudie ce que l’IA générative peut apporter aux associations sportives aux moyens limités. Ma recherche tourne exactement là-dessus : un modèle local fine-tuné qui scanne trois bases scientifiques trois fois par jour, garde l’essentiel et le range dans mon vault Obsidian.",
-      proof: "90",
-      proofLabel: "sources par jour · ~5 % gardées",
+      text: "Mon mémoire étudie ce que l’IA générative peut apporter à une équipe qui manque de temps et d’argent. Alors j’ai construit ma propre réponse : une app de bureau pour toute mon année de master. J’y rédige le mémoire avec des citations APA à la page près, je cherche dans ma bibliothèque par le sens, j’enregistre et transcris les cours, et je révise. Un moteur de recherche local l’alimente en sources chaque jour.",
+      proof: "4",
+      proofLabel: "espaces · mémoire, bibliothèque, cours, questions",
       cost: "≈ 0 €",
-      costLabel: "par mois · tourne en local, 24h/24",
-      open: "Explorer le moteur",
+      costLabel: "transcription et recherche sur mon Mac",
+      open: "Explorer l’app",
     },
     more: {
       strategy: { chapter: "Business de l’esport · étude de cas", proof: "23 p", proofLabel: "dossier stratégique" },
@@ -388,59 +295,8 @@ const fr: Copy = {
     },
   },
 
-  story: {
-    chapter: "01 / La personne derrière les projets",
-    chapterRight: "Compétition → Terrain → Outils → IA",
-    title: ["Du terrain", "aux outils."],
-    body: [
-      "La compétition dans le jeu vidéo m’a rendu curieux de tout ce qui entoure le match. Entraîner au volley m’a montré pourquoi c’est important : lors d’un tournoi U13 bien organisé, j’ai pu me concentrer sur mon équipe parce que les détails avaient déjà été réglés.",
-      "Puis le terrain : la communication de club, les partenariats, un tournoi de 500 personnes. À chaque fois, le même constat : les petites structures sportives tiennent grâce aux bénévoles, et une bonne partie de leur temps part dans des tâches qu’un bon outil pourrait prendre en charge. Alors j’ai commencé à construire ces outils.",
-    ],
-    takeawayLabel: "Ce que j’en retiens",
-    takeaway: ["Le meilleur outil,", "c’est celui que l’équipe continue d’utiliser."],
-    gamesLink: "Au-delà des projets / Mon histoire de joueur (EN)",
-    photoAlt: "Match de volley photographié par Jules Moreau",
-    photoTag: "Ma photo / LISSP Calais",
-    caption: "Archive photo personnelle · Volley",
-    highlights: "Voir mes meilleures actions en compétition",
-    video: {
-      header: "Racines compétitives",
-      play: "Lire les meilleures actions CS2",
-      pause: "Mettre en pause les meilleures actions CS2",
-      caption: ["Mes actions. Mon regard.", "CS2 / Mes meilleures actions"],
-    },
-    places: {
-      kicker: "Avant les projets / Là où j’ai grandi",
-      count: "8 étapes / 4 continents",
-      title: ["Quatre continents.", "Une habitude : s’adapter."],
-      intro: "J’ai grandi en déménageant avec ma famille. Chaque endroit m’a laissé quelque chose que j’utilise encore.",
-      stops: [
-        { place: "France", at: "france", lesson: "Le départ", text: "Né en France. Vingt-quatre jours plus tard, passeport en poche, direction la Guyane." },
-        { place: "Guyane", at: "guiana", lesson: "La nature", text: "Grandir au contact de la nature, et des singes mains jaunes du balcon." },
-        { place: "Corse", at: "corsica", lesson: "Le trail", text: "Là où j’ai découvert le trail." },
-        { place: "Nouvelle-Calédonie", at: "caledonia", lesson: "L’océan", text: "Le surf et le va’a, la pirogue à balancier." },
-        { place: "Congo · Brazzaville", at: "congo", lesson: "Le recul", text: "Prendre conscience de ma chance." },
-        { place: "France", at: "france", lesson: "Retour", text: "Un premier retour." },
-        { place: "Guyane", at: "guiana", lesson: "Le jeu", text: "Minecraft, puis Counter-Strike, puis Overwatch." },
-        { place: "France", at: "france", lesson: "Le sport", text: "Les études, le volley, le golf et le jeu en compétition. Puis le management du sport." },
-      ],
-      mapLabel: "Carte du monde des huit étapes : France, Guyane, Corse, Nouvelle-Calédonie, Congo, puis France, Guyane et de nouveau France.",
-      compass: { n: "N", s: "S", e: "E", w: "O" },
-      controls: { prev: "Étape précédente", next: "Étape suivante", replay: "Rejouer le trajet" },
-    },
-  },
 
   approach: {
-    chapter: "03 / Ma façon de travailler",
-    chapterRight: "Observer · Construire · Transmettre",
-    title: ["Les gens d’abord.", "L’outil ensuite."],
-    body: "Dans une petite structure sportive, la transformation digitale ne se joue pas sur l’outil le plus récent. Elle se joue sur le bénévole le dimanche soir, l’entraîneur qui a dix minutes devant lui, le stagiaire qui arrivera la saison prochaine. C’est pour eux que je construis.",
-    languages: ["Français / Natif", "Anglais / C1", "FR · BE · Europe"],
-    methods: [
-      { title: "Comprendre comment ça marche vraiment.", text: "Avant d’automatiser quoi que ce soit, je regarde comment l’équipe travaille vraiment : qui fait quoi, où l’information se perd, quelles tâches reviennent chaque semaine. Le coaching, l’événementiel et la réserve de la Marine m’ont appris à préparer avant d’agir." },
-      { title: "Construire le plus petit outil utile.", text: "Un espace Notion, des templates, une automatisation, une IA locale : je choisis la solution la plus simple qui lève le frein, et je la construis avec des outils assistés par l’IA comme Claude Code." },
-      { title: "Transmettre.", text: "Un outil ne compte que si l’équipe continue de s’en servir après mon départ. Une documentation claire, un guide de lecture pour la personne suivante, des exports lisibles par n’importe quel assistant IA : c’est comme ça qu’a été pensée la passation au Royal Daring." },
-    ],
     tools: ["Des outils, quand ils servent", "Notion · Obsidian · Canva", "Claude Code · Codex · Ollama · LLM locaux"],
     laws: {
       title: "Les trois lois de mes outils",
@@ -453,96 +309,11 @@ const fr: Copy = {
     },
   },
 
-  experience: {
-    chapter: "04 / Expérience & formation",
-    chapterRight: "Lille · Bruxelles · Guyane",
-    title: "Testé sur le terrain.",
-    cv: "CV complet / PDF",
-    intro: "Avant de construire des outils pour les structures sportives, j’ai travaillé à l’intérieur : sur site, avec des bénévoles, contre la montre.",
-    field: [
-      { label: "Infrastructure festival / AOÛT 2025", title: ["Kourou Beach Festival", "& Tour de Guyane"], text: "Montage de l’espace d’hospitalité VIP et installation des arches sponsors avec Bolt Echafaudage, avec des délais serrés." },
-      { label: "Logistique d’équipe / 2024 — 2025", title: ["De l’entraînement", "au jour du tournoi"], text: "Organisation du transport et de l’hébergement pour le tournoi de volley d’Ensisheim, en plus de mon rôle d’entraîneur au LISSP Calais." },
-      { label: "Esprit d’équipe / DEPUIS 2022", title: ["Préparation.", "Responsabilité."], text: "La réserve de la Marine nationale m’a appris la discipline, l’organisation et la conduite d’équipe sous pression." },
-    ],
-    education: [
-      { label: "2025 — 2027 / Université de Lille", title: "Master · International Sport Administration", text: "Management et gouvernance du sport. Mémoire sur l’IA générative et le no-code dans les associations sportives." },
-      { label: "2022 — 2025 / ULCO", title: "Licence · Management du sport", text: "La base académique de mon expérience terrain." },
-    ],
-    allRoles: "Toute mon expérience",
-    roles: "postes",
-    deployments: [
-      {
-        period: "MAI — JUIL. 2026",
-        where: "BRUXELLES, BE",
-        title: "Stagiaire Communication & Sponsoring",
-        org: "Royal Daring Hockey Club ASBL",
-        body: "Refonte de la communication et du sponsoring du club avant sa montée en Division Honneur : première charte graphique, système de modèles Canva réutilisables sur 4 formats, offre sponsors en 5 niveaux + Pack Jeunes présentée sur un site partenaires bilingue FR/NL, et passation sous Notion pour assurer la continuité.",
-        tag: "STAGE MASTER ISA",
-      },
-      {
-        period: "DÉC. 2025",
-        where: "LILLE, FR",
-        title: "Responsable communication — Tournoi multisports ASI",
-        org: "UFR3S Lille",
-        body: "Opérations terrain pour un tournoi universitaire de plus de 500 personnes. Deux incidents critiques (conflit de salle, alerte météo) résolus sans perturber l’événement. Charte graphique, briefing bilingue et affiche réalisés.",
-        tag: "TERRAIN",
-      },
-      {
-        period: "AOÛT 2025",
-        where: "KOUROU, GUYANE",
-        title: "Technicien infrastructure événementielle",
-        org: "Bolt Echafaudage",
-        body: "Kourou Beach Festival & Tour de Guyane. Montage de l’espace d’hospitalité VIP et installation des arches sponsors avec des délais serrés. Manutention lourde (chariots télescopiques).",
-      },
-      {
-        period: "JUIN — JUIL. 2025",
-        where: "GUYANE",
-        title: "Vente & support opérationnel",
-        org: "Guyane Matériels Groupe",
-        body: "Relation client en environnement tropical. Production de photos produits pour les campagnes commerciales.",
-      },
-      {
-        period: "JANV. — JUIN 2025",
-        where: "NORTKERQUE, FR",
-        title: "Responsable communication",
-        org: "AS Nortkerque 95 (ASN95)",
-        body: "Création de la présence digitale du club : activation sponsors (+467 % de taux de clic), identité visuelle, opérations jour de match et photo sur toute la saison. Plus d’1M de vues, 44K comptes touchés, +93,8 % d’interactions, +28,2 % d’abonnés.",
-        tag: "SIGNAL",
-      },
-      {
-        period: "SEPT. 2024 — JUIN 2025",
-        where: "CALAIS, FR",
-        title: "Entraîneur de volley — U15 (principal) / U13 (adjoint)",
-        org: "LISSP Calais VB",
-        body: "Logistique complète de l’équipe, dont le déplacement international (transport, hébergement) pour le tournoi d’Ensisheim.",
-      },
-      {
-        period: "DEPUIS JUIL. 2022",
-        where: "FRANCE",
-        title: "Réserviste de la Marine nationale — Second maître",
-        org: "Marine nationale",
-        body: "École de Maistrance. Rigueur militaire, gestion de crise et conduite d’équipe. Missions de réserve opérationnelle axées sur la discipline et l’organisation.",
-        tag: "RÉSERVE ACTIVE",
-      },
-    ],
-    personal: "La compétition et la création font toujours partie de mon quotidien.",
-    gamesLink: "Au-delà des projets / Mon histoire de joueur (EN)",
-  },
 
-  contact: {
-    chapter: "05 / Travaillons ensemble",
-    chapterRight: "Stage transformation digitale & IA / FÉV. — JUIN 2027",
-    title: ["Faisons-le", "ensemble."],
-    copy: "Des tâches répétitives, une information éparpillée, des outils que personne n’utilise vraiment ? Je cherche un stage en transformation digitale & IA dans une structure sportive, pour cartographier vos process, automatiser ce qui peut l’être et accompagner votre équipe dans l’adoption des outils.",
-    copyStrong: "De février à juin 2027, en France, en Belgique ou ailleurs en Europe.",
-    cv: "Télécharger le CV",
-    meta: ["Lille / France", "FR natif · EN C1"],
-  },
 
   footer: {
     line: ["Jules Moreau / Du terrain aux outils.", "Conçu avec curiosité, expérience terrain et outils assistés par l’IA."],
     label: "Pied de page",
-    story: "Mon parcours",
     projects: "Projets",
     top: "Haut de page ↑",
     marquee: ["JOUER", "COMPRENDRE", "CONSTRUIRE"],

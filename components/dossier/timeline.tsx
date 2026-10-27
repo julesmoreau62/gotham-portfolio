@@ -21,7 +21,6 @@ const DATES = [
   { at: field.year2025.at, date: 2025.04 },
   { at: kourou.summer.at, date: 2025.62 },
   { at: lille.september.at, date: 2025.71 },
-  { at: lille.december.at, date: 2025.96 },
   { at: daring.may.at, date: 2026.37 },
   { at: shift.last.at, date: 2026.79 },
 ]
@@ -31,7 +30,6 @@ const MARKS = [
   { date: 2025.04, label: "ASN95", at: field.club.at },
   { date: 2025.62, label: "KOUROU", at: kourou.place },
   { date: 2025.75, label: "M2 LILLE", at: lille.master.at },
-  { date: 2025.96, label: "ASI", at: lille.comms.at },
   { date: 2026.37, label: "DARING", at: daring.join.at },
   { date: 2026.79, label: "NOW", at: shift.last.at },
 ]

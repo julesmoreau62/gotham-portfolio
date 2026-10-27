@@ -6,8 +6,9 @@ import { DaringCase } from "@/components/contracts/daring"
 import { SignalCase } from "@/components/contracts/signal"
 import { StrategyCase } from "@/components/contracts/strategy"
 import { FieldOpsCase } from "@/components/contracts/field-ops"
-import { ThesisEngineCase } from "@/components/contracts/thesis-engine"
-import { ThesisBackdrop } from "@/components/contracts/thesis-backdrop"
+import { OnoSendaiCase } from "@/components/contracts/ono-sendai"
+import { OnoBackdrop } from "@/components/contracts/ono-backdrop"
+import { onoSkin } from "@/components/contracts/ono-skin"
 import { BuildCase } from "@/components/contracts/build"
 import { ImageryCase } from "@/components/contracts/imagery"
 
@@ -16,14 +17,19 @@ const CASES: Record<ContractSlug, React.ComponentType> = {
   signal: SignalCase,
   strategy: StrategyCase,
   "field-ops": FieldOpsCase,
-  "thesis-engine": ThesisEngineCase,
+  "ono-sendai": OnoSendaiCase,
   build: BuildCase,
   imagery: ImageryCase,
 }
 
 /** Cases that replace the hero photo with a live backdrop. */
 const BACKDROPS: Partial<Record<ContractSlug, React.ComponentType>> = {
-  "thesis-engine": ThesisBackdrop,
+  "ono-sendai": OnoBackdrop,
+}
+
+/** Cases with their own type, taken from their product's own site. */
+const SKINS: Partial<Record<ContractSlug, { className: string; title: string; role?: string }>> = {
+  "ono-sendai": onoSkin,
 }
 
 type Params = Promise<{ slug: string }>
@@ -63,7 +69,7 @@ export default async function ContractPage({ params }: { params: Params }) {
   const Body = CASES[c.slug]
   const Backdrop = BACKDROPS[c.slug]
   return (
-    <ContractShell key={c.slug} contract={c} backdrop={Backdrop ? <Backdrop /> : undefined}>
+    <ContractShell key={c.slug} contract={c} backdrop={Backdrop ? <Backdrop /> : undefined} skin={SKINS[c.slug]}>
       <Body />
     </ContractShell>
   )

@@ -18,6 +18,7 @@ import { KourouScene } from "./scene-kourou"
 import { LilleScene } from "./scene-lille"
 import { Moments, focusAt } from "./moments"
 import { MissionScene } from "./scene-mission"
+import { ONO_VIDEO, OnoScene } from "./scene-ono"
 import { BootScene, MatchFlash, SearchScene } from "./scene-search"
 import { ShiftScene } from "./scene-shift"
 import { SoundCheck } from "./sound-check"
@@ -37,7 +38,7 @@ type Phase = "gate" | "live" | "end"
 /** Moments that tear the picture, in global seconds. */
 const GLITCHES = [
   CUE.search.at - 0.12, CUE.match.at, CUE.rebuild.at, CUE.childhood.at, CUE.interest.at - 0.15, CUE.gaming.at, CUE.around.at,
-  CAREER_START - 0.2, CUE.kourou.signal.at, CUE.lille.incidents.at, CUE.daring.border.at, CUE.shift.shift.at, CUE.mission.world.at, CUE.mission.out.end,
+  CAREER_START - 0.2, CUE.kourou.signal.at, CUE.daring.border.at, CUE.shift.shift.at, CUE.ono.glitch, CUE.ono.glitch + 0.4, CUE.mission.world.at, CUE.mission.out.end,
 ]
 /** Lite mode renders the film at about 30 fps; the audio clock keeps it in sync. */
 const LITE_FRAME_MS = 1000 / 36
@@ -47,9 +48,9 @@ const FLASHES = [
   { at: CUE.unusual.at, color: "#ff2a3c" },
   { at: CUE.gaming.at, color: "#c8ff00" },
   { at: CUE.field.year.at, color: "#c8ff00" },
-  { at: CUE.lille.incidents.at, color: "#ff2a3c" },
   { at: CUE.daring.border.at, color: "#f2f1ec" },
   { at: CUE.shift.shift.at, color: "#ff2a3c" },
+  { at: CUE.ono.cut - 0.2, color: "#c8ff00" },
   { at: CUE.mission.contact.at, color: "#c8ff00" },
 ]
 
@@ -112,6 +113,8 @@ export function DossierExperience() {
       image.src = src
       return image
     })
+    // The Ono-Sendai black hole is a video: fetched once here so it is cached when the chapter opens.
+    void fetch(ONO_VIDEO).catch(() => {})
     return () => images.forEach(image => { image.onload = image.onerror = null })
   }, [])
 
@@ -255,6 +258,7 @@ export function DossierExperience() {
               <Locator t={t} />
             </div>
             <MatchFlash t={t} />
+            <OnoScene t={t} />
           </>
         )}
       </div>

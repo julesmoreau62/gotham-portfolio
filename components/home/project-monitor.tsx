@@ -91,7 +91,7 @@ export function ProjectMonitor({ entries, selected, on, label }: { entries: Entr
     <div className={styles.monitor} data-on={on} style={{ "--accent": entry.accent } as React.CSSProperties}>
       <div className={styles.monitorBar}>
         <span>{`${label} // ${entry.n} / ${entry.code}`}</span>
-        {entry.status && <span className={styles.monitorStatus}>{entry.slug === "thesis-engine" && <i className={styles.live} aria-hidden="true" />}{entry.status}</span>}
+        {entry.status && <span className={styles.monitorStatus}>{entry.slug === "ono-sendai" && <i className={styles.live} aria-hidden="true" />}{entry.status}</span>}
       </div>
       <div className={styles.monitorScreen} aria-hidden="true">
         {seen.map(i => (

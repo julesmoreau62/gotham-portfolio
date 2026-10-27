@@ -22,11 +22,11 @@ import styles from "./selected-work.module.css"
    book references hide in it too: `library`, `jack in`, `asimov`.
    ------------------------------------------------------------------ */
 
-const FEATURED = ["thesis-engine", ...STORY_PROJECT_SLUGS] as const
+const FEATURED = ["ono-sendai", ...STORY_PROJECT_SLUGS] as const
 const ARCHIVE = ["strategy", "build", "imagery"] as const
 const COMMANDS = ["help", "ls", "cat", "open", "whoami", "contact", "library", "asimov", "jack", "clear"]
 const PROJECT_COMMANDS = ["open", "cat", "cd", "info"]
-const SUGGESTIONS = ["help", "ls -a", "cat thesis-engine", "open daring", "whoami", "contact"]
+const SUGGESTIONS = ["help", "ls -a", "cat ono-sendai", "open daring", "whoami", "contact"]
 /** Boot timeline in seconds: the login screen, then `ls` typed, then its output. */
 const BOOT = { command: 0.75, output: 1.15, ready: 2 }
 const LOGO = [
@@ -38,9 +38,9 @@ const LOGO = [
   " ╚════╝ ╚═╝     ╚═╝",
 ].join("\n")
 
-/** Each project's colour and the picture its monitor shows. Thesis Engine keeps its night-lab violet. */
+/** Each project's colour and the picture its monitor shows. Ono-Sendai takes the ice blue of its landing page. */
 const LOOK: Record<ContractSlug, { accent: string; image: string; position?: string }> = {
-  "thesis-engine": { accent: "#b99bff", image: "/assets/thesis-engine/cover.jpg", position: "64% 42%" },
+  "ono-sendai": { accent: "#9cc8e6", image: "/assets/thesis-engine/cover.jpg", position: "64% 42%" },
   daring: { accent: "#f1c780", image: "/assets/portfolio/daring-sponsor-site.webp", position: "0% 0%" },
   "field-ops": { accent: "#a9edee", image: "/assets/photo/asi-1.jpg", position: "50% 62%" },
   signal: { accent: "#c8ff00", image: "/signal/group_sponsor.webp", position: "50% 45%" },
@@ -51,7 +51,7 @@ const LOOK: Record<ContractSlug, { accent: string; image: string; position?: str
 
 /** Other names people may type for a project, on top of its slug, code and number. */
 const ALIASES: Record<ContractSlug, string[]> = {
-  "thesis-engine": ["thesis", "engine"],
+  "ono-sendai": ["ono", "sendai", "onosendai", "thesis", "engine", "thesis-engine"],
   daring: ["royal", "royal-daring"],
   "field-ops": ["asi", "field", "tournament"],
   signal: ["asn95", "asn"],
@@ -101,7 +101,7 @@ function buildEntries(locale: Locale): Entry[] {
   const contract = (slug: ContractSlug) => CONTRACTS.find(c => c.slug === slug)!
   const featured = FEATURED.map((slug): Omit<Entry, "n"> => {
     const base = { slug, code: contract(slug).code, featured: true, status: t.status[slug], ...LOOK[slug] }
-    if (slug === "thesis-engine") {
+    if (slug === "ono-sendai") {
       const lab = t.lab
       return { ...base, name: lab.identity, chapter: lab.chapter, verb: lab.verb.join(" "), text: lab.text, proof: lab.proof, proofLabel: lab.proofLabel, note: `${lab.cost} ${lab.costLabel}`, tags: lab.offer, open: lab.open }
     }
@@ -235,9 +235,7 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
       case "pwd": return print({ cmd: line, out: [{ type: "text", text: "/home/jules/projects" }] })
       case "sudo": case "hire":
         if (cmd === "sudo" && args[0]?.toLowerCase() !== "hire") return print({ cmd: line, out: [{ type: "sudo", word: "sudo hire jules" }] })
-        print({ cmd: line, out: [{ type: "hire" }] })
-        later(() => scrollToId("extraction"), still() ? 300 : 1600)
-        return
+        return print({ cmd: line, out: [{ type: "hire" }, { type: "contact" }] })
       case "exit": case "quit": case "logout": return print({ cmd: line, out: [{ type: "exit" }] })
       default: {
         // A bare project name reads its summary.
@@ -334,7 +332,7 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
 
   const lsRow = (entry: Entry) => projectLink(entry, styles.lsRow, <>
     <span className={styles.lsN}>{entry.n}</span>
-    <span className={styles.lsSlug}>{entry.slug}{entry.slug === "thesis-engine" && <i className={styles.live} aria-hidden="true" />}</span>
+    <span className={styles.lsSlug}>{entry.slug}{entry.slug === "ono-sendai" && <i className={styles.live} aria-hidden="true" />}</span>
     <span className={styles.lsVerb}>{entry.verb ?? entry.name}</span>
     <span className={styles.lsProof}><b>{entry.proof}</b> <span className={styles.lsLabel}>{entry.proofLabel}</span></span>
   </>)
@@ -402,7 +400,7 @@ export function ProjectTerminal({ locale }: { locale: Locale }) {
         <span key="what">{copy.hero.specialty}</span>,
         <span key="when" className={styles.acid}>● {copy.hero.availability} · {copy.hero.window}</span>,
         <span key="links" className={styles.links}>
-          <a href="#origin" onClick={e => { e.preventDefault(); scrollToId("origin") }}>→ {tt.story}</a>
+          <a href={`mailto:${PROFILE.email}`} data-cursor="mail">→ {PROFILE.email}</a>
         </span>,
       ]
       case "contact": return [

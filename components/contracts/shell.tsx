@@ -11,11 +11,11 @@ import { Chip, Kv, Btn, Arrow, RegMarks, Barcode } from "@/components/ui/primiti
 import { Clock } from "@/components/home/top-bar"
 import { ContractEntrance } from "@/components/contracts/contract-entrance"
 import { hasContractEntrance } from "@/lib/contract-entrances"
-import { PROJECT_STORIES } from "@/lib/journey"
 
 const EASE = [0.2, 1, 0.3, 1] as const
 
-export function ContractShell({ contract: c, backdrop, children }: { contract: Contract; backdrop?: React.ReactNode; children: React.ReactNode }) {
+/** `skin` lets a case bring its own type: a class for the page (fonts) and one for the hero title. */
+export function ContractShell({ contract: c, backdrop, skin, children }: { contract: Contract; backdrop?: React.ReactNode; skin?: { className: string; title: string; role?: string }; children: React.ReactNode }) {
   const hasEntrance = hasContractEntrance(c.slug)
   const [entryStage, setEntryStage] = useState<"intro" | "reveal" | "ready">(hasEntrance ? "intro" : "ready")
   const entered = entryStage !== "intro"
@@ -24,7 +24,6 @@ export function ContractShell({ contract: c, backdrop, children }: { contract: C
   const complete = useCallback(() => setEntryStage("ready"), [])
   const { prev, next } = siblingContracts(c.slug)
   const light = c.accent === "#f2f1ec"
-  const story = c.slug in PROJECT_STORIES ? PROJECT_STORIES[c.slug as keyof typeof PROJECT_STORIES] : null
   const longestWord = Math.max(...c.title.split(" ").map((w) => w.length))
   const titleSize = longestWord >= 9 ? "text-[clamp(40px,6.3vw,110px)]" : "text-[clamp(48px,7.6vw,132px)]"
 
@@ -48,7 +47,7 @@ export function ContractShell({ contract: c, backdrop, children }: { contract: C
   return (
     <>
     {hasEntrance && <ContractEntrance slug={c.slug} onReveal={reveal} onComplete={complete} />}
-    <div inert={!ready} className="min-h-screen bg-bg text-ink" style={{ ["--accent" as string]: c.accent }}>
+    <div inert={!ready} className={`min-h-screen bg-bg text-ink ${skin?.className ?? ""}`} style={{ ["--accent" as string]: c.accent }}>
       {/* Top bar */}
       <header className="fixed inset-x-0 top-0 z-[120] h-14 border-b border-line bg-bg/85 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-4 md:px-8">
@@ -127,9 +126,9 @@ export function ContractShell({ contract: c, backdrop, children }: { contract: C
                 play={entered}
                 delay={0.3}
                 lines={c.title.split(" ").length > 2 ? [c.title] : c.title.split(" ")}
-                className={`display-black ${titleSize}`}
+                className={skin?.title ?? `display-black ${titleSize}`}
               />
-              <motion.p {...fade(0.8)} className="mt-5 display text-[clamp(16px,2vw,26px)]" style={{ color: c.accent }}>
+              <motion.p {...fade(0.8)} className={`mt-5 ${skin?.role ?? "display text-[clamp(16px,2vw,26px)]"}`} style={{ color: c.accent }}>
                 {c.role}
               </motion.p>
               <motion.p {...fade(0.9)} className="mt-4 max-w-2xl mono text-[13px] leading-relaxed text-ink/80">
@@ -170,10 +169,6 @@ export function ContractShell({ contract: c, backdrop, children }: { contract: C
       </section>
 
       <main>
-        {story && <section className="border-b border-line px-5 py-10 md:px-8 md:py-12" aria-label="How this project fits my journey">
-          <div className="label text-acid">My journey / {story.chapter}</div>
-          <p className="mt-4 max-w-3xl text-[clamp(20px,2.4vw,32px)] leading-snug">{story.takeaway}</p>
-        </section>}
         {children}
       </main>
 

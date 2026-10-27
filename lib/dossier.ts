@@ -13,6 +13,7 @@ export type DossierSegment = {
   chapter: string
   /** Global time when the recording starts. */
   start: number
+  /** How much of the recording plays; it can stop before the file ends. */
   duration: number
   lines: DossierLine[]
 }
@@ -77,16 +78,12 @@ const RAW: RawSegment[] = [
     ],
   },
   {
-    id: "SEG06", chapter: "Base Lille", gap: 1.2, duration: 20.04,
+    // The recording goes on with the December tournament (ASI); the film stops after the Master's.
+    id: "SEG06", chapter: "Base Lille", gap: 1.2, duration: 7.0,
     lines: [
       [0.04, 1.76, "September 2025."],
       [2.26, 3.5, "Relocation to Lille."],
       [4.02, 6.54, "Master’s in International Sport Administration."],
-      [7.78, 8.34, "December."],
-      [8.96, 12.24, "Head of communications for a university multisport tournament."],
-      [12.78, 15.32, "Over 500 photos and videos delivered."],
-      [16.3, 17.84, "Two critical incidents."],
-      [18.68, 19.8, "Zero disruption."],
     ],
   },
   {
@@ -112,6 +109,27 @@ const RAW: RawSegment[] = [
       [11.6, 16.78, "His research engine scans 90 sources a day, around the clock."],
       [17.44, 18.3, "Thesis topic:"],
       [18.8, 21.4, "Generative AI in sports associations."],
+    ],
+  },
+  {
+    id: "SEG08.5", chapter: "Operation Ono-Sendai", gap: 1.3, duration: 63.87,
+    lines: [
+      [0.06, 0.94, "Exhibit K."],
+      [1.54, 3.44, "Codename: Ono-Sendai."],
+      [4.2, 8.38, "The problem: his master’s year was scattered across eight different tools."],
+      [8.84, 10.28, "None of them knew the whole picture."],
+      [10.9, 14.76, "So he built his own app. One workspace, four spaces."],
+      [15.52, 19.56, "Thesis: he writes, and a copilot reviews every sentence."],
+      [20.1, 25.4, "It checks each claim against his books, flags what needs nuance, and suggests a better wording."],
+      [26.0, 30.62, "Every citation is formatted in APA 7, down to the exact page."],
+      [31.42, 34.8, "Library: thirty-one books, searched by meaning."],
+      [35.42, 37.84, "A question in French finds the answer in English."],
+      [38.7, 43.82, "Lectures: every class is recorded, transcribed, and lined up with the slides."],
+      [44.64, 50.0, "Ask: one question across all of it, answered with sources, never invented."],
+      [50.92, 53.74, "Every morning, the research engine feeds the library."],
+      [54.28, 57.12, "It all runs on his own machine, for almost nothing."],
+      [57.82, 61.8, "His thesis asks what AI can do with one person and no budget."],
+      [62.36, 63.62, "This is his answer."],
     ],
   },
   {
@@ -171,7 +189,7 @@ export const CUE = {
     ctr: line(3, 9), ctrUp: at(3, 27.98),
   },
   kourou: { summer: line(4, 0), signal: line(4, 1), guiana: at(4, 3.42), place: at(4, 4.94), build: line(4, 2), arches: at(4, 10.64), deadline: line(4, 3), done: line(4, 4) },
-  lille: { september: line(5, 0), move: line(5, 1), master: line(5, 2), december: line(5, 3), comms: line(5, 4), files: line(5, 5), incidents: line(5, 6), zero: line(5, 7) },
+  lille: { september: line(5, 0), move: line(5, 1), master: line(5, 2) },
   daring: {
     may: line(6, 0), border: line(6, 1), position: line(6, 2), brussels: at(6, 4.52), join: line(6, 3), results: line(6, 4),
     identity: at(6, 11.8), tiers: at(6, 13.58), website: at(6, 15.52), handover: line(6, 6),
@@ -180,7 +198,17 @@ export const CUE = {
     last: line(7, 0), again: line(7, 1), shift: line(7, 2), communicates: line(7, 3), builds: line(7, 4), automations: at(7, 9.3), models: at(7, 10.5),
     engine: line(7, 5), scans: at(7, 13.04), topic: line(7, 6), thesis: line(7, 7),
   },
-  mission: { sought: line(8, 0), objective: line(8, 1), sport: at(8, 4.14), window: line(8, 2), world: line(8, 3), recommend: line(8, 4), contact: line(8, 5), out: line(8, 6) },
+  ono: {
+    exhibit: line(8, 0), codename: line(8, 1), problem: line(8, 2), none: line(8, 3), built: line(8, 4),
+    thesis: line(8, 5), check: line(8, 6), flag: at(8, 22.42), rewrite: at(8, 23.98), cite: line(8, 7), page: at(8, 29.18),
+    library: line(8, 8), bilingual: line(8, 9), lectures: line(8, 10), ask: line(8, 11),
+    fed: line(8, 12), local: line(8, 13), why: line(8, 14), answer: line(8, 15),
+    /** The app's logo holds the screen from "his answer" until the picture glitches… */
+    glitch: line(9, 0).at - 0.7,
+    /** …and tears away onto the next mission. */
+    cut: line(9, 0).at + 0.2,
+  },
+  mission: { sought: line(9, 0), objective: line(9, 1), sport: at(9, 4.14), window: line(9, 2), world: line(9, 3), recommend: line(9, 4), contact: line(9, 5), out: line(9, 6) },
   end: last.start + last.duration + 0.3,
 }
 
@@ -242,7 +270,7 @@ export const SFX: SfxEvent[] = (() => {
 })()
 
 function careerSfx(): SfxEvent[] {
-  const { field, kourou, lille, daring, shift, mission } = CUE
+  const { field, kourou, lille, daring, shift, ono, mission } = CUE
   const e = (time: number, kind: SfxKind): SfxEvent => ({ at: time, kind })
   const burst = (from: number, count: number, step: number) => Array.from({ length: count }, (_, i) => e(from + i * step, "tick"))
   // A flight on the large globe: the jet across, then the reticle locking on the new base.
@@ -258,15 +286,24 @@ function careerSfx(): SfxEvent[] {
     ...burst(field.ctr.at, 7, 0.16), e(ctrLands - 0.95, "riser"), e(ctrLands, "impact"),
     e(kourou.summer.at, "thump"), e(kourou.signal.at, "ping"), ...fly(FLIGHTS.kourou), e(kourou.place, "beep"), e(kourou.build.at, "whoosh"),
     ...burst(kourou.build.at + 0.4, 16, 0.38), e(kourou.deadline.at, "alarm"), e(kourou.done.at, "thump"),
-    e(lille.september.at, "thump"), ...fly(FLIGHTS.lille), e(lille.master.at, "shutter"),
-    e(lille.december.at, "thump"), e(lille.comms.at, "shutter"), ...burst(lille.files.at, 14, 0.15), e(lille.incidents.at, "alarm"),
-    e(lille.zero.at, "lock"),
+    e(lille.september.at, "thump"), ...fly(FLIGHTS.lille), e(lille.master.at, "shutter"), e(lille.master.end, "lock"),
     e(daring.may.at, "thump"), e(daring.border.at, "thump"), e(daring.border.at + 0.08, "shutter"), e(daring.brussels, "ping"),
     e(daring.join.at, "whoosh"), e(daring.join.at + 0.2, "shutter"), e(daring.results.at, "beep"),
     e(daring.identity, "tick"), e(daring.tiers, "tick"), e(daring.website, "tick"), e(daring.handover.at, "tick"), e(daring.handover.end - 0.3, "lock"),
     ...fly(FLIGHTS.back), e(shift.again.at, "ping"), e(shift.shift.at - 0.9, "riser"), e(shift.shift.at, "glitch"), e(shift.shift.at + 0.05, "thump"),
     e(shift.communicates.end - 0.4, "glitch"), ...burst(shift.builds.at, 10, 0.08), ...burst(shift.automations, 10, 0.08), ...burst(shift.models, 10, 0.08),
     e(shift.engine.at, "whoosh"), ...burst(shift.scans, 17, 0.2), land(COUNTS.sources), e(shift.topic.at, "beep"), e(shift.thesis.at, "lock"),
+    // Ono-Sendai: the board opens on the black hole, the scattered tools are swallowed, the four spaces swing round.
+    { at: ono.exhibit.at - 0.1, kind: "flight" as const, dur: 1 }, e(ono.exhibit.at + 0.9, "thump"), e(ono.codename.at + 1.3, "lock"),
+    e(ono.problem.at, "beep"), ...burst(ono.problem.at + 0.4, 8, 0.25), ...burst(ono.none.at + 0.3, 8, 0.12),
+    e(ono.built.at - 0.2, "shrink"), e(ono.built.at + 0.8, "whoosh"),
+    e(ono.thesis.at - 0.6, "whoosh"), e(ono.check.at, "beep"), e(ono.flag, "deny"), e(ono.rewrite, "shutter"), e(ono.cite.at, "tick"), e(ono.page, "lock"),
+    e(ono.library.at - 0.6, "whoosh"), ...burst(ono.library.at + 1.4, 3, 0.25), e(ono.bilingual.at, "ping"),
+    e(ono.lectures.at - 0.6, "whoosh"), e(ono.lectures.at, "beep"),
+    e(ono.ask.at - 0.6, "whoosh"), ...burst(ono.ask.at + 0.2, 8, 0.1), e(ono.ask.at + 2.4, "lock"),
+    { at: ono.fed.at, kind: "flight" as const, dur: 2 },
+    e(ono.why.at, "beep"), e(ono.answer.at, "lock"),
+    e(ono.answer.at - 0.05, "impact"), e(ono.glitch, "glitch"), e(ono.glitch + 0.4, "glitch"), e(ono.cut - 0.2, "cut"),
     e(mission.sought.at, "whoosh"), e(mission.objective.at, "beep"), e(mission.window.at, "thump"), e(mission.world.at, "whoosh"),
     e(mission.recommend.at, "tick"), e(mission.contact.at, "lock"),
     // The dive into the closing screen.

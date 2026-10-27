@@ -18,15 +18,13 @@ export const STILLS = {
   volleyball: picture("/assets/photo/volleyball-3.jpg", 1080),
   pitch: picture("/assets/photo/football-8.jpg", 1080),
   stadium: picture("/assets/photo/football-9.jpg", 1920),
-  tournament: picture("/assets/photo/asi-3.jpg", 1080),
 }
 
 /** Every image the film shows, preloaded during the sound check. */
 export const BOARD_IMAGES = [
   ...Object.values(STILLS),
   ...["asn95-posters", "daring-package", "daring-visuals", "thesis-case"].map(name => capture(name)),
-  ...["/assets/portfolio/daring-sponsor-site.webp", "/assets/Royal daring/notion/playbook.png", "/assets/Royal daring/logo-DARING.png", "/assets/Royal daring/recap du weekend/1.png",
-    ...[1, 2, 3, 4, 5].map(n => `/assets/photo/asi-${n}.jpg`)].map(src => picture(src)),
+  ...["/assets/portfolio/daring-sponsor-site.webp", "/assets/Royal daring/notion/playbook.png", "/assets/Royal daring/logo-DARING.png", "/assets/Royal daring/recap du weekend/1.png"].map(src => picture(src)),
 ]
 
 export type Box = { x: number; y: number; w: number; h?: number }

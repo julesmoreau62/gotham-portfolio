@@ -10,7 +10,7 @@ import styles from "./contract-entrance.module.css"
 export function ContractEntrance({ slug, ...callbacks }: EntranceCallbacks & { slug: ContractSlug }) {
   if (slug === "daring") return <DaringEntrance {...callbacks} />
   if (slug === "signal") return <SignalEntrance {...callbacks} />
-  if (slug === "thesis-engine") return <ThesisEntrance {...callbacks} />
+  if (slug === "ono-sendai") return <ThesisEntrance {...callbacks} />
   return null
 }
 
