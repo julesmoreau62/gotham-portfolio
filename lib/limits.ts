@@ -7,8 +7,9 @@ import "server-only"
    (fine for local dev and a single instance).
    ------------------------------------------------------------------ */
 
-const URL_ = process.env.UPSTASH_REDIS_REST_URL
-const TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+// Upstash's own names, or the KV_* names the Vercel Marketplace integration sets.
+const URL_ = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+const TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
 const hasRedis = Boolean(URL_ && TOKEN)
 
 const mem = new Map<string, { v: number; exp: number }>()
