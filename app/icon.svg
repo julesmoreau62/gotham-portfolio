@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <path id="jm" d="M24 12V42Q24 52 14 52H8M24 12L38 34L52 12V52" fill="none" stroke-width="8"/>
-    <clipPath id="band"><rect y="26" width="64" height="10"/></clipPath>
-  </defs>
-  <rect width="64" height="64" fill="#070707"/>
-  <use href="#jm" stroke="#ff0055" x="-3"/>
-  <use href="#jm" stroke="#00e5ff" x="3"/>
-  <use href="#jm" stroke="#c8ff00"/>
-  <g clip-path="url(#band)">
-    <rect y="26" width="64" height="10" fill="#070707"/>
-    <use href="#jm" stroke="#c8ff00" x="7"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1a1a19"/><text x="16" y="21.5" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="15" font-weight="700" fill="#fff">M</text></svg>

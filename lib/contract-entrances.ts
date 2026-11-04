@@ -1,5 +1,0 @@
-const ENTRANCE_SLUGS = ["daring", "signal", "ono-sendai"] as const
-
-export function hasContractEntrance(slug: string): slug is typeof ENTRANCE_SLUGS[number] {
-  return ENTRANCE_SLUGS.some((value) => value === slug)
-}

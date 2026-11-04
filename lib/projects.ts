@@ -1,0 +1,318 @@
+/* ------------------------------------------------------------------
+   PROJECTS — what the artifact panel shows. The AI's knowledge of each
+   project lives in knowledge/projects/<id>.md; the ids below are the
+   only values the open_project tool accepts.
+   ------------------------------------------------------------------ */
+
+export const PROJECT_IDS = ["ono-sendai", "daring", "signal", "field-ops", "build", "strategy", "imagery"] as const
+export type ProjectId = (typeof PROJECT_IDS)[number]
+
+export const SECTIONS = ["overview", "context", "role", "approach", "results", "gallery", "demo", "links"] as const
+export type SectionId = (typeof SECTIONS)[number]
+
+export type Media = { src: string; alt: string; caption?: string; fit?: "cover" | "contain" }
+
+export type Block = { section: SectionId; title?: string } & (
+  | { type: "text"; body: string }
+  | { type: "list"; items: string[] }
+  | { type: "steps"; items: { label: string; text: string }[] }
+  | { type: "metrics"; items: { value: string; label: string }[] }
+  | { type: "gallery"; items: Media[] }
+  | { type: "site"; url: string; label: string; note?: string }
+  | { type: "pdf"; src: string; label: string }
+  | { type: "demo"; demo: "ono-spaces" | "asi-incidents" | "thesis-engine" }
+  | { type: "links"; items: { label: string; href: string }[] }
+)
+
+export type Project = {
+  id: ProjectId
+  code: string
+  title: string
+  org: string
+  role: string
+  period: string
+  location: string
+  status: string
+  summary: string
+  accent: string
+  cover: Media
+  stack?: string[]
+  blocks: Block[]
+}
+
+const D = "/media/daring"
+const S = "/media/signal"
+const F = "/media/field-ops"
+const O = "/media/ono-sendai"
+const B = "/media/build"
+const I = "/media/imagery"
+
+export const PROJECTS: Project[] = [
+  {
+    id: "ono-sendai",
+    code: "ONO",
+    title: "Ono-Sendai",
+    org: "M2 thesis · personal AI workspace",
+    role: "Designer and builder",
+    period: "2026 → in daily use",
+    location: "macOS app",
+    status: "In daily use",
+    summary:
+      "The desktop app I built to run my master's year in one place: write the thesis with citations to the exact page, search 31 books by meaning, transcribe lectures and revise. Fed every day by the Thesis Engine, a local research pipeline.",
+    accent: "#8b9cf7",
+    cover: { src: `${O}/cover.jpg`, alt: "Illustration of a knowledge graph" },
+    stack: ["Electron", "OpenCode", "whisper.cpp", "bge-m3", "pdf.js", "Qwen3 4B + LoRA", "Ollama", "DeepSeek V4-Pro"],
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "4", label: "spaces in one app" },
+        { value: "31", label: "books searchable to the page" },
+        { value: "90/day", label: "sources scanned" },
+        { value: "≈ €0", label: "per month to run" },
+      ] },
+      { section: "context", title: "Context", type: "text", body:
+        "My thesis asks whether generative AI and no-code tools can professionalise a sports association with little time and money. So I built my own answer first: one app for the whole master's year, used every day." },
+      { section: "role", title: "My role", type: "text", body:
+        "Product design, architecture choices, model testing, content and QA. I directed AI coding agents (OpenCode, Claude Code, Codex) for the implementation: about 11,000 lines, with tests." },
+      { section: "demo", title: "Explore the four spaces", type: "demo", demo: "ono-spaces" },
+      { section: "approach", title: "Design choices", type: "steps", items: [
+        { label: "Grounded", text: "The copilot is read-only on the thesis and every answer cites its page or section." },
+        { label: "Plain files", text: "Markdown, CSL-JSON and Zotero. Nothing is locked inside the app." },
+        { label: "Local first", text: "Transcription and search run on my Mac: audio never leaves it." },
+        { label: "Tested models", text: "Three embedding models compared on real sport-management books. Only bge-m3 linked French questions to English passages." },
+      ] },
+      { section: "approach", title: "The Thesis Engine", type: "demo", demo: "thesis-engine" },
+      { section: "gallery", title: "Gallery", type: "gallery", items: [
+        { src: `${O}/thesis-case.webp`, alt: "Ono-Sendai case overview" },
+        { src: `${O}/thesis-stack.webp`, alt: "Toolchain behind Ono-Sendai" },
+        { src: `${O}/thesis-sieve.webp`, alt: "Thesis Engine filtering sources" },
+      ] },
+      { section: "links", title: "Access", type: "text", body:
+        "The repositories stay private while the thesis is in progress. Happy to demo it live in an interview." },
+    ],
+  },
+  {
+    id: "daring",
+    code: "DRG",
+    title: "Royal Daring HC",
+    org: "Royal Daring Club de Molenbeek · est. 1922",
+    role: "Communication and sponsoring",
+    period: "May → Jul 2026",
+    location: "Brussels, BE",
+    status: "Built to last",
+    summary:
+      "A sponsor system built to outlive my internship: first brand guidelines, a bilingual FR/NL partner website, a generated PDF brochure, Canva templates and a Notion handover the volunteers run on their own.",
+    accent: "#e5484d",
+    cover: { src: `${D}/site/img/hero.jpg`, alt: "Royal Daring hockey field" },
+    stack: ["HTML", "CSS", "JavaScript", "Python", "ReportLab", "Netlify", "Canva", "Notion", "Claude Code", "Codex"],
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "5 + 1", label: "sponsor tiers + Youth Pack" },
+        { value: "FR/NL", label: "partner website" },
+        { value: "9 p.", label: "generated brochure" },
+        { value: "11", label: "post templates handed over" },
+      ] },
+      { section: "context", title: "Context", type: "text", body:
+        "A century-old field hockey club: 19 teams, about 620 members, promotion to Division Honneur ahead. When I arrived there was no visual identity, a static 3-tier sponsor PDF and no reusable workflow." },
+      { section: "role", title: "My role", type: "text", body:
+        "Communication and sponsoring intern. I ran the audit, designed the brand system and the sponsor offer, built the website and brochure with AI coding agents, and wrote the handover." },
+      { section: "demo", title: "Partner website", type: "site", url: "https://rdaring-sponsor-only.netlify.app", label: "rdaring-sponsor-only.netlify.app", note: "The live bilingual partner site. Switch FR / NL in its menu." },
+      { section: "approach", title: "Approach", type: "steps", items: [
+        { label: "Awareness", text: "Social formats: weekend recap, matchday stories, playoff poster." },
+        { label: "Credibility", text: "First graphic charter: Daring red, black, gold, Playfair Display and DM Sans." },
+        { label: "Offer", text: "5 tiers + Youth Pack on a FR/NL website and a 9-page brochure generated with Python." },
+        { label: "Continuity", text: "Notion playbook, editorial charter, 11 templates and a Markdown export for any AI assistant." },
+      ] },
+      { section: "gallery", title: "Gallery", type: "gallery", items: [
+        { src: `${D}/sponsor-site-preview.jpg`, alt: "Partner website, home" },
+        { src: `${D}/sponsor-site-packs.webp`, alt: "Partner website, sponsor packs" },
+        { src: `${D}/daring-visuals.webp`, alt: "Social visuals" },
+        { src: `${D}/affiche_final.png`, alt: "Match poster", fit: "contain" },
+        { src: `${D}/recap/1.png`, alt: "Weekend recap carousel", fit: "contain" },
+        { src: `${D}/stage_ete_fr.png`, alt: "Summer camp poster, French", fit: "contain" },
+        { src: `${D}/stage_ete_nl.png`, alt: "Summer camp poster, Dutch", fit: "contain" },
+        { src: `${D}/tshirt_playoffs.png`, alt: "Playoffs T-shirt", fit: "contain" },
+        { src: `${D}/notion/playbook.png`, alt: "Notion playbook", fit: "contain" },
+        { src: `${D}/info_general_cartsnack.png`, alt: "Bilingual signage", fit: "contain" },
+      ] },
+      { section: "results", title: "What the club kept", type: "list", items: [
+        "A live bilingual partner website and a sponsor offer rebuilt from 3 to 5 tiers + Youth Pack.",
+        "22 existing partner logos integrated as social proof, and a club LinkedIn page.",
+        "Templates and a Notion workspace so volunteers keep producing without me.",
+      ] },
+      { section: "links", title: "Documents", type: "pdf", src: `${D}/site/Royal_Daring_Partenaires_2025-26.pdf`, label: "Partner brochure 2025-26 (PDF)" },
+      { section: "links", type: "links", items: [{ label: "Live partner site", href: "https://rdaring-sponsor-only.netlify.app" }] },
+    ],
+  },
+  {
+    id: "signal",
+    code: "SGN",
+    title: "ASN95 Signal",
+    org: "AS Nortkerque 95 · football club",
+    role: "Head of communications",
+    period: "Jan → Jun 2025",
+    location: "Nortkerque, FR",
+    status: "Built from scratch",
+    summary:
+      "A local club's digital presence built from nothing: a sponsor prediction game, a weekly visual identity and a full season of matchday photography. One million views.",
+    accent: "#d6409f",
+    cover: { src: `${S}/group_sponsor.webp`, alt: "Youth academy sponsor photoshoot" },
+    stack: ["Canva", "Lightroom", "Sony α6400", "Google Forms"],
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "1M+", label: "views in one season" },
+        { value: "+467%", label: "sponsor click-through" },
+        { value: "+93.8%", label: "interactions" },
+        { value: "1,650+", label: "edited photos" },
+      ] },
+      { section: "context", title: "Starting point", type: "text", body:
+        "No content calendar, no visual guidelines, no recurring formats. Sponsors had no visibility beyond pitch-side banners. The club had a community, but no voice." },
+      { section: "approach", title: "Three acts", type: "steps", items: [
+        { label: "Activation", text: "Les Pronos du Sultan: a weekly prediction game with a sponsor, free meal for the top 3. +467% CTR. Then ASN95 Predict, a first app concept." },
+        { label: "Communication", text: "Match posters, results and interviews. 3 recurring formats, 5+ sponsors per visual, templates locked mid-season." },
+        { label: "Field", text: "33 events covered, 26 league matches, the club's 30th anniversary, a youth sponsor shoot with 50+ kids." },
+      ] },
+      { section: "gallery", title: "Gallery", type: "gallery", items: [
+        { src: `${S}/asn95-posters.webp`, alt: "Match posters" },
+        { src: `${S}/match-championnat.png`, alt: "Match day poster", fit: "contain" },
+        { src: `${S}/resultat-match.jpg`, alt: "Result graphic", fit: "contain" },
+        { src: `${S}/interview.webp`, alt: "Interview series", fit: "contain" },
+        { src: `${S}/photo_senior_1.jpg`, alt: "Senior team in action" },
+        { src: `${S}/photoshoot_individuel_1.jpg`, alt: "Player portrait" },
+        { src: `${S}/dossier-sponsoring.jpg`, alt: "Sponsorship file", fit: "contain" },
+      ] },
+      { section: "results", title: "Lessons", type: "list", items: ["Consistency wins.", "Sponsors need stories.", "Build, then scale."] },
+    ],
+  },
+  {
+    id: "field-ops",
+    code: "FLD",
+    title: "ASI Tournament",
+    org: "ASI Multisports Tournament · UFR3S Lille",
+    role: "Comms chief · field operations",
+    period: "December 2025",
+    location: "Lille, FR",
+    status: "On the ground",
+    summary:
+      "Communication and field coordination for a 500+ person campus tournament across four disciplines. Two critical incidents handled with zero disruption.",
+    accent: "#3e9bd6",
+    cover: { src: `${F}/asi-1.jpg`, alt: "ASI tournament" },
+    stack: ["Sony α6400", "GoPro ×2", "Canva"],
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "500+", label: "people" },
+        { value: "4", label: "disciplines" },
+        { value: "2 / 0", label: "incidents / disruption" },
+        { value: "45 min", label: "to secure a new venue" },
+      ] },
+      { section: "context", title: "Context", type: "text", body:
+        "A university tournament in disc golf, wheelchair basketball, laser tag and spikeball. I led communication and helped run the day on the ground." },
+      { section: "demo", title: "Incident log", type: "demo", demo: "asi-incidents" },
+      { section: "role", title: "What I produced", type: "list", items: [
+        "Graphic charter (palette and type system).",
+        "Bilingual FR/EN participant briefing and rules.",
+        "Campus and social media poster.",
+        "Event photography and body-cam coverage.",
+      ] },
+      { section: "gallery", title: "Gallery", type: "gallery", items: [
+        { src: `${F}/affiche.png`, alt: "Tournament poster", fit: "contain" },
+        { src: `${F}/charte.png`, alt: "Graphic charter", fit: "contain" },
+        { src: `${F}/regles.jpg`, alt: "Bilingual rules", fit: "contain" },
+        { src: `${F}/asi-2.jpg`, alt: "Tournament action" },
+        { src: `${F}/asi-3.jpg`, alt: "Tournament action" },
+        { src: `${F}/asi-4.jpg`, alt: "Tournament action" },
+      ] },
+    ],
+  },
+  {
+    id: "build",
+    code: "BLD",
+    title: "Client builds",
+    org: "Ferrant P.H.E · AS Nortkerque 95",
+    role: "AI-assisted web delivery",
+    period: "2025 → 2026",
+    location: "Hauts-de-France, FR",
+    status: "1 live · 1 in development",
+    summary:
+      "Websites for real clients: a live bilingual catalogue for an essential-oils manufacturer, and the first website of a 250-member football club. I owned the brief, content, QA and deployment; AI agents wrote the code.",
+    accent: "#d9a21b",
+    cover: { src: `${B}/ferrantphe.png`, alt: "ferrantphe.fr home page" },
+    stack: ["HTML", "CSS", "JavaScript", "Tailwind CSS", "Claude Code", "Codex"],
+    blocks: [
+      { section: "approach", title: "Method", type: "steps", items: [
+        { label: "Brief", text: "Goals, audience and content with the client." },
+        { label: "Structure", text: "Pages, catalogue and SEO plan." },
+        { label: "AI build", text: "Implementation directed through Claude Code and Codex." },
+        { label: "QA and deploy", text: "Visual checks on every screen, then static hosting." },
+      ] },
+      { section: "demo", title: "Ferrant P.H.E · live", type: "site", url: "https://ferrantphe.fr", label: "ferrantphe.fr", note: "16 products, FR/EN datasheets, PWA, JSON-LD, llms.txt." },
+      { section: "gallery", title: "Gallery", type: "gallery", items: [
+        { src: `${B}/ferrantphe.png`, alt: "Ferrant P.H.E home" },
+        { src: `${B}/ferrantphe2.webp`, alt: "Ferrant P.H.E catalogue" },
+        { src: `${B}/ASN1.webp`, alt: "AS Nortkerque 95 website, in development" },
+        { src: `${B}/ASN2.webp`, alt: "AS Nortkerque 95 website, gallery" },
+      ] },
+      { section: "links", type: "links", items: [{ label: "ferrantphe.fr", href: "https://ferrantphe.fr" }] },
+    ],
+  },
+  {
+    id: "strategy",
+    code: "STR",
+    title: "BLAST strategy",
+    org: "Academic case study · “David vs Goliath 2.0”",
+    role: "Strategic analyst",
+    period: "2025",
+    location: "Copenhagen → Mumbai",
+    status: "Case study",
+    summary:
+      "A 23-page strategic audit of BLAST facing the PIF-backed EFG: PESTEL, VRIO, SWOT, and a mobile-first India pivot through a Reliance joint venture.",
+    accent: "#e5733a",
+    cover: { src: "/media/strategy/cover.jpg", alt: "Corporate environment" },
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "23 p.", label: "dossier" },
+        { value: "$82.1M", label: "BLAST FY24 revenue" },
+        { value: "600M", label: "Indian gamers targeted" },
+        { value: "2027", label: "break-even target" },
+      ] },
+      { section: "approach", title: "Roadmap", type: "steps", items: [
+        { label: "H1 2026", text: "India launch: Mumbai studio, Jio and Paytm integration, mobile test event." },
+        { label: "H2 2026", text: "Monetisation: Fantasy Live, Watch-to-Earn, ARPU +50%." },
+        { label: "2027", text: "Break-even, revenue mix EU 60% / India 20% / MENA 20%." },
+      ] },
+      { section: "links", title: "Full dossier", type: "pdf", src: "/media/strategy/blast-case-study.pdf", label: "BLAST case study (PDF)" },
+    ],
+  },
+  {
+    id: "imagery",
+    code: "IMG",
+    title: "Imagery",
+    org: "Photography archive",
+    role: "Sport and event photographer",
+    period: "2024 → 2026",
+    location: "France · French Guiana",
+    status: "Archive",
+    summary: "Fifty selected frames across corporate, events and sport: football, golf, kitesurf and volleyball.",
+    accent: "#9a9a9a",
+    cover: { src: `${I}/kite-3.jpg`, alt: "Kitesurfer" },
+    stack: ["Sony α6400", "GoPro ×2", "Lightroom", "Premiere"],
+    blocks: [
+      { section: "gallery", title: "Selected frames", type: "gallery", items: [
+        ...["kite-3", "football-1", "golf-2", "volleyball-1", "corporate-1", "kite-5", "football-4", "golf-4", "volleyball-3", "corporate-5", "asi-2", "kite-7"].map((n) => ({
+          src: `${I}/${n}.jpg`,
+          alt: `${n.split("-")[0]} photograph`,
+        })),
+      ] },
+    ],
+  },
+]
+
+export function getProject(id: string) {
+  return PROJECTS.find((p) => p.id === id)
+}
+
+export const CV_URL = "/media/docs/cv-julesmoreau.pdf"
+export const CONTACT = {
+  email: "jules.moreau1@outlook.com",
+  linkedin: "https://www.linkedin.com/in/jules-moreau-lille",
+  github: "https://github.com/julesmoreau62",
+}

@@ -1,101 +1,32 @@
 import type { Metadata, Viewport } from "next"
-import { Archivo, JetBrains_Mono } from "next/font/google"
-import { Providers } from "@/components/fx/providers"
-import { SiteAnalytics } from "@/components/fx/site-analytics"
-import { PROFILE, SITE } from "@/lib/profile"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
-const archivo = Archivo({
-  subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
-  display: "swap",
-})
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-})
+const url = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: {
-    default: SITE.title,
-    template: "%s — Jules Moreau",
-  },
-  description: SITE.description,
-  alternates: { canonical: SITE.url },
-  openGraph: {
-    title: SITE.title,
-    description: SITE.description,
-    url: SITE.url,
-    siteName: "Jules Moreau",
-    type: "profile",
-    locale: "en_US",
-    alternateLocale: ["fr_FR"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE.title,
-    description: SITE.description,
-  },
-  robots: { index: true, follow: true },
+  metadataBase: new URL(url),
+  title: "Moreau Harness · Jules Moreau, digital transformation and AI",
+  description:
+    "Chat with the AI double of Jules Moreau: digital transformation and AI for sport organisations. M2 International Sport Administration, open to an internship from February to June 2027.",
+  openGraph: { title: "Moreau Harness", description: "Chat with Jules Moreau's AI double and explore his projects.", type: "website" },
 }
 
 export const viewport: Viewport = {
-  themeColor: "#070707",
-  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#161616" },
+  ],
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Jules Moreau",
-  url: SITE.url,
-  email: `mailto:${PROFILE.email}`,
-  jobTitle: `${PROFILE.degree} — ${PROFILE.role}`,
-  description: SITE.description,
-  seeks: {
-    "@type": "Demand",
-    name: PROFILE.seeking,
-    availabilityStarts: "2027-02-01",
-    availabilityEnds: "2027-06-30",
-    areaServed: ["FR", "BE", "EU"],
-  },
-  knowsAbout: [
-    "Digital Transformation",
-    "Generative AI",
-    "Workflow Automation",
-    "Local LLMs",
-    "Sport Management",
-    "Sport Governance",
-    "Event Operations",
-    "Sponsor Activation",
-    "Esports Management",
-  ],
-  alumniOf: [
-    { "@type": "CollegeOrUniversity", name: "Université de Lille (STAPS/ISA)" },
-    { "@type": "CollegeOrUniversity", name: "ULCO" },
-  ],
-  nationality: "French",
-  address: { "@type": "PostalAddress", addressLocality: "Lille", addressCountry: "FR" },
-  sameAs: [PROFILE.linkedin, PROFILE.github],
-}
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
-      <body className="min-h-screen bg-bg text-ink antialiased">
-        <Providers>{children}</Providers>
-        <SiteAnalytics />
-      </body>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body>{children}</body>
     </html>
   )
 }

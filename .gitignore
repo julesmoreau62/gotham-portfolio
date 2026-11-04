@@ -1,23 +1,8 @@
-# dependencies
-node_modules/
-
-# generated image variants (scripts/build-images.mjs)
-public/_img/
-
-# next.js
-.next/
-out/
-.npm-cache/
-.qa/
-
-# env
+node_modules
+.next
 .env*.local
-
-# os / editor
-.DS_Store
-.vscode/
-.claude/
-
-# typescript
+.env
 *.tsbuildinfo
-next-env.d.ts
+.DS_Store
+.vercel
+.claude/
