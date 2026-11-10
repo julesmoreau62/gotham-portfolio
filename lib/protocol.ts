@@ -9,6 +9,7 @@ export type Action =
   | { type: "open_project"; id: ProjectId; section?: SectionId }
   | { type: "show_contact"; reason?: string }
   | { type: "open_cv" }
+  | { type: "open_off_the_clock" }
 
 /** One line of the NDJSON stream returned by /api/chat. */
 export type StreamEvent =

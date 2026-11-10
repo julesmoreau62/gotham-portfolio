@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import {
-  ArrowLeft, ArrowUp, Check, FileText, Mail, Menu, MessageSquare, PanelLeft,
+  ArrowLeft, ArrowUp, Check, Coffee, FileText, Mail, Menu, MessageSquare, PanelLeft,
   PanelRight, Plus, Square, Trash2, X, ExternalLink, Sparkles,
 } from "lucide-react"
 import { Markdown } from "@/components/markdown"
 import { Linkedin } from "@/components/icons"
 import { ProjectArtifact } from "@/components/artifact"
+import { OffTheClock } from "@/components/shelf"
 import { CONTACT, CV_URL, PROJECTS, getProject, type ProjectId, type SectionId } from "@/lib/projects"
 import { WELCOME } from "@/lib/starters"
 import { MAX_INPUT_CHARS, type Action, type StreamEvent } from "@/lib/protocol"
@@ -15,7 +16,7 @@ import { MAX_INPUT_CHARS, type Action, type StreamEvent } from "@/lib/protocol"
 type Notice = Extract<StreamEvent, { t: "notice" }>["kind"]
 type Msg = { id: string; role: "user" | "assistant"; content: string; actions: Action[]; notice?: Notice; streaming?: boolean }
 type Conv = { id: string; title: string; messages: Msg[]; updatedAt: number }
-type Panel = { kind: "project"; id: ProjectId; section?: SectionId; nonce: number } | { kind: "cv"; nonce: number } | null
+type Panel = { kind: "project"; id: ProjectId; section?: SectionId; nonce: number } | { kind: "cv"; nonce: number } | { kind: "off"; nonce: number } | null
 
 const STORE = "moreau-harness:conversations:v1"
 const uid = () => Math.random().toString(36).slice(2, 10)
@@ -91,6 +92,11 @@ export function Harness() {
     if (show) setPanelVisible(true)
     setDrawer(false)
   }, [])
+  const openOff = useCallback((show = true) => {
+    setPanel({ kind: "off", nonce: Date.now() })
+    if (show) setPanelVisible(true)
+    setDrawer(false)
+  }, [])
   const closePanel = () => {
     setPanel(null)
     setPanelVisible(false)
@@ -103,8 +109,9 @@ export function Harness() {
       const show = !isMobile()
       if (a.type === "open_project") openProject(a.id, a.section, show)
       if (a.type === "open_cv") openCv(show)
+      if (a.type === "open_off_the_clock") openOff(show)
     },
-    [openProject, openCv],
+    [openProject, openCv, openOff],
   )
 
   /* ---------- conversation helpers ---------- */
@@ -136,6 +143,7 @@ export function Harness() {
     // Local commands, no API call.
     const cmd = text.toLowerCase()
     if (cmd === "/cv" || cmd === "/resume") return openCv()
+    if (cmd === "/off") return openOff()
     if (cmd === "/contact") {
       const { convId, reply } = startTurn(text)
       patchMsg(convId, reply.id, (m) => ({ ...m, content: "Here's how to reach the real Jules.", actions: [{ type: "show_contact" }], streaming: false }))
@@ -256,7 +264,7 @@ export function Harness() {
                   <span className="dot" style={{ background: openProj.accent }} aria-hidden /> Context: {openProj.title}
                 </span>
               ) : (
-                <span className="hint hide-mobile"><Sparkles size={13} aria-hidden /> Try /cv or /contact</span>
+                <span className="hint hide-mobile"><Sparkles size={13} aria-hidden /> Try /cv, /contact or /off</span>
               )}
               <span className={`count${input.length > MAX_INPUT_CHARS ? " over" : ""}`}>
                 {input.length > MAX_INPUT_CHARS * 0.75 ? `${input.length}/${MAX_INPUT_CHARS}` : ""}
@@ -341,6 +349,9 @@ export function Harness() {
           </div>
 
           <div className="sidebar-foot">
+            <button className={`nav-item${panel?.kind === "off" ? " active" : ""}`} onClick={() => openOff()}>
+              <Coffee size={16} aria-hidden /> <span className="label">Off the clock</span>
+            </button>
             <button className={`nav-item${panel?.kind === "cv" ? " active" : ""}`} onClick={() => openCv()}>
               <FileText size={16} aria-hidden /> <span className="label">CV</span> <span className="meta">PDF</span>
             </button>
@@ -398,7 +409,7 @@ export function Harness() {
                       <div className="thinking" aria-label="Thinking"><i /><i /><i /></div>
                     ) : null}
                     {m.actions.map((a, i) => (
-                      <ActionView key={i} action={a} onOpen={() => (a.type === "open_project" ? openProject(a.id, a.section) : a.type === "open_cv" ? openCv() : null)} />
+                      <ActionView key={i} action={a} onOpen={() => (a.type === "open_project" ? openProject(a.id, a.section) : a.type === "open_cv" ? openCv() : a.type === "open_off_the_clock" ? openOff() : null)} />
                     ))}
                     {(m.notice === "budget" || m.notice === "rate" || m.notice === "offline" || m.notice === "error") && <ContactCard />}
                   </div>
@@ -431,7 +442,7 @@ export function Harness() {
                     <span className="hide-mobile">{openProj.code.toLowerCase()} · artifact</span>
                   </>
                 ) : (
-                  <span className="hide-mobile">cv-julesmoreau.pdf</span>
+                  <span className="hide-mobile">{panel.kind === "off" ? "off-the-clock" : "cv-julesmoreau.pdf"}</span>
                 )}
               </div>
               {panel.kind === "project" && (
@@ -442,6 +453,8 @@ export function Harness() {
             <div className="panel-body">
               {panel.kind === "project" && openProj ? (
                 <ProjectArtifact project={openProj} section={panel.section} nonce={panel.nonce} />
+              ) : panel.kind === "off" ? (
+                <OffTheClock />
               ) : (
                 <div className="artifact">
                   <div className="links" style={{ marginBottom: 12 }}>
@@ -466,9 +479,9 @@ function ActionView({ action: a, onOpen }: { action: Action; onOpen: () => void 
     <button className="tool" onClick={onOpen}>
       <PanelRight size={14} aria-hidden />
       <span className="name">{a.type}</span>
-      <span className="arg">{a.type === "open_project" ? `${a.id}${a.section ? ` · ${a.section}` : ""}` : "cv.pdf"}</span>
+      <span className="arg">{a.type === "open_project" ? `${a.id}${a.section ? ` · ${a.section}` : ""}` : a.type === "open_off_the_clock" ? "off-the-clock" : "cv.pdf"}</span>
       <span className="state"><Check size={12} aria-hidden /> opened</span>
-      <span className="open-cta">View {project ? project.title : "CV"} →</span>
+      <span className="open-cta">View {project ? project.title : a.type === "open_off_the_clock" ? "Off the clock" : "CV"} →</span>
     </button>
   )
 }

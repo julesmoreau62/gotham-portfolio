@@ -46,6 +46,14 @@ const TOOLS = [
       parameters: { type: "object", properties: {}, additionalProperties: false },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "open_off_the_clock",
+      description: "Open the Off the clock panel: what Jules plays, reads, watches and listens to outside work.",
+      parameters: { type: "object", properties: {}, additionalProperties: false },
+    },
+  },
 ] as const
 
 type ToolCall = { id: string; name: string; args: string }
@@ -66,6 +74,7 @@ function toAction(call: ToolCall): Action | null {
   }
   if (call.name === "show_contact") return { type: "show_contact", reason: typeof args.reason === "string" ? args.reason.slice(0, 120) : undefined }
   if (call.name === "open_cv") return { type: "open_cv" }
+  if (call.name === "open_off_the_clock") return { type: "open_off_the_clock" }
   return null
 }
 
