@@ -4,7 +4,7 @@
    only values the open_project tool accepts.
    ------------------------------------------------------------------ */
 
-export const PROJECT_IDS = ["ono-sendai", "daring", "signal", "field-ops", "build", "strategy", "imagery"] as const
+export const PROJECT_IDS = ["ono-sendai", "daring", "signal", "field-ops", "build", "strategy", "imagery", "harness"] as const
 export type ProjectId = (typeof PROJECT_IDS)[number]
 
 export const SECTIONS = ["overview", "context", "role", "approach", "results", "gallery", "demo", "links"] as const
@@ -35,8 +35,10 @@ export type Project = {
   status: string
   summary: string
   accent: string
-  cover: Media
+  cover?: Media
   stack?: string[]
+  /** Optional per-project names for the section tabs. */
+  labels?: Partial<Record<SectionId, string>>
   blocks: Block[]
 }
 
@@ -301,6 +303,55 @@ export const PROJECTS: Project[] = [
           src: `${I}/${n}.jpg`,
           alt: `${n.split("-")[0]} photograph`,
         })),
+      ] },
+    ],
+  },
+  {
+    id: "harness",
+    code: "MHX",
+    title: "How this works",
+    org: "This site · Moreau Harness",
+    role: "Designer and builder",
+    period: "2026",
+    location: "Next.js on Vercel",
+    status: "Live",
+    summary:
+      "A portfolio you talk to. The AI double answers only from notes I wrote myself, opens projects in this panel, and runs on a budget of about €1 a day. Here is what happens behind each answer, and where it stops.",
+    accent: "#5fd3a0",
+    stack: ["Next.js", "TypeScript", "Vercel", "OpenRouter", "Claude Haiku 5.5", "Upstash Redis", "Claude Code"],
+    labels: { results: "Limits", links: "Privacy" },
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "≈ $0.001", label: "per answer" },
+        { value: "€1", label: "daily spend cap" },
+        { value: "4", label: "tools, all UI-only" },
+        { value: "0", label: "models trained on me" },
+      ] },
+      { section: "context", title: "Why a chat", type: "text", body:
+        "Recruiters rarely read a whole portfolio. They have one question: has he done X? So the site answers it directly, then shows the proof. It is also a small, real version of what I study: a useful AI tool that a small organisation could afford to run." },
+      { section: "approach", title: "What happens when you ask", type: "steps", items: [
+        { label: "Your message", text: "Sent to the site's server with the last few turns of the chat. Nothing else about you." },
+        { label: "The reference", text: "The server adds my notes: identity, experience, skills, method, projects, FAQ and the rules the double must follow. That is all it knows." },
+        { label: "The model", text: "Claude Haiku 5.5, through OpenRouter, writes the answer in my voice and streams it back. The notes are cached, which keeps each answer at a fraction of a cent." },
+        { label: "The panel", text: "When a project is relevant, the model asks the interface to open it here. Its tools only open panels (project, CV, contact, off the clock); they never run anything on the server, and unknown project ids are dropped." },
+      ] },
+      { section: "approach", title: "Design choices", type: "list", items: [
+        "Grounded, not trained: editing a Markdown file is all it takes to update what the double knows.",
+        "Honest by default: when something is not in my notes, it says so and shows how to reach me.",
+        "Works without AI: every project, the CV and the contact are reachable from the sidebar, and each project has its own shareable page.",
+        "Built with AI coding agents (Claude Code); I owned the product, the content, the limits and the QA.",
+      ] },
+      { section: "results", title: "Limits", type: "list", items: [
+        "It can be wrong. It is an AI summarising my notes, not me: for anything that matters (dates, contracts, an interview), write to me.",
+        "Short answers by design, and only the recent part of the conversation is sent to the model.",
+        "Usage is capped per visitor to keep costs predictable.",
+        "A daily spending cap of about €1. Once it is reached, the chat pauses until midnight UTC; projects, CV and contact keep working.",
+      ] },
+      { section: "links", title: "Your data", type: "list", items: [
+        "Your chats are stored in your own browser. Delete them from the sidebar at any time.",
+        "To answer, your messages go to OpenRouter and the model provider. The site itself does not store or log what you write.",
+        "Your IP address is only used as a rate-limit counter that expires within 24 hours.",
+        "No account, no analytics, no tracking cookies.",
       ] },
     ],
   },

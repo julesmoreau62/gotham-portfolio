@@ -67,15 +67,17 @@ export function ProjectArtifact({ project, section, nonce }: { project: Project;
         <nav className="art-nav" aria-label="Sections">
           {sections.map((s) => (
             <button key={s} className={current === s ? "on" : ""} onClick={() => jump(s)}>
-              {SECTION_LABEL[s]}
+              {project.labels?.[s] ?? SECTION_LABEL[s]}
             </button>
           ))}
         </nav>
       )}
 
-      <div className="art-cover">
-        <Image src={project.cover.src} alt={project.cover.alt} fill sizes="(max-width: 860px) 100vw, 680px" style={{ objectFit: "cover" }} priority />
-      </div>
+      {project.cover && (
+        <div className="art-cover">
+          <Image src={project.cover.src} alt={project.cover.alt} fill sizes="(max-width: 860px) 100vw, 680px" style={{ objectFit: "cover" }} priority />
+        </div>
+      )}
 
       {project.blocks.map((b, i) => {
         const anchor = !firstOfSection.has(b.section)

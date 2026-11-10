@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import {
   ArrowLeft, ArrowUp, Check, Coffee, FileText, Mail, Menu, MessageSquare, PanelLeft,
-  PanelRight, Plus, Square, Trash2, X, ExternalLink, Sparkles,
+  PanelRight, Plus, Square, Trash2, X, ExternalLink, Sparkles, Cpu,
 } from "lucide-react"
 import { Markdown } from "@/components/markdown"
 import { Linkedin } from "@/components/icons"
@@ -313,7 +313,7 @@ export function Harness() {
           <div className="nav-scroll">
             <div className="nav-group">
               <div className="nav-title">Projects</div>
-              {PROJECTS.map((p) => (
+              {PROJECTS.filter((p) => p.id !== "harness").map((p) => (
                 <button
                   key={p.id}
                   className={`nav-item${openProj?.id === p.id ? " active" : ""}`}
@@ -349,6 +349,9 @@ export function Harness() {
           </div>
 
           <div className="sidebar-foot">
+            <button className={`nav-item${openProj?.id === "harness" ? " active" : ""}`} onClick={() => openProject("harness")}>
+              <Cpu size={16} aria-hidden /> <span className="label">How this works</span>
+            </button>
             <button className={`nav-item${panel?.kind === "off" ? " active" : ""}`} onClick={() => openOff()}>
               <Coffee size={16} aria-hidden /> <span className="label">Off the clock</span>
             </button>
