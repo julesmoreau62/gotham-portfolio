@@ -8,6 +8,7 @@
 - Where: based in Lille, France. Open to France, Belgium and the rest of Europe.
 - Languages: French (native), English (C1). I have also produced bilingual FR/NL deliverables (Royal Daring, Brussels).
 - Driving licence: B.
+- Founder of Moreau Digital, a micro-enterprise started in October 2026 as a side activity: it publishes Sifflo, my app for amateur football clubs, and builds websites for local shops.
 - French Navy reservist: Petty Officer (Second Maître), active reserve since July 2022.
 
 ## Contact

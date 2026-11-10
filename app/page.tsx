@@ -11,7 +11,7 @@ export default function Home() {
           <h1>Jules Moreau: digital transformation and AI for sport organisations</h1>
           <p>Open to an internship, February to June 2027. Contact: jules.moreau1@outlook.com</p>
           <ul>
-            {PROJECTS.map((p) => (
+            {PROJECTS.filter((p) => !p.hidden).map((p) => (
               <li key={p.id}>
                 <a href={`/p/${p.id}`}>{p.title}</a>: {p.summary}
               </li>

@@ -313,7 +313,7 @@ export function Harness() {
           <div className="nav-scroll">
             <div className="nav-group">
               <div className="nav-title">Projects</div>
-              {PROJECTS.filter((p) => p.id !== "harness").map((p) => (
+              {PROJECTS.filter((p) => p.id !== "harness" && !p.hidden).map((p) => (
                 <button
                   key={p.id}
                   className={`nav-item${openProj?.id === p.id ? " active" : ""}`}

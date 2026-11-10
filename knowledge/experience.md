@@ -1,5 +1,10 @@
 # Experience (reverse chronological)
 
+## Founder — Moreau Digital (micro-enterprise) · since October 2026
+A side activity alongside my master's. Two things under one name:
+- Sifflo, an app for amateur football clubs, launched in November 2026 with AS Nortkerque 95 as its first club. Project id: sifflo
+- Showcase websites for local shops and craftspeople. Project id: build
+
 ## Communication & Sponsoring Intern — Royal Daring Hockey Club ASBL · Brussels, BE · May → Jul 2026
 ISA master internship (M1). Led the club's communication and sponsoring overhaul ahead of its promotion to Division Honneur.
 - First graphic charter of the club, and a reusable Canva template system across 4 content formats (matchday, institutional, event, recruitment).
@@ -14,9 +19,6 @@ ISA master internship (M1). Led the club's communication and sponsoring overhaul
 
 ## Event Infrastructure Technician — Bolt Echafaudage · Kourou, French Guiana · Aug 2025
 - Kourou Beach Festival and Tour de Guyane: built the VIP hospitality complex and deployed sponsor arches under strict timing constraints. Heavy material handling (telehandlers).
-
-## Sales & Ops Support — Guyane Matériels Groupe · French Guiana · Jun → Jul 2025
-- Customer operations in a tropical environment. Product photography for sales campaigns.
 
 ## Head of Communications — AS Nortkerque 95 (ASN95) · Nortkerque, FR · Jan → Jun 2025
 Third-year bachelor internship. Built the club's digital presence from scratch.

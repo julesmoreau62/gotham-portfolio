@@ -4,7 +4,7 @@
    only values the open_project tool accepts.
    ------------------------------------------------------------------ */
 
-export const PROJECT_IDS = ["ono-sendai", "daring", "signal", "field-ops", "build", "strategy", "imagery", "harness"] as const
+export const PROJECT_IDS = ["sifflo", "ono-sendai", "daring", "signal", "field-ops", "build", "strategy", "harness"] as const
 export type ProjectId = (typeof PROJECT_IDS)[number]
 
 export const SECTIONS = ["overview", "context", "role", "approach", "results", "gallery", "demo", "links"] as const
@@ -37,6 +37,8 @@ export type Project = {
   accent: string
   cover?: Media
   stack?: string[]
+  /** Kept for the AI double and its own page, but not listed in the sidebar. */
+  hidden?: boolean
   /** Optional per-project names for the section tabs. */
   labels?: Partial<Record<SectionId, string>>
   blocks: Block[]
@@ -47,35 +49,90 @@ const S = "/media/signal"
 const F = "/media/field-ops"
 const O = "/media/ono-sendai"
 const B = "/media/build"
-const I = "/media/imagery"
+const SF = "/media/sifflo"
 
 export const PROJECTS: Project[] = [
+  {
+    id: "sifflo",
+    code: "SFL",
+    title: "Sifflo",
+    org: "The app for amateur football clubs · Moreau Digital",
+    role: "Product designer and builder",
+    period: "Nov 2026 → pilot",
+    location: "sifflo.app",
+    status: "Pilot · first club online",
+    summary:
+      "One app that replaces a football club's WhatsApp groups: call-ups answered in one tap, live score from the touchline, carpooling, volunteers and sponsor slots. Built from what I saw running communications at AS Nortkerque 95, now its first club.",
+    accent: "#3fb56b",
+    cover: { src: `${SF}/pelouse.webp`, alt: "Football pitch" },
+    stack: ["Next.js", "Supabase", "Cloudflare Workers", "Web push", "PWA", "Claude Code"],
+    labels: { results: "Where it stands" },
+    blocks: [
+      { section: "overview", type: "metrics", items: [
+        { value: "5", label: "roles on one account" },
+        { value: "€2", label: "per licensed member, per year" },
+        { value: "409", label: "automated access-rule tests" },
+        { value: "0", label: "app store: it opens from a link" },
+      ] },
+      { section: "context", title: "The friction", type: "text", body:
+        "A volunteer-run club lives in group chats. Call-ups by text message, changes lost in the thread, parents who miss the one message that concerned them, sponsors seen only on a pitch-side banner. I lived it at AS Nortkerque 95. Sifflo is the tool I was missing, and the field answer to my thesis question." },
+      { section: "role", title: "My role", type: "text", body:
+        "Product design, the rules on who sees what, pricing, content, QA and deployment. I directed AI coding agents for the implementation." },
+      { section: "demo", title: "sifflo.app", type: "site", url: "https://sifflo.app", label: "sifflo.app", note: "The live landing page, with tappable previews of the live score and call-ups." },
+      { section: "approach", title: "Choices", type: "steps", items: [
+        { label: "No app store", text: "Opens from a link and installs on the home screen, with the club's own name, crest and colours." },
+        { label: "Children first", text: "Minors' data is protected by the database itself. Shortened names, accounts validated by a club official, image rights dated and revocable." },
+        { label: "Works at the pitch", text: "A goal or an answer entered without network is sent when the connection returns, with the right minute." },
+        { label: "A price a club can carry", text: "€2 per licensed member per year, designed to be covered by the sponsor slots inside the app." },
+      ] },
+      { section: "approach", title: "What a club gets", type: "list", items: [
+        "Call-ups answered in one tap, with an automatic reminder the evening before.",
+        "Live score with a notification for each goal.",
+        "One notification per family, mentioning only its own children.",
+        "Calendar, carpooling, volunteer slots, line-ups, licence files.",
+        "Partner of the week, \"match presented by\" and a partners page for sponsors.",
+      ] },
+      { section: "gallery", title: "Screens", type: "gallery", items: [
+        { src: `${SF}/accueil-partenaire.jpg`, alt: "Home screen with the partner of the week", fit: "contain" },
+        { src: `${SF}/matchs.jpg`, alt: "Match calendar", fit: "contain" },
+        { src: `${SF}/match-partenaire.jpg`, alt: "Match page presented by a partner", fit: "contain" },
+        { src: `${SF}/equipes.jpg`, alt: "Teams of the club", fit: "contain" },
+        { src: `${SF}/equipe-s1.jpg`, alt: "Senior team page", fit: "contain" },
+      ] },
+      { section: "results", title: "Where it stands", type: "list", items: [
+        "Launched in November 2026, at pilot stage with its first club, AS Nortkerque 95.",
+        "Built for many clubs from day one: each has its own address and its data is isolated from the others.",
+        "No usage figures yet. I will publish them when they exist.",
+      ] },
+      { section: "links", type: "links", items: [{ label: "sifflo.app", href: "https://sifflo.app" }] },
+    ],
+  },
   {
     id: "ono-sendai",
     code: "ONO",
     title: "Ono-Sendai",
-    org: "M2 thesis · personal AI workspace",
+    org: "My lab · personal AI workspace",
     role: "Designer and builder",
     period: "2026 → in daily use",
     location: "macOS app",
     status: "In daily use",
     summary:
-      "The desktop app I built to run my master's year in one place: write the thesis with citations to the exact page, search 31 books by meaning, transcribe lectures and revise. Fed every day by the Thesis Engine, a local research pipeline.",
+      "The tool I use every day, and where I test on myself what I recommend to clubs. It lets me write my thesis with every claim tied to its page, question 31 books in French, and leave a lecture with a course, a revision sheet and flashcards.",
     accent: "#8b9cf7",
     cover: { src: `${O}/cover.jpg`, alt: "Illustration of a knowledge graph" },
     stack: ["Electron", "OpenCode", "whisper.cpp", "bge-m3", "pdf.js", "Qwen3 4B + LoRA", "Ollama", "DeepSeek V4-Pro"],
     blocks: [
       { section: "overview", type: "metrics", items: [
-        { value: "4", label: "spaces in one app" },
+        { value: "4", label: "study tools in one app" },
         { value: "31", label: "books searchable to the page" },
         { value: "90/day", label: "sources scanned" },
         { value: "≈ €0", label: "per month to run" },
       ] },
       { section: "context", title: "Context", type: "text", body:
-        "My thesis asks whether generative AI and no-code tools can professionalise a sports association with little time and money. So I built my own answer first: one app for the whole master's year, used every day." },
+        "My thesis asks whether generative AI and no-code tools can professionalise a sports association with little time and money. Before recommending anything to a club, I tried it on myself: one app for the whole master's year, used every day. What held up here (answers that cite their source, plain files, tools that run locally for almost nothing) is what I carried into Sifflo." },
       { section: "role", title: "My role", type: "text", body:
-        "Product design, architecture choices, model testing, content and QA. I directed AI coding agents (OpenCode, Claude Code, Codex) for the implementation: about 11,000 lines, with tests." },
-      { section: "demo", title: "Explore the four spaces", type: "demo", demo: "ono-spaces" },
+        "Product design, architecture choices, model testing, content and QA. I directed AI coding agents (OpenCode, Claude Code, Codex) for the implementation, with tests." },
+      { section: "demo", title: "Explore the four study tools", type: "demo", demo: "ono-spaces" },
       { section: "approach", title: "Design choices", type: "steps", items: [
         { label: "Grounded", text: "The copilot is read-only on the thesis and every answer cites its page or section." },
         { label: "Plain files", text: "Markdown, CSL-JSON and Zotero. Nothing is locked inside the app." },
@@ -229,13 +286,13 @@ export const PROJECTS: Project[] = [
     id: "build",
     code: "BLD",
     title: "Client builds",
-    org: "Ferrant P.H.E · AS Nortkerque 95",
+    org: "Moreau Digital · Ferrant P.H.E",
     role: "AI-assisted web delivery",
     period: "2025 → 2026",
     location: "Hauts-de-France, FR",
-    status: "1 live · 1 in development",
+    status: "Live",
     summary:
-      "Websites for real clients: a live bilingual catalogue for an essential-oils manufacturer, and the first website of a 250-member football club. I owned the brief, content, QA and deployment; AI agents wrote the code.",
+      "Websites for real clients, starting with a live bilingual catalogue for an essential-oils manufacturer. Since October 2026 I do this under my own micro-enterprise, Moreau Digital. I own the brief, content, QA and deployment; AI agents write the code.",
     accent: "#d9a21b",
     cover: { src: `${B}/ferrantphe.png`, alt: "ferrantphe.fr home page" },
     stack: ["HTML", "CSS", "JavaScript", "Tailwind CSS", "Claude Code", "Codex"],
@@ -250,10 +307,13 @@ export const PROJECTS: Project[] = [
       { section: "gallery", title: "Gallery", type: "gallery", items: [
         { src: `${B}/ferrantphe.png`, alt: "Ferrant P.H.E home" },
         { src: `${B}/ferrantphe2.webp`, alt: "Ferrant P.H.E catalogue" },
-        { src: `${B}/ASN1.webp`, alt: "AS Nortkerque 95 website, in development" },
-        { src: `${B}/ASN2.webp`, alt: "AS Nortkerque 95 website, gallery" },
       ] },
-      { section: "links", type: "links", items: [{ label: "ferrantphe.fr", href: "https://ferrantphe.fr" }] },
+      { section: "context", title: "Moreau Digital", type: "text", body:
+        "My micro-enterprise since October 2026: websites for local shops and craftspeople who have none, hosted for a yearly subscription. I find the business, build a mock-up made for it from its own logo, van or business card, then quote. It is a young side activity, and it also publishes Sifflo." },
+      { section: "links", type: "links", items: [
+        { label: "ferrantphe.fr", href: "https://ferrantphe.fr" },
+        { label: "moreaudigital.fr", href: "https://moreaudigital.fr" },
+      ] },
     ],
   },
   {
@@ -265,6 +325,7 @@ export const PROJECTS: Project[] = [
     period: "2025",
     location: "Copenhagen → Mumbai",
     status: "Case study",
+    hidden: true,
     summary:
       "A 23-page strategic audit of BLAST facing the PIF-backed EFG: PESTEL, VRIO, SWOT, and a mobile-first India pivot through a Reliance joint venture.",
     accent: "#e5733a",
@@ -282,28 +343,6 @@ export const PROJECTS: Project[] = [
         { label: "2027", text: "Break-even, revenue mix EU 60% / India 20% / MENA 20%." },
       ] },
       { section: "links", title: "Full dossier", type: "pdf", src: "/media/strategy/blast-case-study.pdf", label: "BLAST case study (PDF)" },
-    ],
-  },
-  {
-    id: "imagery",
-    code: "IMG",
-    title: "Imagery",
-    org: "Photography archive",
-    role: "Sport and event photographer",
-    period: "2024 → 2026",
-    location: "France · French Guiana",
-    status: "Archive",
-    summary: "Fifty selected frames across corporate, events and sport: football, golf, kitesurf and volleyball.",
-    accent: "#9a9a9a",
-    cover: { src: `${I}/kite-3.jpg`, alt: "Kitesurfer" },
-    stack: ["Sony α6400", "GoPro ×2", "Lightroom", "Premiere"],
-    blocks: [
-      { section: "gallery", title: "Selected frames", type: "gallery", items: [
-        ...["kite-3", "football-1", "golf-2", "volleyball-1", "corporate-1", "kite-5", "football-4", "golf-4", "volleyball-3", "corporate-5", "asi-2", "kite-7"].map((n) => ({
-          src: `${I}/${n}.jpg`,
-          alt: `${n.split("-")[0]} photograph`,
-        })),
-      ] },
     ],
   },
   {
